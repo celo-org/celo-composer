@@ -1,0 +1,102 @@
+{
+  "1337": {
+    "localhost": {
+      "name": "localhost",
+      "chainId": "1337",
+      "contracts": {
+        "Greeter": {
+          "address": "0x0eB8375f4FFa321F82091dC22f8a980e713BC8Fe",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_greeting",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [],
+              "name": "greet",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_greeting",
+                  "type": "string"
+                }
+              ],
+              "name": "setGreeting",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "44787": {
+    "alfajores": {
+      "name": "alfajores",
+      "chainId": "44787",
+      "contracts": {
+        "Greeter": {
+          "address": "0x9c8836f4193a7b8d0c41C34682f50d450Fa5dE27",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_greeting",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [],
+              "name": "greet",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_greeting",
+                  "type": "string"
+                }
+              ],
+              "name": "setGreeting",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
