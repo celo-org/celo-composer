@@ -35,12 +35,15 @@ to print the accounts associated with your mnemonic.
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
 3. Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
-4. Deploy contracts with
+4. Deploy contracts with `yarn deploy`. Or specify a network directly with
+
 
 ```shell
 npx hardhat --network [network] deploy
 ```
   
+5. Auto deploy any contract updates by running `yarn watch`.
+
 Network names are defined in `hardhat.config.js`.
 
 ## [Celo devchain](https://github.com/terminal-fi/celo-devchain)
