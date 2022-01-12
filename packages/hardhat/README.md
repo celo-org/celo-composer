@@ -57,7 +57,7 @@ This is a version of Ganache (@celo/ganache-cli) that deploys the Celo core prot
 ### Start
 
 ```shell
-npx celo-devchain --port 7545
+npx celo-devchain --port 8545
 ```
 
 or

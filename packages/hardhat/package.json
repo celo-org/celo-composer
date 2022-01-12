@@ -1,8 +1,9 @@
 {
   "name": "hardhat-project",
+  "license": "MIT",
   "scripts": {
     "accounts": "hardhat accounts",
-    "devchain": "npx celo-devchain --port 7545",
+    "devchain": "npx celo-devchain --port 8545",
     "generate": "hardhat generate",
     "deploy": "hardhat deploy --export-all ../react-app/contracts/hardhat_contracts.json",
     "watch": "node scripts/watch.js"

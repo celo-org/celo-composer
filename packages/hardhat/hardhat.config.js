@@ -28,7 +28,7 @@ module.exports = {
   defaultNetwork,
   networks: {
     localhost: {
-      url: "http://127.0.0.1:7545",
+      url: "http://127.0.0.1:8545",
       accounts: {
         // This is the mnemonic use by celo-devchain
         mnemonic: "concert load couple harbor equip island argue ramp clarify fence smart topic",

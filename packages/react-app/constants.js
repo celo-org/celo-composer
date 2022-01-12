@@ -7,7 +7,7 @@ export const NETWORKS = {
     rpcUrl:
       "http://" +
       (global.window ? window.location.hostname : "localhost") +
-      ":7545",
+      ":8545",
   },
   alfajores: {
     name: "alfajores",
