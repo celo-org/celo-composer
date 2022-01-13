@@ -1,6 +1,9 @@
 {
   "name": "test",
   "private": true,
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +15,7 @@
     "@celo/contractkit": "^1.5.1",
     "autoprefixer": "^10.4.2",
     "bignumber.js": "^9.0.2",
+    "eth-hooks": "^3.4.1",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
