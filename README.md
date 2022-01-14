@@ -14,6 +14,12 @@ Prerequisites:
 git clone https://github.com/critesjosh/celo-dapp-starter
 ```
 
+Set the correct node version:
+
+```shell
+nvm use # uses node v12 as specified in .nvmrc
+```
+
 Install dependencies and start your local development chain
 
 ```shell

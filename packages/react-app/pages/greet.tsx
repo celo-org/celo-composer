@@ -8,11 +8,6 @@ import {
   useContractKit,
 } from "@celo-tools/use-contractkit";
 
-import {
-  useContractLoader,
-  useContractReader
-} from "eth-hooks";
-
 import { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 
@@ -28,7 +23,8 @@ import { useStaticJsonRPC } from "../hooks";
 import { NETWORKS } from "../constants";
 
 /// 📡 What chain are your contracts deployed to?
-const initialNetwork = NETWORKS.alfajores; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const initialNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, rinkeby, xdai, mainnet)
+const contractsToInit = ["Greeter", "Storage"];
 
 export default function Greet() {
   const {
@@ -44,21 +40,41 @@ export default function Greet() {
 
   const targetNetwork = NETWORKS[network.name.toLowerCase()];
 
-  const provider = useStaticJsonRPC([
-    targetNetwork,
-  ]);
+  const [contracts, setContracts] = useState({});
 
-  const contractConfig = { deployedContracts: deployedContracts || {}, externalContracts: externalContracts || {} };
-  // Load in your local 📝 contract and read a value from it:
-  const readContracts = useContractLoader(contractConfig, provider);
-
-  const log = () => {
-    console.log(readContracts);
+  const initContracts = async (contractsToInit: Array<string>) => {
+    let contracts = {};
+    contractsToInit.map((name) => {
+      let contractData =
+        deployedContracts[targetNetwork.chainId][targetNetwork.name].contracts[
+          name
+        ];
+      contracts[name] = new kit.web3.eth.Contract(
+        contractData.abi,
+        contractData.address
+      );
+    });
+    setContracts(contracts);
+    console.log("contracts", contracts);
   };
 
+  const init = async () => {
+    await connect();
+    await initContracts(contractsToInit);
+  };
+
+  // Load in your local 📝 contract and read a value from it:
+
+  const log = () => {};
+
   useEffect(() => {
-    console.log(readContracts)
-  })
+    // console.log("deployed contracts", deployedContracts);
+    console.log("network", targetNetwork);
+    try {
+    } catch {
+      console.log("no contracts for network", targetNetwork);
+    }
+  });
 
   return (
     <>
@@ -71,10 +87,34 @@ export default function Greet() {
           </>
         )}
         {!address && (
-          <PrimaryButton onClick={connect}>Connect wallet</PrimaryButton>
+          <PrimaryButton onClick={init}>Connect wallet</PrimaryButton>
         )}
       </div>
+
+      <div>{}</div>
       <PrimaryButton onClick={log}>Log stuff</PrimaryButton>
+      <p>
+        <Contract
+          name="Greeter"
+          contracts={contracts}
+        />
+        <Contract
+          name="Storage"
+          contracts={contracts}
+        />
+      </p>
+    </>
+  );
+}
+
+function Contract({ name, contracts }) {
+
+  return (
+    <>
+      <p>{name}</p>
+      {contracts[name] && (
+        <p>{contracts[name]._address}</p>
+      )}
     </>
   );
 }

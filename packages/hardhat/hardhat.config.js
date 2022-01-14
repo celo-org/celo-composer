@@ -17,7 +17,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
-const defaultNetwork = "localhost"
+const defaultNetwork = "alfajores"
 const DEBUG = false
 const mnemonicPath = "m/44'/52752'/0'/0"
 
