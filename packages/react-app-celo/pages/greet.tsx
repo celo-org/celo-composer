@@ -1,5 +1,3 @@
-import { StableToken } from "@celo/contractkit";
-import { ensureLeading0x } from "@celo/utils/lib/address";
 import { Card, Input } from "antd";
 import "antd/dist/antd.css";
 import {
@@ -10,27 +8,16 @@ import {
   useContractKit,
   useProviderOrSigner,
 } from "@celo-tools/use-contractkit";
-import { ethers } from "ethers";
-
 import { useCallback, useEffect, useState } from "react";
-import Web3 from "web3";
-
 import { useContract } from "../hooks/useContract";
-
 import { PrimaryButton, SecondaryButton, toast, useInput } from "../components";
 
 const networks = [Alfajores, Baklava, Mainnet, Localhost];
-
-import externalContracts from "../contracts/external_contracts";
 // contracts
 import deployedContracts from "../contracts/hardhat_contracts.json";
-import { useStaticJsonRPC } from "../hooks";
-
-import { NETWORKS } from "../constants";
 
 /// 📡 What chain are your contracts deployed to?
 const initialNetwork = Localhost; // <-- select your target frontend network (localhost, alfajores, mainnet)
-const contractsToInit = ["Greeter", "Storage"];
 let localhostAccounts;
 
 export default function Greet() {
@@ -56,10 +43,6 @@ export default function Greet() {
     ].contracts[name];
   };
 
-  console.log(network)
-
-  if (network.name != initialNetwork.name) updateNetwork(initialNetwork);
-
   let storageContractData = getContractData(network, "Storage");
   let greeterContractData = getContractData(network, "Greeter");
 
@@ -74,9 +57,8 @@ export default function Greet() {
     );
   }
   catch(e){
-    console.log(e)
+    console.log(e);
   }
-
 
   // Load in your local 📝 contract and read a value from it:
   const log = async () => {
@@ -96,7 +78,7 @@ export default function Greet() {
   useEffect(() => {
     getAccounts();
     console.log('network updated', network)
-  }, [network]);
+  }, [network, getAccounts]);
 
   return (
     <>
@@ -110,7 +92,7 @@ export default function Greet() {
             </p>
             <div>
               {/* <Contract name="Greeter" contracts={contracts} /> */}
-              <Storage name="Storage" contracts={contracts} />
+              <Storage contract={storageContract} />
             </div>
           </>
         )}
@@ -125,17 +107,18 @@ export default function Greet() {
   );
 }
 
-function Storage({ name, contracts }) {
+function Storage({ contract }) {
   const { address, performActions } = useContractKit();
   const [storageValue, setStorageValue] = useState();
   const [storageInput, setStorageInput] = useInput({ type: "text" });
+
+  console.log(contract)
 
   const setStorage = async () => {
     try {
       await performActions(async (kit) => {
         console.log("pf address", address);
-        const storageContract = contracts[name];
-        const result = await storageContract.methods
+        const result = await contract.methods
           .store(storageInput)
           .send({ from: address });
         console.log(result);
@@ -147,8 +130,7 @@ function Storage({ name, contracts }) {
 
   const getStorage = async () => {
     try {
-      const storageContract = contracts[name];
-      const result = await storageContract.methods.retrieve().call();
+      const result = await contract.methods.retrieve().call();
       setStorageValue(result);
       console.log(result);
     } catch (e) {
@@ -160,9 +142,9 @@ function Storage({ name, contracts }) {
 
   return (
     <>
-      <Card title={name} bordered={true} style={{ width: 500 }}>
+      <Card title="Storage" bordered={true} style={{ width: 500 }}>
         <p>
-          {name} Contract Address: {contracts?.[name]?._address}
+          {name} Contract Address: {contract?._address}
         </p>
         {setStorageInput}
         <PrimaryButton onClick={setStorage}>

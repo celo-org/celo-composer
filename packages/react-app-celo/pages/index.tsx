@@ -4,6 +4,7 @@ import {
   Alfajores,
   Baklava,
   Mainnet,
+  Localhost,
   useContractKit,
 } from '@celo-tools/use-contractkit';
 import { BigNumber } from 'bignumber.js';
@@ -27,7 +28,7 @@ function truncateAddress(address: string) {
   return `${address.slice(0, 8)}...${address.slice(36)}`;
 }
 
-const networks = [Alfajores, Baklava, Mainnet];
+const networks = [Alfajores, Baklava, Mainnet, Localhost];
 
 export default function Home(): React.ReactElement {
   const {

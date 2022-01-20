@@ -26,7 +26,7 @@ npx hardhat help
 npx hardhat accounts
 ```
 
-to print the accounts associated with your mnemonic. 
+to print the accounts associated with your mnemonic.
 
 4. Faucet your first account in the list on the Alfajores testnet [here](https://celo.org/developers/faucet).
 
@@ -36,7 +36,6 @@ to print the accounts associated with your mnemonic.
 2. Update contract deployment scripts in `./deploy`.
 3. Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
 4. Deploy contracts with `yarn deploy`. The default deployment network is specified in `hardhat.config.js`. You can overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
-
 
 ```shell
 npx hardhat --network [network] deploy
