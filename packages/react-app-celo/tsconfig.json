@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "hooks/useContract.js"  ],
   "exclude": [
     "node_modules"
   ]

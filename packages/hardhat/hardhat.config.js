@@ -2,7 +2,14 @@ require("@nomiclabs/hardhat-waffle");
 require("dotenv").config({ path: ".env" });
 require("hardhat-deploy");
 const fs = require("fs");
+const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
+
+const defaultNetwork = "localhost";
+const mnemonicPath = "m/44'/52752'/0'/0";
+// This is the mnemonic used by celo-devchain
+const DEVCHAIN_MNEMONIC =
+  "concert load couple harbor equip island argue ramp clarify fence smart topic";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -14,12 +21,17 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
+task(
+  "devchain-keys",
+  "Prints the private keys associated with the devchain",
+  async (taskArgs, hre) => {
+    const wallet = hre.ethers.Wallet.fromMnemonic(DEVCHAIN_MNEMONIC);
+    console.log(wallet.address, wallet.privateKey);
+  }
+);
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
-
-const defaultNetwork = "alfajores"
-const DEBUG = false
-const mnemonicPath = "m/44'/52752'/0'/0"
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -30,9 +42,8 @@ module.exports = {
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: {
-        // This is the mnemonic used by celo-devchain
-        mnemonic: "concert load couple harbor equip island argue ramp clarify fence smart topic",
-      }
+        mnemonic: DEVCHAIN_MNEMONIC,
+      },
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",

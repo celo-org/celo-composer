@@ -11,7 +11,7 @@
               "inputs": [
                 {
                   "internalType": "string",
-                  "name": "_greeting",
+                  "name": "_greet",
                   "type": "string"
                 }
               ],
@@ -45,6 +45,37 @@
               "type": "function"
             }
           ]
+        },
+        "Storage": {
+          "address": "0x2485e1b612d6Df96958291F71Cc1fD64074CA833",
+          "abi": [
+            {
+              "inputs": [],
+              "name": "retrieve",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "num",
+                  "type": "uint256"
+                }
+              ],
+              "name": "store",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
         }
       }
     }
@@ -55,13 +86,13 @@
       "chainId": "44787",
       "contracts": {
         "Greeter": {
-          "address": "0x9c8836f4193a7b8d0c41C34682f50d450Fa5dE27",
+          "address": "0x7e74C4171EFB4F4192e6834C0442b09d4040508C",
           "abi": [
             {
               "inputs": [
                 {
                   "internalType": "string",
-                  "name": "_greeting",
+                  "name": "_greet",
                   "type": "string"
                 }
               ],
@@ -90,6 +121,37 @@
                 }
               ],
               "name": "setGreeting",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "Storage": {
+          "address": "0x5677c590d7146baec4ab1C43f077DF9a97ac930d",
+          "abi": [
+            {
+              "inputs": [],
+              "name": "retrieve",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "num",
+                  "type": "uint256"
+                }
+              ],
+              "name": "store",
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"

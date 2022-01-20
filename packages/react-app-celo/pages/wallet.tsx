@@ -20,7 +20,7 @@ import Head from 'next/head';
 import { createRef, useCallback, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core/types';
+import { TransactionConfig } from 'web3-core';
 
 import { PrimaryButton } from '../components';
 

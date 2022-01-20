@@ -8,8 +8,8 @@
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
     "generate": "hardhat generate",
-    "deploy": "hardhat deploy --export-all ../react-app/contracts/hardhat_contracts.json",
-    "deploy-reset-watch": "hardhat deploy --reset --watch --export-all ../react-app/contracts/hardhat_contracts.json",
+    "deploy": "hardhat deploy --export-all ../contracts/hardhat_contracts.json",
+    "deploy-reset-watch": "hardhat deploy --reset --watch --export-all ../contracts/hardhat_contracts.json",
     "watch": "node scripts/watch.js"
   },
   "devDependencies": {
