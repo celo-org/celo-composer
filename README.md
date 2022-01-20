@@ -17,6 +17,7 @@ git clone https://github.com/critesjosh/celo-dapp-starter
 Set the correct node version:
 
 ```shell
+cd celo-dapp-starter
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
