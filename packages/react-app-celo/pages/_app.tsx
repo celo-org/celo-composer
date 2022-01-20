@@ -1,7 +1,7 @@
 import '@celo-tools/use-contractkit/lib/styles.css';
 import '../styles/globals.css';
 
-import { Alfajores, ContractKitProvider } from '@celo-tools/use-contractkit';
+import { Alfajores, Localhost, ContractKitProvider } from '@celo-tools/use-contractkit';
 import { AppProps } from 'next/app';
 import { Toaster } from 'react-hot-toast';
 
@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
         url: 'https://use-contractkit.vercel.app',
         icon: 'https://use-contractkit.vercel.app/favicon.ico',
       }}
-      network={Alfajores}
+      network={Localhost}
     >
       <Toaster
         position="top-right"
