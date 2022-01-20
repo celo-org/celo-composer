@@ -49,6 +49,7 @@ yarn deploy
 - Edit frontend in `packages/react-app/pages/index.tsx`.
 - Open http://localhost:3000 to see the app.
 
+You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
 # 🔭 Learning Solidity
 
 📕 Read the docs: https://docs.soliditylang.org
