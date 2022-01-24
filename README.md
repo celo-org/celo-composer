@@ -29,8 +29,6 @@ yarn install
 yarn devchain
 ```
 
-You can get a local copy of mainnet by forking with Ganache. Learn more about [forking Mainnet with ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
-
 In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 ```shell
@@ -62,6 +60,8 @@ npx hardhat devchain-keys
 ```
 
 If you are working on a local development blockchain, you may see errors about `the tx doesn't have the correct nonce.` This is because wallets often cache the account nonce to reduce the number of RPC calls and can get out of sync when you restart your development chain. You can reset the account nonce in Metamask by going to `Settings > Advanced > Reset Account`. This will clear the tx history and force Metamask to query the appropriate nonce from your development chain.
+
+**Note:** You can get a local copy of mainnet by forking with Ganache. Learn more about [forking mainnet with Ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
 
 ## React library choices
 
