@@ -24,7 +24,7 @@ nvm use # uses node v12 as specified in .nvmrc
 Install dependencies and start your local development chain
 
 ```shell
-cd celo-dapp-starter/packages/hardhat
+cd packages/hardhat
 yarn install
 yarn devchain
 ```

@@ -13,7 +13,7 @@ npx hardhat devchain-keys
 
 ## Alfajores Testnet Setup
 
-**Note** This setup is not required when using a local development blockchain (like celo devchain or Ganache).
+**Note** This setup is not required when using a local development blockchain (like celo-devchain or Ganache).
 
 1. Create a `.env` file similar to `.envexample`.
 2. Add a mnemonic. You can easily generate one using [this tool](https://iancoleman.io/bip39/).
@@ -32,7 +32,7 @@ to print the accounts associated with your mnemonic.
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
 3. Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
-4. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js`. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
+4. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
 ```shell
 npx hardhat --network [network] deploy
