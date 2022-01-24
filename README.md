@@ -53,7 +53,7 @@ You can run `yarn deploy --reset` to force re-deploy your contracts to your loca
 
 ## Developing with local devchain
 
-You can import account account keys for the local development chain into Metamask. `cd /packages/hardhat` and run
+You can import account account keys for the local development chain into Metamask. To print they private keys of the local chain accounts `cd /packages/hardhat` and run
 
 ```shell
 npx hardhat devchain-keys

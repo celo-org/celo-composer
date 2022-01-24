@@ -8,18 +8,15 @@ Try running some of the following tasks:
 
 ```shell
 npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+npx hardhat devchain-keys
 ```
 
-## Setup
+## Alfajores Testnet Setup
 
-1. Create a `.env` file similar to `.envexample`. 
-2. Add a mnemonic. You can easily generate one using [this tool](https://iancoleman.io/bip39/). This step is not required for local development with celo-devchain.
+**Note** This setup is not required when using a local development blockchain (like celo devchain or Ganache).
+
+1. Create a `.env` file similar to `.envexample`.
+2. Add a mnemonic. You can easily generate one using [this tool](https://iancoleman.io/bip39/).
 3. Run
 
 ```shell
@@ -35,7 +32,7 @@ to print the accounts associated with your mnemonic.
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
 3. Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
-4. Deploy contracts with `yarn deploy`. The default deployment network is specified in `hardhat.config.js`. You can overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
+4. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js`. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
 ```shell
 npx hardhat --network [network] deploy
@@ -71,7 +68,15 @@ yarn devchain
 npx @terminal-fi/celo-devchain --test
 ```
 
-## Verify
+## Fork mainnet with [Ganache](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
+
+You can get a local copy of mainnet by forking with Ganache. Learn more about [forking mainnet with Ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
+
+There is a script provided (`yarn fork-mainnet`) to fork mainnet and fund the same test accounts that come with Celo devchain. Sometimes sending transactions from the first account (which defaults to `0x5409ED021D9299bf6814279A6A1411A7e866A631`) is delayed and sending test transactions from the other accounts works better for some reason. :shrug: The private keys of the associated test accounts are printed in `account_keys.json`.
+
+## Verify your contracts
+
+You can easily verify your contracts deployed to the associated networks with the following commands.
 
 [Reference](https://docs.celo.org/blog/hardhat-deploy-verify)
 
