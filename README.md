@@ -29,10 +29,12 @@ yarn install
 yarn devchain
 ```
 
+[Fork Mainnet with ganache](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
+
 In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 ```shell
-cd packages/react-app
+cd packages/react-app-eth
 yarn install
 yarn dev
 ```
@@ -50,7 +52,18 @@ yarn deploy
 - Open http://localhost:3000 to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
-# 🔭 Learning Solidity
+
+**Note**
+
+You can import accounts from the local development chain into Metamask. `cd /packages/hardhat` and run
+
+```shell
+npx hardhat devchain-keys
+```
+
+If you are working on a local development blockchain, you may see errors about `the tx doesn't have the correct nonce.` This is because wallets often cache the account nonce to reduce the number of RPC calls and can get out of sync when you restart your development chain. You can reset the account nonce in Metamask by going to `Settings > Advanced > Reset Account`. This will clear the tx history and force Metamask to query the appropriate nonce from your development chain.
+
+## 🔭 Learning Solidity
 
 📕 Read the docs: https://docs.soliditylang.org
 

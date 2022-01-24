@@ -25,10 +25,13 @@ task(
   "devchain-keys",
   "Prints the private keys associated with the devchain",
   async (taskArgs, hre) => {
-    const wallet = hre.ethers.Wallet.fromMnemonic(DEVCHAIN_MNEMONIC);
-    console.log(wallet.address, wallet.privateKey);
-  }
-);
+    const accounts = await hre.ethers.getSigners();
+    const hdNode = hre.ethers.utils.HDNode.fromMnemonic(DEVCHAIN_MNEMONIC);
+    for(let i = 0; i < accounts.length; i++) {
+      const account = hdNode.derivePath(`m/44'/60'/0'/0/${i}`);
+      console.log(`Account ${i}\nAddress: ${account.address}\nKey: ${account.privateKey}`);
+    }
+  })
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
