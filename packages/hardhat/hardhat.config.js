@@ -6,7 +6,8 @@ const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
 
 const defaultNetwork = "localhost";
-const mnemonicPath = "m/44'/52752'/0'/0";
+const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
+
 // This is the mnemonic used by celo-devchain
 const DEVCHAIN_MNEMONIC =
   "concert load couple harbor equip island argue ramp clarify fence smart topic";

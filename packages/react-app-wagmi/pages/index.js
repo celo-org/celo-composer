@@ -29,7 +29,6 @@ export default function App() {
     abi: [],
   };
 
-  console.log(networkData.chain);
   if (!loading)
     storageContract = getContractData(networkData?.chain, "Storage");
 
