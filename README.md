@@ -45,6 +45,13 @@ yarn install
 yarn dev
 ```
 
+**Serve your React app to your mobile device for testing via a tunnel.
+**
+
+```shell
+npx localtunnel --port 3000
+```
+
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
 - Edit frontend in `packages/react-app-wagmi/pages/index.tsx`.
