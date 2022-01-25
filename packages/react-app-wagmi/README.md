@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+
+## Requirements
+
+1. Yarn
+2. Metamask or WalletConnect enabled web3 wallet with a connection to the Alfajores testnet.
+   1. Read about how to connect Metamask to Alfajores [here](https://docs.celo.org/getting-started/wallets/using-metamask-with-celo/manual-setup#adding-a-celo-network-to-metamask). 
 ## Getting Started
 
 First, run the development server:
@@ -13,6 +19,8 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+
+Currently, `index.js` shows how to connect to a wallet, read account and network information and connect to the simpel Storage smart contract at `packages/hardhat/contracts/Storage.sol`. 
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
