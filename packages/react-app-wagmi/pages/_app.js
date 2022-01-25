@@ -10,6 +10,10 @@ const connectors = [
     chains: [Celo, Alfajores, Localhost],
     options: {
       qrcode: true,
+      rpc: {
+        44787: "https://alfajores-forno.celo-testnet.org",
+        42220: "https://forno.celo.org",
+      }
     },
   }),
 ]
