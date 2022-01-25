@@ -21,13 +21,21 @@ cd celo-dapp-starter
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
-Install dependencies and start your local development chain
+Get testnet funds and install dependencies
 
 ```shell
 cd packages/hardhat
 yarn install
-yarn devchain
+npx hardhat new-key # prints a key + account
 ```
+
+Paste the private key in `packages/hardhat/.env` and fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
+
+```shell
+yarn deploy
+```
+
+Read more details about [the hardhat package here](packages/hardhat/README.md).
 
 In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
@@ -35,13 +43,6 @@ In another terminal, start the frontend (React app using [Next.js](https://nextj
 cd packages/react-app-wagmi
 yarn install
 yarn dev
-```
-
-In a third terminal, deploy the contracts. Contracts are deployed to a local development chain by default. You can update this by specifying the `defaultNetwork` in `/packages/hardhat/hardhat.config.js`.
-
-```shell
-cd packages/hardhat
-yarn deploy
 ```
 
 - Edit smart contracts in `packages/hardhat/contracts`.

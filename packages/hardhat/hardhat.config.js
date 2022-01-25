@@ -34,6 +34,14 @@ task(
     }
   })
 
+task("new-key",
+  "Prints a new private key",
+  async (taskArgs, hre) => {
+    const wallet = new hre.ethers.Wallet.createRandom();
+    console.log(`key: `, wallet.privateKey);
+    console.log(`Account: `, wallet.address);
+  })
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -51,18 +59,12 @@ module.exports = {
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-        path: mnemonicPath,
-      },
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 44787,
     },
     celo: {
       url: "https://forno.celo.org",
-      accounts: {
-        mnemonic: process.env.MNEMONIC,
-        path: mnemonicPath,
-      },
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 42220,
     },
   },

@@ -8,7 +8,8 @@ Try running some of the following tasks:
 
 ```shell
 npx hardhat accounts
-npx hardhat devchain-keys
+npx hardhat devchain-keys # print devchain keys
+npx hardhat new-key       # print new key + account
 ```
 
 ## Alfajores Testnet Setup
@@ -16,33 +17,26 @@ npx hardhat devchain-keys
 **Note** This setup is not required when using a local development blockchain (like celo-devchain or Ganache).
 
 1. Create a `.env` file similar to `.envexample`.
-2. Add a mnemonic. You can easily generate one using [this tool](https://iancoleman.io/bip39/).
-3. Run
-
-```shell
-npx hardhat accounts
-```
-
-to print the accounts associated with your mnemonic.
-
-4. Faucet your first account in the list on the Alfajores testnet [here](https://celo.org/developers/faucet).
+2. Add a private key. Generate a new one with `npx hardhat new-key`. Paste the key in `.env`.
+3. Faucet your account with the Alfajores testnet [here](https://celo.org/developers/faucet).
 
 ## Develop
 
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
-3. Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
-4. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
+3. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
 ```shell
 npx hardhat --network [network] deploy
 ```
   
-5. Auto deploy any contract updates by running `yarn watch`.
+4. Auto deploy any contract updates by running `yarn watch`.
 
-Network names are defined in `hardhat.config.js`.
+Network configs are defined in `hardhat.config.js`.
 
 ## [Celo devchain](https://github.com/terminal-fi/celo-devchain)
+
+Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
 
 This is a version of Ganache (@celo/ganache-cli) that deploys the Celo core protocol contracts when it starts.
 
