@@ -1,7 +1,7 @@
 {
     "theme_color": "#35D07F",
     "background_color": "#FBCC5C",
-    "display": "browser",
+    "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "name": "Celo DApp starter",
