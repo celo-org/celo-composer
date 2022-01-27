@@ -44,20 +44,25 @@ export default function App() {
 
   if (accountData) {
     return (
-      <Space wrap size="small">
-        <Card title="Connection Info">
-          <p>Account address: {accountData.address}</p>
-          <p>Connected to {networkData.chain?.name}</p>
-          <p>Connected via {accountData.connector.name}</p>
-          <Button onClick={disconnect}>Disconnect</Button>
-        </Card>
-        {storageContract ? <Contract contract={storageContract} /> : <></>}
-      </Space>
+      <Row justify="space-around" align="middle" style={{ height: "300px" }}>
+        <Col span={16}>
+        <Space wrap size="small">
+          <Card title="Connection Info">
+            <p>Account address: {accountData.address}</p>
+            <p>Connected to {networkData.chain?.name}</p>
+            <p>Connected via {accountData.connector.name}</p>
+            <Button onClick={disconnect}>Disconnect</Button>
+          </Card>
+          {storageContract ? <Contract contract={storageContract} /> : <></>}
+        </Space>
+        </Col>
+
+      </Row>
     );
   }
 
   return (
-    <Row justify="space-around" align="middle" style={{"height": "300px"}}>
+    <Row justify="space-around" align="middle" style={{ height: "300px" }}>
       <Col span={6}>
         <Space wrap>
           {connectData.connectors.map((x) => (
