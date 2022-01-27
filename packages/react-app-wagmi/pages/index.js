@@ -13,7 +13,17 @@ import {
 
 import { useState } from "react";
 
-import { Card, Space, Input, Button, notification, Form } from "antd";
+import {
+  Card,
+  Space,
+  Input,
+  Button,
+  notification,
+  Form,
+  Col,
+  Row,
+  Divider,
+} from "antd";
 import "antd/dist/antd.css";
 
 import deployedContracts from "../../contracts/hardhat_contracts.json";
@@ -47,18 +57,22 @@ export default function App() {
   }
 
   return (
-    <Space>
-      {connectData.connectors.map((x) => (
-        <Button key={x.id} onClick={() => connect(x)}>
-          {x.name}
-          {!x.ready && " (unsupported)"}
-        </Button>
-      ))}
+    <Row justify="space-around" align="middle" style={{"height": "300px"}}>
+      <Col span={6}>
+        <Space wrap>
+          {connectData.connectors.map((x) => (
+            <Button type="primary" key={x.id} onClick={() => connect(x)}>
+              {x.name}
+              {!x.ready && " (unsupported)"}
+            </Button>
+          ))}
 
-      {connectError && (
-        <div>{connectError?.message ?? "Failed to connect"}</div>
-      )}
-    </Space>
+          {connectError && (
+            <div>{connectError?.message ?? "Failed to connect"}</div>
+          )}
+        </Space>
+      </Col>
+    </Row>
   );
 }
 
