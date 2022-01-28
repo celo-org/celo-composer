@@ -12,6 +12,7 @@ const connectors = [
     options: {
       qrcode: true,
       rpc: {
+        1: "https://mainnet.infura.io/v3/feb93462d08c4db093c63c120aebcb55",
         44787: "https://alfajores-forno.celo-testnet.org",
         42220: "https://forno.celo.org",
       },
@@ -26,7 +27,7 @@ function MyApp({ Component, pageProps }) {
         <title>Celo DApp Starter</title>
         <meta name="description" content="Celo DApp Starter" />
       </Head>
-      <Provider autoConnect connectors={connectors}>
+      <Provider connectors={connectors}>
         <Component {...pageProps} />
       </Provider>
     </>
