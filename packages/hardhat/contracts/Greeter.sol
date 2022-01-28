@@ -4,6 +4,8 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 contract Greeter {
+    event newGreeting(string greeting, address sender);
+
     string private greeting;
 
     constructor(string memory _greet) {
@@ -18,5 +20,6 @@ contract Greeter {
     function setGreeting(string memory _greeting) public {
         console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
+        emit newGreeting(_greeting, msg.sender);
     }
 }

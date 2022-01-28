@@ -8,8 +8,8 @@
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
     "generate": "hardhat generate",
-    "deploy": "hardhat deploy --export-all ../contracts/hardhat_contracts.json",
-    "deploy-reset-watch": "hardhat deploy --reset --watch --export-all ../contracts/hardhat_contracts.json",
+    "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
+    "deploy-reset-watch": "hardhat deploy --reset --watch --export-all deployments/hardhat_contracts.json",
     "watch": "node scripts/watch.js",
     "fork-mainnet": "ganache --fork.url https://forno.celo.org --wallet.mnemonic 'concert load couple harbor equip island argue ramp clarify fence smart topic' --wallet.accountKeysPath './account_keys.json' --gasPrice 875000000"
   },

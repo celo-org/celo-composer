@@ -12,8 +12,47 @@ const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
 const DEVCHAIN_MNEMONIC =
   "concert load couple harbor equip island argue ramp clarify fence smart topic";
 
+// You need to export an object to set up your config
+// Go to https://hardhat.org/config/ to learn more
+
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+module.exports = {
+  defaultNetwork,
+  networks: {
+    localhost: {
+      url: "http://127.0.0.1:8545",
+      accounts: {
+        mnemonic: DEVCHAIN_MNEMONIC,
+      },
+    },
+    alfajores: {
+      url: "https://alfajores-forno.celo-testnet.org",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 44787,
+    },
+    celo: {
+      url: "https://forno.celo.org",
+      accounts: [process.env.PRIVATE_KEY],
+      chainId: 42220,
+    },
+    rinkeby: {
+      url: "https://rinkeby.infura.io/v3/feb93462d08c4db093c63c120aebcb55",
+      accounts: [process.env.PRIVATE_KEY],
+    }
+  },
+  solidity: {
+    version: "0.8.4",
+  },
+  namedAccounts: {
+    deployer: 0,
+  },
+};
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
+
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
@@ -42,36 +81,9 @@ task("new-key",
     console.log(`Account: `, wallet.address);
   })
 
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-module.exports = {
-  defaultNetwork,
-  networks: {
-    localhost: {
-      url: "http://127.0.0.1:8545",
-      accounts: {
-        mnemonic: DEVCHAIN_MNEMONIC,
-      },
-    },
-    alfajores: {
-      url: "https://alfajores-forno.celo-testnet.org",
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 44787,
-    },
-    celo: {
-      url: "https://forno.celo.org",
-      accounts: [process.env.PRIVATE_KEY],
-      chainId: 42220,
-    },
-  },
-  solidity: {
-    version: "0.8.4",
-  },
-  namedAccounts: {
-    deployer: 0,
-  },
-};
+task("print-account",
+  "Prints the address of the account",
+  () => {
+    const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
+    console.log(`Account: `, wallet.address);
+  })

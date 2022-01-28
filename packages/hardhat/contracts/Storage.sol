@@ -8,6 +8,8 @@ pragma solidity >=0.7.0 <0.9.0;
  */
 contract Storage {
 
+    event newNumber(uint256 number, address sender);
+
     uint256 number = 1;
 
     /**
@@ -16,6 +18,7 @@ contract Storage {
      */
     function store(uint256 num) public {
         number = num;
+        emit newNumber(num, msg.sender);
     }
 
     /**
