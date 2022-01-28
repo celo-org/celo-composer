@@ -1,11 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Simple Celo Dapp
 
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) that connects to [Celo](https://celo.org) via [Metamask](https://metamask.io) or [WalletConnect](http://walletconnect.org/).
 
 ## Requirements
 
 1. Yarn
 2. Metamask or WalletConnect enabled web3 wallet with a connection to the Alfajores testnet.
-   1. Read about how to connect Metamask to Alfajores [here](https://docs.celo.org/getting-started/wallets/using-metamask-with-celo/manual-setup#adding-a-celo-network-to-metamask). 
+   1. Read about how to connect Metamask to Alfajores [here](https://docs.celo.org/getting-started/wallets/using-metamask-with-celo/manual-setup#adding-a-celo-network-to-metamask).
+
 ## Getting Started
 
 First, run the development server:
@@ -26,6 +28,8 @@ Currently, `index.js` shows how to connect to a wallet, read account and network
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+
+This is a PWA ([Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)) which allows users of the dapp to install a homescreen shortcut on their mobile device. 
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
