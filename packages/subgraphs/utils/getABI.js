@@ -14,11 +14,11 @@ function getDeploymentData(network, contractName) {
         const abi = contractData[networks[network]][network].contracts[contractName].abi
         const address = contractData[networks[network]][network].contracts[contractName].address
         console.log(`${contractName} is deployed at ${address} on ${network}`)
-        if(!fs.existsSync(__dirname + `/abis/${network}`)){
-            fs.mkdirSync(__dirname + `/abis/${network}`)
+        if(!fs.existsSync(path.join(__dirname, '..',  `abis/${network}`))){
+            fs.mkdirSync(path.join(__dirname, '..',  `abis/${network}`))
         }
-        fs.writeFileSync(__dirname + `/abis/${network}/${contractName}.json`, JSON.stringify(abi), { flag: 'w+' })
-        console.log(`${contractName} ABI written to utils/abis/${network}/${contractName}.json`)
+        fs.writeFileSync(path.join(__dirname, '..', `abis/${network}/${contractName}.json`), JSON.stringify(abi), { flag: 'w+' })
+        console.log(`${contractName} ABI written to abis/${network}/${contractName}.json`)
     }
     catch (error) {
         console.log(error)
