@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Provider,
   chain,
@@ -10,8 +12,6 @@ import {
   useContractWrite,
   useSigner,
 } from "wagmi";
-
-import { useEffect, useState } from "react";
 
 import {
   Card,
@@ -55,7 +55,10 @@ export default function App() {
     useNetwork();
 
   // Get the contract data for the appropriate network
-  const contracts = getContractData(networkData?.chain);
+  const contracts =
+    deployedContracts[networkData?.chain?.id?.toString()]?.[
+      networkData?.chain?.name?.toLocaleLowerCase()
+    ].contracts;
 
   // Show the current connected Account and Network info
   if (accountData) {
@@ -117,34 +120,36 @@ const Contracts = (props) => {
   );
 };
 
-const getContractData = (network, name) => {
-  return deployedContracts[network?.id.toString()]?.[
-    network?.name?.toLocaleLowerCase()
-  ].contracts;
-};
+// The Storage contract UI
 
 const StorageContract = (props) => {
+  
+  // use the Signer to send transactions 
   const [{ data, error, loading }, getSigner] = useSigner();
   const [number, setNumber] = useState();
 
+  // Query the Graph endpoing specified in ../apollo-client.js 
   const { data: queryData, error: queryError } = useQuery(QUERY, {
     pollInterval: 2500,
   });
 
-  console.log(queryData);
+  console.log(queryData, queryError);
 
-  console.log('signer data', data?.provider?.provider.http)
+  console.log("signer data", data?.provider?.provider.http);
 
   useEffect(() => {
-    setNumber(queryData?.updates[0].number);
+    // set the stored number to the latest Graph query result
+    // setNumber(queryData?.updates[0].number);
   }, [queryData]);
 
+  // Init the storage contract with the props info and the Signer
   const contract = useContract({
     addressOrName: props.contract.address,
     contractInterface: props.contract.abi,
     signerOrProvider: data,
   });
 
+  // This function is called with the "Retrieve number" button is clicked
   const retrieve = async () => {
     const number = (await contract.retrieve()).toString();
     setNumber(number);
@@ -154,6 +159,7 @@ const StorageContract = (props) => {
     });
   };
 
+  // This function is called with the "Set Storage" button is clicked
   const setStorage = async (values) => {
     let tx = await contract.store(values.number);
 
@@ -164,7 +170,7 @@ const StorageContract = (props) => {
 
     let receipt = await tx.wait();
     console.log("receipt", receipt);
-    
+
     notification.open({
       message: "Storage Updated",
       description: `Contract storage updated to: ${values.number}`,
