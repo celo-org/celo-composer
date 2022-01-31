@@ -7,7 +7,6 @@
   "scripts": {
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
-    "generate": "hardhat generate",
     "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
     "deploy-reset-watch": "hardhat deploy --reset --watch --export-all deployments/hardhat_contracts.json",
     "watch": "node scripts/watch.js",
@@ -30,6 +29,7 @@
     "node-watch": "^0.7.2"
   },
   "dependencies": {
-    "ganache": "^7.0.0"
+    "ganache": "^7.0.0",
+    "wagmi": "^0.2.6"
   }
 }
