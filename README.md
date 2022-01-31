@@ -40,7 +40,7 @@ Read more details about [the hardhat package here](packages/hardhat/README.md).
 In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 ```shell
-cd packages/react-app-wagmi
+cd packages/nextjs-wagmi-ui
 yarn install
 yarn dev
 ```
@@ -54,7 +54,7 @@ npx localtunnel --port 3000
 
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
-- Edit frontend in `packages/react-app-wagmi/pages/index.tsx`.
+- Edit frontend in `packages/nextjs-wagmi-ui/pages/index.tsx`.
 - Open http://localhost:3000 to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
@@ -73,9 +73,7 @@ If you are working on a local development blockchain, you may see errors about `
 
 ## React library choices
 
-There are multiple React packages in `packages`. The different packages use different libraries to connect to manage accounts, connections, contracts and other web3 actions. The suffix on the package indicates which package is used. I recommend using [`react-app-wagmi`](https://wagmi-xyz.vercel.app/) to start as it is the easiest to use and most stable. This packages should work with most EVM chains.
-
-`react-app-usecontractkit` uses the Celo specific [use-contractkit library](https://use-contractkit-c-labs.vercel.app/) that allows you to pay transaction fees in Celo stable coins. This package in this repo is still a work in progress (WIP), I recommend you start building using the `wagmi` package.
+The example UI in `packages/nextjs-wagmi-ui` uses the [Next.js](https://nextjs.org/) React framework, and [wagmi](https://wagmi-xyz.vercel.app/) Ethereum library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
 
 ## 🔭 Learning Solidity
 
