@@ -30,6 +30,7 @@ graph codegen
 ```
 
 - Create an account at https://thegraph.com/hosted-service.
+  - Find more information about deploying a subgraph to the hosted service on the Graph docs [here](https://thegraph.com/docs/en/hosted-service/deploy-subgraph-hosted/#create-a-hosted-service-account).
 - Authorize your cli 
 
 ```shell
