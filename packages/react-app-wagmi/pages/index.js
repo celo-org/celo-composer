@@ -11,7 +11,7 @@ import {
   useSigner,
 } from "wagmi";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Card,
@@ -31,36 +31,55 @@ const { TabPane } = Tabs;
 
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
 
+import { useQuery, gql } from "@apollo/client";
+
+// The Graph query endpoint is defined in ../apollo-client.js
+
+// Example GraphQL query for the Storage contract updates
+const QUERY = gql`
+  query Updates {
+    updates(orderBy: timestamp, orderDirection: desc, first: 5) {
+      id
+      number
+      sender
+      timestamp
+    }
+  }
+`;
+
 export default function App() {
-  const [{ data: connectData, error: connectError, connectLoading }, connect] = useConnect();
+  const [{ data: connectData, error: connectError, connectLoading }, connect] =
+    useConnect();
   const [{ data: accountData }, disconnect] = useAccount();
   const [{ data: networkData, error: networkError, loading }, switchNetwork] =
     useNetwork();
 
-  let contracts
+  // Get the contract data for the appropriate network
+  const contracts = getContractData(networkData?.chain);
 
-  console.log('connect loading', networkData)
-
-  if (networkData.chain) contracts = getContractData(networkData?.chain);
-
+  // Show the current connected Account and Network info
   if (accountData) {
     return (
       <Row justify="space-around" align="middle" style={{ height: "300px" }}>
         <Col span={16}>
           <Space wrap size="small">
+            {/* Account info Card */}
             <Card title="Connection Info">
               <p>Account address: {accountData.address}</p>
               <p>Connected to {networkData.chain?.name}</p>
               <p>Connected via {accountData.connector.name}</p>
               <Button onClick={disconnect}>Disconnect</Button>
             </Card>
-            {contracts ? <Contracts contracts={contracts} /> : <></>}
+
+            {/* Contracts info Card */}
+            {contracts && <Contracts contracts={contracts} />}
           </Space>
         </Col>
       </Row>
     );
   }
 
+  // If no account data is detected, show the buttons to connect a wallet
   return (
     <Row justify="space-around" align="middle" style={{ height: "300px" }}>
       <Col span={6}>
@@ -71,7 +90,6 @@ export default function App() {
               {!x.ready && " (unsupported)"}
             </Button>
           ))}
-
           {connectError && (
             <div>{connectError?.message ?? "Failed to connect"}</div>
           )}
@@ -81,6 +99,7 @@ export default function App() {
   );
 }
 
+// A Card to show the Storage and Greeter Contracts from hardhat
 const Contracts = (props) => {
   return (
     <Space direction="vertical">
@@ -108,16 +127,26 @@ const StorageContract = (props) => {
   const [{ data, error, loading }, getSigner] = useSigner();
   const [number, setNumber] = useState();
 
-  let config = {
+  const { data: queryData, error: queryError } = useQuery(QUERY, {
+    pollInterval: 2500,
+  });
+
+  console.log(queryData);
+
+  console.log('signer data', data?.provider?.provider.http)
+
+  useEffect(() => {
+    setNumber(queryData?.updates[0].number);
+  }, [queryData]);
+
+  const contract = useContract({
     addressOrName: props.contract.address,
     contractInterface: props.contract.abi,
-  };
-
-  const contract = useContract({ ...config, signerOrProvider: data });
+    signerOrProvider: data,
+  });
 
   const retrieve = async () => {
-    console.log(contract)
-    const number = (await contract.retrieve.call()).toString();
+    const number = (await contract.retrieve()).toString();
     setNumber(number);
     notification.open({
       message: "Retrieved value",
@@ -135,11 +164,13 @@ const StorageContract = (props) => {
 
     let receipt = await tx.wait();
     console.log("receipt", receipt);
-
+    
     notification.open({
       message: "Storage Updated",
       description: `Contract storage updated to: ${values.number}`,
     });
+
+    setNumber(values.number);
   };
 
   return (
