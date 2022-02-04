@@ -1,29 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import {
-  Card,
-  Space,
-  Input,
-  Button,
-  notification,
-  Form,
-  Col,
-  Row,
-  Divider,
-  Tabs,
-} from "antd";
+import { Card, Button } from "antd";
 import "antd/dist/antd.css";
 
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
-import {
-  Alfajores,
-  Baklava,
-  Mainnet,
-  Localhost,
-  useContractKit,
-  useProviderOrSigner,
-} from "@celo-tools/use-contractkit";
-const networks = [Alfajores, Baklava, Mainnet, Localhost];
+import { useContractKit } from "@celo-tools/use-contractkit";
 
 import { useInput } from "../components";
 
