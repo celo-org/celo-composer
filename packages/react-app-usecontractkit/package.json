@@ -11,7 +11,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@celo-tools/use-contractkit": "3.0.0-beta",
+    "@apollo/client": "^3.5.8",
+    "@celo-tools/use-contractkit": "3.0.0-beta1",
     "@celo/contractkit": "^1.5.1",
     "antd": "^4.18.3",
     "autoprefixer": "^10.4.2",
