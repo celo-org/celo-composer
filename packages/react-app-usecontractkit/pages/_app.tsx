@@ -11,10 +11,6 @@ import { AppProps } from "next/app";
 import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
-  if (router.route === "/wallet") {
-    return <Component {...pageProps} />;
-  }
-
   return (
     <>
       <Head>
