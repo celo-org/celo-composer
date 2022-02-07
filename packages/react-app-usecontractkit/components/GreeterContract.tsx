@@ -22,7 +22,9 @@ export function GreeterContract({ contractData }) {
     : null;
 
   useEffect(() => {
-    setContractLink(`${network.explorer}/address/${contractData.address}`);
+    if (contractData) {
+      setContractLink(`${network.explorer}/address/${contractData.address}`);
+    }
   }, [network, contractData]);
 
   const setGreeter = async () => {
@@ -77,9 +79,13 @@ export function GreeterContract({ contractData }) {
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
         <Typography variant="h5">Greeter Contract:</Typography>
-        <Link href={contractLink} target="_blank">
-          {truncateAddress(contractData?.address)}
-        </Link>
+        {contractData ? (
+          <Link href={contractLink} target="_blank">
+            {truncateAddress(contractData?.address)}
+          </Link>
+        ) : (
+          <Typography>No contract detected for {network.name}</Typography>
+        )}
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Write Contract</Typography>
