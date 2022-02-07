@@ -36,7 +36,7 @@ export default function App() {
           <Tabs
             value={value}
             onChange={handleChange}
-            aria-label="basic tabs example"
+            aria-label="basic tabs"
           >
             <Tab label="Storage Contract" {...a11yProps(0)} />
             <Tab label="Greeter Contract" {...a11yProps(1)} />
