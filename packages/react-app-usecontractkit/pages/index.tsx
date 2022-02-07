@@ -6,20 +6,13 @@ import { Card, Button } from "antd";
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
 
-import { useInput, ButtonAppBar } from "../components";
+import { StorageContract, ButtonAppBar } from "../components";
 
 export default function App() {
   const {
     kit,
     address,
     network,
-    updateNetwork,
-    connect,
-    destroy,
-    performActions,
-    walletType,
-    getConnectedKit,
-    feeCurrency,
   } = useContractKit();
 
   const contracts =
