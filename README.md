@@ -80,6 +80,10 @@ The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) R
 
 ## The Graph
 
+**Using the Graph is not a requirement for building a web3 application. It is more of a convenience for when your application is reading a lot of data from a blockchain.**
+
+I suggest only adding support for the Graph when you need it, avoid premature optimization.
+
 The `/packages/subgraphs` directory includes an example subgraph for reading data from the example `Storage.sol` contract. The Graph is a blockchain data indexing service that makes it easier to read data from EVM blockchains. You can read more about how the Graph works and how to use it in the [README here](/packages/subgraphs/README.md).
 
 ## 🔭 Learning Solidity
