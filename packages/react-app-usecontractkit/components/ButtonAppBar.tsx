@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
+import { truncateAddress } from '../utils'
 
 export function ButtonAppBar() {
   const { address, network, connect, destroy } = useContractKit();
@@ -44,8 +45,4 @@ export function ButtonAppBar() {
       </AppBar>
     </Box>
   );
-}
-
-function truncateAddress(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(38)}`;
 }
