@@ -4,9 +4,9 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Celo DApp starter",
+    "name": "Celo DApp Starter",
     "short_name": "DApp Starter",
-    "description": "Celo PWA DApp",
+    "description": "Demo app for building on Celo",
     "icons": [
         {
             "src": "/icon-192x192.png",
