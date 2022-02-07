@@ -16,6 +16,11 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
       <Head>
         <title>Celo DApp Starter</title>
         <meta name="description" content="Celo DApp Starter" />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
       </Head>
       <ContractKitProvider
         dapp={{
@@ -24,7 +29,6 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
           url: "https://use-contractkit.vercel.app",
           icon: "https://use-contractkit.vercel.app/favicon.ico",
         }}
-        networks={[Alfajores, Mainnet]}
       >
         <Toaster
           position="top-right"
