@@ -14,19 +14,19 @@ Prerequisites:
 git clone https://github.com/critesjosh/celo-dapp-starter
 ```
 
-Set the correct node version:
+### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
 cd celo-dapp-starter
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
-Get testnet funds and install dependencies
+### Get testnet funds and install dependencies
 
 ```shell
 cd packages/hardhat
 yarn install
-npx hardhat new-key # prints a key + account
+npx hardhat create-account # prints a private key + account
 ```
 
 Paste the private key in `packages/hardhat/.env` and fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
@@ -37,10 +37,10 @@ yarn deploy
 
 Read more details about [the hardhat package here](packages/hardhat/README.md).
 
-In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
+### In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 ```shell
-cd packages/nextjs-wagmi-ui
+cd packages/react-app
 yarn install
 yarn dev
 ```
