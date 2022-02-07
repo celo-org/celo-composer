@@ -44,7 +44,7 @@ export function StorageContract({ contractData }) {
         const url = `${network.explorer}/tx/${result.transactionHash}`;
         const action = (key) => (
           <>
-            <Link href={url} target="_blank">
+            <Link href={url} target="_blank" component="div">
               View in Explorer
             </Link>
             <Button
@@ -78,25 +78,33 @@ export function StorageContract({ contractData }) {
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
-        <Typography variant="h5">Storage Contract:</Typography>
+        <Typography variant="h5" component="div">
+          Storage Contract:
+        </Typography>
         {contractData ? (
-          <Link href={contractLink} target="_blank">
+          <Link href={contractLink} target="_blank" component="div">
             {truncateAddress(contractData?.address)}
           </Link>
         ) : (
-          <Typography>No contract detected for {network.name}</Typography>
+          <Typography component="div">
+            No contract detected for {network.name}
+          </Typography>
         )}
-        <Divider sx={{ m: 1 }} />
+        <Divider component="div" sx={{ m: 1 }} />
 
-        <Typography variant="h6">Write Contract</Typography>
+        <Typography variant="h6" component="div">
+          Write Contract
+        </Typography>
         <Box sx={{ m: 1 }}>{setStorageInput}</Box>
         <Button sx={{ m: 1 }} variant="contained" onClick={setStorage}>
           Update Storage Contract
         </Button>
-        <Divider sx={{ m: 1 }} />
+        <Divider component="div" sx={{ m: 1 }} />
 
-        <Typography variant="h6">Read Contract</Typography>
-        <Typography sx={{ m: 1 }}>
+        <Typography variant="h6" component="div">
+          Read Contract
+        </Typography>
+        <Typography sx={{ m: 1 }} component="div">
           Storage Contract Value: {storageValue}
         </Typography>
         <Button sx={{ m: 1 }} variant="contained" onClick={getStorage}>
