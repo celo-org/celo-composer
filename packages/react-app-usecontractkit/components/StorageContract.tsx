@@ -2,13 +2,13 @@ import { useInput } from "../components";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
-import { truncateAddress } from '../utils'
+import { truncateAddress } from "../utils";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
@@ -20,7 +20,7 @@ export function StorageContract({ contractData }) {
   const contract = contractData
     ? new kit.web3.eth.Contract(contractData.abi, contractData.address)
     : null;
-  
+
   useEffect(() => {
     setContractLink(`${network.explorer}/address/${contractData.address}`);
   }, [network, contractData]);
@@ -38,14 +38,26 @@ export function StorageContract({ contractData }) {
 
         console.log(result);
 
-        const variant = (result.status == true) ? "success" : "error";
+        const variant = result.status == true ? "success" : "error";
         const url = `${network.explorer}/tx/${result.transactionHash}`;
-        const action = <a href={url} target="_blank" rel='noreferrer'>View in Explorer</a>;
+        const action = (key) => (
+          <>
+            <Link href={url} target="_blank">
+              View in Explorer
+            </Link>
+            <Button
+              onClick={() => {
+                closeSnackbar(key);
+              }}
+            >
+              X
+            </Button>
+          </>
+        );
         enqueueSnackbar("Transaction sent", {
           variant,
-          action
+          action,
         });
-
       });
     } catch (e) {
       console.log(e);
@@ -65,7 +77,9 @@ export function StorageContract({ contractData }) {
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
         <Typography variant="h5">Storage Contract:</Typography>
-        <Link href={contractLink} target="_blank">{truncateAddress(contractData?.address)}</Link>
+        <Link href={contractLink} target="_blank">
+          {truncateAddress(contractData?.address)}
+        </Link>
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Write Contract</Typography>

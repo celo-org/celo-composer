@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
@@ -33,19 +33,28 @@ export function GreeterContract({ contractData }) {
           .estimateGas();
 
         const result = await contract.methods
-          .store(greeterInput)
+          .setGreeting(greeterInput)
           .send({ from: address, gasLimit });
 
         console.log(result);
 
         const variant = result.status == true ? "success" : "error";
         const url = `${network.explorer}/tx/${result.transactionHash}`;
-        const action = (
-          <a href={url} target="_blank" rel="noreferrer">
-            View in Explorer
-          </a>
+        const action = (key) => (
+          <>
+            <Link href={url} target="_blank">
+              View in Explorer
+            </Link>
+            <Button
+              onClick={() => {
+                closeSnackbar(key);
+              }}
+            >
+              X
+            </Button>
+          </>
         );
-        enqueueSnackbar("Transaction sent", {
+        enqueueSnackbar("Transaction processed", {
           variant,
           action,
         });
@@ -68,7 +77,9 @@ export function GreeterContract({ contractData }) {
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
         <Typography variant="h5">Greeter Contract:</Typography>
-        <Link href={contractLink} target="_blank">{truncateAddress(contractData?.address)}</Link>
+        <Link href={contractLink} target="_blank">
+          {truncateAddress(contractData?.address)}
+        </Link>
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Write Contract</Typography>
@@ -82,7 +93,7 @@ export function GreeterContract({ contractData }) {
         <Typography sx={{ m: 1 }}>
           Greeter Contract Value: {greeterValue}
         </Typography>
-        <Button sx={{ m: 1 }} variant="contained" onClick={setGreeter}>
+        <Button sx={{ m: 1 }} variant="contained" onClick={getGreeter}>
           Read Greeter Contract
         </Button>
       </Grid>
