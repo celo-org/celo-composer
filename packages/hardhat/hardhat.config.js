@@ -69,7 +69,7 @@ task(
     }
   })
 
-task("new-key",
+task("create-account",
   "Prints a new private key",
   async (taskArgs, hre) => {
     const wallet = new hre.ethers.Wallet.createRandom();

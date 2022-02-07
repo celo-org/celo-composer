@@ -29,7 +29,6 @@
     "node-watch": "^0.7.2"
   },
   "dependencies": {
-    "ganache": "^7.0.0",
-    "wagmi": "^0.2.6"
+    "ganache": "^7.0.0"
   }
 }
