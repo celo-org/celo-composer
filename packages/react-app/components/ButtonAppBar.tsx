@@ -18,7 +18,7 @@ export function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Celo Dapp Starter
           </Typography>
-          {address && <Chip label={network.name} color="secondary" />}
+          {network && <Chip label={network.name} color="secondary" />}
           {address && (
             <>
               <Chip
