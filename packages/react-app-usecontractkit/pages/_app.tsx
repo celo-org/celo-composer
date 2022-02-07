@@ -30,6 +30,7 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
           url: "https://use-contractkit.vercel.app",
           icon: "https://use-contractkit.vercel.app/favicon.ico",
         }}
+        network={Mainnet}
       >
         <SnackbarProvider
           maxSnack={3}
