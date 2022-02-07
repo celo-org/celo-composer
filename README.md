@@ -45,16 +45,19 @@ yarn install
 yarn dev
 ```
 
-**Serve your React app to your mobile device for testing via a tunnel.
-**
+**Serve your React app to your mobile device for testing via a tunnel.**
+
+Next.js defaults to serving your app on port 3000, so that's what we'll do here:
 
 ```shell
 npx localtunnel --port 3000
 ```
 
+Read more about localtunnel [here](https://www.npmjs.com/package/localtunnel).
+
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
-- Edit frontend in `packages/nextjs-wagmi-ui/pages/index.tsx`.
+- Edit frontend in `packages/react-app/pages/index.tsx`.
 - Open http://localhost:3000 to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
@@ -73,7 +76,11 @@ If you are working on a local development blockchain, you may see errors about `
 
 ## React library choices
 
-The example UI in `packages/nextjs-wagmi-ui` uses the [Next.js](https://nextjs.org/) React framework, and [wagmi](https://wagmi-xyz.vercel.app/) Ethereum library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
+The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [use-contractkit](https://www.npmjs.com/package/@celo-tools/use-contractkit) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
+
+## The Graph
+
+The `/packages/subgraphs` directory includes an example subgraph for reading data from the example `Storage.sol` contract. The Graph is a blockchain data indexing service that makes it easier to read data from EVM blockchains. You can read more about how the Graph works and how to use it in the [README here](/packages/subgraphs/README.md).
 
 ## 🔭 Learning Solidity
 
