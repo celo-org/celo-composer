@@ -1,7 +1,7 @@
 import { useInput } from "../components";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useState } from "react";
-
+import { useSnackbar } from "notistack";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -12,6 +12,7 @@ export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
   const [storageValue, setStorageValue] = useState();
   const [storageInput, setStorageInput] = useInput({ type: "text" });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
     ? new kit.web3.eth.Contract(contractData.abi, contractData.address)
@@ -23,10 +24,21 @@ export function StorageContract({ contractData }) {
         const gasLimit = await contract.methods
           .store(storageInput)
           .estimateGas();
+
         const result = await contract.methods
           .store(storageInput)
           .send({ from: address, gasLimit });
+
         console.log(result);
+
+        const variant = (result.status == true) ? "success" : "error";
+        const url = `${network.explorer}/tx/${result.transactionHash}`;
+        const action = <a href={url} target="_blank" rel='noreferrer'>View in Explorer</a>;
+        enqueueSnackbar("Transaction sent", {
+          variant,
+          action
+        });
+
       });
     } catch (e) {
       console.log(e);
@@ -36,11 +48,26 @@ export function StorageContract({ contractData }) {
   const getStorage = async () => {
     try {
       const result = await contract.methods.retrieve().call();
+
+      console.log(network);
+
       setStorageValue(result);
-      console.log(result);
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const action = (input) => {
+    console.log(key, input);
+    return (
+      <Button
+        onClick={() => {
+          alert(`I belong to snackbar with key ${key}`);
+        }}
+      >
+        View on explorer
+      </Button>
+    );
   };
 
   return (

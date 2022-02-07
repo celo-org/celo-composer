@@ -1,6 +1,7 @@
 import "@celo-tools/use-contractkit/lib/styles.css";
 import "../styles/globals.css";
 import Head from "next/head";
+import { SnackbarProvider } from "notistack";
 
 import {
   Alfajores,
@@ -30,18 +31,19 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
           icon: "https://use-contractkit.vercel.app/favicon.ico",
         }}
       >
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            className: "w-72 md:w-96",
-            style: {
-              padding: "0px",
-            },
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
           }}
-        />
-        <div suppressHydrationWarning>
-          {typeof window === "undefined" ? null : <Component {...pageProps} />}
-        </div>
+        >
+          <div suppressHydrationWarning>
+            {typeof window === "undefined" ? null : (
+              <Component {...pageProps} />
+            )}
+          </div>
+        </SnackbarProvider>
       </ContractKitProvider>
     </>
   );
