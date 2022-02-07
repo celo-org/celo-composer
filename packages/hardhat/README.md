@@ -8,8 +8,8 @@ Try running some of the following tasks:
 
 ```shell
 npx hardhat accounts
-npx hardhat devchain-keys # print devchain keys
-npx hardhat new-key       # print new key + account
+npx hardhat devchain-keys  # print devchain keys
+npx hardhat create-account # print new key + account
 ```
 
 ## Alfajores Testnet Setup
@@ -17,8 +17,8 @@ npx hardhat new-key       # print new key + account
 **Note** This setup is not required when using a local development blockchain (like celo-devchain or Ganache).
 
 1. Create a `.env` file similar to `.envexample`.
-2. Add a private key. Generate a new one with `npx hardhat new-key`. Paste the key in `.env`.
-3. Faucet your account with the Alfajores testnet [here](https://celo.org/developers/faucet).
+2. Add a private key. Generate a new one with `npx hardhat create-account`. Paste the private key in `.env`.
+3. Faucet your account with the Alfajores testnet faucet [here](https://celo.org/developers/faucet).
 
 ## Develop
 
