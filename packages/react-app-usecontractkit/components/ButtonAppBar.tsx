@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
 
 export function ButtonAppBar() {
@@ -16,10 +17,15 @@ export function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Celo Dapp Starter
           </Typography>
-          {network && <Typography sx={{ mx: 2 }}>{network.name}</Typography>}
+          {address && <Chip label={network.name} color="secondary" />}
           {address && (
             <>
-              <Typography sx={{ mx: 2 }}>{truncateAddress(address)}</Typography>
+              <Chip
+                label={truncateAddress(address)}
+                color="info"
+                onDelete={destroy}
+                sx={{mx:1}}
+              />
               <Button variant="outlined" color="inherit" onClick={destroy}>
                 Disconnect
               </Button>
