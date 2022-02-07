@@ -1,4 +1,4 @@
-import { useInput } from "../components";
+import { useInput } from ".";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
@@ -10,10 +10,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 
-export function StorageContract({ contractData }) {
+export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [storageValue, setStorageValue] = useState();
-  const [storageInput, setStorageInput] = useInput({ type: "text" });
+  const [greeterValue, setGreeterValue] = useState();
+  const [greeterInput, setGreeterInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -27,15 +27,15 @@ export function StorageContract({ contractData }) {
     }
   }, [network, contractData]);
 
-  const setStorage = async () => {
+  const setGreeter = async () => {
     try {
       await performActions(async (kit) => {
         const gasLimit = await contract.methods
-          .store(storageInput)
+          .setGreeting(greeterInput)
           .estimateGas();
 
         const result = await contract.methods
-          .store(storageInput)
+          .setGreeting(greeterInput)
           .send({ from: address, gasLimit });
 
         console.log(result);
@@ -56,7 +56,7 @@ export function StorageContract({ contractData }) {
             </Button>
           </>
         );
-        enqueueSnackbar("Transaction sent", {
+        enqueueSnackbar("Transaction processed", {
           variant,
           action,
         });
@@ -66,10 +66,10 @@ export function StorageContract({ contractData }) {
     }
   };
 
-  const getStorage = async () => {
+  const getGreeter = async () => {
     try {
-      const result = await contract.methods.retrieve().call();
-      setStorageValue(result);
+      const result = await contract.methods.greet().call();
+      setGreeterValue(result);
     } catch (e) {
       console.log(e);
     }
@@ -78,7 +78,7 @@ export function StorageContract({ contractData }) {
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
-        <Typography variant="h5">Storage Contract:</Typography>
+        <Typography variant="h5">Greeter Contract:</Typography>
         {contractData ? (
           <Link href={contractLink} target="_blank">
             {truncateAddress(contractData?.address)}
@@ -89,18 +89,18 @@ export function StorageContract({ contractData }) {
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Write Contract</Typography>
-        <Box sx={{ m: 1 }}>{setStorageInput}</Box>
-        <Button sx={{ m: 1 }} variant="contained" onClick={setStorage}>
-          Update Storage Contract
+        <Box sx={{ m: 1 }}>{setGreeterInput}</Box>
+        <Button sx={{ m: 1 }} variant="contained" onClick={setGreeter}>
+          Update Greeter Contract
         </Button>
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Read Contract</Typography>
         <Typography sx={{ m: 1 }}>
-          Storage Contract Value: {storageValue}
+          Greeter Contract Value: {greeterValue}
         </Typography>
-        <Button sx={{ m: 1 }} variant="contained" onClick={getStorage}>
-          Read Storage Contract
+        <Button sx={{ m: 1 }} variant="contained" onClick={getGreeter}>
+          Read Greeter Contract
         </Button>
       </Grid>
     </Grid>
