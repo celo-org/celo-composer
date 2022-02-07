@@ -1,5 +1,4 @@
 import "@celo-tools/use-contractkit/lib/styles.css";
-import "../styles/globals.css";
 import Head from "next/head";
 import { SnackbarProvider } from "notistack";
 
@@ -9,7 +8,6 @@ import {
   ContractKitProvider,
 } from "@celo-tools/use-contractkit";
 import { AppProps } from "next/app";
-import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
   return (
@@ -30,7 +28,7 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
           url: "https://use-contractkit.vercel.app",
           icon: "https://use-contractkit.vercel.app/favicon.ico",
         }}
-        network={Mainnet}
+        network={Alfajores}
       >
         <SnackbarProvider
           maxSnack={3}
