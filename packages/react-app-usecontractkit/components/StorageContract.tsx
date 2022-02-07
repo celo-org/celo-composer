@@ -1,22 +1,29 @@
 import { useInput } from "../components";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
+import { truncateAddress } from '../utils'
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from '@mui/material/Link';
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
   const [storageValue, setStorageValue] = useState();
   const [storageInput, setStorageInput] = useInput({ type: "text" });
+  const [contractLink, setContractLink] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
     ? new kit.web3.eth.Contract(contractData.abi, contractData.address)
     : null;
+  
+  useEffect(() => {
+    setContractLink(`${network.explorer}/address/${contractData.address}`);
+  }, [network, contractData]);
 
   const setStorage = async () => {
     try {
@@ -48,40 +55,26 @@ export function StorageContract({ contractData }) {
   const getStorage = async () => {
     try {
       const result = await contract.methods.retrieve().call();
-
-      console.log(network);
-
       setStorageValue(result);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const action = (input) => {
-    console.log(key, input);
-    return (
-      <Button
-        onClick={() => {
-          alert(`I belong to snackbar with key ${key}`);
-        }}
-      >
-        View on explorer
-      </Button>
-    );
-  };
-
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Box sx={{ m: 2 }} justifyContent="center">
+      <Grid item xs={6} sx={{ m: 2 }}>
         <Typography variant="h5">Storage Contract:</Typography>
-        <Typography>{contractData?.address}</Typography>
+        <Link href={contractLink} target="_blank">{truncateAddress(contractData?.address)}</Link>
         <Divider sx={{ m: 1 }} />
+
         <Typography variant="h6">Write Contract</Typography>
         <Box sx={{ m: 1 }}>{setStorageInput}</Box>
         <Button sx={{ m: 1 }} variant="contained" onClick={setStorage}>
           Update Storage Contract
         </Button>
         <Divider sx={{ m: 1 }} />
+
         <Typography variant="h6">Read Contract</Typography>
         <Typography sx={{ m: 1 }}>
           Storage Contract Value: {storageValue}
@@ -89,7 +82,7 @@ export function StorageContract({ contractData }) {
         <Button sx={{ m: 1 }} variant="contained" onClick={getStorage}>
           Read Storage Contract
         </Button>
-      </Box>
+      </Grid>
     </Grid>
   );
 }
