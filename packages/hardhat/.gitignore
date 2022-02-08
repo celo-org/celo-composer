@@ -7,3 +7,6 @@ typechain
 #Hardhat files
 cache
 artifacts
+
+# hardhat typechain generated files
+types/

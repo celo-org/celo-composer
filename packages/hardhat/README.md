@@ -56,6 +56,18 @@ or
 yarn devchain
 ```
 
+### Generate Typescript bindings
+
+This setting defaults to the web3 v1 bindings because that is what is used by use-contractkit in `packages/react-app`.
+
+You can change the output directory and target in `hardhat.config.js`.
+
+```shell
+npx hardhat typechain
+```
+
+Read more about Typechain [here](https://github.com/dethcrypto/TypeChain) and more about the hardhat plugin [here](https://github.com/dethcrypto/TypeChain/tree/master/packages/hardhat).
+
 ### Run sanity tests and print all core contract addresses:
 
 ```shell

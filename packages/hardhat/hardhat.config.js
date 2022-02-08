@@ -4,6 +4,7 @@ require("hardhat-deploy");
 const fs = require("fs");
 const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
+require('@typechain/hardhat')
 
 const defaultNetwork = "alfajores";
 const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
@@ -43,6 +44,12 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0,
+  },
+  typechain: {
+    outDir: 'types',
+    target: 'web3-v1',
+    alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
+    externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
   },
 };
 
