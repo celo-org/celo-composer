@@ -11,13 +11,13 @@ Prerequisites:
 3. Git
 
 ```shell
-git clone https://github.com/critesjosh/celo-dapp-starter
+git clone https://github.com/celo-org/celo-progressive-dapp-starter
 ```
 
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
-cd celo-dapp-starter
+cd celo-progressive-dapp-starter
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
