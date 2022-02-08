@@ -46,7 +46,7 @@ export function StorageContract({ contractData }) {
         const url = `${network.explorer}/tx/${result.transactionHash}`;
         const action = (key) => (
           <>
-            <Link href={url} target="_blank" component="div">
+            <Link href={url} target="_blank">
               View in Explorer
             </Link>
             <Button
