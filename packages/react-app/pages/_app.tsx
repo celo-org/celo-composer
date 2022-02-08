@@ -1,6 +1,8 @@
 import "@celo-tools/use-contractkit/lib/styles.css";
 import Head from "next/head";
 import { SnackbarProvider } from "notistack";
+import { ApolloProvider } from "@apollo/client";
+import client from "../apollo-client";
 
 import {
   Alfajores,
@@ -38,11 +40,13 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
             horizontal: "right",
           }}
         >
-          <div suppressHydrationWarning>
-            {typeof window === "undefined" ? null : (
-              <Component {...pageProps} />
-            )}
-          </div>
+          <ApolloProvider client={client}>
+            <div suppressHydrationWarning>
+              {typeof window === "undefined" ? null : (
+                <Component {...pageProps} />
+              )}
+            </div>
+          </ApolloProvider>
         </SnackbarProvider>
       </ContractKitProvider>
     </>

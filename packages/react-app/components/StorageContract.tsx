@@ -7,6 +7,22 @@ import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { truncateAddress } from "../utils";
 import { Storage } from "../../hardhat/types/Storage";
+import { useQuery, gql } from "@apollo/client";
+
+// The Graph query endpoint is defined in ../apollo-client.js
+
+// Example GraphQL query for the Storage contract updates
+const QUERY = gql`
+  query Updates {
+    updates(orderBy: timestamp, orderDirection: desc, first: 5) {
+      id
+      number
+      sender
+      timestamp
+    }
+  }
+`;
+
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
@@ -14,6 +30,12 @@ export function StorageContract({ contractData }) {
   const [storageInput, setStorageInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = React.useState<string | null>(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  
+  // Query the Graph endpoint specified in ../apollo-client.js 
+  const { data: queryData, error: queryError } = useQuery(QUERY, {
+    pollInterval: 2500,
+  });
+  console.log('The Graph query results', queryData);
 
   const contract = contractData
     ? (new kit.web3.eth.Contract(
