@@ -1,8 +1,5 @@
 import * as React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import { Tabs, Tab, Typography, Box, Link } from "@mui/material";
 
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
@@ -45,6 +42,9 @@ export default function App() {
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>
+      <footer style={{textAlign: "center"}}>
+        <Link href="https://github.com/celo-org/celo-progressive-dapp-starter" target="_blank">View source on GitHub</Link>
+      </footer>
     </div>
   );
 }
