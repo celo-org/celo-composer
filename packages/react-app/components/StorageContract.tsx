@@ -12,7 +12,7 @@ export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
   const [storageValue, setStorageValue] = React.useState<string | null>(null);
   const [storageInput, setStorageInput] = useInput({ type: "text" });
-  const [contractLink, setContractLink] = React.useState<string>("");
+  const [contractLink, setContractLink] = React.useState<string | null>(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
@@ -26,7 +26,7 @@ export function StorageContract({ contractData }) {
     if (contractData) {
       setContractLink(`${network.explorer}/address/${contractData.address}`);
     }
-  }, [network]);
+  }, [network, contractData]);
 
   const setStorage = async () => {
     try {
