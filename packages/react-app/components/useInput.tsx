@@ -1,5 +1,5 @@
+import * as React from "react";
 import { useState } from "react";
-import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 
 export function useInput({ type /*...*/ }) {

@@ -1,43 +1,43 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import * as React from "react";
+import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 
 import { useInput } from ".";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { truncateAddress } from "../utils";
-import { Storage } from '../../hardhat/types/Storage'
+import { Storage } from "../../hardhat/types/Storage";
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [storageValue, setStorageValue] = useState();
+  const [storageValue, setStorageValue] = React.useState<string | null>(null);
   const [storageInput, setStorageInput] = useInput({ type: "text" });
-  const [contractLink, setContractLink] = useState("");
+  const [contractLink, setContractLink] = React.useState<string>("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
-    ? (new kit.web3.eth.Contract(contractData.abi, contractData.address) as any) as Storage
+    ? (new kit.web3.eth.Contract(
+        contractData.abi,
+        contractData.address
+      ) as any as Storage)
     : null;
 
   useEffect(() => {
     if (contractData) {
       setContractLink(`${network.explorer}/address/${contractData.address}`);
     }
-  }, [network, contractData]);
+  }, [network]);
 
   const setStorage = async () => {
     try {
       await performActions(async (kit) => {
         const gasLimit = await contract.methods
-          .store(storageInput)
+          .store(storageInput as string)
           .estimateGas();
 
         const result = await contract.methods
-          .store(storageInput)
+          .store(storageInput as string)
+          //@ts-ignore
           .send({ from: address, gasLimit });
 
         console.log(result);
@@ -70,7 +70,7 @@ export function StorageContract({ contractData }) {
 
   const getStorage = async () => {
     try {
-      const result = await contract.methods.retrieve().call();
+      const result = (await contract.methods.retrieve().call()) as string;
       setStorageValue(result);
     } catch (e) {
       console.log(e);
@@ -84,7 +84,7 @@ export function StorageContract({ contractData }) {
           Storage Contract:
         </Typography>
         {contractData ? (
-          <Link href={contractLink} target="_blank" component="div">
+          <Link href={contractLink} target="_blank">
             {truncateAddress(contractData?.address)}
           </Link>
         ) : (

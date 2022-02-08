@@ -33,11 +33,7 @@ export default function App() {
       <ButtonAppBar />
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs"
-          >
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
             <Tab label="Storage Contract" {...a11yProps(0)} />
             <Tab label="Greeter Contract" {...a11yProps(1)} />
           </Tabs>

@@ -1,26 +1,25 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import * as React from "react";
+import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 
 import { useInput } from ".";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { truncateAddress } from "../utils";
-import { Greeter } from '../../hardhat/types/Greeter'
+import { Greeter } from "../../hardhat/types/Greeter";
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [greeterValue, setGreeterValue] = useState();
+  const [greeterValue, setGreeterValue] = React.useState<string | null>(null);
   const [greeterInput, setGreeterInput] = useInput({ type: "text" });
-  const [contractLink, setContractLink] = useState("");
+  const [contractLink, setContractLink] = React.useState<string>("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
-    ? (new kit.web3.eth.Contract(contractData.abi, contractData.address) as any) as Greeter
+    ? (new kit.web3.eth.Contract(
+        contractData.abi,
+        contractData.address
+      ) as any as Greeter)
     : null;
 
   useEffect(() => {
@@ -38,6 +37,7 @@ export function GreeterContract({ contractData }) {
 
         const result = await contract.methods
           .setGreeting(greeterInput as string)
+          //@ts-ignore
           .send({ from: address, gasLimit });
 
         console.log(result);
