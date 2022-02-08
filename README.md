@@ -100,3 +100,13 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 - [Fallback](https://solidity-by-example.org/fallback/)
 
 📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
+
+## Contributing
+
+We welcome contributions to this repository!
+
+If you decide to try this out and find something confusing, consider opening an pull request to make things more clear for the next developer that comes through.
+
+If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
+
+We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
