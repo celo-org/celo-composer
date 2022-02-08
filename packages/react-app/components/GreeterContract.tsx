@@ -1,14 +1,16 @@
-import { useInput } from ".";
-import { useContractKit } from "@celo-tools/use-contractkit";
-import { useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
-import { truncateAddress } from "../utils";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+
+import { useInput } from ".";
+import { useContractKit } from "@celo-tools/use-contractkit";
+import { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { truncateAddress } from "../utils";
+import { Greeter } from '../../hardhat/types/Greeter'
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
@@ -18,7 +20,7 @@ export function GreeterContract({ contractData }) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
-    ? new kit.web3.eth.Contract(contractData.abi, contractData.address)
+    ? (new kit.web3.eth.Contract(contractData.abi, contractData.address) as any) as Greeter
     : null;
 
   useEffect(() => {
@@ -31,11 +33,11 @@ export function GreeterContract({ contractData }) {
     try {
       await performActions(async (kit) => {
         const gasLimit = await contract.methods
-          .setGreeting(greeterInput)
+          .setGreeting(greeterInput as string)
           .estimateGas();
 
         const result = await contract.methods
-          .setGreeting(greeterInput)
+          .setGreeting(greeterInput as string)
           .send({ from: address, gasLimit });
 
         console.log(result);
