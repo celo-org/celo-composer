@@ -45,43 +45,6 @@ export function TokenContract({ contractData }) {
     }
   }, [network, contractData]);
 
-  const setToken = async () => {
-    try {
-      await performActions(async (kit) => {
-        const gasLimit = await contract.methods.store(tokenInput).estimateGas();
-
-        const result = await contract.methods
-          .store(tokenInput)
-          .send({ from: address, gasLimit });
-
-        console.log(result);
-
-        const variant = result.status == true ? "success" : "error";
-        const url = `${network.explorer}/tx/${result.transactionHash}`;
-        const action = (key) => (
-          <>
-            <Link href={url} target="_blank" component="div">
-              View in Explorer
-            </Link>
-            <Button
-              onClick={() => {
-                closeSnackbar(key);
-              }}
-            >
-              X
-            </Button>
-          </>
-        );
-        enqueueSnackbar("Transaction sent", {
-          variant,
-          action,
-        });
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const getTokenName = async () => {
     const tokenName = await contract.methods.name().call();
     setTokenName(tokenName);
@@ -143,6 +106,43 @@ export function TokenContract({ contractData }) {
     let receipt = await tx.wait();
     console.log("receipt", receipt);
   };
+
+  // const transferTokens = async (e) => {
+  //   try {
+  //     await performActions(async (kit) => {
+  //       const gasLimit = await contract.methods.store(tokenInput).estimateGas();
+
+  //       const result = await contract.methods
+  //         .store(tokenInput)
+  //         .send({ from: address, gasLimit });
+
+  //       console.log(result);
+
+  //       const variant = result.status == true ? "success" : "error";
+  //       const url = `${network.explorer}/tx/${result.transactionHash}`;
+  //       const action = (key) => (
+  //         <>
+  //           <Link href={url} target="_blank" component="div">
+  //             View in Explorer
+  //           </Link>
+  //           <Button
+  //             onClick={() => {
+  //               closeSnackbar(key);
+  //             }}
+  //           >
+  //             X
+  //           </Button>
+  //         </>
+  //       );
+  //       enqueueSnackbar("Transaction sent", {
+  //         variant,
+  //         action,
+  //       });
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">

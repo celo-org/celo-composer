@@ -15,6 +15,7 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.4",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^4.4.2",
     "@terminal-fi/celo-devchain": "^3.4.0",
     "@typechain/ethers-v5": "^9.0.0",
     "@typechain/hardhat": "^4.0.0",
@@ -33,7 +34,6 @@
     "typechain": "^7.0.0"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.2",
     "ganache": "^7.0.0"
   }
 }
