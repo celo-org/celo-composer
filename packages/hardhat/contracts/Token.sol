@@ -13,8 +13,6 @@ contract Token
     // Account used to deploy contract
     address private contractOwner;         
 
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ASSET VALUE TRACKING: TOKEN  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
     string public name;
     string public symbol;
     uint256 public decimals;
@@ -34,11 +32,8 @@ contract Token
     // Multiplier to convert to smallest unit                              
     uint256 public UNIT_MULTIPLIER;                                     
 
-    constructor()  
-    {
+    constructor() {
         contractOwner = msg.sender;       
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ASSET VALUE TRACKING: TOKEN  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
         name = "Token";             
         symbol = "TKN";           
@@ -53,37 +48,19 @@ contract Token
 
         // // Assign entire initial supply to contract owner
         balances[contractOwner] = total;    
-
     }
-
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ASSET VALUE TRACKING: TOKEN  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
 
     // Fired when an account authorizes another account to spend tokens on its behalf
 
-    event Approval          
-                            (
-                                address indexed owner, 
-                                address indexed spender, 
-                                uint256 value
-                            );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
 
     // Fired when tokens are transferred from one account to another
-    event Transfer          
-                            (
-                                address indexed from, 
-                                address indexed to, 
-                                uint256 value
-                            );
+    event Transfer(address indexed from, address indexed to, uint256 value);
 
-/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ASSET VALUE TRACKING: TOKEN  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
     /**
     * @dev Total supply of tokens
     */
-    function totalSupply() 
-                            external 
-                            view 
-                            returns (uint256) 
-    {
+    function totalSupply() external view returns (uint256) {
         return total;
     }
 
@@ -92,11 +69,7 @@ contract Token
     *
     * @return An uint256 representing the amount owned by the calling address
     */
-    function balance()
-                            public 
-                            view 
-                            returns (uint256) 
-    {
+    function balance() public view returns (uint256) {
         return balanceOf(msg.sender);
     }
 
@@ -106,14 +79,7 @@ contract Token
     * @param owner The address to query the balance of
     * @return An uint256 representing the amount owned by the passed address
     */
-    function balanceOf
-                            (
-                                address owner
-                            ) 
-                            public 
-                            view 
-                            returns (uint256) 
-    {
+    function balanceOf(address owner) public view returns (uint256) {
         return balances[owner];
     }
 
@@ -124,14 +90,7 @@ contract Token
     * @param value The amount to be transferred.
     * @return A bool indicating if the transfer was successful.
     */
-    function transfer
-                            (
-                                address to, 
-                                uint256 value
-                            ) 
-                            public 
-                            returns (bool) 
-    {
+    function transfer(address to, uint256 value) public returns (bool) {
         require(to != address(0));
         require(to != msg.sender);
         require(value <= balanceOf(msg.sender));                                         
@@ -150,15 +109,7 @@ contract Token
     * @param value uint256 the amount of tokens to be transferred
     * @return A bool indicating if the transfer was successful.
     */
-    function transferFrom
-                            (
-                                address from, 
-                                address to, 
-                                uint256 value
-                            ) 
-                            public 
-                            returns (bool) 
-    {
+    function transferFrom(address from, address to, uint256 value) public returns (bool) {
         require(from != address(0));
         require(value <= allowed[from][msg.sender]);
         require(value <= balanceOf(from));                                         
@@ -179,15 +130,7 @@ contract Token
     * @param spender address The address which will spend the funds.
     * @return A uint256 specifying the amount of tokens still available for the spender.
     */
-    function allowance
-                            (
-                                address owner, 
-                                address spender
-                            ) 
-                            public 
-                            view 
-                            returns (uint256) 
-    {
+    function allowance(address owner, address spender) public view returns (uint256) {
         return allowed[owner][spender];
     }
 
@@ -199,14 +142,7 @@ contract Token
     * @param value The amount of tokens to be spent.
     * @return A bool indicating success (always returns true)
     */
-    function approve
-                            (
-                                address spender, 
-                                uint256 value
-                            ) 
-                            public 
-                            returns (bool) 
-    {
+    function approve(address spender, uint256 value) public returns (bool) {
         allowed[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
