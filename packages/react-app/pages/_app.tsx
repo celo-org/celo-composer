@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
                   <Github style={{width: "40px", margin: "5px"}}/>
                 </Link>
                 <Link
-                  href="https://chat.celo.org"
+                  href="https://discord.gg/cGCE9p9352"
                   target="_blank"
                 >
                   <Discord style={{width: "40px", margin: "5px"}}/>
