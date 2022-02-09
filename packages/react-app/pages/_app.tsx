@@ -1,8 +1,13 @@
+import React from 'react';
 import "@celo-tools/use-contractkit/lib/styles.css";
 import Head from "next/head";
 import { SnackbarProvider } from "notistack";
 import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
+import { Link } from "@mui/material";
+
+import Discord from '../public/Discord'
+import Github from '../public/Github'
 
 import {
   Alfajores,
@@ -45,6 +50,20 @@ function MyApp({ Component, pageProps, router }: AppProps): React.ReactElement {
               {typeof window === "undefined" ? null : (
                 <Component {...pageProps} />
               )}
+              <footer style={{ textAlign: "center" }}>
+                <Link
+                  href="https://github.com/celo-org/celo-progressive-dapp-starter"
+                  target="_blank"
+                >
+                  <Github style={{width: "40px", margin: "5px"}}/>
+                </Link>
+                <Link
+                  href="https://chat.celo.org"
+                  target="_blank"
+                >
+                  <Discord style={{width: "40px", margin: "5px"}}/>
+                </Link>
+              </footer>
             </div>
           </ApolloProvider>
         </SnackbarProvider>

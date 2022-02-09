@@ -40,9 +40,6 @@ export default function App() {
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>
-      <footer style={{textAlign: "center"}}>
-        <Link href="https://github.com/celo-org/celo-progressive-dapp-starter" target="_blank">View source on GitHub</Link>
-      </footer>
     </div>
   );
 }
