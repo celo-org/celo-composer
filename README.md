@@ -11,13 +11,13 @@ Prerequisites:
 3. Git
 
 ```shell
-git clone https://github.com/critesjosh/celo-dapp-starter
+git clone https://github.com/celo-org/celo-progressive-dapp-starter
 ```
 
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
-cd celo-dapp-starter
+cd celo-progressive-dapp-starter
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
@@ -100,6 +100,10 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 - [Fallback](https://solidity-by-example.org/fallback/)
 
 📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
+
+## Support
+
+Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
 
 ## Contributing
 

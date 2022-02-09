@@ -80,8 +80,9 @@ task("create-account",
   "Prints a new private key",
   async (taskArgs, hre) => {
     const wallet = new hre.ethers.Wallet.createRandom();
-    console.log(`key: `, wallet.privateKey);
-    console.log(`Account: `, wallet.address);
+    console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
+    console.log();
+    console.log(`Your testnet account address: `, wallet.address);
   })
 
 task("print-account",
