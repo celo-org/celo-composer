@@ -6,38 +6,14 @@ import { truncateAddress } from "../utils";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
-import SvgIcon from "@mui/material/SvgIcon";
 import { ethers } from "ethers";
 
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
-
-const iconStyle = {
-  // backgroundColor: "#000000", // camel cased
-  // height: "100px",
-  // color: "yellow",
-  marginLeft: "0px",
-  marginRight: "0px",
-  marginTop: "10px",
-  marginBottom: "10px",
-};
-
 const buttonStyle = {
-  // backgroundColor: "#000000", // camel cased
-  // height: "100px",
-  // color: "yellow",
   marginLeft: "0px",
   marginRight: "5px",
   marginTop: "20px",
@@ -46,12 +22,9 @@ const buttonStyle = {
 
 export function TokenContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [tokenValue, setTokenValue] = useState();
   const [tokenInput, setTokenInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  //   const [{ data, error, loading }, getSigner] = useSigner();
   const [tokenBalance, setTokenBalance] = useState("");
   const [tokenName, setTokenName] = useState("");
   const [tokenDecimals, setTokenDecimals] = useState("");
@@ -191,10 +164,10 @@ export function TokenContract({ contractData }) {
         )}
 
         {/* Token Name */}
+
         <Box pt={2}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Token Name
               </Typography>
@@ -209,14 +182,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                style={buttonStyle}
-                size="large"
-                href="https://docs.celo.org/"
-                target="_blank"
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Name:</b> {tokenName}
               </Typography>
@@ -225,10 +190,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Token Symbol */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Token Symbol
               </Typography>
@@ -243,14 +208,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                href="https://docs.celo.org/"
-                target="_blank"
-                size="large"
-                style={buttonStyle}
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Symbol:</b> {tokenSymbol}
               </Typography>
@@ -259,10 +216,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Total Tokens */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Total Tokens
               </Typography>
@@ -277,14 +234,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                style={buttonStyle}
-                size="small"
-                href="https://docs.celo.org/"
-                target="_blank"
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Total:</b> {tokenTotal}
               </Typography>
@@ -293,10 +242,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Token Decimals */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Token Decimals
               </Typography>
@@ -311,14 +260,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                style={buttonStyle}
-                size="large"
-                href="https://docs.celo.org/"
-                target="_blank"
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Decimals:</b> {tokenDecimals}
               </Typography>
@@ -327,10 +268,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Initial Supply */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Initial Supply
               </Typography>
@@ -345,14 +286,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                size="large"
-                style={buttonStyle}
-                href="https://docs.celo.org/"
-                target="_blank"
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Initial Supply:</b> {tokenInitialSupply}
               </Typography>
@@ -361,10 +294,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Current Balance */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Token Balance
               </Typography>
@@ -379,13 +312,6 @@ export function TokenContract({ contractData }) {
               >
                 Submit
               </Button>
-              {/* <Button
-                size="large"
-                href="https://docs.celo.org/"
-                target="_blank"
-              >
-                Learn More
-              </Button> */}
               <Typography variant="body2" color="text.secondary">
                 <b>Token Balance:</b> {tokenBalance}
               </Typography>
@@ -394,10 +320,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Address Balance */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Address Balance
               </Typography>
@@ -421,13 +347,6 @@ export function TokenContract({ contractData }) {
                 >
                   Submit
                 </Button>
-                {/* <Button
-                  size="large"
-                  href="https://docs.celo.org/"
-                  target="_blank"
-                >
-                  Learn More
-                </Button> */}
               </form>
               <Typography variant="body2" color="text.secondary">
                 <b>Address balance:</b> {tokenBalanceOf}
@@ -437,10 +356,10 @@ export function TokenContract({ contractData }) {
         </Box>
 
         {/* Transfer */}
+
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              {/* <HomeIcon style={iconStyle} color="primary" /> */}
               <Typography gutterBottom variant="h5" component="div">
                 Transfer Balance
               </Typography>
@@ -472,13 +391,6 @@ export function TokenContract({ contractData }) {
                 >
                   Submit
                 </Button>
-                {/* <Button
-                  size="large"
-                  href="https://docs.celo.org/"
-                  target="_blank"
-                >
-                  Learn More
-                </Button> */}
               </form>
             </CardContent>
           </Card>
