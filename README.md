@@ -101,6 +101,10 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 
 📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
 
+## Support
+
+Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
+
 ## Contributing
 
 We welcome contributions to this repository!
