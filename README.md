@@ -114,3 +114,5 @@ If you decide to try this out and find something confusing, consider opening an 
 If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
 
 We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
+
+You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/2/100027610).
