@@ -3,10 +3,9 @@ pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Token is ERC20, Ownable {
+contract Token {
+    ///+interfaces
     // Allow SafeMath functions to be called for all uint256 types
     using SafeMath for uint256; 
 
@@ -56,21 +55,6 @@ contract Token is ERC20, Ownable {
 
     // Fired when tokens are transferred from one account to another
     event Transfer(address indexed from, address indexed to, uint256 value);
-
-    /**
-    * @dev Mints new tokens from the contract owner's address
-    */
-        function mint(address account, uint256 amount) public onlyOwner {
-        _mint(account, amount);
-    }
-
-    /**
-    * @dev Burns existing tokens from the contract owner's address
-    */
- 
-    function burn(address account, uint256 amount) public onlyOwner {
-        _burn(account, amount);
-    }
 
     /**
     * @dev Total supply of tokens
