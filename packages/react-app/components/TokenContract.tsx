@@ -56,13 +56,12 @@ export function TokenContract({ contractData }) {
   };
 
   const getTokenInitialSupply = async () => {
-    const tokenInitialSupply = await contract.methods
-      .initialSupply()
-      .call()
-      .then((result) => {
-        return ethers.utils.formatUnits(result, 18);
-      });
-    setTokenInitialSupply(tokenInitialSupply);
+    const tokenInitialSupply = await contract.methods.initialSupply().call();
+    const converted = ethers.utils.formatUnits(
+      tokenInitialSupply.toString(),
+      18
+    );
+    setTokenInitialSupply(converted);
   };
 
   const getTokenDecimals = async () => {
@@ -77,13 +76,9 @@ export function TokenContract({ contractData }) {
   };
 
   const getBalance = async () => {
-    const tokenBalance = await contract.methods
-      .balance()
-      .call()
-      .then((result) => {
-        return ethers.utils.formatUnits(result, 18);
-      });
-    setTokenBalance(tokenBalance);
+    const tokenBalance = await contract.methods.balance().call();
+    const converted = ethers.utils.formatUnits(tokenBalance.toString(), 18);
+    setTokenBalance(converted);
   };
 
   const getTokenBalanceOf = async (e) => {
