@@ -11,6 +11,7 @@ import {
   StorageContract,
   GreeterContract,
   TokenContract,
+  ShopContract,
   ButtonAppBar,
 } from "../components";
 
@@ -39,9 +40,10 @@ export default function App() {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Storage Contract" {...a11yProps(0)} />
-            <Tab label="Greeter Contract" {...a11yProps(1)} />
-            <Tab label="Token Contract" {...a11yProps(2)} />
+            <Tab label="Storage" {...a11yProps(0)} />
+            <Tab label="Greeter" {...a11yProps(1)} />
+            <Tab label="Token" {...a11yProps(2)} />
+            <Tab label="Shop" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -52,6 +54,9 @@ export default function App() {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <TokenContract contractData={contracts?.Token} />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <ShopContract contractData={contracts?.Shop} />
         </TabPanel>
       </Box>
     </div>
