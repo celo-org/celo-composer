@@ -1,0 +1,19 @@
+{
+  "name": "celo-progressive-dapp-starter",
+  "version": "1.0.0",
+  "description": "Get started building PWAs on Celo",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-ui": "cd packages/react-app && yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celo-org/celo-progressive-dapp-starter.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/celo-org/celo-progressive-dapp-starter/issues"
+  },
+  "homepage": "https://github.com/celo-org/celo-progressive-dapp-starter#readme"
+}
