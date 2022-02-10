@@ -973,17 +973,17 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@celo-tools/use-contractkit@3.0.0-beta1":
-  version "3.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/@celo-tools/use-contractkit/-/use-contractkit-3.0.0-beta1.tgz#b86c84769c5bd72dbdbf0d78f7ff5b971dbb2169"
-  integrity sha512-5zJalraOiAMJ/TLDASLSfAGi1pwfCvH8JCP+5cwz/xsWVQyn8sUYEWDyoYaE4z82dXD+ArO8UvdNdWq4wSEpWg==
+"@celo-tools/use-contractkit@3.0.0-beta2":
+  version "3.0.0-beta2"
+  resolved "https://registry.yarnpkg.com/@celo-tools/use-contractkit/-/use-contractkit-3.0.0-beta2.tgz#dfca4a8e26033d66b11287f6a09c78e058704b35"
+  integrity sha512-ckSZi6xmSn7l6W8CcdRPwhazsTJBUObw4/I4hpXk59Kiw544iUcuAYNnrdsDEJD/sPSuiO7pr9wW49EoWgkT6A==
   dependencies:
     "@celo/utils" "1.5.1"
     "@celo/wallet-base" "1.5.1"
     "@celo/wallet-ledger" "1.5.1"
     "@celo/wallet-local" "1.5.1"
     "@celo/wallet-remote" "1.5.1"
-    "@celo/wallet-walletconnect-v1" "3.0.0-beta1"
+    "@celo/wallet-walletconnect-v1" "3.0.0-beta2"
     "@ethersproject/providers" "^5.5.2"
     "@ledgerhq/hw-transport-webusb" "^5.43.0"
     isomorphic-fetch "^3.0.0"
@@ -1117,10 +1117,10 @@
     eth-lib "^0.2.8"
     ethereumjs-util "^5.2.0"
 
-"@celo/wallet-walletconnect-v1@3.0.0-beta1":
-  version "3.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/@celo/wallet-walletconnect-v1/-/wallet-walletconnect-v1-3.0.0-beta1.tgz#56c357ae513e53cbf483dbd135f177bff3610b1d"
-  integrity sha512-IYfUV5Tk0AlwEG40CK216GUAURX04+ed3K0s9Epnzpe+Ro8U9DItnDtNE+ijIjKfPCiY+X6oagufQth5LJyiTA==
+"@celo/wallet-walletconnect-v1@3.0.0-beta2":
+  version "3.0.0-beta2"
+  resolved "https://registry.yarnpkg.com/@celo/wallet-walletconnect-v1/-/wallet-walletconnect-v1-3.0.0-beta2.tgz#b5fd7b2cdbc0b195a988c83de25db9f6dd6f83c0"
+  integrity sha512-qT6bGcgUxFA2XbbtPvhDqtg9aBu6qdVkQMgU8hMopAXk1K5VnHEMGUea9TYvwfhlV1jbfJ++DnmdQfSK0gwReA==
   dependencies:
     "@walletconnect/client-v1" "npm:@walletconnect/client@1.6.6"
     "@walletconnect/types-v1" "npm:@walletconnect/types@1.6.6"
