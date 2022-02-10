@@ -21,7 +21,7 @@
     "bignumber.js": "^9.0.2",
     "ethers": "^5.5.3",
     "graphql": "^16.3.0",
-    "next": "12.0.7",
+    "next": "^12.0.10",
     "next-pwa": "^5.4.4",
     "notistack": "^2.0.3",
     "react": "17.0.2",
