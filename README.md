@@ -45,15 +45,20 @@ yarn install
 yarn dev
 ```
 
-**Serve your React app to your mobile device for testing via a tunnel.**
+### Testing on Mobile
 
-Next.js defaults to serving your app on port 3000, so that's what we'll do here:
+- Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
+- Serve your React app to your mobile device for testing via a tunnel.
+
+Next.js defaults to serving your app on port 3000, so point the tunnel there:
 
 ```shell
 npx localtunnel --port 3000
 ```
 
 Read more about localtunnel [here](https://www.npmjs.com/package/localtunnel).
+
+### Review
 
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
