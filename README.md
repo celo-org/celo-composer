@@ -101,6 +101,10 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 
 📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
 
+## Support
+
+Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
+
 ## Contributing
 
 We welcome contributions to this repository!
@@ -110,3 +114,5 @@ If you decide to try this out and find something confusing, consider opening an 
 If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
 
 We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
+
+You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/2/100027610).
