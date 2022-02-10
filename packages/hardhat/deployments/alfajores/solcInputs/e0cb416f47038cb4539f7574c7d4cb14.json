@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Shop.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Shop {\n    address owner;\n    uint skuCount;\n\n    enum State { ForSale, Sold, Shipped }\n\n    struct Item {\n        string name;\n        uint sku;\n        uint price;\n        State state;\n        address seller;\n        address buyer;\n    }\n\n    mapping (uint => Item) items;\n\n    event ForSale(uint skuCount);\n    event Sold(uint sku);\n    event Shipped(uint sku);\n\n    modifier onlyOwner() {\n        require(msg.sender == owner);\n        _;\n    }\n\n    modifier verifyCaller(address _address) {\n        require(msg.sender == _address);\n        _;\n    }\n\n    modifier paidEnough(uint _price) {\n        require(msg.value >= _price);\n        _;\n    }\n\n    modifier forSale(uint _sku) {\n        require(items[_sku].state == State.ForSale);\n        _;\n    }\n\n    modifier sold(uint _sku) {\n        require(items[_sku].state == State.Sold);\n        _;\n    }\n\n    modifier checkValue(uint _sku) {\n        _;\n        uint _price = items[_sku].price;\n        uint amountToRefund = msg.value - _price;\n        payable(items[_sku].buyer).transfer(amountToRefund);\n    }\n\n    constructor() {\n        owner = msg.sender;\n        skuCount = 0;\n    }\n\n    function addItem(string memory _name, uint _price) public\n        onlyOwner {\n        skuCount = skuCount + 1;\n\n        emit ForSale(skuCount);\n\n        items[skuCount] = Item({\n            name: _name,\n            sku: skuCount,\n            price: _price,\n            state: State.ForSale,\n            seller: msg.sender,\n            buyer: address(0)\n        });\n    }\n\n    function buyItem(uint sku) public payable\n        forSale(sku)\n        paidEnough(items[sku].price)\n        checkValue(sku) {\n        address buyer = msg.sender;\n        uint price = items[sku].price;\n\n        items[sku].buyer = buyer;\n        items[sku].state = State.Sold;\n        \n        payable(items[sku].seller).transfer(price);\n\n        emit Sold(sku);\n    }\n\n    function shipItem(uint sku) public\n        sold(sku)\n        verifyCaller(items[sku].seller) {\n        items[sku].state = State.Shipped;\n\n        emit Shipped(sku);\n    }\n\n    function fetchItem(uint _sku)\n        public\n        view\n        returns (string memory name, uint sku, uint price, string memory stateIs, address seller, address buyer) {\n        uint state;\n        name = items[_sku].name;\n        sku = items[_sku].sku;\n        price = items[_sku].price;\n        state = uint(items[_sku].state);\n\n        if (state == 0) {\n            stateIs = \"For Sale\";\n        } else if (state == 1) {\n            stateIs = \"Sold\";\n        }\n\n        seller = items[_sku].seller;\n        buyer = items[_sku].buyer;\n    }\n}"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
