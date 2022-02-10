@@ -111,7 +111,7 @@ export function TokenContract({ contractData }) {
         const url = `${network.explorer}/tx/${result.transactionHash}`;
         const action = (key) => (
           <>
-            <Link href={url} target="_blank" component="div">
+            <Link href={url} target="_blank">
               View in Explorer
             </Link>
             <Button
@@ -136,18 +136,18 @@ export function TokenContract({ contractData }) {
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item xs={6} sx={{ m: 2 }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5">
           Token Contract
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Create and manage your own token on Celo.
         </Typography>
         {contractData ? (
-          <Link href={contractLink} target="_blank" component="div">
+          <Link href={contractLink} target="_blank">
             {truncateAddress(contractData?.address)}
           </Link>
         ) : (
-          <Typography component="div" variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary">
             No contract detected for {network.name}
           </Typography>
         )}
@@ -157,7 +157,7 @@ export function TokenContract({ contractData }) {
         <Box pt={2}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Token Name
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -183,7 +183,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Token Symbol
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -209,7 +209,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Total Tokens
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -235,7 +235,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Token Decimals
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -261,7 +261,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Initial Supply
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -287,7 +287,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Token Balance
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -313,7 +313,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Address Balance
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -349,7 +349,7 @@ export function TokenContract({ contractData }) {
         <Box pt={1}>
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5">
                 Transfer Balance
               </Typography>
               <Typography variant="body2" color="text.secondary">
