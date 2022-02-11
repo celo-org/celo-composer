@@ -4,7 +4,8 @@
   "description": "Get started building PWAs on Celo",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ui": "cd packages/react-app && yarn && yarn build"
+    "contract-types": "cd packages/hardhat && yarn && npx hardhat typechain",
+    "build-ui": "yarn contract-types && cd packages/react-app && yarn && yarn build"
   },
   "repository": {
     "type": "git",
