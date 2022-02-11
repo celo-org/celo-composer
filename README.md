@@ -1,6 +1,8 @@
-# Celo Dapp Starter
+# Celo Progressive Dapp Starter
 
 A starter pack to get started with building dapps on Celo.
+
+You can view a live version of the template deployed at https://celo-progressive-dapp-starter.netlify.app/.
 
 This repo is heavily inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth).
 
@@ -66,6 +68,10 @@ Read more about localtunnel [here](https://www.npmjs.com/package/localtunnel).
 - Open http://localhost:3000 to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
+
+## Deploy Your DApp
+
+This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
 
 ## Developing with local devchain
 
