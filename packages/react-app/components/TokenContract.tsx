@@ -34,6 +34,10 @@ export function TokenContract({ contractData }) {
   const [tokenBalanceOf, setTokenBalanceOf] = useState("");
   const [newAddress, setNewAddress] = useState("");
   const [tokenTransferValue, setTokenTransferValue] = useState("");
+  const [mintAddress, setMintAddress] = useState("");
+  const [mintValue, setMintValue] = useState("");
+  const [burnAddress, setBurnAddress] = useState("");
+  const [burnValue, setBurnValue] = useState("");
 
   const contract = contractData
     ? new kit.web3.eth.Contract(contractData.abi, contractData.address)
@@ -91,6 +95,90 @@ export function TokenContract({ contractData }) {
         return ethers.utils.formatUnits(result, 18);
       });
     setTokenBalanceOf(tokenBalanceOf);
+  };
+
+  const mintTokens = async (e) => {
+    e.preventDefault();
+    console.log(mintAddress);
+    console.log(mintValue);
+    try {
+      await performActions(async (kit) => {
+        const gasLimit = await contract.methods
+          .mint(mintAddress, mintValue)
+          .estimateGas();
+
+        const result = await contract.methods
+          .mint(mintAddress, mintValue)
+          .send({ from: address, gasLimit });
+
+        console.log(result);
+
+        const variant = result.status == true ? "success" : "error";
+        const url = `${network.explorer}/tx/${result.transactionHash}`;
+        const action = (key) => (
+          <>
+            <Link href={url} target="_blank">
+              View in Explorer
+            </Link>
+            <Button
+              onClick={() => {
+                closeSnackbar(key);
+              }}
+            >
+              X
+            </Button>
+          </>
+        );
+        enqueueSnackbar("Transaction sent", {
+          variant,
+          action,
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const burnTokens = async (e) => {
+    e.preventDefault();
+    console.log(burnAddress);
+    console.log(burnValue);
+    try {
+      await performActions(async (kit) => {
+        const gasLimit = await contract.methods
+          .burn(burnAddress, burnValue)
+          .estimateGas();
+
+        const result = await contract.methods
+          .burn(burnAddress, burnValue)
+          .send({ from: address, gasLimit });
+
+        console.log(result);
+
+        const variant = result.status == true ? "success" : "error";
+        const url = `${network.explorer}/tx/${result.transactionHash}`;
+        const action = (key) => (
+          <>
+            <Link href={url} target="_blank">
+              View in Explorer
+            </Link>
+            <Button
+              onClick={() => {
+                closeSnackbar(key);
+              }}
+            >
+              X
+            </Button>
+          </>
+        );
+        enqueueSnackbar("Transaction sent", {
+          variant,
+          action,
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const transferTokens = async (e) => {
@@ -340,6 +428,90 @@ export function TokenContract({ contractData }) {
               <Typography variant="body2" color="text.secondary">
                 <b>Address balance:</b> {tokenBalanceOf}
               </Typography>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {/* Mint */}
+
+        <Box pt={1}>
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                Mint Tokens
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Increase token supply by minting new tokens to a specific
+                address.
+              </Typography>
+              <form noValidate autoComplete="off" onSubmit={mintTokens}>
+                <TextField
+                  onChange={(e) => setMintAddress(e.target.value)}
+                  label="Address"
+                  fullWidth
+                  required
+                  margin="normal"
+                  variant="standard"
+                />
+                <TextField
+                  onChange={(e) => setMintValue(e.target.value)}
+                  label="Value"
+                  fullWidth
+                  required
+                  margin="normal"
+                  variant="standard"
+                />
+                <Button
+                  style={buttonStyle}
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                >
+                  Submit
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </Box>
+
+        {/* Burn */}
+
+        <Box pt={1}>
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                Burn Tokens
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Decrease token supply by burning existing tokens from a specific
+                address.
+              </Typography>
+              <form noValidate autoComplete="off" onSubmit={burnTokens}>
+                <TextField
+                  onChange={(e) => setBurnAddress(e.target.value)}
+                  label="Address"
+                  fullWidth
+                  required
+                  margin="normal"
+                  variant="standard"
+                />
+                <TextField
+                  onChange={(e) => setBurnValue(e.target.value)}
+                  label="Value"
+                  fullWidth
+                  required
+                  margin="normal"
+                  variant="standard"
+                />
+                <Button
+                  style={buttonStyle}
+                  variant="contained"
+                  type="submit"
+                  size="large"
+                >
+                  Submit
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </Box>

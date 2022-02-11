@@ -56,6 +56,38 @@ contract Token {
     // Fired when tokens are transferred from one account to another
     event Transfer(address indexed from, address indexed to, uint256 value);
 
+    /** @dev Creates `amount` tokens and assigns them to `account`, increasing
+     * the total supply.
+     *
+     * View OpenZeppelin ERC20 _mint for more advanced minting features https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5b6112000c2e1b61db63d7b0bb33ab0775ec0975/contracts/token/ERC20/ERC20.sol#L257 
+     *
+     */
+    function mint(address account, uint256 amount) public {
+        total += amount;
+        balances[account] += amount;
+    }
+
+    /**
+     * @dev Destroys `amount` tokens from `account`, reducing the
+     * total supply.
+     *
+     * View OpenZeppelin ERC20 _burn for more advanced burning features https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5b6112000c2e1b61db63d7b0bb33ab0775ec0975/contracts/token/ERC20/ERC20.sol#L280
+     *
+     * Requirements:
+     *
+     * - `account` must have at least `amount` tokens.
+     */
+    function burn(address account, uint256 amount) public {
+
+        uint256 accountBalance = balances[account];
+        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
+        unchecked {
+            balances[account] = accountBalance - amount;
+        }
+        total -= amount;
+
+    }
+
     /**
     * @dev Total supply of tokens
     */

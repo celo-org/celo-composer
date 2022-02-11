@@ -278,7 +278,7 @@
           ]
         },
         "Token": {
-          "address": "0x86f32AC0E0351e95105835ce85FDD0585646FDDE",
+          "address": "0x9538182a45c742AA8963Cce09Fd44f3B593fe4f3",
           "abi": [
             {
               "inputs": [],
@@ -429,6 +429,24 @@
               "type": "function"
             },
             {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "burn",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
               "inputs": [],
               "name": "decimals",
               "outputs": [
@@ -452,6 +470,24 @@
                 }
               ],
               "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "mint",
+              "outputs": [],
+              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
