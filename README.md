@@ -16,6 +16,12 @@ Prerequisites:
 git clone https://github.com/celo-org/celo-progressive-dapp-starter
 ```
 
+## Intro Video
+
+[![Intro Video](https://img.youtube.com/vi/MQg2sta0lr8/0.jpg)](https://youtu.be/MQg2sta0lr8)
+
+## Using the Dapp Starter
+
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
