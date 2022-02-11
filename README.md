@@ -1,6 +1,8 @@
-# Celo Dapp Starter
+# Celo Progressive Dapp Starter
 
 A starter pack to get started with building dapps on Celo.
+
+You can view a live version of the template deployed at https://celo-progressive-dapp-starter.netlify.app/.
 
 This repo is heavily inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth).
 
@@ -45,9 +47,12 @@ yarn install
 yarn dev
 ```
 
-**Serve your React app to your mobile device for testing via a tunnel.**
+### Testing on Mobile
 
-Next.js defaults to serving your app on port 3000, so that's what we'll do here:
+- Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
+- Serve your React app to your mobile device for testing via a tunnel.
+
+Next.js defaults to serving your app on port 3000, so point the tunnel there:
 
 ```shell
 npx localtunnel --port 3000
@@ -55,12 +60,18 @@ npx localtunnel --port 3000
 
 Read more about localtunnel [here](https://www.npmjs.com/package/localtunnel).
 
+### Review
+
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
 - Edit frontend in `packages/react-app/pages/index.tsx`.
 - Open http://localhost:3000 to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
+
+## Deploy Your DApp
+
+This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
 
 ## Developing with local devchain
 
