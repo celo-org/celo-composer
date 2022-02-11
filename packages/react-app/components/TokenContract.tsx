@@ -26,7 +26,7 @@ export function TokenContract({ contractData }) {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tokenBalance, setTokenBalance] = useState("");
   const [tokenName, setTokenName] = useState("");
-  const [tokenDecimals, setTokenDecimals] = useState("");
+  const [tokenDecimals, setTokenDecimals] = useState(18);
   const [tokenInitialSupply, setTokenInitialSupply] = useState("");
   const [tokenSymbol, setTokenSymbol] = useState("");
   const [tokenTotal, setTokenTotal] = useState("");
@@ -62,32 +62,32 @@ export function TokenContract({ contractData }) {
     const tokenInitialSupply = await contract.methods.initialSupply().call();
     const converted = ethers.utils.formatUnits(
       tokenInitialSupply.toString(),
-      18
+      tokenDecimals
     );
     setTokenInitialSupply(converted);
   };
 
   const getTokenDecimals = async () => {
     const tokenDecimals = await contract.methods.decimals().call();
-    setTokenDecimals(tokenDecimals.toString());
+    setTokenDecimals(tokenDecimals);
   };
 
   const getTokenTotal = async () => {
     const tokenTotal = await contract.methods.totalSupply().call();
-    const convertedTotal = ethers.utils.formatUnits(tokenTotal.toString(), 18);
+    const convertedTotal = ethers.utils.formatUnits(tokenTotal.toString(), tokenDecimals);
     setTokenTotal(convertedTotal);
   };
 
   const getBalance = async () => {
     const tokenBalance = await contract.methods.balance().call();
-    const converted = ethers.utils.formatUnits(tokenBalance.toString(), 18);
+    const converted = ethers.utils.formatUnits(tokenBalance.toString(), tokenDecimals);
     setTokenBalance(converted);
   };
 
   const getTokenBalanceOf = async (e) => {
     e.preventDefault();
     const tokenBalanceOf = await contract.methods.balanceOf(newAddress).call();
-    const converted = ethers.utils.formatUnits(tokenBalanceOf.toString(), 18);
+    const converted = ethers.utils.formatUnits(tokenBalanceOf.toString(), tokenDecimals);
     setTokenBalanceOf(converted);
   };
 
