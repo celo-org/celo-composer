@@ -22,7 +22,6 @@ const buttonStyle = {
 
 export function TokenContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [tokenInput, setTokenInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [tokenBalance, setTokenBalance] = useState("");
@@ -87,14 +86,9 @@ export function TokenContract({ contractData }) {
 
   const getTokenBalanceOf = async (e) => {
     e.preventDefault();
-    console.log(address);
-    const tokenBalanceOf = await contract.methods
-      .balanceOf(address)
-      .call()
-      .then((result) => {
-        return ethers.utils.formatUnits(result, 18);
-      });
-    setTokenBalanceOf(tokenBalanceOf);
+    const tokenBalanceOf = await contract.methods.balanceOf(newAddress).call();
+    const converted = ethers.utils.formatUnits(tokenBalanceOf.toString(), 18);
+    setTokenBalanceOf(converted);
   };
 
   const mintTokens = async (e) => {
@@ -402,7 +396,7 @@ export function TokenContract({ contractData }) {
           <Card sx={{ minWidth: 275 }}>
             <CardContent>
               <Typography gutterBottom variant="h5">
-                Address Balance
+                Token Balance Of
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 Reads the balance of the given address.
@@ -426,7 +420,7 @@ export function TokenContract({ contractData }) {
                 </Button>
               </form>
               <Typography variant="body2" color="text.secondary">
-                <b>Address balance:</b> {tokenBalanceOf}
+                <b>Token balance of:</b> {tokenBalanceOf}
               </Typography>
             </CardContent>
           </Card>
