@@ -59,6 +59,7 @@ export function StorageContract({ contractData }) {
 
         const result = await contract.methods
           .store(storageInput as string)
+          //@ts-ignore
           .send({ from: address, gasLimit });
 
         console.log(result);
