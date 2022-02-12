@@ -1,18 +1,18 @@
 import * as React from "react";
 import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 
-import { useInput } from ".";
+import { useInput } from "@/hooks/useInput";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
-import { truncateAddress } from "../utils";
+import { truncateAddress } from "@/utils";
 import { Greeter } from "../../hardhat/types/Greeter";
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [greeterValue, setGreeterValue] = React.useState<string | null>(null);
+  const [greeterValue, setGreeterValue] = useState<string | null>(null);
   const [greeterInput, setGreeterInput] = useInput({ type: "text" });
-  const [contractLink, setContractLink] = React.useState<string>("");
+  const [contractLink, setContractLink] = useState<string>("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
@@ -91,17 +91,17 @@ export function GreeterContract({ contractData }) {
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Write Contract</Typography>
-        <Box sx={{ m: 1 }}>{setGreeterInput}</Box>
-        <Button sx={{ m: 1 }} variant="contained" onClick={setGreeter}>
+        <Box sx={{ m: 1, marginLeft: 0 }}>{setGreeterInput}</Box>
+        <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={setGreeter}>
           Update Greeter Contract
         </Button>
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Read Contract</Typography>
-        <Typography sx={{ m: 1 }}>
+        <Typography sx={{ m: 1, marginLeft: 0 }}>
           Greeter Contract Value: {greeterValue}
         </Typography>
-        <Button sx={{ m: 1 }} variant="contained" onClick={getGreeter}>
+        <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={getGreeter}>
           Read Greeter Contract
         </Button>
       </Grid>

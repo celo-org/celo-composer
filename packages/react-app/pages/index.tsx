@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tabs, Tab, Typography, Box, Link } from "@mui/material";
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { StorageContract, GreeterContract, ButtonAppBar } from "../components";
+import { StorageContract, GreeterContract, ButtonAppBar } from "@/components";
 
 interface TabPanelProps {
   children?: React.ReactNode;
