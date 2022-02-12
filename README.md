@@ -16,6 +16,12 @@ Prerequisites:
 git clone https://github.com/celo-org/celo-progressive-dapp-starter
 ```
 
+## Intro Video
+
+[![Intro Video](https://img.youtube.com/vi/MQg2sta0lr8/0.jpg)](https://youtu.be/MQg2sta0lr8)
+
+## Using the Dapp Starter
+
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
@@ -127,3 +133,7 @@ If you improve the user interface or create new components that you think might 
 We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
 
 You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/2/100027610).
+
+## Troubleshooting
+
+For M1 Mac developers who have installed nvm using brew, the server may crash. To resolve this issue, take a look here at this [solution](https://stackoverflow.com/a/67254340)
