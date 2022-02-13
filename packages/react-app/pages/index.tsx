@@ -12,7 +12,8 @@ import {
   GreeterContract,
   TokenContract,
   ButtonAppBar,
-} from "../components";
+} from "@/components";
+
 
 interface TabPanelProps {
   children?: React.ReactNode;

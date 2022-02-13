@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { truncateAddress } from '../utils'
+import { truncateAddress } from '@/utils'
 
 export function ButtonAppBar() {
   const { address, network, connect, destroy } = useContractKit();
@@ -14,7 +14,7 @@ export function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ gap: 2 }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Celo Dapp Starter
           </Typography>
