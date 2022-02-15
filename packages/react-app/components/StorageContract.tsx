@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 
-import { useInput } from "@/hooks/useInput";
+import { useInput } from ".";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
-import { SnackbarAction, useSnackbar } from "notistack";
-import { truncateAddress } from "@/utils";
+import { useSnackbar } from "notistack";
+import { truncateAddress } from "../utils";
 import { Storage } from "../../hardhat/types/Storage";
 import { useQuery, gql } from "@apollo/client";
 
@@ -26,9 +26,9 @@ const QUERY = gql`
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
-  const [storageValue, setStorageValue] = useState<string | null>(null);
+  const [storageValue, setStorageValue] = React.useState<string | null>(null);
   const [storageInput, setStorageInput] = useInput({ type: "text" });
-  const [contractLink, setContractLink] = useState<string | null>(null);
+  const [contractLink, setContractLink] = React.useState<string | null>(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   
   // Query the Graph endpoint specified in ../apollo-client.js 
@@ -66,7 +66,7 @@ export function StorageContract({ contractData }) {
 
         const variant = result.status == true ? "success" : "error";
         const url = `${network.explorer}/tx/${result.transactionHash}`;
-        const action: SnackbarAction = (key) => (
+        const action = (key) => (
           <>
             <Link href={url} target="_blank">
               View in Explorer
@@ -119,8 +119,8 @@ export function StorageContract({ contractData }) {
         <Typography variant="h6" component="div">
           Write Contract
         </Typography>
-        <Box sx={{ m: 1, marginLeft: 0 }}>{setStorageInput}</Box>
-        <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={setStorage}>
+        <Box sx={{ m: 1 }}>{setStorageInput}</Box>
+        <Button sx={{ m: 1 }} variant="contained" onClick={setStorage}>
           Update Storage Contract
         </Button>
         <Divider component="div" sx={{ m: 1 }} />
@@ -128,10 +128,10 @@ export function StorageContract({ contractData }) {
         <Typography variant="h6" component="div">
           Read Contract
         </Typography>
-        <Typography sx={{ m: 1, marginLeft: 0 }} component="div">
+        <Typography sx={{ m: 1 }} component="div">
           Storage Contract Value: {storageValue}
         </Typography>
-        <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={getStorage}>
+        <Button sx={{ m: 1 }} variant="contained" onClick={getStorage}>
           Read Storage Contract
         </Button>
       </Grid>
