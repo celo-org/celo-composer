@@ -63,7 +63,6 @@ contract Token {
      *
      */
     function mint(address account, uint256 amount) public {
-        amount = 10**18 * uint256(amount); 
         total += amount;
         balances[account] += amount;
     }
@@ -79,7 +78,7 @@ contract Token {
      * - `account` must have at least `amount` tokens.
      */
     function burn(address account, uint256 amount) public {
-        amount = 10**18 * uint256(amount); 
+
         uint256 accountBalance = balances[account];
         require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
         unchecked {
@@ -123,7 +122,6 @@ contract Token {
     * @return A bool indicating if the transfer was successful.
     */
     function transfer(address to, uint256 value) public returns (bool) {
-        value = 10**18 * uint256(value); 
         require(to != address(0));
         require(to != msg.sender);
         require(value <= balanceOf(msg.sender));                                         
