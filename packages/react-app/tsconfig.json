@@ -17,10 +17,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["*"],
-    },
     "incremental": true
   },
   "include": [

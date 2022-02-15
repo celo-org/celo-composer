@@ -3,11 +3,11 @@ import "@celo-tools/use-contractkit/lib/styles.css";
 import Head from "next/head";
 import { SnackbarProvider } from "notistack";
 import { ApolloProvider } from "@apollo/client";
-import client from "@/apollo-client";
+import client from "../apollo-client";
 import { Link } from "@mui/material";
 
-import Discord from '@/public/Discord'
-import Github from '@/public/Github'
+import Discord from '../public/Discord'
+import Github from '../public/Github'
 
 import {
   Alfajores,
