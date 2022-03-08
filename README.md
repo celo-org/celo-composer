@@ -16,6 +16,12 @@ Prerequisites:
 git clone https://github.com/celo-org/celo-progressive-dapp-starter
 ```
 
+## Intro Video
+
+[![Intro Video](https://img.youtube.com/vi/MQg2sta0lr8/0.jpg)](https://youtu.be/MQg2sta0lr8)
+
+## Using the Dapp Starter
+
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
@@ -127,3 +133,33 @@ If you improve the user interface or create new components that you think might 
 We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
 
 You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/2/100027610).
+
+## How to Contribute a new dApp
+
+As a contributor, you can add your own dApp to this repository and include it as a tab for others to access. Follow the steps below and reference existing files for additional details to help you get started.
+
+- Create a new smart contract in `packages/hardhat/contracts`.
+- Add a new deployment script within `packages/hardhat/deploy/00-deploy.js` using the name of your smart contract.
+- Deploy your Smart Contract from within packages/hardhat using `yarn deploy`
+- Add a new component named `ContractName.tsx` to `packages/react-app/components` to create front end of your dApp.
+- Export component using `packages/react-app/components/index.tsx` using `export * from './ContractName`
+- Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
+- Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
+
+```
+<Tab label="Contract Label" {...a11yProps(#)} />
+```
+
+- Add tab panel to page replacing `#` with tab number and `ContractName` with your smart contract name
+
+```
+<TabPanel value={value} index={#}>
+    <GreeterContract contractData={contracts?.ContractName} />
+</TabPanel>
+```
+
+You should now be able to view your new dApp from [http://localhost:3000](http://localhost:3000).
+
+## Troubleshooting
+
+For M1 Mac developers who have installed nvm using brew, the server may crash. To resolve this issue, take a look here at this [solution](https://stackoverflow.com/a/67254340)
