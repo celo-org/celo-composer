@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,11 +12,6 @@ import { truncateAddress, getWindowDimensions } from '@/utils'
 export function ButtonAppBar() {
   const { address, network, connect, destroy } = useContractKit();
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-  useEffect(() => {
-    console.log("----")
-    console.log(windowDimensions)
-  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
