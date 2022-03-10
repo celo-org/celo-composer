@@ -86,6 +86,7 @@ export function StorageContract({ contractData }) {
         });
       });
     } catch (e) {
+      enqueueSnackbar(e.message, { variant: 'error' });
       console.log(e);
     }
   };
@@ -101,7 +102,7 @@ export function StorageContract({ contractData }) {
 
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Grid item xs={6} sx={{ m: 2 }}>
+      <Grid item sm={6} xs={12} sx={{ m: 2 }}>
         <Typography variant="h5" component="div">
           Storage Contract:
         </Typography>
@@ -128,7 +129,7 @@ export function StorageContract({ contractData }) {
         <Typography variant="h6" component="div">
           Read Contract
         </Typography>
-        <Typography sx={{ m: 1, marginLeft: 0 }} component="div">
+        <Typography sx={{ m: 1, marginLeft: 0, wordWrap: "break-word" }} component="div">
           Storage Contract Value: {storageValue}
         </Typography>
         <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={getStorage}>
