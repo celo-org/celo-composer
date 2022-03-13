@@ -64,6 +64,7 @@ export function GreeterContract({ contractData }) {
         });
       });
     } catch (e) {
+      enqueueSnackbar(e.message, {variant: 'error'});
       console.log(e);
     }
   };
@@ -79,7 +80,7 @@ export function GreeterContract({ contractData }) {
 
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Grid item xs={6} sx={{ m: 2 }}>
+      <Grid item sm={6} xs={12} sx={{ m: 2 }}>
         <Typography variant="h5">Greeter Contract:</Typography>
         {contractData ? (
           <Link href={contractLink} target="_blank">
@@ -98,7 +99,7 @@ export function GreeterContract({ contractData }) {
         <Divider sx={{ m: 1 }} />
 
         <Typography variant="h6">Read Contract</Typography>
-        <Typography sx={{ m: 1 }}>
+        <Typography sx={{ m: 1, marginLeft: 0, wordWrap: "break-word" }}>
           Greeter Contract Value: {greeterValue}
         </Typography>
         <Button sx={{ m: 1 }} variant="contained" onClick={getGreeter}>
