@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,10 +7,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { truncateAddress } from '@/utils'
+import { truncateAddress, getWindowDimensions } from '@/utils'
 
 export function ButtonAppBar() {
   const { address, network, connect, destroy } = useContractKit();
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -27,9 +29,11 @@ export function ButtonAppBar() {
                 onDelete={destroy}
                 sx={{mx:1}}
               />
-              <Button variant="outlined" color="inherit" onClick={destroy}>
-                Disconnect
-              </Button>
+              {windowDimensions.width >= 600 ?
+                <Button variant="outlined" color="inherit" onClick={destroy}>
+                  Disconnect
+                </Button>
+              : ""}
             </>
           )}
           {!address && (
