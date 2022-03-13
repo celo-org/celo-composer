@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Ballot.sol": {
+      "content": "// SPDX-License-Identifier: GPL-3.0\r\n\r\npragma solidity >=0.7.0 <0.9.0;\r\n\r\n/**\r\n * @title Ballot\r\n * @dev Implements voting process along with vote delegation\r\n */\r\ncontract Ballot {\r\n\r\n    struct Voter {\r\n        uint weight; // weight is accumulated by delegation\r\n        bool voted;  // if true, that person already voted\r\n        address delegate; // person delegated to\r\n        uint vote;   // index of the voted proposal\r\n    }\r\n\r\n    struct Proposal {\r\n        string name;   // short name\r\n        uint voteCount; // number of accumulated votes\r\n    }\r\n\r\n    address public chairperson;\r\n\r\n    mapping(address => Voter) public voters;\r\n\r\n    Proposal[] public proposals;\r\n\r\n    /**\r\n     * @dev Create a new ballot to choose one of 'proposalNames'.\r\n     * @param proposalNames names of proposals\r\n     */\r\n    constructor(string[] memory proposalNames) {\r\n        chairperson = msg.sender;\r\n        voters[chairperson].weight = 1;\r\n\r\n        for (uint i = 0; i < proposalNames.length; i++) {\r\n            // 'Proposal({...})' creates a temporary\r\n            // Proposal object and 'proposals.push(...)'\r\n            // appends it to the end of 'proposals'.\r\n            proposals.push(Proposal({\r\n            name: proposalNames[i],\r\n            voteCount: 0\r\n            }));\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @dev Test sender having already voted\r\n     */\r\n    function hasVoted() public view returns(bool) {\r\n        return(voters[msg.sender].voted);\r\n    }\r\n    /**\r\n     * @dev get Weight of sender\r\n     */\r\n    function getWeight() public view returns(uint) {\r\n        return(voters[msg.sender].weight);\r\n    }\r\n    /**\r\n     * @dev get Proposal index sender has voted for\r\n     */\r\n    function getVote() public view returns(uint) {\r\n        return(voters[msg.sender].vote);\r\n    }\r\n\r\n    /**\r\n     * @dev Give 'voter' the right to vote on this ballot. May only be called by 'chairperson'.\r\n      * @param voter address of voter\r\n      */\r\n    function giveRightToVote(address voter) public {\r\n        require(\r\n            msg.sender == chairperson,\r\n            \"Only chairperson can give right to vote.\"\r\n        );\r\n        require(\r\n            !voters[voter].voted,\r\n            \"The voter already voted.\"\r\n        );\r\n        require(voters[voter].weight == 0);\r\n        voters[voter].weight = 1;\r\n    }\r\n\r\n    /**\r\n     * @dev Delegate your vote to the voter 'to'.\r\n     * @param to address to which vote is delegated\r\n     */\r\n    function delegate(address to) public {\r\n        Voter storage sender = voters[msg.sender];\r\n        require(!sender.voted, \"You already voted.\");\r\n        require(to != msg.sender, \"Self-delegation is disallowed.\");\r\n\r\n        while (voters[to].delegate != address(0)) {\r\n            to = voters[to].delegate;\r\n\r\n            // We found a loop in the delegation, not allowed.\r\n            require(to != msg.sender, \"Found loop in delegation.\");\r\n        }\r\n        sender.voted = true;\r\n        sender.delegate = to;\r\n        Voter storage delegate_ = voters[to];\r\n        if (delegate_.voted) {\r\n            // If the delegate already voted,\r\n            // directly add to the number of votes\r\n            proposals[delegate_.vote].voteCount += sender.weight;\r\n        } else {\r\n            // If the delegate did not vote yet,\r\n            // add to her weight.\r\n            delegate_.weight += sender.weight;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @dev Give your vote (including votes delegated to you) to proposal 'proposals[proposal].name'.\r\n     * @param proposal index of proposal in the proposals array\r\n     */\r\n    function vote(uint proposal) public {\r\n        Voter storage sender = voters[msg.sender];\r\n        require(sender.weight != 0, \"Has no right to vote\");\r\n        require(!sender.voted, \"Already voted.\");\r\n        sender.voted = true;\r\n        sender.vote = proposal;\r\n\r\n        // If 'proposal' is out of the range of the array,\r\n        // this will throw automatically and revert all\r\n        // changes.\r\n        proposals[proposal].voteCount += sender.weight;\r\n    }\r\n\r\n    /**\r\n     * @dev Computes the winning proposal taking all previous votes into account.\r\n     * @return winningProposal_ index of winning proposal in the proposals array\r\n     */\r\n    function winningProposal() public view\r\n    returns (uint winningProposal_)\r\n    {\r\n        uint winningVoteCount = 0;\r\n        for (uint p = 0; p < proposals.length; p++) {\r\n            if (proposals[p].voteCount > winningVoteCount) {\r\n                winningVoteCount = proposals[p].voteCount;\r\n                winningProposal_ = p;\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * @dev Calls winningProposal() function to get the index of the winner contained in the proposals array and then\r\n     * @return winnerName_ the name of the winner\r\n     */\r\n    function winnerName() public view\r\n    returns (string memory winnerName_)\r\n    {\r\n        winnerName_ = proposals[winningProposal()].name;\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
