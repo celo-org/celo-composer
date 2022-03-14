@@ -27,6 +27,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log: true,
   });
 
+  await deploy("cBallot", {
+    from: deployer,
+    args: [ { 'proposal1' : 'proposal2' } ],
+    log: true,
+  });
+
   // Getting a previously deployed contract
   // const Greeter = new ethers.Contract("Greeter", deployer);
 
@@ -59,4 +65,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
 };
 
-module.exports.tags = ["Greeter", "Storage"];
+module.exports.tags = ["Greeter", "Storage", "cBallot"];

@@ -1,85 +1,4 @@
 {
-  "4": {
-    "rinkeby": {
-      "name": "rinkeby",
-      "chainId": "4",
-      "contracts": {
-        "Greeter": {
-          "address": "0x971f1E92DdCf8EbaF9f2Ed83bfEe87e3E2816B81",
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greet",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
-            {
-              "inputs": [],
-              "name": "greet",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greeting",
-                  "type": "string"
-                }
-              ],
-              "name": "setGreeting",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        },
-        "Storage": {
-          "address": "0x7Ae4DF8850b1a05b47F40a37EC8AA3374464644C",
-          "abi": [
-            {
-              "inputs": [],
-              "name": "retrieve",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "num",
-                  "type": "uint256"
-                }
-              ],
-              "name": "store",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        }
-      }
-    }
-  },
   "1337": {
     "localhost": {
       "name": "localhost",
@@ -248,7 +167,7 @@
       "chainId": "44787",
       "contracts": {
         "Greeter": {
-          "address": "0xc7576A90cE35cb1614EdA509ee766Ea7377b5759",
+          "address": "0xd0bCc649006c0E11F78dd2f16cAb27C41F48b904",
           "abi": [
             {
               "inputs": [
@@ -309,7 +228,7 @@
           ]
         },
         "Storage": {
-          "address": "0x5ba3ec4808A655381452f4b58C929e4200B4DF69",
+          "address": "0x9b95489B130B64af2Ec1639Aa39B708cD85A454c",
           "abi": [
             {
               "anonymous": false,
@@ -354,6 +273,285 @@
               "name": "store",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        },
+        "cBallot": {
+          "address": "0x3064309eA12cb29D7ABdE2c4130735Bca964f006",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_proposalsName",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "_newProposalName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_newProposalContent",
+                  "type": "string"
+                }
+              ],
+              "name": "addProposal",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "chairperson",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "to",
+                  "type": "address"
+                }
+              ],
+              "name": "delegate",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getNbProposals",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "voter",
+                  "type": "address"
+                }
+              ],
+              "name": "giveRightToVote",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "nbProposals",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "name": "proposals",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "content",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "voteCount",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "proposalsName",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_idProposal",
+                  "type": "uint256"
+                }
+              ],
+              "name": "readProposal",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "proposalName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "proposalContent",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "nbVotes",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "readWinnerProposal",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "_winnerName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_winnerContent",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_winnerVoteCount",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_newChairAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "transferChairpersonRole",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "proposal",
+                  "type": "uint256"
+                }
+              ],
+              "name": "vote",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "voters",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "weight",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "voted",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "address",
+                  "name": "delegate",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "vote",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "winnerName",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "winnerName_",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "winningProposal",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "winningProposal_",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             }
           ]
