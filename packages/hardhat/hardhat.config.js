@@ -82,7 +82,7 @@ task("create-account",
     const wallet = new hre.ethers.Wallet.createRandom();
     console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
     console.log();
-    console.log(`Your testnet account address: `, wallet.address);
+    console.log(`Your account address: `, wallet.address);
   })
 
 task("print-account",
