@@ -10,7 +10,7 @@ Try running some of the following tasks:
 npx hardhat accounts
 npx hardhat devchain-keys  # print devchain keys
 npx hardhat create-account # print new key + account
-npx hardhat test           # run contract tests in ./scripts
+npx hardhat test           # run contract tests in ./test
 ```
 
 ## Alfajores Testnet Setup
