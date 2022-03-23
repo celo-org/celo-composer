@@ -16,7 +16,7 @@ contract Storage {
      * @dev Store value in variable
      * @param num value to store
      */
-    function store(uint256 num) public external {
+    function store(uint256 num) external {
         number = num;
         emit newNumber(num, msg.sender);
     }
