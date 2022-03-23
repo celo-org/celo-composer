@@ -10,13 +10,13 @@ contract Storage {
 
     event newNumber(uint256 number, address sender);
 
-    uint256 number = 1;
+    uint256 private number = 1;
 
     /**
      * @dev Store value in variable
      * @param num value to store
      */
-    function store(uint256 num) public {
+    function store(uint256 num) external {
         number = num;
         emit newNumber(num, msg.sender);
     }
