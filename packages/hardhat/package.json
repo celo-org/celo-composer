@@ -1,10 +1,12 @@
 {
-  "name": "hardhat-project",
+  "name": "@celo-progressive-dapp-starter/hardhat",
+  "version": "1.0.0",
   "license": "MIT",
   "engines": {
     "node": "12.x"
   },
   "scripts": {
+    "test": "hardhat test",
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
     "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
