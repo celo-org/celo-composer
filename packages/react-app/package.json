@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
+    "@celo-progressive-dapp-starter/hardhat": "^1.0.0",
     "@celo-tools/use-contractkit": "^3.0.1",
     "@celo/contractkit": "^1.5.2",
     "@emotion/react": "^11.7.1",
