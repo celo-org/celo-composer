@@ -33,7 +33,6 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
             {typeof window === "undefined" ? null : (
               <Component {...pageProps} />
             )}
-            <Footer />
           </div>
         </ApolloProvider>
       </SnackbarProvider>
