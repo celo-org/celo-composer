@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Tabs, Tab, Typography, Box, Link } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Tabs, Tab, Typography, Box, Link, useMediaQuery, CssBaseline } from "@mui/material";
 import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { StorageContract, GreeterContract, ButtonAppBar } from "@/components";
@@ -23,24 +24,39 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
   return (
-    <div>
-      <ButtonAppBar />
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Storage Contract" {...a11yProps(0)} />
-            <Tab label="Greeter Contract" {...a11yProps(1)} />
-          </Tabs>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div>
+        <ButtonAppBar />
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
+              <Tab label="Storage Contract" {...a11yProps(0)} />
+              <Tab label="Greeter Contract" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <StorageContract contractData={contracts?.Storage} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <GreeterContract contractData={contracts?.Greeter} />
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          <StorageContract contractData={contracts?.Storage} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <GreeterContract contractData={contracts?.Greeter} />
-        </TabPanel>
-      </Box>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
