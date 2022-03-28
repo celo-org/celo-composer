@@ -1,9 +1,17 @@
 import * as React from "react";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Tabs, Tab, Typography, Box, Link, useMediaQuery, CssBaseline } from "@mui/material";
-import deployedContracts from "../../hardhat/deployments/hardhat_contracts.json";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+  useMediaQuery,
+  CssBaseline,
+} from "@mui/material";
+import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { StorageContract, GreeterContract, ButtonAppBar } from "@/components";
+import { StorageContract, GreeterContract } from "@/components";
+import AppLayout from "@/components/layout/AppLayout";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,23 +32,22 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
+          mode: prefersDarkMode ? "dark" : "light",
         },
       }),
-    [prefersDarkMode],
+    [prefersDarkMode]
   );
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div>
-        <ButtonAppBar />
+      <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
@@ -55,7 +62,7 @@ export default function App() {
             <GreeterContract contractData={contracts?.Greeter} />
           </TabPanel>
         </Box>
-      </div>
+      </AppLayout>
     </ThemeProvider>
   );
 }

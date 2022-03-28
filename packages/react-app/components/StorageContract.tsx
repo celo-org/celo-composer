@@ -6,7 +6,7 @@ import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { SnackbarAction, useSnackbar } from "notistack";
 import { truncateAddress } from "@/utils";
-import { Storage } from "../../hardhat/types/Storage";
+import { Storage } from "@celo-progressive-dapp-starter/hardhat/types/Storage";
 import { useQuery, gql } from "@apollo/client";
 
 // The Graph query endpoint is defined in ../apollo-client.js

@@ -6,7 +6,7 @@ import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { truncateAddress } from "@/utils";
-import { Greeter } from "../../hardhat/types/Greeter";
+import { Greeter } from "@celo-progressive-dapp-starter/hardhat/types/Greeter";
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
