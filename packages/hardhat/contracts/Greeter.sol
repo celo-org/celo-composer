@@ -17,7 +17,7 @@ contract Greeter {
         return greeting;
     }
 
-    function setGreeting(string memory _greeting) external {
+    function setGreeting(string calldata _greeting) external {
         console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
         emit newGreeting(_greeting, msg.sender);
