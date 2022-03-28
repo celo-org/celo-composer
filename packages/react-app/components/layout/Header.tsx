@@ -7,11 +7,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { truncateAddress, getWindowDimensions } from '@/utils'
+import { truncateAddress, getWindowDimensions } from "@/utils";
 
-export function ButtonAppBar() {
+export function Header() {
   const { address, network, connect, destroy } = useContractKit();
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -27,20 +29,22 @@ export function ButtonAppBar() {
                 label={truncateAddress(address)}
                 color="info"
                 onDelete={destroy}
-                sx={{mx:1}}
+                sx={{ mx: 1 }}
               />
-              {windowDimensions.width >= 600 ?
+              {windowDimensions.width >= 600 ? (
                 <Button variant="outlined" color="inherit" onClick={destroy}>
                   Disconnect
                 </Button>
-              : ""}
+              ) : (
+                ""
+              )}
             </>
           )}
           {!address && (
             <Button
               color="inherit"
               variant="outlined"
-              onClick={() => connect().catch((e) => console.log(e))}
+              onClick={() => connect().catch(e => console.log(e))}
             >
               Connect wallet
             </Button>
