@@ -35,6 +35,7 @@
     "typechain": "^7.0.0"
   },
   "dependencies": {
-    "ganache": "^7.0.0"
+    "ganache": "^7.0.0",
+    "redstone-evm-connector": "^2.1.9"
   }
 }
