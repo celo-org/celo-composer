@@ -15,10 +15,11 @@ describe("Oracle", function () {
       .wrapLite(oracle)
       .usingPriceFeed("redstone", { asset: "CELO" });
     const celoAmount = await wrappedContract.getCELOAmountForUSDAmount(usdAmount);
+    const humanFriendlyCeloAmount = ethers.utils.formatEther(celoAmount);
 
-    expect(celoAmount).to.be.lessThan(100); // It means that CELO price is higher than $1
+    expect(Number(humanFriendlyCeloAmount)).to.be.lessThan(100); // It means that CELO price is higher than $1
 
     // Print celo amount
-    console.log(`Celo amount for $100: ${celoAmount.toNumber() / 10 ** 8}`);
+    console.log(`Celo amount for $100: ${humanFriendlyCeloAmount} CELO`);
   });
 });

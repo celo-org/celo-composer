@@ -6,7 +6,7 @@
     "node": "12.x"
   },
   "scripts": {
-    "test": "hardhat test",
+    "test": "hardhat test --network hardhat",
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
     "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
