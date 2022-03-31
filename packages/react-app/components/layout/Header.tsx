@@ -9,7 +9,6 @@ import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { truncateAddress, getWindowDimensions } from "@/utils";
 import { useThemeContext } from "@/contexts/UserTheme";
-import { Switch } from "@mui/material";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 
 export function Header() {
@@ -23,7 +22,7 @@ export function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar sx={{ gap: 2 }}>
+        <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Celo Dapp Starter
           </Typography>
