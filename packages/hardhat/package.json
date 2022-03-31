@@ -7,6 +7,7 @@
   },
   "scripts": {
     "test": "hardhat test",
+    "test-local": "hardhat test --network hardhat",
     "accounts": "hardhat accounts",
     "devchain": "npx celo-devchain --port 8545",
     "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
@@ -35,6 +36,7 @@
     "typechain": "^7.0.0"
   },
   "dependencies": {
-    "ganache": "^7.0.0"
+    "ganache": "^7.0.0",
+    "redstone-evm-connector": "^2.1.9"
   }
 }
