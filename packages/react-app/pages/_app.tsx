@@ -6,37 +6,38 @@ import { ApolloProvider } from "@apollo/client";
 import client from "@/apollo-client";
 import { Alfajores, ContractKitProvider } from "@celo-tools/use-contractkit";
 import { AppProps } from "next/app";
-import Footer from "@/components/layout/Footer";
-import Meta from "@/components/meta/Meta";
+import { CustomThemeProvider } from "@/contexts/userTheme";
 
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
-    <ContractKitProvider
-      dapp={{
-        name: "use-contractkit demo",
-        description: "A demo DApp to showcase functionality",
-        url: "https://use-contractkit.vercel.app",
-        icon: "https://use-contractkit.vercel.app/favicon.ico",
-      }}
-      network={Alfajores}
-      // networks={[Mainnet, Alfajores]}
-    >
-      <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+    <CustomThemeProvider>
+      <ContractKitProvider
+        dapp={{
+          name: "use-contractkit demo",
+          description: "A demo DApp to showcase functionality",
+          url: "https://use-contractkit.vercel.app",
+          icon: "https://use-contractkit.vercel.app/favicon.ico",
         }}
+        network={Alfajores}
+        // networks={[Mainnet, Alfajores]}
       >
-        <ApolloProvider client={client}>
-          <div suppressHydrationWarning>
-            {typeof window === "undefined" ? null : (
-              <Component {...pageProps} />
-            )}
-          </div>
-        </ApolloProvider>
-      </SnackbarProvider>
-    </ContractKitProvider>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+        >
+          <ApolloProvider client={client}>
+            <div suppressHydrationWarning>
+              {typeof window === "undefined" ? null : (
+                <Component {...pageProps} />
+              )}
+            </div>
+          </ApolloProvider>
+        </SnackbarProvider>
+      </ContractKitProvider>
+    </CustomThemeProvider>
   );
 }
 

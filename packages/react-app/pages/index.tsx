@@ -1,13 +1,5 @@
 import * as React from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  Tabs,
-  Tab,
-  Typography,
-  Box,
-  useMediaQuery,
-  CssBaseline,
-} from "@mui/material";
+import { Tabs, Tab, Typography, Box } from "@mui/material";
 import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { StorageContract, GreeterContract } from "@/components";
@@ -32,38 +24,23 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? "dark" : "light",
-        },
-      }),
-    [prefersDarkMode]
-  );
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
-        <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-              <Tab label="Storage Contract" {...a11yProps(0)} />
-              <Tab label="Greeter Contract" {...a11yProps(1)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <StorageContract contractData={contracts?.Storage} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <GreeterContract contractData={contracts?.Greeter} />
-          </TabPanel>
+    <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
+            <Tab label="Storage Contract" {...a11yProps(0)} />
+            <Tab label="Greeter Contract" {...a11yProps(1)} />
+          </Tabs>
         </Box>
-      </AppLayout>
-    </ThemeProvider>
+        <TabPanel value={value} index={0}>
+          <StorageContract contractData={contracts?.Storage} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <GreeterContract contractData={contracts?.Greeter} />
+        </TabPanel>
+      </Box>
+    </AppLayout>
   );
 }
 
