@@ -8,12 +8,15 @@ import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { truncateAddress, getWindowDimensions } from "@/utils";
+import { ThemeSwitcher } from "../ThemeSwitcher";
+import { useThemeContext } from "@/contexts/userTheme";
 
 export function Header() {
   const { address, network, connect, destroy } = useContractKit();
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
+  const { theme, setTheme } = useThemeContext();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
