@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Tabs,
   Tab,
@@ -32,23 +32,38 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? "dark" : "light",
+        },
+      }),
+    [prefersDarkMode]
+  );
+
   return (
-    <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Storage Contract" {...a11yProps(0)} />
-            <Tab label="Greeter Contract" {...a11yProps(1)} />
-          </Tabs>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
+        <Box sx={{ width: "100%" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
+              <Tab label="Storage Contract" {...a11yProps(0)} />
+              <Tab label="Greeter Contract" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <StorageContract contractData={contracts?.Storage} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <GreeterContract contractData={contracts?.Greeter} />
+          </TabPanel>
         </Box>
-        <TabPanel value={value} index={0}>
-          <StorageContract contractData={contracts?.Storage} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <GreeterContract contractData={contracts?.Greeter} />
-        </TabPanel>
-      </Box>
-    </AppLayout>
+      </AppLayout>
+    </ThemeProvider>
   );
 }
 
