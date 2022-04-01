@@ -9,16 +9,34 @@ import redstone from "redstone-api"
 
 export function AccountInfo() {
   const { kit, address, network } = useContractKit();
-  const [balance, setBalance] = useState({ raw: '0', usd: '0' });
+  const [balance, setBalance] = useState({
+    CELO: {
+      raw: '0', usd: '0'
+    },
+    cEUR: {
+      raw: '0'
+    },
+    cUSD: {
+      raw: '0'
+    }
+  });
 
   async function fetchBalance() {
-    const { CELO } = await kit.getTotalBalance(address);
+    const { CELO, cUSD, cEUR } = await kit.getTotalBalance(address);
     const celoAmount = kit.web3.utils.fromWei(CELO.toString(), 'ether');
     const celoUsdPrice = await redstone.getPrice('CELO');
 
     setBalance({
-      raw: kit.web3.utils.fromWei(CELO.toString(), 'ether'),
-      usd: (celoUsdPrice.value * (+celoAmount)).toString()
+      CELO: {
+        raw: kit.web3.utils.fromWei(CELO.toString(), 'ether'),
+        usd: (celoUsdPrice.value * (+celoAmount)).toString()
+      },
+      cEUR: {
+        raw: kit.web3.utils.fromWei(cUSD.toString(), 'ether'),
+      },
+      cUSD: {
+        raw: kit.web3.utils.fromWei(cEUR.toString(), 'ether'),
+      }
     })
   }
 
@@ -42,7 +60,11 @@ export function AccountInfo() {
         <Divider sx={{ m: 1 }} />
         <Typography variant="h6">Balance:</Typography>
         <Typography sx={{ m: 1, marginLeft: 0, wordWrap: "break-word" }}>
-          {`${balance.raw} CELO ($${balance.usd})`}
+          {`${balance.CELO.raw} CELO ($${balance.CELO.usd})`}
+          <br />
+          {`${balance.cUSD.raw} cUSD`}
+          <br />
+          {`${balance.cEUR.raw} cEUR`}
         </Typography>
       </Grid>
     </Grid>
