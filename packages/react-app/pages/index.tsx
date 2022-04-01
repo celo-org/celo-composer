@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
 import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { StorageContract, GreeterContract } from "@/components";
+import { StorageContract, GreeterContract, AccountInfo } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
 
 interface TabPanelProps {
@@ -29,14 +29,18 @@ export default function App() {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Storage Contract" {...a11yProps(0)} />
-            <Tab label="Greeter Contract" {...a11yProps(1)} />
+            <Tab label="Account Info" {...a11yProps(0)} />
+            <Tab label="Storage Contract" {...a11yProps(1)} />
+            <Tab label="Greeter Contract" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <StorageContract contractData={contracts?.Storage} />
+          <AccountInfo></AccountInfo>
         </TabPanel>
         <TabPanel value={value} index={1}>
+          <StorageContract contractData={contracts?.Storage} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>

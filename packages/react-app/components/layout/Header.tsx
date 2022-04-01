@@ -17,18 +17,6 @@ export function Header() {
     getWindowDimensions()
   );
   const { theme, setTheme } = useThemeContext();
-  const [balance, setBalance] = useState('0');
-
-  async function fetchBalance() {
-    const { CELO } = await kit.getTotalBalance(address);
-    setBalance(kit.web3.utils.fromWei(CELO.toString(), 'ether'))
-  }
-
-  useEffect(() => {
-    if (address) {
-      fetchBalance()
-    }
-  }, [network, address])
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -37,7 +25,6 @@ export function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Celo Dapp Starter
           </Typography>
-          {address && <Chip label={`${balance} CELO`} color="info"/>}
           {network && <Chip label={network.name} color="secondary" />}
           {address && (
             <>
