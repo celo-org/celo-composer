@@ -28,7 +28,7 @@ export default function App() {
     <AppLayout title="Celo Starter" description="Celo Starter">
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
+          <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs">
             <Tab label="Account" {...a11yProps(0)} />
             <Tab label="Storage" {...a11yProps(1)} />
             <Tab label="Greeter" {...a11yProps(2)} />
