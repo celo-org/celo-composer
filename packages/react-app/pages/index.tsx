@@ -25,13 +25,13 @@ export default function App() {
     ]?.contracts;
 
   return (
-    <AppLayout title="Celo DApp Starter" description="Celo DApp Starter">
+    <AppLayout title="Celo Starter" description="Celo Starter">
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Account Info" {...a11yProps(0)} />
-            <Tab label="Storage Contract" {...a11yProps(1)} />
-            <Tab label="Greeter Contract" {...a11yProps(2)} />
+            <Tab label="Account" {...a11yProps(0)} />
+            <Tab label="Storage" {...a11yProps(1)} />
+            <Tab label="Greeter" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
