@@ -32,10 +32,10 @@ export function AccountInfo() {
         usd: (celoUsdPrice.value * (+celoAmount)).toString()
       },
       cEUR: {
-        raw: kit.web3.utils.fromWei(cUSD.toString(), 'ether'),
+        raw: kit.web3.utils.fromWei(cEUR.toString(), 'ether'),
       },
       cUSD: {
-        raw: kit.web3.utils.fromWei(cEUR.toString(), 'ether'),
+        raw: kit.web3.utils.fromWei(cUSD.toString(), 'ether'),
       }
     })
   }
