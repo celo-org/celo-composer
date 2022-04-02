@@ -12474,7 +12474,7 @@ redstone-api-extended@^1.0.3:
     redstone-node "^0.4.25"
     streamr-client "5.5.8"
 
-redstone-api@^0.4.0, redstone-api@^0.4.6:
+redstone-api@^0.4.0, redstone-api@^0.4.11, redstone-api@^0.4.6:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/redstone-api/-/redstone-api-0.4.11.tgz#103530e7a23138bb24332ce4d893eb72e61109bd"
   integrity sha512-X0gj7UU5aLQPmNjdnhBUCvi6tkj5SpQJ7heT6+TIPx7Od707n4oqKHoJa41V8QOGjudbxaM1BIv6+2+hp0wFGQ==

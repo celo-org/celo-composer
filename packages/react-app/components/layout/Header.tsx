@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,7 +12,7 @@ import { ThemeSwitcher } from "../ThemeSwitcher";
 import { useThemeContext } from "@/contexts/userTheme";
 
 export function Header() {
-  const { address, network, connect, destroy } = useContractKit();
+  const { address, network, connect, destroy, kit } = useContractKit();
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
