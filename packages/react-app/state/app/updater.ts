@@ -1,7 +1,7 @@
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useCallback, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { updateBlockNumber } from ".";
+import { updateBlockNumber } from "./reducer";
 
 export default function Updater(): null {
   const { network, kit } = useContractKit();
