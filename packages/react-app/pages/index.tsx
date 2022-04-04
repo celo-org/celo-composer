@@ -2,7 +2,7 @@ import * as React from "react";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
 import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
 import { useContractKit } from "@celo-tools/use-contractkit";
-import { StorageContract, GreeterContract, AccountInfo } from "@/components";
+import { StorageContract, GreeterContract, AccountInfo, Polling } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
 
 interface TabPanelProps {
@@ -44,6 +44,7 @@ export default function App() {
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>
+      <Polling/>
     </AppLayout>
   );
 }

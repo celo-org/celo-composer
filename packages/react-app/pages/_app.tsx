@@ -7,37 +7,51 @@ import client from "@/apollo-client";
 import { Alfajores, ContractKitProvider } from "@celo-tools/use-contractkit";
 import { AppProps } from "next/app";
 import { CustomThemeProvider } from "@/contexts/userTheme";
+import { Provider } from "react-redux"
+import store from "@/state/index"
+import AppUpdater from "@/state/app/updater"
+
+function Updaters() {
+  return (
+    <>
+      <AppUpdater />
+    </>
+  )
+}
 
 function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
-    <CustomThemeProvider>
-      <ContractKitProvider
-        dapp={{
-          name: "use-contractkit demo",
-          description: "A demo DApp to showcase functionality",
-          url: "https://use-contractkit.vercel.app",
-          icon: "https://use-contractkit.vercel.app/favicon.ico",
-        }}
-        network={Alfajores}
-        // networks={[Mainnet, Alfajores]}
-      >
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
+    <Provider store={store}>
+      <CustomThemeProvider>
+        <ContractKitProvider
+          dapp={{
+            name: "use-contractkit demo",
+            description: "A demo DApp to showcase functionality",
+            url: "https://use-contractkit.vercel.app",
+            icon: "https://use-contractkit.vercel.app/favicon.ico",
           }}
+          network={Alfajores}
+          // networks={[Mainnet, Alfajores]}
         >
-          <ApolloProvider client={client}>
-            <div suppressHydrationWarning>
-              {typeof window === "undefined" ? null : (
-                <Component {...pageProps} />
-              )}
-            </div>
-          </ApolloProvider>
-        </SnackbarProvider>
-      </ContractKitProvider>
-    </CustomThemeProvider>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+          >
+            <Updaters/>
+            <ApolloProvider client={client}>
+              <div suppressHydrationWarning>
+                {typeof window === "undefined" ? null : (
+                  <Component {...pageProps} />
+                )}
+              </div>
+            </ApolloProvider>
+          </SnackbarProvider>
+        </ContractKitProvider>
+      </CustomThemeProvider>
+    </Provider>
   );
 }
 
