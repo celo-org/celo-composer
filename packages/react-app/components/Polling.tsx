@@ -25,7 +25,7 @@ const transitionStyles = {
   exited:  { opacity: 0.5 },
 };
 
-const FadeIcon = React.forwardRef(function Fade({ in: inProp }, ref) {
+const FadeIcon = React.forwardRef(function Fade({ in: inProp }: { in: boolean }, ref) {
   const nodeRef = React.useRef(null);
   const foreignRef = useForkRef(null, ref);
   const handleRef = useForkRef(nodeRef, foreignRef);
