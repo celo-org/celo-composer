@@ -21,14 +21,16 @@ export default function Updater(): null {
   useEffect(() => {
     if (!network) return undefined;
 
-    const subscription = kit.web3.eth.subscribe("newBlockHeaders", (err, header) => {
-      if (err) return;
-      blockNumberCallback(header.number);
-    })
+    const pollBlockNumber = async () => {
+      const number = await kit.web3.eth.getBlockNumber();
+      blockNumberCallback(number);
+    }
 
-    return () => {
-      subscription.unsubscribe()
-    };
+    pollBlockNumber()
+
+    const interval = setInterval(pollBlockNumber, 10000);
+  
+    return () => clearInterval(interval);
   }, [dispatch, network, kit, blockNumberCallback]);
 
   useEffect(() => {
