@@ -56,7 +56,7 @@ const AccountTable: React.FC<{ rows: AccountDataEntry[] }> = ({ rows }) => (
               <TableCell component="th" scope="row">
                 {row.token}
               </TableCell>
-              <TableCell align="right">{row.balance < 0.01 ? row.balance.toExponential(2) : row.balance.toFixed(2)} {row.token}</TableCell>
+              <TableCell align="right">{row.balance < 0.01 ? formatSmallValue(row.balance) : row.balance.toFixed(2) + " "}{row.token}</TableCell>
               <TableCell align="right">{formatValue(row.value, row.baseCurrency)}</TableCell>
               <TableCell align="right">{formatValue(row.exchange, row.baseCurrency)} / {row.token}</TableCell>
             </TableRow>
