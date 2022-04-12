@@ -4,7 +4,7 @@ import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 import { useInput } from "@/hooks/useInput";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
+import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
 import { truncateAddress } from "@/utils";
 import { Greeter } from "@celo-progressive-dapp-starter/hardhat/types/Greeter";
 
@@ -44,7 +44,7 @@ export function GreeterContract({ contractData }) {
 
         const variant = result.status == true ? "success" : "error";
         const url = `${network.explorer}/tx/${result.transactionHash}`;
-        const action = (key) => (
+        const action: SnackbarAction = (key) => (
           <>
             <Link href={url} target="_blank">
               View in Explorer
