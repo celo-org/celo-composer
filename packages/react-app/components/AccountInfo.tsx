@@ -7,26 +7,14 @@ import { truncateAddress } from "@/utils";
 
 import redstone from "redstone-api"
 
+import AccountTable, { BaseCurrency } from './AccountTable';
+
 async function getPrices() {
   return {
     CELO: await redstone.getPrice("CELO"),
     EUR: await redstone.getPrice("EUR"),
     ETH: await redstone.getPrice("ETH")
   };
-}
-
-enum BaseCurrency {
-  USD = "USD",
-  EUR = "EUR",
-  ETH = "ETH",
-  CELO = "CELO"
-}
-
-function formatValue(value: number, currency: BaseCurrency): string {
-  if (currency === BaseCurrency.USD) return `$${value}`;
-  if (currency === BaseCurrency.EUR) return `€${value}`;
-  if (currency === BaseCurrency.ETH) return `${value} ETH`;
-  return `${value} CELO`;
 }
 
 export function AccountInfo() {
@@ -107,17 +95,16 @@ export function AccountInfo() {
         <Typography variant="h6">Balance:</Typography>
         <Typography sx={{ m: 1, marginLeft: 0, wordWrap: "break-word" }}>
           { loadingBalance ? <CircularProgress /> : (
-            <>
-              {`${balance.CELO.raw} CELO (${formatValue(balance.CELO.base, baseCurrency)} @ ${formatValue(balance.CELO.exchange, baseCurrency)}/CELO)`}
-              <br />
-              {`${balance.cUSD.raw} cUSD (${formatValue(balance.cUSD.base, baseCurrency)} @ ${formatValue(balance.cUSD.exchange, baseCurrency)}/cUSD)`}
-              <br />
-              {`${balance.cEUR.raw} cEUR (${formatValue(balance.cEUR.base, baseCurrency)} @ ${formatValue(balance.cEUR.exchange, baseCurrency)}/cEUR)`}
-              <br />
-              {`${balance.cREAL.raw} cREAL (value estimate not supported)`}
-            </>
+              <AccountTable
+                  rows={[
+                      { token: BaseCurrency.CELO, balance: +balance.CELO.raw, value: +balance.CELO.base, exchange: balance.CELO.exchange, baseCurrency },
+                      { token: BaseCurrency.USD, balance: +balance.cUSD.raw, value: +balance.cUSD.base, exchange: balance.cUSD.exchange, baseCurrency },
+                      { token: BaseCurrency.EUR, balance: +balance.cEUR.raw, value: +balance.cEUR.base, exchange: balance.cEUR.exchange, baseCurrency }
+                  ]}
+              />
           )}
         </Typography>
+        <Typography variant="h6">Select base currency for display:</Typography>
         <ButtonGroup variant="outlined" aria-label="outlined primary button group">
           { [ BaseCurrency.USD, BaseCurrency.EUR, BaseCurrency.ETH, BaseCurrency.CELO ].map(currency => (
             <Button key={currency} onClick={() => setBaseCurrency(currency)} variant={currency === baseCurrency ? "contained" : undefined}>
