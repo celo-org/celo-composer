@@ -45,6 +45,23 @@ yarn deploy
 
 Read more details about [the hardhat package here](packages/hardhat/README.md).
 
+### Alternate TruffleSuite Development of Celo App for deploying smart contracts. 
+The local development and deployment can be done using trufflesuite and ganache as well.
+1. Install ganache from https://trufflesuite.com/ganache/index.html and click quickstart to have a blockchain with 10 addresess.
+2. Install Trufflesuite by following the steps here : https://github.com/trufflesuite/truffle
+3. Create a new workspace, clone the repository and initiate truffle
+```shell
+mkdir Celoproject
+git clone https://github.com/celo-org/celo-progressive-dapp-starter
+truffle init
+```
+4. Open config.js on VSCode or any other editor to verify if the ganache settings and Truffle settings are in line with each other as shown here https://www.youtube.com/watch?v=Clf_WJqlzYI
+5. Compile the contracts by pressing F5 on VSCode and deploy using the following command 
+```shell
+truffle deploy --reset
+```
+6. Follow along the rest of the tutorial for deploying the rest of the app.
+
 ### In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 ```shell
