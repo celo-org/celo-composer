@@ -22,10 +22,10 @@ import { truncateAddress, truncateTxHash } from "@/utils";
 import { Storage } from "@celo-progressive-dapp-starter/hardhat/types/Storage";
 import { useQuery, gql } from "@apollo/client";
 
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-dayjs.extend(relativeTime)
+dayjs.extend(relativeTime);
 
 // The Graph query endpoint is defined in ../apollo-client.js
 
