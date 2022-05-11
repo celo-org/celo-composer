@@ -1,13 +1,31 @@
 import * as React from "react";
-import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Typography,
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from "@mui/material";
 
 import { useInput } from "@/hooks/useInput";
 import { useContractKit } from "@celo-tools/use-contractkit";
 import { useEffect, useState } from "react";
 import { SnackbarAction, useSnackbar } from "notistack";
-import { truncateAddress } from "@/utils";
+import { truncateAddress, truncateTxHash } from "@/utils";
 import { Storage } from "@celo-progressive-dapp-starter/hardhat/types/Storage";
 import { useQuery, gql } from "@apollo/client";
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 // The Graph query endpoint is defined in ../apollo-client.js
 
@@ -23,6 +41,44 @@ const QUERY = gql`
   }
 `;
 
+function StorageEventTable({ network, rows }) {
+  return (
+    <TableContainer>
+      <Table aria-label="transaction history">
+        <TableHead>
+          <TableRow>
+            <TableCell>Tx Hash</TableCell>
+            <TableCell align="right">Number</TableCell>
+            <TableCell align="right">Sender</TableCell>
+            <TableCell align="right">Timestamp</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                <Link href={`${network.explorer}/tx/${row.id}`} target="_blank">
+                  {truncateTxHash(row.id)}
+                </Link>
+              </TableCell>
+              <TableCell align="right">{row.number}</TableCell>
+              <TableCell align="right">
+                <Link href={`${network.explorer}/address/${row.sender}`} target="_blank">
+                  {truncateAddress(row.sender)}
+                </Link>
+              </TableCell>
+              <TableCell align="right">{dayjs(row.timestamp * 1e3).fromNow()}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+}
+
 
 export function StorageContract({ contractData }) {
   const { kit, address, network, performActions } = useContractKit();
@@ -30,7 +86,7 @@ export function StorageContract({ contractData }) {
   const [storageInput, setStorageInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState<string | null>(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  
+
   // Query the Graph endpoint specified in ../apollo-client.js 
   const { data: queryData, error: queryError } = useQuery(QUERY, {
     pollInterval: 2500,
@@ -39,9 +95,9 @@ export function StorageContract({ contractData }) {
 
   const contract = contractData
     ? (new kit.web3.eth.Contract(
-        contractData.abi,
-        contractData.address
-      ) as any as Storage)
+      contractData.abi,
+      contractData.address
+    ) as any as Storage)
     : null;
 
   useEffect(() => {
@@ -135,6 +191,9 @@ export function StorageContract({ contractData }) {
         <Button sx={{ m: 1, marginLeft: 0 }} variant="contained" onClick={getStorage}>
           Read Storage Contract
         </Button>
+      </Grid>
+      <Grid item sm={6} xs={12} sx={{ m: 2 }}>
+        {queryData && <StorageEventTable network={network} rows={queryData.updates}></StorageEventTable>}
       </Grid>
     </Grid>
   );
