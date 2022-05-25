@@ -10,55 +10,92 @@ import { useContractKit } from "@celo-tools/use-contractkit";
 import { truncateAddress, getWindowDimensions } from "@/utils";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { useThemeContext } from "@/contexts/userTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import { Polling } from "@/components";
+
+function AccountDetails() {
+  const { address, network, connect, destroy, kit } = useContractKit();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  return (
+    <>
+      {network && <Chip label={network.name} color="secondary" />}
+      {address && (
+        <>
+          <Chip
+            label={truncateAddress(address)}
+            color="info"
+            onDelete={destroy}
+            sx={{ mx: 1 }}
+          />
+          {!isMobile ? (
+            <Button variant="outlined" color="inherit" onClick={destroy}>
+              Disconnect
+            </Button>
+          ) : (
+            ""
+          )}
+        </>
+      )}
+      {!address && (
+        <Button
+          color="inherit"
+          variant="outlined"
+          onClick={() => connect().catch(e => console.log(e))}
+        >
+          Connect wallet
+        </Button>
+      )}
+
+    </>
+  )
+}
 
 export function Header() {
-  const { address, network, connect, destroy, kit } = useContractKit();
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-  const { theme, setTheme } = useThemeContext();
+  const { theme: themeContext, setTheme } = useThemeContext();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Celo Dapp Starter
-          </Typography>
-          {network && <Chip label={network.name} color="secondary" />}
-          {address && (
-            <>
-              <Chip
-                label={truncateAddress(address)}
-                color="info"
-                onDelete={destroy}
-                sx={{ mx: 1 }}
+      {isMobile ? (
+        <>
+          <AppBar position="static">
+            <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Celo Dapp Starter
+              </Typography>
+              <ThemeSwitcher
+                sx={{ m: 1 }}
+                onChange={e => setTheme(e.target.checked)}
+                checked={themeContext}
               />
-              {windowDimensions.width >= 600 ? (
-                <Button variant="outlined" color="inherit" onClick={destroy}>
-                  Disconnect
-                </Button>
-              ) : (
-                ""
-              )}
-            </>
-          )}
-          {!address && (
-            <Button
-              color="inherit"
-              variant="outlined"
-              onClick={() => connect().catch(e => console.log(e))}
-            >
-              Connect wallet
-            </Button>
-          )}
-          <ThemeSwitcher
-            sx={{ m: 1 }}
-            onChange={e => setTheme(e.target.checked)}
-            checked={theme}
-          />
-        </Toolbar>
-      </AppBar>
+            </Toolbar>
+          </AppBar>
+          <AppBar color="primary" sx={{ top: "auto", bottom: 0 }}>
+            <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
+              <AccountDetails />
+              <Polling/>
+            </Toolbar>
+          </AppBar>
+        </>
+      ) : (
+        <AppBar position="static">
+          <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Celo Dapp Starter
+            </Typography>
+            <AccountDetails />
+            <ThemeSwitcher
+              sx={{ m: 1 }}
+              onChange={e => setTheme(e.target.checked)}
+              checked={themeContext}
+            />
+          </Toolbar>
+        </AppBar>
+      )}
     </Box>
   );
 }
