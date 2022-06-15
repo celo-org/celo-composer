@@ -1,4 +1,4 @@
-# Celo Progressive Dapp Starter
+# Celo Composer
 
 A starter pack to get started with building dapps on Celo.
 
@@ -13,19 +13,19 @@ Prerequisites:
 3. Git
 
 ```shell
-git clone https://github.com/celo-org/celo-progressive-dapp-starter
+git clone https://github.com/celo-org/celo-composer
 ```
 
 ## Intro Video
 
 [![Intro Video](https://img.youtube.com/vi/MQg2sta0lr8/0.jpg)](https://youtu.be/MQg2sta0lr8)
 
-## Using the Dapp Starter
+## Using Celo Composer
 
 ### Set the correct node version (several Celo packages require using node version 12.x):
 
 ```shell
-cd celo-progressive-dapp-starter
+cd celo-composer
 nvm use # uses node v12 as specified in .nvmrc
 ```
 
