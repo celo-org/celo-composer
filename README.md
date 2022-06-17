@@ -16,21 +16,21 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-[![Contributors][contributors-shield]][contributors-url]
+<!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url] -->
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="docs-celo-composer.netlify.app">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-<h3 align="center">Celo Composer</h3>
+<h2 align="center">Celo Composer</h2>
 
   <p align="center">
     A starter pack to get started with building dapps on Celo.
@@ -255,8 +255,6 @@ Don't forget to give the project a star! Thanks again!
 - Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
 - Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ```
 <Tab label="Contract Label" {...a11yProps(#)} />
 ```
@@ -281,16 +279,12 @@ For M1 Mac developers who have installed nvm using brew, the server may crash. T
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- CONTACT -->
 
 ## Contact
 
 - [@CeloDevs](https://twitter.com/CeloDevs)
 - [Discord](https://discord.com/invite/6yWMkgM)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
 
