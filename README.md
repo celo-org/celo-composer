@@ -109,7 +109,7 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 
 ## Installation
 
-1. Clone the repo\*\*
+1. Clone the repo
 
 ```sh
 git clone https://github.com/celo-org/celo-composer
@@ -146,7 +146,7 @@ yarn install
 yarn dev
 ```
 
-5. Testing on Mobile
+6. Testing on Mobile
 
 - Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
 - Serve your React app to your mobile device for testing via a tunnel.
