@@ -77,8 +77,6 @@
 
 ## About The Project
 
-[![Main Image][main-image.png]](https://celo-composer.netlify.app/)
-
 Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
