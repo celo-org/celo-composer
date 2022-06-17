@@ -26,7 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="docs-celo-composer.netlify.app">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -35,7 +35,7 @@
   <p align="center">
     A starter pack to get started with building dapps on Celo.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="docs-celo-composer.netlify.app"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="celo-composer.netlify.app">View Demo</a>
@@ -77,8 +77,6 @@
 
 ## About The Project
 
----
-
 [![Main Image][main-image.png]](https://celo-composer.netlify.app/)
 
 Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
@@ -86,8 +84,6 @@ Celo Composer allows you to quickly build, deploy, and iterate on decentralized 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Built With
-
----
 
 Celo Composer is built on Celo to make it simple to build dApps using a variety of front-end frameworks.
 
@@ -105,21 +101,15 @@ Celo Composer is built on Celo to make it simple to build dApps using a variety 
 
 ## Getting Started
 
----
-
 To build your dApp, you'll need to install the dependencies, create a new project, and run the following commands:
 
 ## Prerequisites
-
----
 
 - Node (v12), [NVM](https://github.com/nvm-sh/nvm)
 - Yarn
 - Git
 
 ## Installation
-
----
 
 1. Clone the repo\*\*
 
@@ -170,8 +160,6 @@ npx localtunnel --port 3000
 
 ## Review
 
----
-
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
 - Edit frontend in `packages/react-app/pages/index.tsx`.
@@ -181,13 +169,9 @@ You can run `yarn deploy --reset` to force re-deploy your contracts to your loca
 
 ## Deploy Your DApp
 
----
-
 This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
 
 ## Developing with local devchain
-
----
 
 You can [import account account keys](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account) for the local development chain into Metamask. To print the private keys of the local chain accounts `cd /packages/hardhat` and run
 
@@ -201,13 +185,9 @@ If you are working on a local development blockchain, you may see errors about `
 
 ## React library choices
 
----
-
 The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [use-contractkit](https://www.npmjs.com/package/@celo-tools/use-contractkit) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
 
 ## The Graph
-
----
 
 **Using the Graph is not a requirement for building a web3 application. It is more of a convenience for when your application is reading a lot of data from a blockchain.**
 
@@ -220,8 +200,6 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 <!-- USAGE EXAMPLES -->
 
 ## 🔭 Learning Solidity
-
----
 
 📕 Read the docs: https://docs.soliditylang.org
 
@@ -238,15 +216,11 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 
 ## Support
 
----
-
 Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
 
 <!-- ROADMAP -->
 
 ## Roadmap
-
----
 
 See the [open issues](https://github.com/celo-org/celo-composer/issues) for a full list of proposed features (and known issues).
 
@@ -255,8 +229,6 @@ See the [open issues](https://github.com/celo-org/celo-composer/issues) for a fu
 <!-- CONTRIBUTING -->
 
 ## Contributing
-
----
 
 As a contributor, you can add your own dApp to this repository and include it as a tab for others to access. Follow the steps below and reference existing files for additional details to help you get started.
 
@@ -303,13 +275,9 @@ You should now be able to view your new dApp from [http://localhost:3000](http:/
 
 ## Troubleshooting
 
----
-
 For M1 Mac developers who have installed nvm using brew, the server may crash. To resolve this issue, take a look here at this [solution](https://stackoverflow.com/a/67254340)
 
 ## License
-
----
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -319,8 +287,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## Contact
 
----
-
 - [@CeloDevs](https://twitter.com/CeloDevs)
 - [Discord](https://discord.com/invite/6yWMkgM)
 
@@ -329,8 +295,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- ACKNOWLEDGMENTS -->
 
 ## Acknowledgments
-
----
 
 - This repo is heavily inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth).
 
