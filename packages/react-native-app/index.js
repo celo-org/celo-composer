@@ -12,7 +12,7 @@ const { withWalletConnect } = require("@walletconnect/react-native-dapp");
 registerRootComponent(
 	withWalletConnect(App, {
 		clientMeta: {
-			name: "React Native DApp Starter",
+			name: "Celo Composer React Native",
 			description: "React Native Starter Project to build on Celo",
 		},
 		redirectUrl:
