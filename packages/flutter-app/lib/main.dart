@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_web3/controllers/theme_controller.dart';
-import 'package:flutter_web3/controllers/walletconnect_controller.dart';
 import 'package:flutter_web3/screens/home_screen.dart';
 import 'package:flutter_web3/utils/theme_config.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +8,6 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<WalletConnectController>(
-          create: (_) => WalletConnectController(),
-        ),
         ChangeNotifierProvider<ThemeController>(
           create: (_) => ThemeController(),
         )
