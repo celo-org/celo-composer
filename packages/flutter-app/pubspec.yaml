@@ -42,8 +42,7 @@ dependencies:
   walletconnect_dart: ^0.0.6 # https://pub.dev/packages/walletconnect_dart/changelog
   walletconnect_secure_storage: ^1.0.0
   web3dart: ^2.4.0
-  flutter_walletconnect:
-    path: /Users/viral-sangani/Desktop/Project/flutter_walletconnect
+  flutter_walletconnect: ^0.0.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
