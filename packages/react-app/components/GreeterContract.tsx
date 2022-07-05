@@ -2,21 +2,21 @@ import * as React from "react";
 import { Box, Button, Divider, Grid, Typography, Link } from "@mui/material";
 
 import { useInput } from "@/hooks/useInput";
-import { useContractKit } from "@celo-tools/use-contractkit";
+import { useCelo } from "@celo/react-celo";
 import { useEffect, useState } from "react";
 import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
 import { truncateAddress } from "@/utils";
 import { Greeter } from "@celo-progressive-dapp-starter/hardhat/types/Greeter";
 
 export function GreeterContract({ contractData }) {
-  const { kit, address, network, performActions } = useContractKit();
+  const { kit, address, network, performActions } = useCelo();
   const [greeterValue, setGreeterValue] = useState<string | null>(null);
   const [greeterInput, setGreeterInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState<string>("");
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const contract = contractData
-    ? (new kit.web3.eth.Contract(
+    ? (new kit.connection.web3.eth.Contract(
         contractData.abi,
         contractData.address
       ) as any as Greeter)

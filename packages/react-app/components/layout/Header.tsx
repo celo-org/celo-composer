@@ -1,12 +1,11 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
-import { useContractKit } from "@celo-tools/use-contractkit";
+import { useCelo } from "@celo/react-celo";
 import { truncateAddress, getWindowDimensions } from "@/utils";
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { useThemeContext } from "@/contexts/userTheme";
@@ -15,7 +14,7 @@ import { useTheme } from "@mui/material/styles";
 import { Polling } from "@/components";
 
 function AccountDetails() {
-  const { address, network, connect, destroy, kit } = useContractKit();
+  const { address, network, connect, destroy } = useCelo();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

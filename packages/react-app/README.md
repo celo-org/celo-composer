@@ -16,7 +16,7 @@ yarn dev
 
 ## Dependencies
 
-- [use-contractkit](https://www.npmjs.com/package/@celo-tools/use-contractkit) for web3 connection and account management
+- [react-celo](https://www.npmjs.com/package/@celo/react-celo) for web3 connection and account management
 - [Next.js](https://nextjs.org/) app framework
 - [Apollo Client](https://www.npmjs.com/package/apollo-client) (for Graph queries)
 - [Material UI](https://mui.com/getting-started/installation/) for designed React Components
