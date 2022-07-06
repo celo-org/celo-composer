@@ -130,13 +130,17 @@ yarn install
 npx hardhat create-account # prints a private key + account
 ```
 
-4. Paste the private key in `packages/hardhat/.env` and fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
+4. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
+
+`PRIVATE_KEY="0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d"`
+
+5. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
 
 ```sh
 yarn deploy
 ```
 
-5. In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
+6. In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
 
 Read more details about the hardhat package [here](https://github.com/celo-org/celo-composer/blob/main/packages/hardhat/README.md).
 
@@ -146,7 +150,7 @@ yarn install
 yarn dev
 ```
 
-6. Testing on Mobile
+7. Testing on Mobile
 
 - Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
 - Serve your React app to your mobile device for testing via a tunnel.
