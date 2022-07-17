@@ -1,5 +1,5 @@
 <div id="top"></div>
-<h1 align="center">Celo React Native Celo Composer</h1>
+<h1 align="center">React Native Celo Composer</h1>
 
 <p float="right" align="middle">
 <img width="170" height="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/539px-React-icon.svg.png" />
