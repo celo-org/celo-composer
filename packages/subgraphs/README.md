@@ -1,4 +1,4 @@
-# Celo DApp Starter Subgraph
+# Celo Composer Subgraph
 
 ## Requirements
 
