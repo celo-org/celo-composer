@@ -16,8 +16,8 @@
     "hardhat:fork-mainnet": "yarn workspace @celo-composer/hardhat fork-mainnet",
     "hardhat:deploy-reset-watch": "yarn workspace @celo-composer/hardhat deploy-reset-watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "contract-types": "cd packages/hardhat && yarn && npx hardhat typechain",
-    "build-ui": "yarn contract-types && cd packages/react-app && yarn && yarn build"
+    "prepare-hardhat": "cd packages/hardhat && yarn && npx hardhat typechain && yarn deploy",
+    "build-ui": "yarn prepare-hardhat && cd packages/react-app && yarn && yarn build"
   },
   "repository": {
     "type": "git",
