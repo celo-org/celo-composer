@@ -26,7 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="docs-celo-composer.netlify.app">
+  <a href="https://celo-composer.netlify.app">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
@@ -35,10 +35,10 @@
   <p align="center">
     A starter pack to get started with building dapps on Celo.
     <br />
-    <a href="docs-celo-composer.netlify.app"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/celo-org/celo-composer"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="celo-composer.netlify.app">View Demo</a>
+    <a href="https://celo-composer.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/celo-org/celo-composer/issues">Report Bug</a>
     ·
