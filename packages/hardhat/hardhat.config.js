@@ -4,7 +4,7 @@ require("hardhat-deploy");
 const fs = require("fs");
 const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
-require('@typechain/hardhat')
+require("@typechain/hardhat");
 
 const defaultNetwork = "alfajores";
 const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
@@ -30,12 +30,12 @@ module.exports = {
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: process.env.PRIVATE_KEY,
       chainId: 44787,
     },
     celo: {
       url: "https://forno.celo.org",
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: process.env.PRIVATE_KEY,
       chainId: 42220,
     },
   },
@@ -46,10 +46,10 @@ module.exports = {
     deployer: 0,
   },
   typechain: {
-    outDir: 'types',
-    target: 'web3-v1',
+    outDir: "types",
+    target: "web3-v1",
     alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
-    externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
+    externalArtifacts: ["externalArtifacts/*.json"], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
   },
 };
 
@@ -70,24 +70,23 @@ task(
   async (taskArgs, hre) => {
     const accounts = await hre.ethers.getSigners();
     const hdNode = hre.ethers.utils.HDNode.fromMnemonic(DEVCHAIN_MNEMONIC);
-    for(let i = 0; i < accounts.length; i++) {
+    for (let i = 0; i < accounts.length; i++) {
       const account = hdNode.derivePath(`m/44'/60'/0'/0/${i}`);
-      console.log(`Account ${i}\nAddress: ${account.address}\nKey: ${account.privateKey}`);
+      console.log(
+        `Account ${i}\nAddress: ${account.address}\nKey: ${account.privateKey}`
+      );
     }
-  })
+  }
+);
 
-task("create-account",
-  "Prints a new private key",
-  async (taskArgs, hre) => {
-    const wallet = new hre.ethers.Wallet.createRandom();
-    console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
-    console.log();
-    console.log(`Your account address: `, wallet.address);
-  })
+task("create-account", "Prints a new private key", async (taskArgs, hre) => {
+  const wallet = new hre.ethers.Wallet.createRandom();
+  console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
+  console.log();
+  console.log(`Your account address: `, wallet.address);
+});
 
-task("print-account",
-  "Prints the address of the account",
-  () => {
-    const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
-    console.log(`Account: `, wallet.address);
-  })
+task("print-account", "Prints the address of the account", () => {
+  const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
+  console.log(`Account: `, wallet.address);
+});
