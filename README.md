@@ -4,11 +4,11 @@
 <h2> Inspiration 🔥</h2>
 <p>
 
-This project is inspired by the original [celo composer](https://github.com/celo-org/celo-composer) . I started this fork as an improvment to the original project because I find response to PR and Issue a bit slow than I expected, and which I figured its likely due to the busy schedule of the team at the moment and that is where you and I as a community memeber comes to help 😎.
+The original [celo composer](https://github.com/celo-org/celo-composer)  served as an inspiration for this project. I created this fork as an improvement to the original project because I noticed that the team was responding to PR and issue reports more slowly than I had anticipated. This is where you and I, as a community member, can help 😎.
 </p>
 
 <p>
-Contributuing to the original branch makes more sense but with the response friction, I would rather work on this branch with help from the community while keeping in touch with the Celo Devrel team to make sure this projects aligns with the original projects mission which is to anyone quickly build, deploy, and iterate on decentralized applications using Celo.
+Making contributions to the original branch makes more sense, but given the response friction, I would prefer to work on this branch with community assistance while staying in contact with the Celo Devrel team to ensure that this project is in line with the original project's mission, which is to enable anyone to quickly build, deploy, and iterate on decentralized applications using Celo.
 </p>
 
 <h2> Proposal 🔖</h2> 
@@ -32,11 +32,18 @@ Contributuing to the original branch makes more sense but with the response fric
 	- Solidity exploit series (Gamefiy this section, where learners fix smart contract issue with tips given)
 	- Assignments (In view)
 - **More Yarn Commands**
+- **More React Hooks**
+- **Tools & Resources Help/Docs**
+	- Hardhat
+	- Solidity
+	- Nextjs
 - **Comprehensive Documentation using Gitbook 📚**
 - **Youtube Videos 🎥**
 - **Talks 🎙**
 
 
+<h2> Bias 🙈</h2> 
+Solidity, Node.js, and React are technologies that I have experience with, so they will be a large part of the earlier work. I would appreciate any contributions that would help flutter or React Native develop and support more mobile applications.
 
 </div>
 
