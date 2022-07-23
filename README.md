@@ -49,7 +49,7 @@ Making contributions to the original branch makes more sense, but given the resp
 Solidity, Node.js, and React are technologies that I have experience with, so they will be a large part of the earlier work. I would appreciate any contributions that would help flutter or React Native develop and support more mobile applications.
 
 <h2>Author </h2>
-- 📧 oluwafemialofe@gmail.com
+- 📧 oluwafemialofe@gmail.com  
 - twitter @alofeoluwaslim
 
 </div>
