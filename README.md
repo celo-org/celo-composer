@@ -30,7 +30,8 @@ Contributuing to the original branch makes more sense but with the response fric
 	- Graph Protocol
 - **Challenge 🧩**
 	- Solidity exploit series (Gamefiy this section, where learners fix smart contract issue with tips given)
-	- 
+	- Assignments (In view)
+- **More Yarn Commands**
 - **Comprehensive Documentation using Gitbook 📚**
 - **Youtube Videos 🎥**
 - **Talks 🎙**
