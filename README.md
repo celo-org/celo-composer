@@ -18,16 +18,19 @@ Making contributions to the original branch makes more sense, but given the resp
 	 - Contract   (Read and write to any contract with writing a sigle line of code)
 	 - Events (List smart contract events)
 	 - Ramp (Buy Celo or cUSD with Fiat to your Dapp or Wallet)
+	 - ... (Keep adding to the list)
 - **Build Tutorial 🛠**
 	- ERC20 Token (Launch your token & distribute it)
 	- NFT Forest (Mint trees in a forest as NFT for preservation)
 	- Swap DEX (Swap between Celo & cUSD using Oracle to determine price)
 	-  Sign in with Celo (Trustless on chain login using your Celo wallet signature)
+	- ... (Keep adding to the list)
 - **Advance Topics ⛓** (Build a Dapp to cover the following topics)
 	- Smart contract proxy / Delegate call
 	- Upgradable contract
 	- Openzeppelin Defender
 	- Graph Protocol
+	- ... (Keep adding to the list)
 - **Challenge 🧩**
 	- Solidity exploit series (Gamefiy this section, where learners fix smart contract issue with tips given)
 	- Assignments (In view)
@@ -44,6 +47,10 @@ Making contributions to the original branch makes more sense, but given the resp
 
 <h2> Bias 🙈</h2> 
 Solidity, Node.js, and React are technologies that I have experience with, so they will be a large part of the earlier work. I would appreciate any contributions that would help flutter or React Native develop and support more mobile applications.
+
+<h2>Author </h2>
+- 📧 oluwafemialofe@gmail.com
+- twitter @alofeoluwaslim
 
 </div>
 
