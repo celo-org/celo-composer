@@ -1,4 +1,4 @@
-# Celo React Native DApp Starter
+# Celo Composer React Native App
 
 A starter pack to get started with building dapps on Celo.
 
@@ -12,7 +12,7 @@ A starter pack to get started with building dapps on Celo.
 -   Yarn
 -   NodeJS
 
-### Using the Dapp Starter
+### Using the React Native App
 
 ---
 

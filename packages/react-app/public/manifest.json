@@ -4,8 +4,8 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Celo DApp Starter",
-    "short_name": "DApp Starter",
+    "name": "Celo Composer React App",
+    "short_name": "Celo Composer",
     "description": "Demo app for building on Celo",
     "icons": [
         {

@@ -64,7 +64,7 @@ export function Header() {
           <AppBar position="static">
             <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Celo Dapp Starter
+                Celo Composer
               </Typography>
               <ThemeSwitcher
                 sx={{ m: 1 }}
@@ -84,7 +84,7 @@ export function Header() {
         <AppBar position="static">
           <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Celo Dapp Starter
+              Celo Composer
             </Typography>
             <AccountDetails />
             <ThemeSwitcher
