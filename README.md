@@ -36,6 +36,7 @@ Making contributions to the original branch makes more sense, but given the resp
 	- Assignments (In view)
 - **More Yarn Commands**
 - **More React Hooks**
+- **More Harhat Tasks**
 - **Tools & Resources Help/Docs**
 	- Hardhat
 	- Solidity
