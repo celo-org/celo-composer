@@ -69,7 +69,7 @@ npx hardhat typechain
 
 Read more about Typechain [here](https://github.com/dethcrypto/TypeChain) and more about the hardhat plugin [here](https://github.com/dethcrypto/TypeChain/tree/master/packages/hardhat).
 
-### Run sanity tests and print all core contract addresses:
+### Run sanity tests and print all core contract addresses
 
 ```shell
 npx @terminal-fi/celo-devchain --test
@@ -97,4 +97,20 @@ On Mainnet:
 
 ```shell
 npx hardhat --network celo sourcify
+```
+
+## Deploy with [Figment Datahub](https://datahub.figment.io/)
+
+Figment Datahub provides RPC & REST APIs for Celo network. To learn more about Datahub refer this doc - [https://docs.figment.io/introduction/what-is-datahub](https://docs.figment.io/introduction/what-is-datahub). Follow these steps to deploy your smart contract with Figment datahub's RPC.
+
+- Create account on [Datahub](https://datahub.figment.io/).
+- On the dashboard, click on `Create new app` and select **Celo** from the protocol list.
+- Once you have created an app, copy the api key.
+- Edit `hardhat.config.js` and update `alfajoresDatahub` and `celoDatahub` with the API Key.
+- Run the test or deploy the contract with following commands.
+
+```bash
+npx hardhat run scripts/run.ts --network alfajoresDatahub
+
+npx hardhat run scripts/deploy.ts --network celoDatahub
 ```
