@@ -14,9 +14,12 @@ Making contributions to the original branch makes more sense, but given the resp
 <h2> Proposal 🔖</h2> 
 
  - **Components 📦** (Add more components)
+	 - Create Passworded Wallet 
 	 - Faucet (Get test tokens into your wallet on Alfajeros)
 	 - Contract   (Read and write to any contract with writing a sigle line of code)
 	 - Events (List smart contract events)
+	 - Add New Tokens
+	 - Manage Nfts
 	 - Ramp (Buy Celo or cUSD with Fiat to your Dapp or Wallet)
 	 - ... (Keep adding to the list)
 - **Build Tutorial 🛠**
