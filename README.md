@@ -20,6 +20,7 @@ Making contributions to the original branch makes more sense, but given the resp
 	 - Events (List smart contract events)
 	 - Add New Tokens
 	 - Manage Nfts
+	 - Price History
 	 - Ramp (Buy Celo or cUSD with Fiat to your Dapp or Wallet)
 	 - ... (Keep adding to the list)
 - **Build Tutorial 🛠**
