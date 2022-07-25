@@ -55,6 +55,10 @@ A mobile dapp starter template to help you get started building DApps on Celo bl
 -   [Hardhat](https://hardhat.org/getting-started/)
 -   [Web3JS](https://web3js.readthedocs.io/en/v1.7.3/)
 
+=======
+
+# Celo Composer React Native App
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Getting Started
@@ -89,7 +93,7 @@ To get a local copy up and running follow these simple steps.
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+### Using the React Native App
 
 ---
 

@@ -1,1 +1,35 @@
 node_modules
+
+# IntelliJ project files
+*.iml
+*.ipr
+*.iws
+.idea
+
+# eclipse project file
+.settings/
+.classpath
+.project
+
+# NetBeans specific
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# OS
+.DS_Store
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp

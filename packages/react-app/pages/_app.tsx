@@ -1,10 +1,9 @@
 import React from "react";
-import "@celo-tools/use-contractkit/lib/styles.css";
-import Head from "next/head";
+import '@celo/react-celo/lib/styles.css';
 import { SnackbarProvider } from "notistack";
 import { ApolloProvider } from "@apollo/client";
 import client from "@/apollo-client";
-import { Alfajores, ContractKitProvider } from "@celo-tools/use-contractkit";
+import { Alfajores, CeloProvider } from "@celo/react-celo";
 import { AppProps } from "next/app";
 import { CustomThemeProvider } from "@/contexts/userTheme";
 import { Provider } from "react-redux"
@@ -23,12 +22,12 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
   return (
     <Provider store={store}>
       <CustomThemeProvider>
-        <ContractKitProvider
+        <CeloProvider
           dapp={{
-            name: "use-contractkit demo",
-            description: "A demo DApp to showcase functionality",
-            url: "https://use-contractkit.vercel.app",
-            icon: "https://use-contractkit.vercel.app/favicon.ico",
+            name: "Celo Composer",
+            description: "A demo dApp to showcase functionality",
+            url: "https://celo-composer.netlify.app/",
+            icon: "https://celo-composer.netlify.app/favicon.ico",
           }}
           network={Alfajores}
           // networks={[Mainnet, Alfajores]}
@@ -49,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
               </div>
             </ApolloProvider>
           </SnackbarProvider>
-        </ContractKitProvider>
+        </CeloProvider>
       </CustomThemeProvider>
     </Provider>
   );

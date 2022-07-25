@@ -1,11 +1,12 @@
 import * as React from "react";
 import { Divider, Grid, Typography, Link, ButtonGroup, Button, CircularProgress } from "@mui/material";
 
-import { useContractKit } from "@celo-tools/use-contractkit";
+import { useCelo } from "@celo/react-celo";
 import { useEffect, useState } from "react";
 import { truncateAddress } from "@/utils";
 
 import redstone from "redstone-api"
+import web3 from "web3";
 
 import AccountTable, { BaseCurrency } from './AccountTable';
 
@@ -18,7 +19,7 @@ async function getPrices() {
 }
 
 export function AccountInfo() {
-  const { kit, address, network } = useContractKit();
+  const { kit, address, network } = useCelo();
   const [ loadingBalance, setLoadingBalance ] = useState(true);
   const [ baseCurrency, setBaseCurrency ] = useState(BaseCurrency.USD);
 
@@ -39,9 +40,9 @@ export function AccountInfo() {
 
   async function fetchBalance() {
     const { CELO, cUSD, cEUR, cREAL } = await kit.getTotalBalance(address);
-    const celoAmount = kit.web3.utils.fromWei(CELO.toString(), 'ether');
-    const ceurAmount = kit.web3.utils.fromWei(cEUR.toString(), 'ether');
-    const cusdAmount = kit.web3.utils.fromWei(cUSD.toString(), 'ether');
+    const celoAmount = web3.utils.fromWei(CELO.toString(), 'ether');
+    const ceurAmount = web3.utils.fromWei(cEUR.toString(), 'ether');
+    const cusdAmount = web3.utils.fromWei(cUSD.toString(), 'ether');
     const { CELO: celoUsdPrice, EUR: eurUsdPrice, ETH: ethUsdPrice } = await getPrices();
     const scale = (
       baseCurrency === BaseCurrency.USD
@@ -52,22 +53,22 @@ export function AccountInfo() {
 
     setBalance({
       CELO: {
-        raw: kit.web3.utils.fromWei(CELO.toString(), 'ether'),
+        raw: web3.utils.fromWei(CELO.toString(), 'ether'),
         base: (celoUsdPrice.value * (+celoAmount) * scale),
         exchange: celoUsdPrice.value * scale
       },
       cEUR: {
-        raw: kit.web3.utils.fromWei(cEUR.toString(), 'ether'),
+        raw: web3.utils.fromWei(cEUR.toString(), 'ether'),
         base: (eurUsdPrice.value * (+ceurAmount) * scale),
         exchange: eurUsdPrice.value * scale
       },
       cUSD: {
-        raw: kit.web3.utils.fromWei(cUSD.toString(), 'ether'),
+        raw: web3.utils.fromWei(cUSD.toString(), 'ether'),
         base: (+cusdAmount * scale),
         exchange: scale
       },
       cREAL: {
-        raw: kit.web3.utils.fromWei(cREAL.toString(), 'ether'),
+        raw: web3.utils.fromWei(cREAL.toString(), 'ether'),
       }
     })
     setLoadingBalance(false)

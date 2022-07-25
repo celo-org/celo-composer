@@ -4,7 +4,7 @@ import {
   ThemeProvider,
   useMediaQuery,
 } from "@mui/material";
-import React, { PropsWithChildren, useContext } from "react";
+import React, { PropsWithChildren, useContext, useEffect } from "react";
 
 export const CustomThemeContext = React.createContext<{
   theme?: boolean;
@@ -32,6 +32,9 @@ export const CustomThemeProvider = (props: PropsWithChildren<{}>) => {
       }),
     [theme]
   );
+  useEffect(() => {
+    theme ? document.body.classList.add("tw-dark") : document.body.classList.remove("tw-dark");
+  }, [theme])
   return (
     <CustomThemeContext.Provider
       value={{

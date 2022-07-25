@@ -26,7 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="docs-celo-composer.netlify.app">
+  <a href="https://celo-composer.netlify.app">
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
@@ -35,10 +35,10 @@
   <p align="center">
     A starter pack to get started with building dapps on Celo.
     <br />
-    <a href="docs-celo-composer.netlify.app"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/celo-org/celo-composer"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="celo-composer.netlify.app">View Demo</a>
+    <a href="https://celo-composer.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/celo-org/celo-composer/issues">Report Bug</a>
     ·
@@ -103,7 +103,7 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 
 ## Prerequisites
 
-- Node (v12), [NVM](https://github.com/nvm-sh/nvm)
+- Node
 - Yarn
 - Git
 
@@ -113,16 +113,10 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 
 ```sh
 git clone https://github.com/celo-org/celo-composer
-```
-
-2. Set the correct node version (several Celo packages require using node version 12.x):
-
-```sh
 cd celo-composer
-nvm use # uses node v12 as specified in .nvmrc
 ```
 
-3. Get testnet funds and install dependencies.
+2. Get testnet funds and install dependencies.
 
 ```sh
 cd packages/hardhat
@@ -130,7 +124,11 @@ yarn install
 npx hardhat create-account # prints a private key + account
 ```
 
-4. Paste the private key in `packages/hardhat/.env` and fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
+3. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
+
+`PRIVATE_KEY="0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d"`
+
+4. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
 
 ```sh
 yarn deploy
@@ -183,7 +181,7 @@ If you are working on a local development blockchain, you may see errors about `
 
 ## React library choices
 
-The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [use-contractkit](https://www.npmjs.com/package/@celo-tools/use-contractkit) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
+The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [react-celo](https://www.npmjs.com/package/@celo/react-celo) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
 
 ## The Graph
 

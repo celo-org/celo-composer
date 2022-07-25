@@ -15,11 +15,11 @@ import {
 } from "@mui/material";
 
 import { useInput } from "@/hooks/useInput";
-import { useContractKit } from "@celo-tools/use-contractkit";
+import { useCelo } from "@celo/react-celo";
 import { useEffect, useState } from "react";
 import { SnackbarAction, useSnackbar } from "notistack";
 import { truncateAddress, truncateTxHash } from "@/utils";
-import { Storage } from "@celo-progressive-dapp-starter/hardhat/types/Storage";
+import { Storage } from "@celo-composer/hardhat/types/Storage";
 import { useQuery, gql } from "@apollo/client";
 
 import dayjs from 'dayjs';
@@ -81,20 +81,20 @@ function StorageEventTable({ network, rows }) {
 
 
 export function StorageContract({ contractData }) {
-  const { kit, address, network, performActions } = useContractKit();
+  const { kit, address, network, performActions } = useCelo();
   const [storageValue, setStorageValue] = useState<string | null>(null);
   const [storageInput, setStorageInput] = useInput({ type: "text" });
   const [contractLink, setContractLink] = useState<string | null>(null);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  // Query the Graph endpoint specified in ../apollo-client.js 
+  // Query the Graph endpoint specified in ../apollo-client.js
   const { data: queryData, error: queryError } = useQuery(QUERY, {
     pollInterval: 2500,
   });
   console.log('The Graph query results', queryData);
 
   const contract = contractData
-    ? (new kit.web3.eth.Contract(
+    ? (new kit.connection.web3.eth.Contract(
       contractData.abi,
       contractData.address
     ) as any as Storage)
