@@ -30,7 +30,7 @@ module.exports = {
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: process.env.PRIVATE_KEY,
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 44787,
     },
     alfajoresDatahub: {
@@ -40,7 +40,7 @@ module.exports = {
     },
     celo: {
       url: "https://forno.celo.org",
-      accounts: process.env.PRIVATE_KEY,
+      accounts: [process.env.PRIVATE_KEY],
       chainId: 42220,
     },
     celoDatahub: {
