@@ -27,6 +27,7 @@ Making contributions to the original branch makes more sense, but given the resp
 	- ERC20 Token (Launch your token & distribute it)
 	- NFT Forest (Mint trees in a forest as NFT for preservation)
 	- Swap DEX (Swap between Celo & cUSD using Oracle to determine price)
+	- Simple Betting Game (Winner Takes All)
 	-  Sign in with Celo (Trustless on chain login using your Celo wallet signature)
 	- ... (Keep adding to the list)
 - **Advance Topics ⛓** (Build a Dapp to cover the following topics)
