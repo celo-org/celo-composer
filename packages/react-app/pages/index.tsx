@@ -4,6 +4,8 @@ import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contra
 import { useCelo } from "@celo/react-celo";
 import { StorageContract, GreeterContract, AccountInfo, Polling } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
+import { useEffect } from "react";
+import { ContractLayout } from "@/components/contract-components"
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -29,18 +31,22 @@ export default function App() {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Account" {...a11yProps(0)} />
-            <Tab label="Storage" {...a11yProps(1)} />
-            <Tab label="Greeter" {...a11yProps(2)} />
+            <Tab label="Contract" {...a11yProps(0)} />
+            <Tab label="Account" {...a11yProps(1)} />
+            <Tab label="Storage" {...a11yProps(2)} />
+            <Tab label="Greeter" {...a11yProps(3)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <AccountInfo></AccountInfo>
+          <ContractLayout contractData={contracts?.Storage}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <StorageContract contractData={contracts?.Storage} />
+          <AccountInfo></AccountInfo>
         </TabPanel>
         <TabPanel value={value} index={2}>
+          <StorageContract contractData={contracts?.Storage} />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
           <GreeterContract contractData={contracts?.Greeter} />
         </TabPanel>
       </Box>

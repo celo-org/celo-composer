@@ -27,6 +27,13 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     log: true,
   });
 
+  await deploy("SupportToken", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+    from: deployer,
+    //args: [ "Hello", ethers.utils.parseEther("1.5") ],
+    log: true,
+  });
+
   // Getting a previously deployed contract
   // const Greeter = new ethers.Contract("Greeter", deployer);
 
@@ -56,7 +63,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     LibraryName: **LibraryAddress**
   });
   */
-
 };
 
-module.exports.tags = ["Greeter", "Storage"];
+module.exports.tags = ["Greeter", "Storage", "SupportToken"];
