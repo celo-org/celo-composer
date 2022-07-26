@@ -58,14 +58,14 @@ export default function App() {
           <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs">
             <Tab label="Account" {...a11yProps(0)} />
             {
-             buildTabs()
+             contracts && buildTabs()
             }
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <AccountInfo></AccountInfo>
         </TabPanel>
-        {buildTabContent()}
+        {contracts && buildTabContent()}
       </Box>
       <Polling/>
     </AppLayout>
