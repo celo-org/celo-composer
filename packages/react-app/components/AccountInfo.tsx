@@ -96,7 +96,6 @@ export function AccountInfo() {
         )}
         <Divider sx={{ m: 1 }} />
         <Typography variant="h6">Balance:</Typography>
-        <Typography sx={{ m: 1, marginLeft: 0, wordWrap: "break-word" }}>
           { loadingBalance ? <CircularProgress /> : (
               <AccountTable
                   rows={[
@@ -106,7 +105,6 @@ export function AccountInfo() {
                   ]}
               />
           )}
-        </Typography>
         <Typography variant="h6">Select base currency for display:</Typography>
         <ButtonGroup variant="outlined" aria-label="outlined primary button group">
           { [ BaseCurrency.USD, BaseCurrency.EUR, BaseCurrency.ETH, BaseCurrency.CELO ].map(currency => (
