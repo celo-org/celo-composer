@@ -4,6 +4,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useCelo } from "@celo/react-celo";
+
 import {
   ContractFields,
   ContractFuncTypeTag,
@@ -15,10 +17,14 @@ import Box from "@mui/material/Box";
 export function ContractLayout({ contractName, contractData }) {
   const [viewFunctions, setViewFunctions] = useState([]);
   const [stateFunctions, setStateFunctions] = useState([]);
+  const [contractFunctions, setContractFunctions] = useState([]);
+  const { kit, network } = useCelo();
+  const [contract, setContract] = useState({});
 
   useEffect(() => {
     const abi = contractData.abi;
     if (abi) {
+      console.log("C data: ", contractData);
       setViewFunctions(
         abi.filter(
           (contract) =>
@@ -33,33 +39,48 @@ export function ContractLayout({ contractName, contractData }) {
             ["nonpayable", "payable"].includes(contract.stateMutability)
         )
       );
+
+      setContractFunctions([...viewFunctions, ...stateFunctions]);
+
+      const contract = new kit.connection.web3.eth.Contract(
+        contractData.abi,
+        contractData.address
+      );
+
+      setContract(contract);
     }
-  }, []);
+  }, [contractData]);
 
   return (
     <div>
       <h4>
-        {contractName} deployed at <a href="#">{contractData.address}</a>
+        {contractName} deployed at{" "}
+        <a
+          target="_blank"
+          href={`${network.explorer}/address/${contractData.address}`}
+        >
+          {contractData.address}
+        </a>
       </h4>
       <div>
         {viewFunctions.map(
           ({ inputs, name, outputs, stateMutability }, key) => {
             return (
-              <Accordion>
+              <Accordion key={key}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={"panel" + key + "-content"}
                   id={"panel" + key + "-header"}
                 >
-                  <Typography>
-                    {name} <ContractFuncTypeTag funcType="view" />
-                  </Typography>
+                  <Typography mr={1}>{name}</Typography>
+                  <ContractFuncTypeTag funcType={stateMutability} />
                 </AccordionSummary>
                 <AccordionDetails>
                   <ContractFields
+                    funcName={name}
                     inputs={inputs}
-                    name={name}
                     outputs={outputs}
+                    contract={contract}
                     stateMutability={stateMutability}
                   />
                 </AccordionDetails>
@@ -67,33 +88,31 @@ export function ContractLayout({ contractName, contractData }) {
             );
           }
         )}
-        {/* {stateFunctions.map(
+        {stateFunctions.map(
           ({ inputs, name, outputs, stateMutability }, key) => {
             return (
-              <Accordion>
+              <Accordion key={key}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={"panel" + key + "-content"}
                   id={"panel" + key + "-header"}
                 >
-                  <Typography>
-                    {name} <ContractFuncTypeTag funcType={stateMutability} />
-                  </Typography>
+                  <Typography mr={1}>{name}</Typography>
+                  <ContractFuncTypeTag funcType={stateMutability} />
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                    <ContractFields
-                      inputs={inputs}
-                      name={name}
-                      outputs={outputs}
-                      stateMutability={stateMutability}
-                    />
-                  </Box>
+                  <ContractFields
+                    funcName={name}
+                    inputs={inputs}
+                    outputs={outputs}
+                    contract={contract}
+                    stateMutability={stateMutability}
+                  />
                 </AccordionDetails>
               </Accordion>
             );
           }
-        )} */}
+        )}
       </div>
     </div>
   );

@@ -5,25 +5,97 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { Link } from "@mui/material";
+import { useCelo } from "@celo/react-celo";
+import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
 
-export function ContractFields({ inputs, name, outputs, stateMutability }) {
+export function ContractFields({
+  inputs,
+  funcName,
+  outputs,
+  stateMutability,
+  contract,
+}) {
   const [params, setParams] = useState({});
+  const [result, setResult] = useState("");
+  const { kit, address, network, performActions } = useCelo();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const handleChange = (event) => {
+  function handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
-    setParams({ ...params, ...{ name: value } });
-    console.log(params);
-  };
+
+    setParams({ ...params, ...{ [name]: value } });
+  }
 
   function buttonColor(funcType) {
     switch (funcType) {
-      case "view":
-        return "primary";
       case "nonpayable":
         return "secondary";
       case "payable":
         return "error";
+      default:
+        return "primary";
+    }
+  }
+
+  function getReArrangedFuncArgs() {
+    let orderedArgs = [];
+    inputs.forEach((field) => {
+      orderedArgs.push(params[field.name]);
+    });
+
+    return orderedArgs;
+  }
+
+  async function handleOnSubmit() {
+    const args = getReArrangedFuncArgs();
+
+    if (["view", "pure"].includes(stateMutability)) {
+      const result = await contract.methods[funcName](...args).call();
+      setResult(result);
+    } else {
+      try {
+        await performActions(async (kit) => {
+          const gasLimit = await contract.methods[funcName](
+            ...args
+          ).estimateGas();
+
+          const result = await contract.methods[funcName](...args)
+            //@ts-ignore
+            .send({ from: address, gasLimit });
+
+          console.log(result);
+
+          const variant = result.status == true ? "success" : "error";
+          const url = `${network.explorer}/tx/${result.transactionHash}`;
+          const action = (key) => (
+            <>
+              <Link href={url} target="_blank">
+                View in Explorer
+              </Link>
+              <Button
+                onClick={() => {
+                  closeSnackbar(key);
+                }}
+              >
+                X
+              </Button>
+            </>
+          );
+          enqueueSnackbar("Transaction processed", {
+            variant,
+            action,
+          });
+        });
+      } catch (e) {
+        enqueueSnackbar(
+          e.message + " Check browser console for more details.",
+          { variant: "error" }
+        );
+        console.log(e);
+      }
     }
   }
 
@@ -31,29 +103,31 @@ export function ContractFields({ inputs, name, outputs, stateMutability }) {
     <>
       {inputs.map((input, key) => {
         const name = input.name;
-        setParams({ ...params, ...{ name: "" } });
-
         return (
-          <>
-            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-              <FormControl sx={{ m: 1 }}>
-                <InputLabel htmlFor={name}>{name}</InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-amount"
-                  label={name}
-                  name={name}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Box>
+          <Box sx={{ display: "flex", flexWrap: "wrap" }} key={key}>
             <FormControl sx={{ m: 1 }}>
-              <Button variant="contained" color={buttonColor(stateMutability)}>
-                {stateMutability === "view" ? "Call" : "Transact"}
-              </Button>
+              <InputLabel htmlFor={name}>{name}</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                label={name}
+                name={name}
+                onChange={handleChange}
+                onKeyUp={handleChange}
+              />
             </FormControl>
-          </>
+          </Box>
         );
       })}
+      <FormControl sx={{ m: 1 }}>
+        <Button
+          variant="contained"
+          color={buttonColor(stateMutability)}
+          onClick={handleOnSubmit}
+        >
+          {["view", "pure"].includes(stateMutability) ? "Call" : "Transact"}
+        </Button>
+        {result && <Typography mt={1}>Response: {result}</Typography>}
+      </FormControl>
     </>
   );
 }

@@ -32,7 +32,7 @@ export default function App() {
     return (
       Object.keys(contracts).map((contractName,key)=>{
         key += 1;
-        return <Tab label={contractName} {...a11yProps(key)} />
+        return <Tab label={contractName} {...a11yProps(key)} key={key} />
       })
     )
   }
@@ -43,7 +43,7 @@ export default function App() {
         let contractName = Object.keys(contracts);
         key += 1;
         return (
-          <TabPanel value={value} index={key}>
+          <TabPanel value={value} index={key} key={key}>
         <ContractLayout contractName={contractName[key]} contractData={contract}/>
         </TabPanel>
         )
