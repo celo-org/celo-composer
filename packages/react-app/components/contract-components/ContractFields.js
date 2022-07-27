@@ -49,7 +49,9 @@ export function ContractFields({
     return orderedArgs;
   }
 
-  async function handleOnSubmit() {
+  async function handleOnSubmit(e) {
+    e.preventDefault();
+
     const args = getReArrangedFuncArgs();
 
     if (["view", "pure"].includes(stateMutability)) {
@@ -101,33 +103,36 @@ export function ContractFields({
 
   return (
     <>
-      {inputs.map((input, key) => {
-        const name = input.name;
-        return (
-          <Box sx={{ display: "flex", flexWrap: "wrap" }} key={key}>
-            <FormControl sx={{ m: 1 }}>
-              <InputLabel htmlFor={name}>{name}</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                label={name}
-                name={name}
-                onChange={handleChange}
-                onKeyUp={handleChange}
-              />
-            </FormControl>
-          </Box>
-        );
-      })}
-      <FormControl sx={{ m: 1 }}>
-        <Button
-          variant="contained"
-          color={buttonColor(stateMutability)}
-          onClick={handleOnSubmit}
-        >
-          {["view", "pure"].includes(stateMutability) ? "Call" : "Transact"}
-        </Button>
-        {result && <Typography mt={1}>Response: {result}</Typography>}
-      </FormControl>
+      <form onSubmit={handleOnSubmit} autoComplete="off">
+        {inputs.map((input, key) => {
+          const name = input.name;
+          return (
+            <Box sx={{ display: "flex", flexWrap: "wrap" }} key={key}>
+              <FormControl sx={{ m: 1 }}>
+                <InputLabel htmlFor={name}>{name}</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  label={name}
+                  name={name}
+                  onChange={handleChange}
+                  onKeyUp={handleChange}
+                  required
+                />
+              </FormControl>
+            </Box>
+          );
+        })}
+        <FormControl sx={{ m: 1 }}>
+          <Button
+            variant="contained"
+            color={buttonColor(stateMutability)}
+            type="submit"
+          >
+            {["view", "pure"].includes(stateMutability) ? "Call" : "Transact"}
+          </Button>
+          {result && <Typography mt={1}>Response: {result}</Typography>}
+        </FormControl>
+      </form>
     </>
   );
 }

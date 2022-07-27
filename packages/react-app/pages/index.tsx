@@ -26,8 +26,6 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
-    console.log(contracts);
-
   function buildTabs() {
     return (
       Object.keys(contracts).map((contractName,key)=>{

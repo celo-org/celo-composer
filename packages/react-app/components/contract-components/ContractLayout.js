@@ -24,7 +24,6 @@ export function ContractLayout({ contractName, contractData }) {
   useEffect(() => {
     const abi = contractData.abi;
     if (abi) {
-      console.log("C data: ", contractData);
       setViewFunctions(
         abi.filter(
           (contract) =>

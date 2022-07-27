@@ -23,7 +23,7 @@ contract Greeter {
         emit newGreeting(_greeting, msg.sender);
     }
 
-    function greetingsAvailable() public returns (string memory,string memory, string memory){
-        return ("Morning sunshine", "Good day", "Have a nice night");
-    }
+    // function greetingsAvailable() public returns (string memory,string memory, string memory){
+    //     return ("Morning sunshine", "Good day", "Have a nice night");
+    // }
 }
