@@ -41,6 +41,10 @@ Making contributions to the original branch makes more sense, but given the resp
 	- Assignments (In view)
 - **More Yarn Commands**
 - **More React Hooks**
+- **Development Tools**
+	- Solidity Linter
+	- Prettier (With both Solidity support and JS)
+	- Slither (Solidity code analysis)
 - **More Harhat Tasks**
 - **Tools & Resources Help/Docs**
 	- Hardhat
