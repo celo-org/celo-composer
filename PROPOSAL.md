@@ -45,6 +45,7 @@ Making contributions to the original branch makes more sense, but given the resp
 	- Solidity Linter
 	- Prettier (With both Solidity support and JS)
 	- Slither (Solidity code analysis)
+	- Husky
 - **More Harhat Tasks**
 - **Tools & Resources Help/Docs**
 	- Hardhat
