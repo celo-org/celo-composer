@@ -41,12 +41,16 @@ export function ContractLayout({ contractName, contractData }) {
 
       setContractFunctions([...viewFunctions, ...stateFunctions]);
 
-      const contract = new kit.connection.web3.eth.Contract(
-        contractData.abi,
-        contractData.address
-      );
+      try {
+        const contract = new kit.connection.web3.eth.Contract(
+          contractData.abi,
+          contractData.address
+        );
 
-      setContract(contract);
+        setContract(contract);
+      } catch (error) {
+        cnsole.log(error);
+      }
     }
   }, [contractData]);
 

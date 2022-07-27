@@ -55,8 +55,16 @@ export function ContractFields({
     const args = getReArrangedFuncArgs();
 
     if (["view", "pure"].includes(stateMutability)) {
-      const result = await contract.methods[funcName](...args).call();
-      setResult(result);
+      try {
+        const result = await contract.methods[funcName](...args).call();
+        setResult(result);
+      } catch (error) {
+        enqueueSnackbar(
+          e.message + " Check browser console for more details.",
+          { variant: "error" }
+        );
+        console.log(e);
+      }
     } else {
       try {
         await performActions(async (kit) => {
