@@ -1,10 +1,7 @@
 {
-  "name": "@celo-progressive-dapp-starter/react-app",
+  "name": "@celo-composer/react-app",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": "12.x"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,11 +10,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.8",
-    "@celo-progressive-dapp-starter/hardhat": "^1.0.0",
+    "@celo-composer/hardhat": "^1.0.0",
     "@celo/contractkit": "^2.0.0",
     "@celo/react-celo": "^4.0.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.4.0",
     "@reduxjs/toolkit": "^1.8.1",
     "autoprefixer": "^10.4.2",

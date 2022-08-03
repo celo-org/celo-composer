@@ -1,4 +1,4 @@
-# Celo DApp Starter Frontend
+# Celo Composer Frontend
 
 ## Getting Started
 

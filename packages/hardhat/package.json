@@ -1,10 +1,7 @@
 {
-  "name": "@celo-progressive-dapp-starter/hardhat",
+  "name": "@celo-composer/hardhat",
   "version": "1.0.0",
   "license": "MIT",
-  "engines": {
-    "node": "12.x"
-  },
   "scripts": {
     "test": "hardhat test",
     "test-local": "hardhat test --network hardhat",

@@ -1,9 +1,12 @@
 import * as React from "react";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
-import deployedContracts from "@celo-progressive-dapp-starter/hardhat/deployments/hardhat_contracts.json";
+import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import { useCelo } from "@celo/react-celo";
-import { StorageContract, GreeterContract, AccountInfo, Polling } from "@/components";
+import { AccountInfo, Polling, ContractEventListener } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
+import { useEffect } from "react";
+import { ContractLayout } from "@/components/contract-components";
+import Grid from "@mui/material/Grid";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -14,6 +17,7 @@ interface TabPanelProps {
 export default function App() {
   const { network } = useCelo();
   const [value, setValue] = React.useState(0);
+  const [eventConfig, setEventConfig] = React.useState([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -24,27 +28,93 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
+  //Here we create config to watch
+  //all events of contract we ever deployed
+  useEffect(() => {
+    if (contracts) {
+      let configList = [];
+      for (const contract in contracts) {
+        configList.push({
+          name: contract,
+          abi: contracts[contract].abi,
+          address: contracts[contract].address,
+        });
+      }
+
+      setEventConfig(configList);
+    }
+  }, [contracts]);
+
+  function buildTabs() {
+    return Object.keys(contracts).map((contractName, key) => {
+      key += 1;
+      return <Tab label={contractName} {...a11yProps(key)} key={key} />;
+    });
+  }
+
+  function buildTabContent() {
+    return Object.values(contracts).map((contract, key) => {
+      let contractName = Object.keys(contracts);
+      key += 1;
+      return (
+        <TabPanel value={value} index={key} key={key}>
+          <ContractLayout
+            contractName={contractName[key]}
+            contractData={contract}
+          />
+        </TabPanel>
+      );
+    });
+  }
+
   return (
     <AppLayout title="Celo Starter" description="Celo Starter">
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs">
-            <Tab label="Account" {...a11yProps(0)} />
-            <Tab label="Storage" {...a11yProps(1)} />
-            <Tab label="Greeter" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <AccountInfo></AccountInfo>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <StorageContract contractData={contracts?.Storage} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <GreeterContract contractData={contracts?.Greeter} />
-        </TabPanel>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                variant="scrollable"
+                scrollButtons
+                allowScrollButtonsMobile
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs"
+              >
+                <Tab label="Account" {...a11yProps(0)} />
+                {contracts && buildTabs()}
+              </Tabs>
+            </Box>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Box sx={{ width: "100%" }}>
+              <TabPanel value={value} index={0}>
+                <AccountInfo></AccountInfo>
+              </TabPanel>
+              {contracts && buildTabContent()}
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h5">Events: </Typography>
+
+            <div
+              style={{
+                width: "100%",
+                border: "1px solid grey",
+                height: "100%",
+                padding: "0.5rem",
+                overflowY: "scroll",
+                background: "black",
+                height: "25rem",
+              }}
+            >
+              <ContractEventListener config={eventConfig} />
+            </div>
+          </Grid>
+        </Grid>
       </Box>
-      <Polling/>
+      <Polling />
     </AppLayout>
   );
 }
