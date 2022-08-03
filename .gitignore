@@ -33,3 +33,5 @@ nb-configuration.xml
 *.log
 *.pyc
 *.swp
+
+PROPOSAL.md

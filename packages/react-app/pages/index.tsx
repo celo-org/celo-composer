@@ -4,6 +4,8 @@ import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contra
 import { useCelo } from "@celo/react-celo";
 import { StorageContract, GreeterContract, AccountInfo, Polling } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
+import { useEffect } from "react";
+import { ContractLayout } from "@/components/contract-components"
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,25 +26,44 @@ export default function App() {
       network?.name?.toLocaleLowerCase()
     ]?.contracts;
 
+  function buildTabs() {
+    return (
+      Object.keys(contracts).map((contractName,key)=>{
+        key += 1;
+        return <Tab label={contractName} {...a11yProps(key)} key={key} />
+      })
+    )
+  }
+
+  function buildTabContent(){
+     return (
+      Object.values(contracts).map((contract,key)=>{
+        let contractName = Object.keys(contracts);
+        key += 1;
+        return (
+          <TabPanel value={value} index={key} key={key}>
+        <ContractLayout contractName={contractName[key]} contractData={contract}/>
+        </TabPanel>
+        )
+      })
+    )
+  }
+
   return (
     <AppLayout title="Celo Starter" description="Celo Starter">
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs variant="scrollable" scrollButtons allowScrollButtonsMobile value={value} onChange={handleChange} aria-label="basic tabs">
             <Tab label="Account" {...a11yProps(0)} />
-            <Tab label="Storage" {...a11yProps(1)} />
-            <Tab label="Greeter" {...a11yProps(2)} />
+            {
+             contracts && buildTabs()
+            }
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           <AccountInfo></AccountInfo>
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          <StorageContract contractData={contracts?.Storage} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <GreeterContract contractData={contracts?.Greeter} />
-        </TabPanel>
+        {contracts && buildTabContent()}
       </Box>
       <Polling/>
     </AppLayout>
