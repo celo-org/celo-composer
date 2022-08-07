@@ -41,6 +41,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 widget.text,
                 style: const TextStyle(
                   color: Colors.white,
+                  fontFamily: 'Poppins',
                   fontSize: 20,
                 ),
               ),

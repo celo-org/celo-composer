@@ -33,6 +33,7 @@ extension BlockchainFlavorExtention on BlockchainFlavor {
 var logger = Logger(printer: SimpleLogPrinter(''));
 
 class ColorConstants {
+  static Color whiteColor = const Color(0xFFF5F5F5);
   static Color lightScaffoldBackgroundColor = const Color(0xFFF5F5F5);
   static Color darkScaffoldBackgroundColor = const Color(0xFF1D1D1D);
 

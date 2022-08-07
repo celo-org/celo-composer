@@ -103,6 +103,7 @@ Why Celo Composer Flutter?
 * [url_launcher](https://pub.dev/packages/url_launcher)
 * [walletconnect_dart](https://pub.dev/packages/walletconnect_dart)
 * [walletconnect_secure_storage](https://pub.dev/packages/walletconnect_secure_storage)
+* [QR Flutter](https://pub.dev/packages/qr_flutter)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
