@@ -47,6 +47,9 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
+## 📚 Documentation
+
+Guides, Tutorials, Videos, Documentation, Builds & Challenge, visit https://alofe-oluwafemi.gitbook.io/celo-composer-docs/
 
 <details>
   <summary>Table of Contents</summary>
