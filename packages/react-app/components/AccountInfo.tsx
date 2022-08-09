@@ -12,6 +12,7 @@ import {
 import { useCelo } from "@celo/react-celo";
 import { useEffect, useState } from "react";
 import { truncateAddress } from "@/utils";
+import {utils as etherUtil, BigNumber} from "ethers";
 
 import redstone from "redstone-api";
 import web3 from "web3";
@@ -63,15 +64,12 @@ export function AccountInfo() {
 
   async function fetchBalance() {
     const { CELO, cUSD, cEUR, cREAL } = await kit.getTotalBalance(address);
-    const celoAmount = web3.utils.fromWei(CELO.toString(), "ether");
-    const ceurAmount = web3.utils.fromWei(cEUR.toString(), "ether");
-    const cusdAmount = web3.utils.fromWei(cUSD.toString(), "ether");
-    const {
-      CELO: celoUsdPrice,
-      EUR: eurUsdPrice,
-      ETH: ethUsdPrice,
-    } = await getPrices();
-    const scale =
+    const celoAmount = etherUtil.formatUnits(CELO.toFixed());
+    const ceurAmount = etherUtil.formatUnits(cEUR.toFixed());
+    const cusdAmount = etherUtil.formatUnits(cUSD.toFixed());
+    const crealAmount = etherUtil.formatUnits(cREAL.toFixed());
+    const { CELO: celoUsdPrice, EUR: eurUsdPrice, ETH: ethUsdPrice } = await getPrices();
+    const scale = (
       baseCurrency === BaseCurrency.USD
         ? 1
         : baseCurrency === BaseCurrency.EUR
@@ -82,25 +80,25 @@ export function AccountInfo() {
 
     setBalance({
       CELO: {
-        raw: web3.utils.fromWei(CELO.toString(), "ether"),
-        base: celoUsdPrice.value * +celoAmount * scale,
-        exchange: celoUsdPrice.value * scale,
+        raw: celoAmount,
+        base: (celoUsdPrice.value * (+celoAmount) * scale),
+        exchange: celoUsdPrice.value * scale
       },
       cEUR: {
-        raw: web3.utils.fromWei(cEUR.toString(), "ether"),
-        base: eurUsdPrice.value * +ceurAmount * scale,
-        exchange: eurUsdPrice.value * scale,
+        raw: ceurAmount,
+        base: (eurUsdPrice.value * (+ceurAmount) * scale),
+        exchange: eurUsdPrice.value * scale
       },
       cUSD: {
-        raw: web3.utils.fromWei(cUSD.toString(), "ether"),
-        base: +cusdAmount * scale,
-        exchange: scale,
+        raw: cusdAmount,
+        base: (+cusdAmount * scale),
+        exchange: scale
       },
       cREAL: {
-        raw: web3.utils.fromWei(cREAL.toString(), "ether"),
-      },
-    });
-    setLoadingBalance(false);
+        raw: crealAmount,
+      }
+    })
+    setLoadingBalance(false)
   }
 
   useEffect(() => {
@@ -123,35 +121,15 @@ export function AccountInfo() {
         )}
         <Divider sx={{ m: 1 }} />
         <Typography variant="h6">Balance:</Typography>
-        {loadingBalance ? (
-          <CircularProgress />
-        ) : (
-          <AccountTable
-            rows={[
-              {
-                token: BaseCurrency.CELO,
-                balance: +balance.CELO.raw,
-                value: +balance.CELO.base,
-                exchange: balance.CELO.exchange,
-                baseCurrency,
-              },
-              {
-                token: BaseCurrency.USD,
-                balance: +balance.cUSD.raw,
-                value: +balance.cUSD.base,
-                exchange: balance.cUSD.exchange,
-                baseCurrency,
-              },
-              {
-                token: BaseCurrency.EUR,
-                balance: +balance.cEUR.raw,
-                value: +balance.cEUR.base,
-                exchange: balance.cEUR.exchange,
-                baseCurrency,
-              },
-            ]}
-          />
-        )}
+          { loadingBalance ? <CircularProgress /> : (
+              <AccountTable
+                  rows={[
+                      { token: BaseCurrency.CELO, balance: +balance.CELO.raw, value: +balance.CELO.base, exchange: balance.CELO.exchange, baseCurrency },
+                      { token: BaseCurrency.USD, balance: +balance.cUSD.raw, value: +balance.cUSD.base, exchange: balance.cUSD.exchange, baseCurrency },
+                      { token: BaseCurrency.EUR, balance: +balance.cEUR.raw, value: +balance.cEUR.base, exchange: balance.cEUR.exchange, baseCurrency }
+                  ]}
+              />
+          )}
         <Typography variant="h6">Select base currency for display:</Typography>
         <ButtonGroup
           variant="outlined"
