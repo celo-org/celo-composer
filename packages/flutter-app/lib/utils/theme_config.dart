@@ -41,7 +41,6 @@ class ThemeConfig {
         backgroundColor: Colors.amber,
       ),
       appBarTheme: AppBarTheme(
-        brightness: brightness,
         color: cardBackground,
         iconTheme: const IconThemeData(
           color: Colors.white,
@@ -99,71 +98,84 @@ class ThemeConfig {
           fontWeight: FontWeight.w300,
         ),
       ),
-      fontFamily: '',
+      fontFamily: 'Poppins',
       textTheme: TextTheme(
         headline1: baseTextTheme.headline1?.copyWith(
           color: primaryText,
           fontSize: 34.0,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Poppins',
         ),
         headline2: baseTextTheme.headline2?.copyWith(
           color: primaryText,
           fontSize: 22,
           fontWeight: FontWeight.bold,
+          fontFamily: 'Poppins',
         ),
         headline3: baseTextTheme.headline3?.copyWith(
           color: secondaryText,
           fontSize: 20,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Poppins',
         ),
         headline4: baseTextTheme.headline4?.copyWith(
           color: primaryText,
           fontSize: 18,
           fontWeight: FontWeight.w600,
+          fontFamily: 'Poppins',
         ),
         headline5: baseTextTheme.headline5?.copyWith(
           color: primaryText,
           fontSize: 16,
           fontWeight: FontWeight.w700,
+          fontFamily: 'Poppins',
         ),
         headline6: baseTextTheme.headline6?.copyWith(
           color: primaryText,
           fontSize: 14,
           fontWeight: FontWeight.w700,
+          fontFamily: 'Poppins',
         ),
         bodyText1: baseTextTheme.bodyText1?.copyWith(
           color: secondaryText,
           fontSize: 15,
+          fontFamily: 'Poppins',
         ),
         bodyText2: baseTextTheme.bodyText2?.copyWith(
           color: primaryText,
           fontSize: 12,
           fontWeight: FontWeight.w400,
+          fontFamily: 'Poppins',
         ),
         button: baseTextTheme.button?.copyWith(
           color: primaryText,
           fontSize: 12.0,
           fontWeight: FontWeight.w700,
+          fontFamily: 'Poppins',
         ),
         caption: baseTextTheme.caption?.copyWith(
           color: primaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w300,
+          fontFamily: 'Poppins',
         ),
         overline: baseTextTheme.overline?.copyWith(
           color: secondaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w500,
+          fontFamily: 'Poppins',
         ),
         subtitle1: baseTextTheme.subtitle1?.copyWith(
           color: primaryText,
           fontSize: 16.0,
           fontWeight: FontWeight.w700,
+          fontFamily: 'Poppins',
         ),
         subtitle2: baseTextTheme.subtitle2?.copyWith(
           color: secondaryText,
           fontSize: 11.0,
           fontWeight: FontWeight.w500,
+          fontFamily: 'Poppins',
         ),
       ),
       colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
