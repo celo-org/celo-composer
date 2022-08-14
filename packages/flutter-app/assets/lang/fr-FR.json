@@ -1,0 +1,15 @@
+{
+    "send": "Envoyer",
+    "home": "D’accueil",
+    "setting": "Parametrage",
+    "address": "Adresse",
+    "balance": "Solde",
+    "amount": "Montant",
+    "connect_wallet": "Connecter le portefeuille",
+    "disconnect": "Déconnecter",
+    "receive": "Recevoir",
+    "send_token": "Envoyer un jeton",
+    "refresh": "Rafraîchir",
+    "language": "Langage",
+    "network": "Réseau"
+}

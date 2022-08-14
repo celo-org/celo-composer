@@ -1,0 +1,15 @@
+{
+    "send": "Send",
+    "home": "Home",
+    "setting": "Setting",
+    "address": "Address",
+    "balance": "Balance",
+    "amount": "Amount",
+    "connect_wallet": "Connect Wallet",
+    "disconnect": "Disconnet",
+    "receive": "Receive",
+    "send_token": "Send Token",
+    "refresh": "Refresh",
+    "language": "Language",
+    "network": "Network"
+}

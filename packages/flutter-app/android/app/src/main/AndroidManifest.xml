@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_web3">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="flutter_web3"
         android:name="${applicationName}"

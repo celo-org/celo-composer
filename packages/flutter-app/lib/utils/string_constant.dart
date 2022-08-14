@@ -6,13 +6,13 @@ class AllStrings {
   String celo = 'Celo';
   String flutter = 'Flutter';
   String celoComposer = 'Celo Composer';
-  String amount = 'Amount';
-  String address = 'Address';
-  String sendToken = 'Send Token';
-  String send = 'Send';
-  String receive = 'Receive';
-  String disconnect = 'Disconnect';
-  String connectWallet = 'Connect Wallet';
-  String refresh = 'Refresh';
+  String amount = 'amount';
+  String address = 'address';
+  String sendToken = 'send_token';
+  String send = 'send';
+  String receive = 'receive';
+  String disconnect = 'disconnect';
+  String connectWallet = 'connect_wallet';
+  String refresh = 'refresh';
   String celoComposerFlutter = 'Celo Composer - Flutter';
 }
