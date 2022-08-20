@@ -104,6 +104,7 @@ Why Celo Composer Flutter?
 * [walletconnect_dart](https://pub.dev/packages/walletconnect_dart)
 * [walletconnect_secure_storage](https://pub.dev/packages/walletconnect_secure_storage)
 * [QR Flutter](https://pub.dev/packages/qr_flutter)
+* [Easy Localization](https://pub.dev/packages/easy_localization)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -179,10 +180,62 @@ Use this space to list resources you find helpful and would like to give credit 
 * [walletconnect_dart](https://pub.dev/packages/walletconnect_dart/example)
 * [URL Launch](https://www.digitalocean.com/community/tutorials/flutter-url-launcher)
 * [Provider](https://blog.logrocket.com/quick-guide-provider-flutter-state-management/)
+* [Easy Localization](https://itnext.io/app-localization-in-flutter-2f00f812bf08)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Translations 🌐
+This project should rely on easy_localization. This approach is recommended even if there's only a locale needed.
+
+1. To add a new localizable string, open the en-US.json file at assets/lang/en-US.json.
+
+```
+{
+    "new_string": "New String"
+}
+```
+
+2. Use the new string
+
+```
+import 'package:easy_localization/easy_localization.dart';
+
+@override
+Widget build(BuildContext context) {
+  return Text("new_string".tr());
+}
+```
+
+#### Adding Supported Locales
+Update the CFBundleLocalizations array in the Info.plist at ios/Runner/Info.plist to include the new locale.
+```
+...
+  <key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+	</array>
+...
+```
+
+#### Adding Translations
+1. For each supported locale, add a new JSON file in assets/lang.
+```
+├── assets
+│   ├── lang
+│   │   ├── en-US.json
+│   │   └── fr-FR.json
+```
+2. Add the translated strings to each .json file:
+app_en.json
+```
+{
+    "new_string": "New String",
+}
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
