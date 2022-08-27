@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:eip55/eip55.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
+import 'package:walletconnect_qrcode_modal_dart/walletconnect_qrcode_modal_dart.dart';
 
 import '../model/app_info.dart';
 import '../model/crypto_wallet.dart';
@@ -22,6 +24,7 @@ class WalletConnectHelper {
   final AppInfo appInfo;
 
   late WalletConnect connector;
+  late WalletConnectQrCodeModal qrCodeModalConnector;
 
   SessionStatus? sessionStatus;
   List<String> accounts = [];
@@ -31,7 +34,30 @@ class WalletConnectHelper {
     this.bridge,
     required this.appInfo,
   }) {
-    connector = getWalletConnect();
+    if (kIsWeb) {
+      qrCodeModalConnector = getWalletConnectQR();
+    } else {
+      connector = getWalletConnect();
+    }
+  }
+
+  WalletConnectQrCodeModal getWalletConnectQR() {
+    final qrCodeModalConnector = WalletConnectQrCodeModal(
+      connector: WalletConnect(
+        bridge: bridge ?? 'https://bridge.walletconnect.org',
+        clientMeta: PeerMeta(
+          name: appInfo.name ?? 'WalletConnect',
+          description: appInfo.description ?? 'WalletConnect Developer App',
+          url: appInfo.url ?? 'https://walletconnect.org',
+          icons: appInfo.icons ??
+              [
+                'https://gblobscdn.gitbook.com/spaces%2F-LJJeCjcLrr53DcT1Ml7%2Favatar.png?alt=media'
+              ],
+        ),
+      ),
+    );
+
+    return qrCodeModalConnector;
   }
 
   WalletConnect getWalletConnect() {
@@ -56,13 +82,51 @@ class WalletConnectHelper {
     connector = getWalletConnect();
   }
 
-  Future<bool> initSession({int? chainId}) async {
+  Future<bool> initSession(context, {int? chainId}) async {
+    try {
+      if (kIsWeb) {
+        return await initWebSession(context, chainId: chainId);
+      } else {
+        return await initMobileSession(chainId: chainId);
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> initWebSession(context, {int? chainId}) async {
+    if (!qrCodeModalConnector.connector.connected) {
+      try {
+        sessionStatus = await qrCodeModalConnector.connect(
+          context,
+          chainId: chainId,
+        );
+
+        qrCodeModalConnector.registerListeners(
+          onConnect: (session) => print('Connected: $session'),
+          onSessionUpdate: (response) => print('Session updated: $response'),
+          onDisconnect: () => print('Disconnected'),
+        );
+
+        accounts = sessionStatus?.accounts ?? [];
+
+        return true;
+      } catch (e) {
+        debugPrint('createSession() - failure - $e');
+        reset();
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  Future<bool> initMobileSession({int? chainId}) async {
     if (!connector.connected) {
       try {
         sessionStatus = await connector.createSession(
           chainId: chainId,
           onDisplayUri: (uri) async {
-            print(uri);
             await _connectWallet(displayUri: uri);
           },
         );
@@ -92,20 +156,20 @@ class WalletConnectHelper {
     }
   }
 
-  Future<String> getPublicAddress(
-      {CryptoWallet wallet = CryptoWallet.metamask}) async {
-    if (!connector.connected) {
-      await initSession();
-    }
+  // Future<String> getPublicAddress(
+  //     {CryptoWallet wallet = CryptoWallet.metamask}) async {
+  //   if (!connector.connected) {
+  //     await initSession();
+  //   }
 
-    if (accounts.isNotEmpty) {
-      String address = accounts.first;
-      address = toEIP55Address(address);
-      return address;
-    } else {
-      throw 'Unexpected exception';
-    }
-  }
+  //   if (accounts.isNotEmpty) {
+  //     String address = accounts.first;
+  //     address = toEIP55Address(address);
+  //     return address;
+  //   } else {
+  //     throw 'Unexpected exception';
+  //   }
+  // }
 
   WalletConnectEthereumCredentials getEthereumCredentials() {
     EthereumWalletConnectProvider provider =
