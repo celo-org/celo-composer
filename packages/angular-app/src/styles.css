@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  html {
+    scroll-behavior: smooth;
+    width: 100%;
+
+  }
+
+  body, html {
+    overflow: hidden;
+  }
+
+  select {
+    outline: 0;
+  }
+
+  .bg-hero,
+  .bg-community,
+  .bg-faq {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .bg-community {
+    background-position: center bottom;
+  }
+
+  .about {
+    box-shadow: 0px 4px 30px #C1D214;
+  }
+
+  .accordion-item .chevron-down,
+  .accordion-item .chevron-up,
+  .accordion-item .accordion-answer {
+    transition: all .5s ease-in;
+  }
+
+  .accordion-item {
+    cursor: pointer;
+  }
+
+  .accordion-item .accordion-answer {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .accordion-item .accordion-answer .active {
+    max-height: 20rem;
+  }
+
+  .vertical-line {
+    border: 0;
+    margin: 0;
+    border-left: 4px solid #6DB327;
+    height: 69rem;
+  }
+
+  .discord-cta .wrapper {
+    max-width: 560px;
+  }
+
+  /*
+  .slides-container {
+      position: relative;
+  }
+  .slide-item {
+      position: absolute;
+  }
+  .collage {
+
+  }
+  .collage > div {
+
+  }
+  .collage .row-1 {
+      animation: animate-collage 12s linear infinite;
+  }
+
+  @keyframes animate-collage {
+      100% {
+          transform: translateX(-100%);
+      }
+  } */
+
+  @media (min-width: 768px) {
+    .vertical-line {
+      left: 8.6rem;
+      top: 11.2rem;
+      height: 82rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .vertical-line {
+      left: 11.2rem;
+      top: 9.5rem;
+      height: 74rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .vertical-line {
+      left: 13.7rem;
+      top: 7.7rem;
+      height: 73rem;
+    }
+
+    .hero-claws {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .vertical-line {
+      left: 16.5rem;
+      top: 8rem;
+      height: 69rem;
+    }
+  }
+}
+
+.bg-semi-black {
+  --tw-bg-opacity: 1;
+  background-color: rgba(18, 17, 17, var(--tw-bg-opacity));
+}
