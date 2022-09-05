@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:eip55/eip55.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:walletconnect_dart/walletconnect_dart.dart';
 import 'package:walletconnect_qrcode_modal_dart/walletconnect_qrcode_modal_dart.dart';
@@ -156,33 +153,23 @@ class WalletConnectHelper {
     }
   }
 
-  // Future<String> getPublicAddress(
-  //     {CryptoWallet wallet = CryptoWallet.metamask}) async {
-  //   if (!connector.connected) {
-  //     await initSession();
-  //   }
-
-  //   if (accounts.isNotEmpty) {
-  //     String address = accounts.first;
-  //     address = toEIP55Address(address);
-  //     return address;
-  //   } else {
-  //     throw 'Unexpected exception';
-  //   }
-  // }
-
   WalletConnectEthereumCredentials getEthereumCredentials() {
-    EthereumWalletConnectProvider provider =
-        EthereumWalletConnectProvider(connector);
+    EthereumWalletConnectProvider provider = EthereumWalletConnectProvider(
+        kIsWeb ? qrCodeModalConnector.connector : connector);
     WalletConnectEthereumCredentials credentials =
         WalletConnectEthereumCredentials(provider: provider);
     return credentials;
   }
 
   Future<void> dispose() async {
-    connector.session.reset();
-    await connector.killSession();
-    await connector.close();
+    if (kIsWeb) {
+      await qrCodeModalConnector.connector.close();
+      await qrCodeModalConnector.killSession();
+    } else {
+      connector.session.reset();
+      await connector.killSession();
+      await connector.close();
+    }
 
     sessionStatus = null;
     accounts = [];
