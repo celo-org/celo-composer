@@ -134,7 +134,7 @@ The app will start in the conenct device of connected emulator/simulator.
 
 - [x] Add Android support
 - [ ] Add IOS support
-- [ ] Add Web support
+- [x] Add Web support
 - [ ] Add Desktop support
     - [ ] Linux
     - [ ] Mac
@@ -178,6 +178,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
 * [walletconnect_dart](https://pub.dev/packages/walletconnect_dart/example)
+* [walletconnect_qrcode_modal_dart](https://pub.dev/packages/walletconnect_qrcode_modal_dart/example)
 * [URL Launch](https://www.digitalocean.com/community/tutorials/flutter-url-launcher)
 * [Provider](https://blog.logrocket.com/quick-guide-provider-flutter-state-management/)
 * [Easy Localization](https://itnext.io/app-localization-in-flutter-2f00f812bf08)

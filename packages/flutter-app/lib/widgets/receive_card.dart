@@ -43,7 +43,7 @@ class _MyWidgetState extends State<ReceiveCard>
                 child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 18.0, vertical: 10.0),
-                    width: context.screenWidth(0.75),
+                    width: context.screenWidth(0.85),
                     height: context.screenHeight(0.37),
                     decoration: ShapeDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,

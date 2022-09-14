@@ -46,6 +46,7 @@ dependencies:
   qr_flutter: ^4.0.0
   eip55: ^1.0.2
   easy_localization: ^3.0.0
+  walletconnect_qrcode_modal_dart: ^0.0.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -29,8 +29,9 @@ class WalletController extends ChangeNotifier {
   bool isConnectWallet = false;
   String? publicWalletAddress;
 
-  void connectWallet() async {
-    isConnectWallet = await walletConnectHelper.initSession(chainId: 42220);
+  void connectWallet(context) async {
+    isConnectWallet =
+        await walletConnectHelper.initSession(context, chainId: 42220);
     if (isConnectWallet) {
       publicWalletAddress = walletConnectHelper
           .getEthereumCredentials()

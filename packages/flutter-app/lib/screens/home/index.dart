@@ -284,7 +284,7 @@ class _IndexPageState extends State<IndexPage> {
                         text: AllStrings().connectWallet.tr(),
                         onPressed: () async {
                           try {
-                            walletController.connectWallet();
+                            walletController.connectWallet(context);
                           } catch (e) {
                             logger.d(e);
                           }
