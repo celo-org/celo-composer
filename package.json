@@ -2,7 +2,6 @@
   "name": "@celo-composer/monorepo",
   "version": "1.0.0",
   "description": "Get started building dApps on Celo",
-  "private": true,
   "scripts": {
     "react-app:dev": "yarn workspace @celo-composer/react-app dev",
     "react-app:build": "yarn workspace @celo-composer/react-app build",
@@ -52,6 +51,6 @@
     "celo"
   ],
   "bin": {
-    "test-cli-tool": "bin/index.js"
+    "celo-composer": "bin/index.js"
   }
 }

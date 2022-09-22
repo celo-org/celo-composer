@@ -67,8 +67,15 @@ const createAsync = async (command) => {
       `git clone --depth 2 --filter=blob:none --sparse ${BASE_URL} ${name}`
     );
     shell.cd(name);
-    shell.exec(`git sparse-checkout set packages/${slug}`);
+
+    const { stdout, stderr, code } = shell.exec(
+      `git sparse-checkout set packages/${slug} packages/hardhat`,
+      {
+        silent: true,
+      }
+    );
     shell.exec(`mv packages/${slug}/* .`);
+    shell.exec(`mv packages/hardhat .`);
     shell.exec("rm -rf packages");
 
     spinner.stopAndPersist({
