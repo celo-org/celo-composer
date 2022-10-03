@@ -1,23 +1,7 @@
 {
-  "name": "@celo-composer/monorepo",
-  "version": "1.0.0",
+  "name": "@celo/celo-composer",
+  "version": "0.0.1-alpha",
   "description": "Get started building dApps on Celo",
-  "scripts": {
-    "react-app:dev": "yarn workspace @celo-composer/react-app dev",
-    "react-app:build": "yarn workspace @celo-composer/react-app build",
-    "react-app:start": "yarn workspace @celo-composer/react-app start",
-    "react-app:lint": "yarn workspace @celo-composer/react-app lint",
-    "hardhat:test": "yarn workspace @celo-composer/hardhat test",
-    "hardhat:deploy": "yarn workspace @celo-composer/hardhat deploy",
-    "hardhat:watch": "yarn workspace @celo-composer/hardhat watch",
-    "hardhat:accounts": "yarn workspace @celo-composer/hardhat accounts",
-    "hardhat:devchain": "yarn workspace @celo-composer/hardhat devchain",
-    "hardhat:fork-mainnet": "yarn workspace @celo-composer/hardhat fork-mainnet",
-    "hardhat:deploy-reset-watch": "yarn workspace @celo-composer/hardhat deploy-reset-watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare-hardhat": "cd packages/hardhat && yarn && npx hardhat typechain && yarn deploy",
-    "build-ui": "yarn prepare-hardhat && cd packages/react-app && yarn && yarn build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/celo-org/celo-composer.git"
@@ -27,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/celo-org/celo-composer/issues"
   },
-  "homepage": "https://github.com/celo-org/celo-composer#readme",
+  "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
   "workspaces": {
     "packages": [
       "packages/*"
