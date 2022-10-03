@@ -29,12 +29,15 @@
     "shelljs": "^0.8.5",
     "yargs": "17.5.1"
   },
-  "main": "index.s",
+  "main": "bin/index.js",
   "keywords": [
     "celo-composer",
     "celo"
   ],
   "bin": {
     "celo-composer": "bin/index.js"
-  }
+  },
+  "files": [
+    "bin"
+  ]
 }
