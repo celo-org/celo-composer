@@ -83,11 +83,11 @@ yarn install
 npx hardhat create-account # prints a private key + account
 ```
 
-3. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
+1. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
 
 `PRIVATE_KEY="0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d"`
 
-4. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
+2. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
 
 ```sh
 yarn deploy
@@ -95,7 +95,7 @@ yarn deploy
 
 ## Supported Frameworks
 
-## React
+### <u>React</u>
 
 - Creating examples and experiment with React for your libraries and components.
 - Start the dApp with `yarn dev`/`npm run dev` and you are good to go.
@@ -104,7 +104,7 @@ yarn deploy
 
 Check here to learn more about [Celo Composer - React](./packages/react-app/README.md)
 
-## React Native
+### <u>React Native</u>
 
 - You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
 - Support for Android and IOS.
@@ -114,7 +114,7 @@ Check here to learn more about [Celo Composer - React](./packages/react-app/READ
 
 Check here to learn more about [Celo Composer - React Native](./packages/react-native-app/README.md)
 
-## Flutter
+### <u>Flutter</u>
 
 - One command to get started - Type `flutter run` to start development in your mobile phone.
 - Works with all major mobile crypto wallets.
@@ -124,7 +124,7 @@ Check here to learn more about [Celo Composer - React Native](./packages/react-n
 
 Check here to learn more about [Celo Composer - Flutter](./packages/flutter-app/README.md)
 
-## Angular
+### <u>Angular</u>
 
 - Creating examples and experiment with Angular for your libraries and components.
 - Easy to setup and use.
