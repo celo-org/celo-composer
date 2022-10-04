@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "0.0.1-alpha",
+  "version": "0.0.2-alpha",
   "description": "Get started building dApps on Celo",
   "repository": {
     "type": "git",
@@ -12,17 +12,16 @@
     "url": "https://github.com/celo-org/celo-composer/issues"
   },
   "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
+  "workspaces": [
+    "bin/*"
+  ],
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.2.5"
   },
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^9.4.0",
+    "fs-extra": "^10.1.0",
     "inquirer": "^8.2.4",
     "node-emoji": "^1.11.0",
     "ora": "5.4.1",
