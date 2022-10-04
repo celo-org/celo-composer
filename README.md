@@ -56,22 +56,29 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 ## Prerequisites
 
 - Node
-- Yarn
-- Git
 
-## Installation
+## How to use Celo Composer
 
-1. Clone the repo
+The easiest way to get started with Celo Composer is using `@celo/celo-composer`. This is a CLI tool enables you to quickly start building dApps on Celo for multiple frameworks including React, React Native (w/o Expo), Flutter and Angular. You can create the dApp using default Composer templates provided by Celo. To get started, use the following command:
 
-```sh
-git clone https://github.com/celo-org/celo-composer
-cd celo-composer
+```bash
+npx @celo/celo-composer create
 ```
 
-2. Get testnet funds and install dependencies.
+#### Output
+
+![Output-1](./images/readme/image-1.png)
+
+- Select the framework you like and please enter.
+
+![Output-2](./images/readme/image-2.png)
+
+- Enter the project name and the starter project will the create in present working directory.
+
+### Get testnet funds and install dependencies
 
 ```sh
-cd packages/hardhat
+cd hardhat
 yarn install
 npx hardhat create-account # prints a private key + account
 ```
@@ -86,32 +93,50 @@ npx hardhat create-account # prints a private key + account
 yarn deploy
 ```
 
-5. In another terminal, start the frontend (React app using [Next.js](https://nextjs.org/))
+## Supported Frameworks
 
-Read more details about the hardhat package [here](https://github.com/celo-org/celo-composer/blob/main/packages/hardhat/README.md).
+## React
 
-```sh
-cd packages/react-app
-yarn install
-yarn dev
-```
+- Creating examples and experiment with React for your libraries and components.
+- Start the dApp with `yarn dev`/`npm run dev` and you are good to go.
+- Support for Website and Progressive Web Application.
+- Works with all major crypto wallet.
 
-6. Testing on Mobile
+Check here to learn more about [Celo Composer - React](./packages/react-app/README.md)
 
-- Get the Alfajores Testnet mobile wallet for Android and iOS [here](https://celo.org/developers/wallet).
-- Serve your React app to your mobile device for testing via a tunnel.
-  Next.js defaults to serving your app on port 3000, so point the tunnel there:
+## React Native
 
-```sh
-npx localtunnel --port 3000
-```
+- You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
+- Support for Android and IOS.
+- Works with [Expo](https://expo.dev/) and without Expo.
+- Working example app - The included example app shows how this all works together.
+- Easy to use and always updated with latest dependencies.
+
+Check here to learn more about [Celo Composer - React Native](./packages/react-native-app/README.md)
+
+## Flutter
+
+- One command to get started - Type `flutter run` to start development in your mobile phone.
+- Works with all major mobile crypto wallets.
+- Support for Android, IOS (Web, Windows, and Linux coming soon).
+- Working example app - The included example app shows how this all works together.
+- Easy to use and always updated with latest dependencies.
+
+Check here to learn more about [Celo Composer - Flutter](./packages/flutter-app/README.md)
+
+## Angular
+
+- Creating examples and experiment with Angular for your libraries and components.
+- Easy to setup and use.
+
+Check here to learn more about [Celo Composer - Angular](./packages/angular-app/README.md)
 
 ## Review
 
 - Edit smart contracts in `packages/hardhat/contracts`.
 - Edit deployment scripts in `packages/hardhat/deploy`.
 - Edit frontend in `packages/react-app/pages/index.tsx`.
-- Open http://localhost:3000 to see the app.
+- Open <http://localhost:3000> to see the app.
 
 You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
 
@@ -149,7 +174,7 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 
 ## 🔭 Learning Solidity
 
-📕 Read the docs: https://docs.soliditylang.org
+📕 Read the docs: <https://docs.soliditylang.org>
 
 - [Primitive Data Types](https://solidity-by-example.org/primitives/)
 - [Mappings](https://solidity-by-example.org/mapping/)
@@ -164,7 +189,7 @@ The `/packages/subgraphs` directory includes an example subgraph for reading dat
 
 ## Support
 
-Join the Celo Discord server at https://chat.celo.org. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
+Join the Celo Discord server at <https://chat.celo.org>. Reach out on the dedicated repo channel [here](https://discord.com/channels/600834479145353243/941003424298856448).
 
 <!-- ROADMAP -->
 
@@ -203,13 +228,13 @@ Don't forget to give the project a star! Thanks again!
 - Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
 - Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
 
-```
+```jsx
 <Tab label="Contract Label" {...a11yProps(#)} />
 ```
 
 - Add tab panel to page replacing `#` with tab number and `ContractName` with your smart contract name
 
-```
+```jsx
 <TabPanel value={value} index={#}>
     <GreeterContract contractData={contracts?.ContractName} />
 </TabPanel>
@@ -219,25 +244,14 @@ You should now be able to view your new dApp from [http://localhost:3000](http:/
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Troubleshooting
-
-For M1 Mac developers who have installed nvm using brew, the server may crash. To resolve this issue, take a look here at this [solution](https://stackoverflow.com/a/67254340)
-
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
-
 ## Contact
 
 - [@CeloDevs](https://twitter.com/CeloDevs)
 - [Discord](https://discord.com/invite/6yWMkgM)
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- This repo is heavily inspired by [scaffold-eth](https://github.com/scaffold-eth/scaffold-eth).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
