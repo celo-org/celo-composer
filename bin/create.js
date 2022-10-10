@@ -30,7 +30,7 @@ const createAsync = async (command) => {
       slug = "react-app";
       break;
     case "React Native (With Expo)":
-      slug = "react-native-app-without-expo";
+      slug = "react-native-app";
       break;
     case "React Native (without Expo)":
       slug = "react-native-app-without-expo";
