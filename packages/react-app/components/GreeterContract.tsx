@@ -6,7 +6,7 @@ import { useCelo } from "@celo/react-celo";
 import { useEffect, useState } from "react";
 import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
 import { truncateAddress } from "@/utils";
-import { Greeter } from "@celo-composer/hardhat/types/Greeter";
+import { Greeter } from "@local-contracts/types/Greeter";
 
 export function GreeterContract({ contractData }) {
   const { kit, address, network, performActions } = useCelo();

@@ -28,6 +28,12 @@ export const CustomThemeProvider = (props: PropsWithChildren<{}>) => {
       createTheme({
         palette: {
           mode: themeString(theme),
+          primary: {
+            light: '#FBCC5C',
+            main: '#35D07F',
+            dark: '#111214',
+            contrastText: '#fff',
+          },
         },
       }),
     [theme]
