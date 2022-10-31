@@ -29,9 +29,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <!-- <a href="https://github.com/viral-sangani/walletconnect_flutter">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
 
   <h3 align="center">Celo Compose Flutter</h3>
 
