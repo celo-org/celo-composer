@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
@@ -40,11 +40,7 @@ contract SimpleProxyContract is Ownable {
         return true;
     }
 
-    function sendTokens(address _from, uint256 tokens)
-        external
-        payable
-        returns (bool)
-    {
+    function sendTokens(address _from, uint256 tokens) external payable {
         uint256 split;
         assert(walletAddresses.length > 0);
         assert(tokenAddress != address(0));
@@ -61,7 +57,7 @@ contract SimpleProxyContract is Ownable {
         }
     }
 
-    function balanceOf(address _account) external returns (uint256) {
+    function balanceOf(address _account) external view returns (uint256) {
         return cont.balanceOf(_account);
     }
 
@@ -72,11 +68,11 @@ contract SimpleProxyContract is Ownable {
         return true;
     }
 
-    function totalMembers() external returns (uint256) {
+    function totalMembers() external view returns (uint256) {
         return walletAddresses.length;
     }
 
-    function getTokenAddress() external returns (address) {
+    function getTokenAddress() external view returns (address) {
         return tokenAddress;
     }
 }

@@ -1,7 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("dotenv").config({ path: ".env" });
 require("hardhat-deploy");
-const fs = require("fs");
 const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
 require("@typechain/hardhat");
@@ -50,7 +49,7 @@ module.exports = {
     },
   },
   solidity: {
-    version: "0.8.4",
+    version: "0.8.17",
   },
   namedAccounts: {
     deployer: 0,

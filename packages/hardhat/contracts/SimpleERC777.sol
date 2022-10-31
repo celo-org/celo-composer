@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.17;
 import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 
 /**
  * @title Simple777Token
- * @dev Very simple ERC777 Token example, where all tokens are pre-assigned to the creator.
+ * @dev Basic ERC777 Token example, where all tokens are pre-assigned to the creator.
  * Note they can later distribute these tokens as they wish using `transfer` and other
  * `ERC20` or `ERC777` functions.
  */
