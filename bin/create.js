@@ -175,11 +175,14 @@ const createAsync = async (command) => {
         `git sparse-checkout add packages/${selectedPackages[x]}`, { silent: true }
       );
 
-      // update name of each package.json project to work properly with monorepo
-      let packageFile = shell.cat(`packages/${selectedPackages[x]}/package.json`);
-      let projectPackage = JSON.parse(packageFile.stdout);
-      projectPackage.name = `@${projectName}/${selectedPackages[x]}`;
-      shell.echo(JSON.stringify(projectPackage, "", 4)).to(`packages/${selectedPackages[x]}/package.json`);
+      // flutter project doesn't have package.json
+      if (selectedPackages[x] != availablePackages[3].name) {
+        // update name of each package.json project to work properly with monorepo
+        let packageFile = shell.cat(`packages/${selectedPackages[x]}/package.json`);
+        let projectPackage = JSON.parse(packageFile.stdout);
+        projectPackage.name = `@${projectName}/${selectedPackages[x]}`;
+        shell.echo(JSON.stringify(projectPackage, "", 4)).to(`packages/${selectedPackages[x]}/package.json`);
+      }
 
       // if project isn't web no need to netlify.toml
       if (selectedPackages[x] == availablePackages[1].name |
@@ -235,6 +238,9 @@ const createAsync = async (command) => {
     }
 
     shell.echo(JSON.stringify(packageJson, "", 4)).to("package.json");
+
+    shell.exec("rm -rf .git");
+    shell.exec("git init --quiet --initial-branch=main");
     
     spinner.stopAndPersist({
       symbol: emoji.get("100"),
