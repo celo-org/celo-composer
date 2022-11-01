@@ -4,6 +4,7 @@ require("hardhat-deploy");
 const { task } = require("hardhat/config");
 require("@nomiclabs/hardhat-ethers");
 require("@typechain/hardhat");
+require("hardhat-celo");
 
 const defaultNetwork = "alfajores";
 const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
@@ -46,6 +47,12 @@ module.exports = {
       url: "https://celo-mainnet--rpc.datahub.figment.io/apikey/<API KEY>",
       accounts: [process.env.PRIVATE_KEY],
       chainId: 42220,
+    },
+  },
+  etherscan: {
+    apiKey: {
+        alfajores: process.env.CELOSCAN_API_KEY,
+        celo: process.env.CELOSCAN_API_KEY
     },
   },
   solidity: {
