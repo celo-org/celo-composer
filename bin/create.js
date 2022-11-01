@@ -12,11 +12,11 @@ const createAsync = async (command) => {
   let availablePackages = [
     {
       name: "react-app",
-      label: "React"
+      label: "React (with examples, requires hardhat deploy)"
     },
     {
       name: "react-app-tailwindcss",
-      label: "React with Tailwindcss"
+      label: "React with Tailwindcss (blank boilerplate)"
     },
     {
       name: "react-native-app",
