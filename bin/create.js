@@ -1,4 +1,4 @@
-const prompt = require("inquirer");
+const inquirer = require("inquirer");
 const shell = require("shelljs");
 const chalk = require("chalk");
 const ora = require("ora");
@@ -49,7 +49,7 @@ const createAsync = async (command) => {
   ];
   let selectedPackages = [];
 
-  let { fEFramework } = await prompt.prompt({
+  let { fEFramework } = await inquirer.prompt({
     type: "list",
     name: "fEFramework",
     message: "Choose front-end framework:",
@@ -87,7 +87,7 @@ const createAsync = async (command) => {
       break;
   }
 
-  let { scFramework } = await prompt.prompt({
+  let { scFramework } = await inquirer.prompt({
     type: "list",
     name: "scFramework",
     message: "Choose smart-contract framework:",
@@ -107,7 +107,7 @@ const createAsync = async (command) => {
       break;
   }
 
-  let { indexingProtocol } = await prompt.prompt({
+  let { indexingProtocol } = await inquirer.prompt({
     type: "list",
     name: "indexingProtocol",
     message: "Create a subgraph:",
@@ -126,7 +126,7 @@ const createAsync = async (command) => {
       break;
   }
 
-  let { projectName } = await prompt.prompt({
+  let { projectName } = await inquirer.prompt({
     type: "input",
     name: "projectName",
     message: "Project name: ",
@@ -204,12 +204,18 @@ const createAsync = async (command) => {
 
       // customize scripts for projects user wants
 
-      // react-app and react-app-tailwindcss have same scripts
-      if (selectedPackages[x] == availablePackages[0].name || selectedPackages[x] == availablePackages[1].name) {
+      if (selectedPackages[x] == availablePackages[0].name) {
         packageJson.scripts["react-dev"] = `yarn workspace @${projectName}/react-app dev`;
         packageJson.scripts["react-build"] = `yarn workspace @${projectName}/react-app build`;
         packageJson.scripts["react-start"] = `yarn workspace @${projectName}/react-app start`;
         packageJson.scripts["react-lint"] = `yarn workspace @${projectName}/react-app lint`;
+      }
+
+      if (selectedPackages[x] == availablePackages[1].name) {
+        packageJson.scripts["react-dev"] = `yarn workspace @${projectName}/react-app-tailwindcss dev`;
+        packageJson.scripts["react-build"] = `yarn workspace @${projectName}/react-app-tailwindcss build`;
+        packageJson.scripts["react-start"] = `yarn workspace @${projectName}/react-app-tailwindcss start`;
+        packageJson.scripts["react-lint"] = `yarn workspace @${projectName}/react-app-tailwindcss lint`;
       }
 
       if (selectedPackages[x] == availablePackages[2].name) {
