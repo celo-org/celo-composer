@@ -15,6 +15,10 @@ const createAsync = async (command) => {
       label: "React"
     },
     {
+      name: "react-app-tailwindcss",
+      label: "React with Tailwindcss"
+    },
+    {
       name: "react-native-app",
       label: "React Native (With Expo)"
     },
@@ -55,7 +59,8 @@ const createAsync = async (command) => {
       availablePackages[1].label,
       availablePackages[2].label,
       availablePackages[3].label,
-      availablePackages[4].label
+      availablePackages[4].label,
+      availablePackages[5].label
     ],
   });
 
@@ -74,6 +79,10 @@ const createAsync = async (command) => {
       break;
     case availablePackages[4].label:
       selectedPackages.push(availablePackages[4].name);
+      break;
+    case availablePackages[5].label:
+      selectedPackages.push(availablePackages[5].name);
+      break;
     default:
       break;
   }
@@ -84,15 +93,15 @@ const createAsync = async (command) => {
     message: "Choose smart-contract framework:",
     default: "Hardhat",
     choices: [
-      availablePackages[5].label,
       availablePackages[6].label,
+      availablePackages[7].label,
       "None"
     ],
   });
 
   switch (scFramework) {
-    case availablePackages[5].label:
-      selectedPackages.push(availablePackages[5].name);
+    case availablePackages[6].label:
+      selectedPackages.push(availablePackages[6].name);
       break;
     default:
       break;
@@ -111,7 +120,7 @@ const createAsync = async (command) => {
 
   switch (indexingProtocol) {
     case "Yes":
-      selectedPackages.push(availablePackages[7].name);
+      selectedPackages.push(availablePackages[8].name);
       break;
     default:
       break;
@@ -176,7 +185,7 @@ const createAsync = async (command) => {
       );
 
       // flutter project doesn't have package.json
-      if (selectedPackages[x] != availablePackages[3].name) {
+      if (selectedPackages[x] != availablePackages[4].name) {
         // update name of each package.json project to work properly with monorepo
         let packageFile = shell.cat(`packages/${selectedPackages[x]}/package.json`);
         let projectPackage = JSON.parse(packageFile.stdout);
@@ -185,23 +194,25 @@ const createAsync = async (command) => {
       }
 
       // if project isn't web no need to netlify.toml
-      if (selectedPackages[x] == availablePackages[1].name |
-          selectedPackages[x] == availablePackages[2].name |
-          selectedPackages[x] == availablePackages[3].name |
-          selectedPackages[x] == availablePackages[4].name
+      if (selectedPackages[x] == availablePackages[2].name ||
+          selectedPackages[x] == availablePackages[3].name ||
+          selectedPackages[x] == availablePackages[4].name ||
+          selectedPackages[x] == availablePackages[5].name
           ) {
         shell.rm("netlify.toml");
       }
 
       // customize scripts for projects user wants
-      if (selectedPackages[x] == availablePackages[0].name) {
+
+      // react-app and react-app-tailwindcss have same scripts
+      if (selectedPackages[x] == availablePackages[0].name || selectedPackages[x] == availablePackages[1].name) {
         packageJson.scripts["react-dev"] = `yarn workspace @${projectName}/react-app dev`;
         packageJson.scripts["react-build"] = `yarn workspace @${projectName}/react-app build`;
         packageJson.scripts["react-start"] = `yarn workspace @${projectName}/react-app start`;
         packageJson.scripts["react-lint"] = `yarn workspace @${projectName}/react-app lint`;
       }
 
-      if (selectedPackages[x] == availablePackages[1].name) {
+      if (selectedPackages[x] == availablePackages[2].name) {
         packageJson.scripts["react-native-start"] = `yarn workspace @${projectName}/react-native-app start`;
         packageJson.scripts["react-native-android"] = `yarn workspace @${projectName}/react-native-app android`;
         packageJson.scripts["react-native-ios"] = `yarn workspace @${projectName}/react-native-app ios`;
@@ -209,7 +220,7 @@ const createAsync = async (command) => {
         packageJson.scripts["react-native-test"] = `yarn workspace @${projectName}/react-native-app test`;
       }
 
-      if (selectedPackages[x] == availablePackages[2].name) {
+      if (selectedPackages[x] == availablePackages[3].name) {
         packageJson.scripts["react-native-android"] = `yarn workspace @${projectName}/react-native-app-without-expo android`;
         packageJson.scripts["react-native-ios"] = `yarn workspace @${projectName}/react-native-app-without-expo ios`;
         packageJson.scripts["react-native-start"] = `yarn workspace @${projectName}/react-native-app-without-expo start`;
@@ -217,7 +228,7 @@ const createAsync = async (command) => {
         packageJson.scripts["react-native-lint"] = `yarn workspace @${projectName}/react-native-app-without-expo lint`;
       }
 
-      if (selectedPackages[x] == availablePackages[4].name) {
+      if (selectedPackages[x] == availablePackages[5].name) {
         packageJson.scripts["angular-ng"] = `yarn workspace @${projectName}/angular-app ng`;
         packageJson.scripts["angular-start"] = `yarn workspace @${projectName}/angular-app start`;
         packageJson.scripts["angular-build"] = `yarn workspace @${projectName}/angular-app build`;
@@ -225,13 +236,13 @@ const createAsync = async (command) => {
         packageJson.scripts["angular-test"] = `yarn workspace @${projectName}/angular-app test`;
       }
 
-      if (selectedPackages[x] == availablePackages[5].name) {
+      if (selectedPackages[x] == availablePackages[6].name) {
         packageJson.scripts["hardhat-chain"] = `yarn workspace @${projectName}/hardhat chain`;
         packageJson.scripts["hardhat-test"] = `yarn workspace @${projectName}/hardhat test`;
         packageJson.scripts["hardhat-deploy"] = `yarn workspace @${projectName}/hardhat run deploy`;        
       }
       
-      if (selectedPackages[x] == availablePackages[7].name) {
+      if (selectedPackages[x] == availablePackages[8].name) {
         packageJson.scripts["subgraph-get-abi"] = `yarn workspace @${projectName}/subgraphs get-abi`;
       }
       
