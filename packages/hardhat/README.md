@@ -83,7 +83,25 @@ There is a script provided (`yarn fork-mainnet`) to fork mainnet and fund the sa
 
 ## Verify your contracts
 
-You can easily verify your contracts deployed to the associated networks with the following commands.
+### hardhat-celo
+
+You can easily verify your contracts deployed to the associated networks with hardhat-celo.
+
+[Reference](https://docs.celo.org/developer/verify/hardhat)
+
+```shell
+npx hardhat verify smart-contract-address parameter(s) --network alfajores
+```
+
+On Mainnet:
+
+```shell
+npx hardhat verify smart-contract-address parameter(s) --network celo
+```
+
+### Sourcify
+
+Additionally, you can easily verify your contracts deployed to the associated networks with the following commands.
 
 [Reference](https://docs.celo.org/blog/hardhat-deploy-verify)
 

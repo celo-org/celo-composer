@@ -20,6 +20,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["*"],
+      "@local-contracts/*": ["../hardhat/*"]
     },
     "incremental": true
   },

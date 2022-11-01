@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "0.0.2-alpha",
+  "version": "1.0.1",
   "description": "Get started building dApps on Celo",
   "repository": {
     "type": "git",
@@ -15,9 +15,6 @@
   "workspaces": [
     "bin/*"
   ],
-  "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.2.5"
-  },
   "dependencies": {
     "chalk": "4.1.2",
     "commander": "^9.4.0",

@@ -1,6 +1,7 @@
-//SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
 
+// remember to remove unnecessary imports and its use when deploying your smart contract
 import "hardhat/console.sol";
 
 contract Greeter {
@@ -13,7 +14,7 @@ contract Greeter {
         greeting = _greet;
     }
 
-    function greet() public view returns (string memory) {
+    function greet() external view returns (string memory) {
         return greeting;
     }
 
@@ -22,8 +23,4 @@ contract Greeter {
         greeting = _greeting;
         emit newGreeting(_greeting, msg.sender);
     }
-
-    // function greetingsAvailable() public returns (string memory,string memory, string memory){
-    //     return ("Morning sunshine", "Good day", "Have a nice night");
-    // }
 }

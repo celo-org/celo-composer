@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
-import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
+import deployedContracts from "@local-contracts/deployments/hardhat_contracts.json";
 import { useCelo } from "@celo/react-celo";
 import { AccountInfo, Polling, ContractEventListener } from "@/components";
 import AppLayout from "@/components/layout/AppLayout";
@@ -23,10 +23,7 @@ export default function App() {
     setValue(newValue);
   };
 
-  const contracts =
-    deployedContracts[network?.chainId?.toString()]?.[
-      network?.name?.toLocaleLowerCase()
-    ]?.contracts;
+  const contracts = deployedContracts[network?.chainId?.toString()][0]?.contracts;
 
   //Here we create config to watch
   //all events of contract we ever deployed
