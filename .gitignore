@@ -9,6 +9,8 @@ packages/*/.env.*
 *.iws
 .idea
 
+*.gitkeep
+
 # eclipse project file
 .settings/
 .classpath
