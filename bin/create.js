@@ -1,4 +1,4 @@
-const prompt = require("inquirer");
+const inquirer = require("inquirer");
 const shell = require("shelljs");
 const chalk = require("chalk");
 const ora = require("ora");
@@ -12,7 +12,11 @@ const createAsync = async (command) => {
   let availablePackages = [
     {
       name: "react-app",
-      label: "React"
+      label: "React (with examples, requires hardhat deploy)"
+    },
+    {
+      name: "react-app-tailwindcss",
+      label: "React with Tailwindcss (blank boilerplate)"
     },
     {
       name: "react-native-app",
@@ -45,7 +49,7 @@ const createAsync = async (command) => {
   ];
   let selectedPackages = [];
 
-  let { fEFramework } = await prompt.prompt({
+  let { fEFramework } = await inquirer.prompt({
     type: "list",
     name: "fEFramework",
     message: "Choose front-end framework:",
@@ -55,7 +59,8 @@ const createAsync = async (command) => {
       availablePackages[1].label,
       availablePackages[2].label,
       availablePackages[3].label,
-      availablePackages[4].label
+      availablePackages[4].label,
+      availablePackages[5].label
     ],
   });
 
@@ -74,23 +79,7 @@ const createAsync = async (command) => {
       break;
     case availablePackages[4].label:
       selectedPackages.push(availablePackages[4].name);
-    default:
       break;
-  }
-
-  let { scFramework } = await prompt.prompt({
-    type: "list",
-    name: "scFramework",
-    message: "Choose smart-contract framework:",
-    default: "Hardhat",
-    choices: [
-      availablePackages[5].label,
-      availablePackages[6].label,
-      "None"
-    ],
-  });
-
-  switch (scFramework) {
     case availablePackages[5].label:
       selectedPackages.push(availablePackages[5].name);
       break;
@@ -98,7 +87,27 @@ const createAsync = async (command) => {
       break;
   }
 
-  let { indexingProtocol } = await prompt.prompt({
+  let { scFramework } = await inquirer.prompt({
+    type: "list",
+    name: "scFramework",
+    message: "Choose smart-contract framework:",
+    default: "Hardhat",
+    choices: [
+      availablePackages[6].label,
+      availablePackages[7].label,
+      "None"
+    ],
+  });
+
+  switch (scFramework) {
+    case availablePackages[6].label:
+      selectedPackages.push(availablePackages[6].name);
+      break;
+    default:
+      break;
+  }
+
+  let { indexingProtocol } = await inquirer.prompt({
     type: "list",
     name: "indexingProtocol",
     message: "Create a subgraph:",
@@ -111,13 +120,13 @@ const createAsync = async (command) => {
 
   switch (indexingProtocol) {
     case "Yes":
-      selectedPackages.push(availablePackages[7].name);
+      selectedPackages.push(availablePackages[8].name);
       break;
     default:
       break;
   }
 
-  let { projectName } = await prompt.prompt({
+  let { projectName } = await inquirer.prompt({
     type: "input",
     name: "projectName",
     message: "Project name: ",
@@ -176,7 +185,7 @@ const createAsync = async (command) => {
       );
 
       // flutter project doesn't have package.json
-      if (selectedPackages[x] != availablePackages[3].name) {
+      if (selectedPackages[x] != availablePackages[4].name) {
         // update name of each package.json project to work properly with monorepo
         let packageFile = shell.cat(`packages/${selectedPackages[x]}/package.json`);
         let projectPackage = JSON.parse(packageFile.stdout);
@@ -185,15 +194,16 @@ const createAsync = async (command) => {
       }
 
       // if project isn't web no need to netlify.toml
-      if (selectedPackages[x] == availablePackages[1].name |
-          selectedPackages[x] == availablePackages[2].name |
-          selectedPackages[x] == availablePackages[3].name |
-          selectedPackages[x] == availablePackages[4].name
+      if (selectedPackages[x] == availablePackages[2].name ||
+          selectedPackages[x] == availablePackages[3].name ||
+          selectedPackages[x] == availablePackages[4].name ||
+          selectedPackages[x] == availablePackages[5].name
           ) {
         shell.rm("netlify.toml");
       }
 
       // customize scripts for projects user wants
+
       if (selectedPackages[x] == availablePackages[0].name) {
         packageJson.scripts["react-dev"] = `yarn workspace @${projectName}/react-app dev`;
         packageJson.scripts["react-build"] = `yarn workspace @${projectName}/react-app build`;
@@ -202,6 +212,13 @@ const createAsync = async (command) => {
       }
 
       if (selectedPackages[x] == availablePackages[1].name) {
+        packageJson.scripts["react-dev"] = `yarn workspace @${projectName}/react-app-tailwindcss dev`;
+        packageJson.scripts["react-build"] = `yarn workspace @${projectName}/react-app-tailwindcss build`;
+        packageJson.scripts["react-start"] = `yarn workspace @${projectName}/react-app-tailwindcss start`;
+        packageJson.scripts["react-lint"] = `yarn workspace @${projectName}/react-app-tailwindcss lint`;
+      }
+
+      if (selectedPackages[x] == availablePackages[2].name) {
         packageJson.scripts["react-native-start"] = `yarn workspace @${projectName}/react-native-app start`;
         packageJson.scripts["react-native-android"] = `yarn workspace @${projectName}/react-native-app android`;
         packageJson.scripts["react-native-ios"] = `yarn workspace @${projectName}/react-native-app ios`;
@@ -209,7 +226,7 @@ const createAsync = async (command) => {
         packageJson.scripts["react-native-test"] = `yarn workspace @${projectName}/react-native-app test`;
       }
 
-      if (selectedPackages[x] == availablePackages[2].name) {
+      if (selectedPackages[x] == availablePackages[3].name) {
         packageJson.scripts["react-native-android"] = `yarn workspace @${projectName}/react-native-app-without-expo android`;
         packageJson.scripts["react-native-ios"] = `yarn workspace @${projectName}/react-native-app-without-expo ios`;
         packageJson.scripts["react-native-start"] = `yarn workspace @${projectName}/react-native-app-without-expo start`;
@@ -217,7 +234,7 @@ const createAsync = async (command) => {
         packageJson.scripts["react-native-lint"] = `yarn workspace @${projectName}/react-native-app-without-expo lint`;
       }
 
-      if (selectedPackages[x] == availablePackages[4].name) {
+      if (selectedPackages[x] == availablePackages[5].name) {
         packageJson.scripts["angular-ng"] = `yarn workspace @${projectName}/angular-app ng`;
         packageJson.scripts["angular-start"] = `yarn workspace @${projectName}/angular-app start`;
         packageJson.scripts["angular-build"] = `yarn workspace @${projectName}/angular-app build`;
@@ -225,13 +242,13 @@ const createAsync = async (command) => {
         packageJson.scripts["angular-test"] = `yarn workspace @${projectName}/angular-app test`;
       }
 
-      if (selectedPackages[x] == availablePackages[5].name) {
+      if (selectedPackages[x] == availablePackages[6].name) {
         packageJson.scripts["hardhat-chain"] = `yarn workspace @${projectName}/hardhat chain`;
         packageJson.scripts["hardhat-test"] = `yarn workspace @${projectName}/hardhat test`;
         packageJson.scripts["hardhat-deploy"] = `yarn workspace @${projectName}/hardhat run deploy`;        
       }
       
-      if (selectedPackages[x] == availablePackages[7].name) {
+      if (selectedPackages[x] == availablePackages[8].name) {
         packageJson.scripts["subgraph-get-abi"] = `yarn workspace @${projectName}/subgraphs get-abi`;
       }
       
