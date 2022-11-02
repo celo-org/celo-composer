@@ -68,12 +68,8 @@ const createAsync = async (command) => {
         choices: ["Yes", "No"],
     });
 
-    switch (indexingProtocol) {
-        case "Yes":
-            selectedPackages.push(availablePackages["subgraphs"]);
-            break;
-        default:
-            break;
+    if (indexingProtocol === "Yes") {
+        selectedPackages.push("subgraphs");
     }
 
     let { projectName } = await inquirer.prompt({
