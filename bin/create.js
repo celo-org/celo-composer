@@ -27,7 +27,14 @@ const createAsync = async (command) => {
         name: "fEFramework",
         message: "Choose front-end framework:",
         default: Object.values(availablePackages)[0],
-        choices: Object.values(availablePackages),
+        choices: [
+            availablePackages["react-app"],
+            availablePackages["react-app-tailwindcss"],
+            availablePackages["react-native-app"],
+            availablePackages["react-native-app-without-expo"],
+            availablePackages["flutter-app"],
+            availablePackages["angular-app"],
+        ],
     });
 
     /**
