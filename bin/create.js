@@ -10,38 +10,47 @@ const BASE_URL = "https://github.com/celo-org/celo-composer/";
 const createAsync = async (command) => {
 
   let availablePackages = [
+    // 0
     {
       name: "react-app",
       label: "React (with examples, requires hardhat deploy)"
     },
+    // 1
     {
       name: "react-app-tailwindcss",
       label: "React with Tailwindcss (blank boilerplate)"
     },
+    // 2
     {
       name: "react-native-app",
       label: "React Native (With Expo)"
     },
+    // 3
     {
       name: "react-native-app-without-expo",
       label: "React Native (without Expo)"
     },
+    // 4
     {
       name: "flutter-app",
       label: "Flutter"
     },
+    // 5
     {
       name: "angular-app",
       label: "Angular"
     },
+    // 6
     {
       name: "hardhat",
       label: "Hardhat"
     },
+    // 7
     {
       name: "truffle",
-      label: "Truffle (comming soon)"
+      label: "Truffle"
     },
+    // 8
     {
       name: "subgraphs",
       label: "TheGraph"
@@ -103,6 +112,9 @@ const createAsync = async (command) => {
     case availablePackages[6].label:
       selectedPackages.push(availablePackages[6].name);
       break;
+    case availablePackages[7].label:
+      selectedPackages.push(availablePackages[7].name);
+      break;
     default:
       break;
   }
@@ -141,7 +153,7 @@ const createAsync = async (command) => {
     await isOutputDirectoryEmpty(outputDir);
 
     // Showing the loader
-    const spinner = loading(`Generation custom Celo Composer project with the following packages: ${selectedPackages}...\n`);
+    const spinner = loading(`Generation custom Celo Composer project with the following packages: ${selectedPackages.join(", ")}...\n`);
 
     // Shell commands to clone and trim the required directories
     shell.cd(pwd);
