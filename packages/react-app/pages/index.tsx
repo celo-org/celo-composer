@@ -40,9 +40,9 @@ export default function App() {
         configList.push({
           name: contract,
           abi: contracts[contract].abi,
-          // address: contracts[contract].address,
-          // To use Truffle, Uncomment the below line and comment the above line
           address: contracts[contract].address,
+          // To use Truffle, Uncomment the below line and comment the above line
+          // address: contracts[contract].address,
         });
       }
 
