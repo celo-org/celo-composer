@@ -42,7 +42,7 @@ export default function App() {
           abi: contracts[contract].abi,
           address: contracts[contract].address,
           // To use Truffle, Uncomment the below line and comment the above line
-          // address: contracts[contract].address,
+          // address: contracts[contract].networks[network?.chainId?.toString()].address ?? "44787",
         });
       }
 
