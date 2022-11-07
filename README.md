@@ -1,7 +1,3 @@
-## Hacktoberfest 2022
-
-Any feature improvement, major bug fix, or new dapp example added to celo-composer during the month of October for #hacktoberfest will be eligible for a 20-100 cUSD prize (based on complexity). Tag devrel@celo.org once you've submitted a PR.
-
 <!-- TABLE OF CONTENTS -->
 
 <details>
