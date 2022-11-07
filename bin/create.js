@@ -16,7 +16,7 @@ const createAsync = async (command) => {
         "flutter-app": "Flutter",
         "angular-app": "Angular",
         hardhat: "Hardhat",
-        truffle: "Truffle (comming soon)",
+        truffle: "Truffle",
         subgraphs: "TheGraph",
     };
 
