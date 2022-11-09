@@ -124,9 +124,7 @@ const createAsync = async (command) => {
             },
             homepage:
                 "https://github.com/celo-org/celo-composer/blob/main/README.md",
-            workspaces: {
-                packages: ["packages/*"],
-            },
+            workspaces: ["packages/*"],
             keywords: ["celo-composer", "celo"],
         };
 
@@ -186,6 +184,15 @@ const createAsync = async (command) => {
                     `packages/${package}/package.json`
                 );
                 let parsed = JSON.parse(localPackageJson);
+
+                // Change the name of the project in package.json for the generated packages.
+                parsed["name"] = `@${projectName}/${package}`;
+
+                // write back the changes to the package.json
+                shell
+                    .echo(JSON.stringify(parsed, "", 4))
+                    .to(`packages/${package}/package.json`);
+
                 Object.keys(parsed.scripts).forEach((key) => {
                     packageJson.scripts[
                         `${package}:${key}`
