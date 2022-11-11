@@ -2,10 +2,10 @@
 
 <p align="center">
   <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="angular-logo" width="120px" height="120px"/>
-  <br>
+  <br />
   <i>Now you can easily add crypto dependencies and implement solutions 
-    <br>Using the power of Angular.</i>
-  <br>
+    <b /r>Using the power of Angular.</i>
+  <br />
 </p>
 
 
