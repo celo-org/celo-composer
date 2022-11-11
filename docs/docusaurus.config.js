@@ -37,6 +37,33 @@ const config = {
         indexBlog: false,
       },
     ],
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        // options here
+        name: "celo-composer", // used by CLI, must be path safe
+        id: "main-readme",
+        sourceBaseUrl:
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+        outDir: "docs", // the base directory to output to.
+        documents: ["README.md"], // the file names to download
+        modifyContent(filename, content) {
+          let newContent = content
+            .replaceAll(
+              "./images/readme/",
+              "https://github.com/celo-org/celo-composer/blob/main/images/readme/"
+            )
+            .replaceAll(".png", ".png?raw=true")
+            .replaceAll(
+              "./packages/",
+              "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/"
+            );
+          console.log("newContent", newContent);
+          return newContent;
+        },
+        // performCleanup: false,
+      },
+    ],
   ],
   presets: [
     [
@@ -70,7 +97,7 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "getting-started/index",
+            docId: "introduction",
             position: "left",
             label: "Docs",
           },
