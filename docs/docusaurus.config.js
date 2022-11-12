@@ -10,7 +10,7 @@ const config = {
   tagline:
     "Celo Composer is a starter project with all code needed to build, deploy, and upgrade a dapps on Celo.",
   // TODO: Update this to the URL of your site once docs are live.
-  url: "https://celo.prg",
+  url: "https://celo.org",
   baseUrl: "/",
   onBrokenLinks: "ignore",
   onBrokenMarkdownLinks: "warn",
