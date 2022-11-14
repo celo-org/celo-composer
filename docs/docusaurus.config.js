@@ -43,16 +43,16 @@ const config = {
       {
         name: "celo-composer-main-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/",
         outDir: "docs",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
         // noRuntimeDownloads: true,
         // modifyContent(filename, content) {
         //   let newContent = content
         //     .replaceAll(
         //       "./images/readme/",
-        //       "https://github.com/celo-org/celo-composer/blob/readme-updates/images/readme/"
+        //       "https://github.com/celo-org/celo-composer/blob/main/images/readme/"
         //     )
         // },
       },
@@ -63,10 +63,10 @@ const config = {
       {
         name: "celo-composer-react-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-app/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-app/",
         outDir: "docs/frameworks/react-app",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
     // React + Tailwind Readme
@@ -75,10 +75,10 @@ const config = {
       {
         name: "celo-composer-react-tailwind-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-app-tailwindcss/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-app-tailwindcss/",
         outDir: "docs/frameworks/react-app-tailwind",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
 
@@ -88,10 +88,10 @@ const config = {
       {
         name: "celo-composer-react-native-app-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-native-app/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-native-app/",
         outDir: "docs/frameworks/react-native-app",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
     // React Native w/o Expo Readme
@@ -100,34 +100,34 @@ const config = {
       {
         name: "celo-composer-react-native-app-without-expo-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-native-app-without-expo/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-native-app-without-expo/",
         outDir: "docs/frameworks/react-native-app-without-expo",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
     // Flutter Readme
-    [
-      "docusaurus-plugin-remote-content",
-      {
-        name: "celo-composer-flutter-app-readme",
-        sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/flutter-app/",
-        outDir: "docs/frameworks/flutter-app",
-        documents: ["README.md"],
-        performCleanup: false,
-      },
-    ],
+    // [
+    //   "docusaurus-plugin-remote-content",
+    //   {
+    //     name: "celo-composer-flutter-app-readme",
+    //     sourceBaseUrl:
+    //       "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/flutter-app/",
+    //     outDir: "docs/frameworks/flutter-app",
+    //     documents: ["README.md"],
+    //     performCleanup: true,
+    //   },
+    // ],
     // Angular Readme
     [
       "docusaurus-plugin-remote-content",
       {
         name: "celo-composer-angular-app-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/angular-app/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/angular-app/",
         outDir: "docs/frameworks/angular-app",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
     // Hardhat Readme
@@ -136,34 +136,34 @@ const config = {
       {
         name: "celo-composer-hardhat-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/hardhat/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/hardhat/",
         outDir: "docs/frameworks/hardhat",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
     // Truffle Readme
-    // [
-    //   "docusaurus-plugin-remote-content",
-    //   {
-    //     name: "celo-composer-truffle-readme",
-    //     sourceBaseUrl:
-    //       "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/truffle/",
-    //     outDir: "docs/frameworks/truffle",
-    //     documents: ["README.md"],
-    //     performCleanup: false,
-    //   },
-    // ],
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "celo-composer-truffle-readme",
+        sourceBaseUrl:
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/truffle/",
+        outDir: "docs/frameworks/truffle",
+        documents: ["README.md"],
+        performCleanup: true,
+      },
+    ],
     // Subgraphs Readme
     [
       "docusaurus-plugin-remote-content",
       {
         name: "celo-composer-subgraphs-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/subgraphs/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/subgraphs/",
         outDir: "docs/frameworks/subgraphs",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: true,
       },
     ],
   ],

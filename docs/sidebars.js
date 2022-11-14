@@ -28,11 +28,11 @@ const sidebars = {
       label: "React Native w/o Expo",
       id: "frameworks/react-native-app-without-expo/README",
     },
-    {
-      type: "doc",
-      label: "Flutter",
-      id: "frameworks/flutter-app/README",
-    },
+    // {
+    //   type: "doc",
+    //   label: "Flutter",
+    //   id: "frameworks/flutter-app/README",
+    // },
     {
       type: "doc",
       label: "Angular",
@@ -43,31 +43,15 @@ const sidebars = {
       label: "Hardhat",
       id: "frameworks/hardhat/README",
     },
-    // {
-    //   type: "doc",
-    //   label: "Truffle",
-    //   id: "frameworks/truffle/README",
-    // },
+    {
+      type: "doc",
+      label: "Truffle",
+      id: "frameworks/truffle/README",
+    },
     {
       type: "doc",
       label: "Subgraphs",
       id: "frameworks/subgraphs/README",
-    },
-    {
-      type: "category",
-      label: "Getting Started",
-      items: [
-        {
-          type: "doc",
-          label: "Start building on Celo",
-          id: "getting-started/index",
-        },
-        {
-          type: "doc",
-          label: "Setup for Celo Testnet",
-          id: "getting-started/setup-for-celo-testnet",
-        },
-      ],
     },
   ],
 };
