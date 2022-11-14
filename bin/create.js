@@ -7,22 +7,33 @@ const { ensureDir, readdir } = require("fs-extra");
 
 const BASE_URL = "https://github.com/celo-org/celo-composer/";
 
-const createAsync = async (command) => {
-    let availablePackages = {
-        "react-app": "React (with examples, requires hardhat deploy)",
-        "react-app-tailwindcss": "React with Tailwindcss (blank boilerplate)",
-        "react-native-app": "React Native (With Expo)",
-        "react-native-app-without-expo": "React Native (without Expo)",
-        "flutter-app": "Flutter",
-        "angular-app": "Angular",
-        hardhat: "Hardhat",
-        truffle: "Truffle",
-        subgraphs: "TheGraph",
-    };
+/**
+ * Object all available templates to choose from.
+ */
+let availablePackages = {
+    "react-app": "React (with examples, requires hardhat deploy)",
+    "react-app-tailwindcss": "React with Tailwindcss (blank boilerplate)",
+    "react-native-app": "React Native (With Expo)",
+    "react-native-app-without-expo": "React Native (without Expo)",
+    "flutter-app": "Flutter",
+    "angular-app": "Angular",
+    hardhat: "Hardhat",
+    truffle: "Truffle",
+    subgraphs: "TheGraph",
+};
 
-    let selectedPackages = [];
+/**
+ * All questions in one place
+ * 1. Frontend Framework
+ * 2. Smart Contract Framework
+ * 3. Indexing?
+ * 4. Project Name
+ *
+ * All of the repsonse will be available in promise resolve - answers as an array.
+ */
 
-    let { fEFramework } = await inquirer.prompt({
+let questions = [
+    {
         type: "list",
         name: "fEFramework",
         message: "Choose front-end framework:",
@@ -35,21 +46,8 @@ const createAsync = async (command) => {
             availablePackages["flutter-app"],
             availablePackages["angular-app"],
         ],
-    });
-
-    /**
-     * Based on what fEFramework value is,
-     * get its index in the object values array,
-     * at the same index get its key and push it to selectedPackages.
-     */
-
-    selectedPackages.push(
-        Object.keys(availablePackages)[
-            Object.values(availablePackages).indexOf(fEFramework)
-        ]
-    );
-
-    let { scFramework } = await inquirer.prompt({
+    },
+    {
         type: "list",
         name: "scFramework",
         message: "Choose smart-contract framework:",
@@ -59,32 +57,23 @@ const createAsync = async (command) => {
             availablePackages["truffle"],
             "None",
         ],
-    });
-
-    selectedPackages.push(
-        Object.keys(availablePackages)[
-            Object.values(availablePackages).indexOf(scFramework)
-        ]
-    );
-
-    let { indexingProtocol } = await inquirer.prompt({
+    },
+    {
         type: "list",
         name: "indexingProtocol",
         message: "Create a subgraph:",
         default: "No",
         choices: ["Yes", "No"],
-    });
-
-    if (indexingProtocol === "Yes") {
-        selectedPackages.push("subgraphs");
-    }
-
-    let { projectName } = await inquirer.prompt({
+    },
+    {
         type: "input",
         name: "projectName",
         message: "Project name: ",
-    });
+    },
+];
 
+// Generate Project files based on selectedPackages
+async function generatePackageJSON(selectedPackages, projectName) {
     if (selectedPackages.length > 0) {
         const pwd = process.cwd();
         const outputDir = `${pwd}/${projectName}`;
@@ -124,7 +113,9 @@ const createAsync = async (command) => {
             },
             homepage:
                 "https://github.com/celo-org/celo-composer/blob/main/README.md",
-            workspaces: ["packages/*"],
+            workspaces: {
+                packages: ["packages/*"],
+            },
             keywords: ["celo-composer", "celo"],
         };
 
@@ -179,24 +170,22 @@ const createAsync = async (command) => {
              * all of them will be add as react-app:start, react-app:dev, react-app:build etc...
              */
 
-            packages.forEach((package) => {
-                let localPackageJson = shell.cat(
-                    `packages/${package}/package.json`
-                );
+            packages.forEach((p) => {
+                let localPackageJson = shell.cat(`packages/${p}/package.json`);
                 let parsed = JSON.parse(localPackageJson);
 
                 // Change the name of the project in package.json for the generated packages.
-                parsed["name"] = `@${projectName}/${package}`;
+                parsed["name"] = `@${projectName}/${p}`;
 
                 // write back the changes to the package.json
                 shell
                     .echo(JSON.stringify(parsed, "", 4))
-                    .to(`packages/${package}/package.json`);
+                    .to(`packages/${p}/package.json`);
 
                 Object.keys(parsed.scripts).forEach((key) => {
                     packageJson.scripts[
-                        `${package}:${key}`
-                    ] = `yarn workspace @${projectName}/${package} ${key}`;
+                        `${p}:${key}`
+                    ] = `yarn workspace @${projectName}/${p} ${key}`;
                 });
             });
         }
@@ -209,8 +198,9 @@ const createAsync = async (command) => {
             text: chalk.green(" Done!"),
         });
         shell.echo(JSON.stringify(packageJson, "", 4)).to("package.json");
+        shell.cd(pwd);
     }
-};
+}
 
 async function isOutputDirectoryEmpty(outputFolder, force = false) {
     const files = await readdir(outputFolder);
@@ -227,6 +217,35 @@ async function isOutputDirectoryEmpty(outputFolder, force = false) {
         }
     }
 }
+
+// Based on answers provided prepare selectedPackages array.
+async function prepareSelectedPackages(answers) {
+    let selectedPackages = [];
+
+    selectedPackages.push(
+        Object.keys(availablePackages)[
+            Object.values(availablePackages).indexOf(answers["fEFramework"])
+        ]
+    );
+
+    selectedPackages.push(
+        Object.keys(availablePackages)[
+            Object.values(availablePackages).indexOf(answers["scFramework"])
+        ]
+    );
+
+    if (answers["indexingProtocol"] === "Yes") {
+        selectedPackages.push("subgraphs");
+    }
+
+    await generatePackageJSON(selectedPackages, answers["projectName"]);
+}
+
+// Modified in-order to receive answers programmatically in order to make this function testable.
+const createAsync = async (answers = {}) => {
+    let inquirerAnswers = await inquirer.prompt(questions, answers);
+    await prepareSelectedPackages(inquirerAnswers);
+};
 
 const loading = (message) => {
     return ora(message).start();
