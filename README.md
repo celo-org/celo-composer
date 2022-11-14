@@ -65,33 +65,23 @@ The easiest way to get started with Celo Composer is using `@celo/celo-composer`
 npx @celo/celo-composer create
 ```
 
-#### Output
+#### This will prompt you to select the framework and the template you want to use
 
-![Output-1](https://github.com/celo-org/celo-composer/blob/main/images/readme/image-1.png?raw=true)
+![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-create.png?raw=true)
 
-- Select the framework you like and please enter.
+#### Once you select the framework and the template, it will ask you to select the smart contract development environment tool
 
-![Output-2](https://github.com/celo-org/celo-composer/blob/main/images/readme/image-2.png?raw=true)
+![Celo Composer tool selection](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-tool.png?raw=true)
 
-- Enter the project name and the starter project will the create in present working directory.
+#### After selecting the tool, it will ask you whether you want subgraph support for your dApp
 
-### Get testnet funds and install dependencies
+![Celo Composer subgraph support](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-subgraph.png?raw=true)
 
-```sh
-cd hardhat
-yarn install
-npx hardhat create-account # prints a private key + account
-```
+#### Finally, it will ask you for the name of your dApp
 
-1. Create `packages/hardhat/.env` and paste the line containing the private key into it, so it looks something like this:
+![Celo Composer dApp name](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-project-name.png?raw=true)
 
-`PRIVATE_KEY="0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d"`
-
-2. Fund the account from the faucet [here](https://celo.org/developers/faucet). Once the account is funded, deploy the contracts with:
-
-```sh
-yarn deploy
-```
+**_🔥Voila, you have your dApp ready to go. You can now start building your dApp on Celo._**
 
 ## Supported Frameworks
 
@@ -102,7 +92,7 @@ yarn deploy
 - Support for Website and Progressive Web Application.
 - Works with all major crypto wallet.
 
-Check here to learn more about [Celo Composer - React](https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-app/README.md)
+Check here to learn more about [Celo Composer - React](https://github.com/celo-org/celo-composer/main/packages/react-app/README.md)
 
 ### <u>React Native</u>
 
@@ -112,7 +102,7 @@ Check here to learn more about [Celo Composer - React](https://raw.githubusercon
 - Working example app - The included example app shows how this all works together.
 - Easy to use and always updated with latest dependencies.
 
-Check here to learn more about [Celo Composer - React Native](https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/react-native-app/README.md)
+Check here to learn more about [Celo Composer - React Native](https://github.com/celo-org/celo-composer/main/packages/react-native-app/README.md)
 
 ### <u>Flutter</u>
 
@@ -122,53 +112,14 @@ Check here to learn more about [Celo Composer - React Native](https://raw.github
 - Working example app - The included example app shows how this all works together.
 - Easy to use and always updated with latest dependencies.
 
-Check here to learn more about [Celo Composer - Flutter](https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/flutter-app/README.md)
+Check here to learn more about [Celo Composer - Flutter](https://github.com/celo-org/celo-composer/main/packages/flutter-app/README.md)
 
 ### <u>Angular</u>
 
 - Creating examples and experiment with Angular for your libraries and components.
 - Easy to setup and use.
 
-Check here to learn more about [Celo Composer - Angular](https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/angular-app/README.md)
-
-## Review
-
-- Edit smart contracts in `packages/hardhat/contracts`.
-- Edit deployment scripts in `packages/hardhat/deploy`.
-- Edit frontend in `packages/react-app/pages/index.tsx`.
-- Open <http://localhost:3000> to see the app.
-
-You can run `yarn deploy --reset` to force re-deploy your contracts to your local development chain.
-
-## Deploy Your DApp
-
-This repo comes with a `netlify.toml` file that makes it easy to deploy your front end using [Netlify](https://www.netlify.com/). The `toml` file contains instructions for Netlify to build and serve the site, so all you need to do is create an account and connect your GitHub repo to Netlify.
-
-## Developing with local devchain
-
-You can [import account account keys](https://metamask.zendesk.com/hc/en-us/articles/360015489331-How-to-import-an-Account) for the local development chain into Metamask. To print the private keys of the local chain accounts `cd /packages/hardhat` and run
-
-```shell
-npx hardhat devchain-keys
-```
-
-If you are working on a local development blockchain, you may see errors about `the tx doesn't have the correct nonce.` This is because wallets often cache the account nonce to reduce the number of RPC calls and can get out of sync when you restart your development chain. You can [reset the account nonce in Metamask](https://metamask.zendesk.com/hc/en-us/articles/360015488891-How-to-reset-your-account) by going to `Settings > Advanced > Reset Account`. This will clear the tx history and force Metamask to query the appropriate nonce from your development chain.
-
-**Note:** You can get a local copy of mainnet by forking with Ganache. Learn more about [forking mainnet with Ganache here.](https://trufflesuite.com/blog/introducing-ganache-7/index.html#1-zero-config-mainnet-forking)
-
-## React library choices
-
-The example UI in `packages/react-app` uses the [Next.js](https://nextjs.org/) React framework, and [react-celo](https://www.npmjs.com/package/@celo/react-celo) Celo library to get you started with building a responsive, web3 DApp quickly. Feel free to use it as a reference and use whatever web3 packages you are familiar with.
-
-## The Graph
-
-**Using the Graph is not a requirement for building a web3 application. It is more of a convenience for when your application is reading a lot of data from a blockchain.**
-
-Its suggested to only adding support for the Graph when you need it, avoid premature optimization.
-
-The `/packages/subgraphs` directory includes an example subgraph for reading data from the example `Storage.sol` contract. The Graph is a blockchain data indexing service that makes it easier to read data from EVM blockchains. You can read more about how the Graph works and how to use it in the [README here](https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/subgraphs/README.md).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
+Check here to learn more about [Celo Composer - Angular](https://github.com/celo-org/celo-composer/main/packages/angular-app/README.md)
 
 <!-- USAGE EXAMPLES -->
 
@@ -210,37 +161,6 @@ If you decide to try this out and find something confusing, consider opening an 
 We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
 
 You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/17/100028587).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-### How to Contribute a new dApp
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-- Create a new smart contract in `packages/hardhat/contracts`.
-- Add a new deployment script within `packages/hardhat/deploy/00-deploy.js` using the name of your smart contract.
-- Deploy your Smart Contract from within packages/hardhat using `yarn deploy`
-- Add a new component named `ContractName.tsx` to `packages/react-app/components` to create front end of your dApp.
-- Export component using `packages/react-app/components/index.tsx` using `export * from './ContractName`
-- Import component to `packages/react-app/pages/index.tsx` by adding contract to `import { ContractName } from "@/components";`
-- Add tab within tabs component in `packages/react-app/pages/index.tsx` and replace # with tab number.
-
-```jsx
-<Tab label="Contract Label" {...a11yProps(#)} />
-```
-
-- Add tab panel to page replacing `#` with tab number and `ContractName` with your smart contract name
-
-```jsx
-<TabPanel value={value} index={#}>
-    <GreeterContract contractData={contracts?.ContractName} />
-</TabPanel>
-```
-
-You should now be able to view your new dApp from [http://localhost:3000](http://localhost:3000).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
