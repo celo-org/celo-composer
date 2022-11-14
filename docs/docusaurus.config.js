@@ -107,17 +107,17 @@ const config = {
       },
     ],
     // Flutter Readme
-    // [
-    //   "docusaurus-plugin-remote-content",
-    //   {
-    //     name: "celo-composer-flutter-app-readme",
-    //     sourceBaseUrl:
-    //       "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/flutter-app/",
-    //     outDir: "docs/frameworks/flutter-app",
-    //     documents: ["README.md"],
-    //     performCleanup: true,
-    //   },
-    // ],
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "celo-composer-flutter-app-readme",
+        sourceBaseUrl:
+          "https://raw.githubusercontent.com/celo-org/celo-composer/main/packages/flutter-app/",
+        outDir: "docs/frameworks/flutter-app",
+        documents: ["README.md"],
+        performCleanup: true,
+      },
+    ],
     // Angular Readme
     [
       "docusaurus-plugin-remote-content",

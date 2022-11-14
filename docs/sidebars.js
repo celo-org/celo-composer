@@ -28,11 +28,11 @@ const sidebars = {
       label: "React Native w/o Expo",
       id: "frameworks/react-native-app-without-expo/README",
     },
-    // {
-    //   type: "doc",
-    //   label: "Flutter",
-    //   id: "frameworks/flutter-app/README",
-    // },
+    {
+      type: "doc",
+      label: "Flutter",
+      id: "frameworks/flutter-app/README",
+    },
     {
       type: "doc",
       label: "Angular",
