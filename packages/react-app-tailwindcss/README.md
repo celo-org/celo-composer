@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React Framework + TailwindCSS | Celo Composer
 
-## Getting Started
+Celo Composer support React boilerplate template with TwilwindCSS. This is a starterkit with no additional boilderplate code. It's a perfect starterkit to get your project started on Celo blockchain.
 
-First, run the development server:
+## Setup & Intallation
 
 ```bash
-npm run dev
-# or
-yarn dev
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run `yarn` or `npm install` to install all the required dependencies to run the dApp.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+> React + Tailwind CSS Template does not have any dependency on hardhat and truffle.
+> This starterkit does not include connection of Hardhat/Truffle with ReactJS. It's up to the user to integrate smart contract with ReactJS. This gives user more flexibily over the dApp.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- To start the dApp, run the following command.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+yarn react-dev
+```
 
-## Learn More
+## Dependencies
 
-To learn more about Next.js, take a look at the following resources:
+- [react-celo](https://www.npmjs.com/package/@celo/react-celo) for web3 connection and account management
+- [Next.js](https://nextjs.org/) app framework
+- [TailwindCSS](https://tailwindcss.com/) for UI
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `/pages` includes the main application components (specifically `index.tsx` and `_app.tsx`)
+  - `_app.tsx` includes configurartion
+  - `index.tsx` is the main page of the application
+- `/components` includes components that are rendered in `index.tsx`
+- `/public` includes static files
