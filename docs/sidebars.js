@@ -6,52 +6,64 @@ const sidebars = {
     {
       type: "doc",
       label: "Introduction",
-      id: "README",
+      id: "README"
     },
     {
-      type: "doc",
-      label: "React",
-      id: "frameworks/react-app/README",
+      type: "category",
+      label: "React + Nextjs",
+      items: [
+        {
+          type: "doc",
+          label: "Installation and Setup",
+          id: "frameworks/react-app/installation-and-setup"
+        },
+        {
+          type: "doc",
+          label: "Deploying your Contract",
+          id: "frameworks/react-app/deploying-your-contract"
+        },
+        {
+          type: "doc",
+          label: "Deploying your Contract",
+          id: "frameworks/react-app/verifying-your-contract"
+        }
+      ]
+      // id: "frameworks/react-app/README",
     },
     {
       type: "doc",
       label: "React + TailwindCSS",
-      id: "frameworks/react-app-tailwind/README",
+      id: "frameworks/react-app-tailwind/README"
     },
     {
       type: "doc",
       label: "React Native",
-      id: "frameworks/react-native-app/README",
+      id: "frameworks/react-native-app/README"
     },
     {
       type: "doc",
       label: "React Native w/o Expo",
-      id: "frameworks/react-native-app-without-expo/README",
+      id: "frameworks/react-native-app-without-expo/README"
     },
     {
       type: "doc",
       label: "Flutter",
-      id: "frameworks/flutter-app/README",
+      id: "frameworks/flutter-app/README"
     },
     {
       type: "doc",
       label: "Angular",
-      id: "frameworks/angular-app/README",
+      id: "frameworks/angular-app/README"
     },
     {
       type: "doc",
       label: "Hardhat",
-      id: "frameworks/hardhat/README",
+      id: "frameworks/hardhat/README"
     },
-    // {
-    //   type: "doc",
-    //   label: "Truffle",
-    //   id: "frameworks/truffle/README",
-    // },
     {
       type: "doc",
       label: "Subgraphs",
-      id: "frameworks/subgraphs/README",
+      id: "frameworks/subgraphs/README"
     },
     {
       type: "category",
@@ -60,16 +72,16 @@ const sidebars = {
         {
           type: "doc",
           label: "Start building on Celo",
-          id: "getting-started/index",
+          id: "getting-started/index"
         },
         {
           type: "doc",
           label: "Setup for Celo Testnet",
-          id: "getting-started/setup-for-celo-testnet",
-        },
-      ],
-    },
-  ],
+          id: "getting-started/setup-for-celo-testnet"
+        }
+      ]
+    }
+  ]
 };
 
 module.exports = sidebars;
