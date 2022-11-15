@@ -84,12 +84,12 @@ Why Celo Composer Flutter?
 
 ## Directory Structure
 
-`├──`[`.vscode`](.vscode) — VSCode settings including code snippets, recommended extensions etc.<br>
-`├──`[`android`](./android) — Contains all the Android specific code.<br>
-`├──`[`ios`](./ios) — Contains all the IOS specific code.<br>
-`├──`[`lib`](./lib) — Core modules, controllers, UI Code, constants, etc.<br>
-`├──`[`.gitignore`](./.gitignore) — A gitignore file specifies intentionally untracked files that Git should ignore.<br>
-`├──`[`pubspec.yaml`](./pubspec.yaml) —  A pubspec is generated when you create a new Flutter project.<br>
+`├──`[`.vscode`](.vscode) — VSCode settings including code snippets, recommended extensions etc.<br/>
+`├──`[`android`](./android) — Contains all the Android specific code.<br/>
+`├──`[`ios`](./ios) — Contains all the IOS specific code.<br/>
+`├──`[`lib`](./lib) — Core modules, controllers, UI Code, constants, etc.<br/>
+`├──`[`.gitignore`](./.gitignore) — A gitignore file specifies intentionally untracked files that Git should ignore.<br/>
+`├──`[`pubspec.yaml`](./pubspec.yaml) —  A pubspec is generated when you create a new Flutter project.<br/>
 
 ### Built With
 

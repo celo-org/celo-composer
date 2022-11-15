@@ -2,16 +2,11 @@
 
 <p align="center">
   <img src="https://angular.io/assets/images/logos/angular/angular.svg" alt="angular-logo" width="120px" height="120px"/>
-  <br>
+  <br/>
   <i>Now you can easily add crypto dependencies and implement solutions 
-    <br>Using the power of Angular.</i>
-  <br>
+    <br/>Using the power of Angular.</i>
+  <br/>
 </p>
-
-
-
-
-
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3
 
@@ -45,6 +40,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 package that implements end-to-end testing capabilities.
 
 ## Provider
+
 This Dapp use web3modal allow us to use more wallet connectors
 you can get more info [here](https://github.com/Web3Modal/web3modal)
 
@@ -55,15 +51,14 @@ in web3.serrvice.ts line 31 insert your key in infuraId: ''
 
 ## Change Network
 
-in ``web3.serrvice.ts`` line 56 you can change the network to your desire net
-to  ``network: "mainnet",`` or ``network: "rinkeby",`` or ``network: "ropsten",``
-
+in `web3.serrvice.ts` line 56 you can change the network to your desire net
+to `network: "mainnet",` or `network: "rinkeby",` or `network: "ropsten",`
 
 ## Dependencies and changes to common Angular App
 
 **tsconfig.json**
 
-```json 
+```json
   "compilerOptions": {
     "paths":{
       "crypto": ["./node_modules/crypto-browserify"],
@@ -87,4 +82,3 @@ to  ``network: "mainnet",`` or ``network: "rinkeby",`` or ``network: "ropsten",`
   }
 
 ```
-
