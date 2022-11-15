@@ -24,7 +24,7 @@ const sidebars = {
         },
         {
           type: "doc",
-          label: "Deploying your Contract",
+          label: "Verifying your Contract",
           id: "frameworks/react-app/verifying-your-contract"
         }
       ]

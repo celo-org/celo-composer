@@ -55,8 +55,8 @@ yarn install
 
 Before generating your own private key to use in the development environment, we need for do two things.
 
-* In the current _packages/hardhat_ folder, create _.env_ file 
-* Copy and paste the below placeholder variables here before we replace it with your own values
+- In the current _packages/hardhat_ folder, create _.env_ file
+- Copy and paste the below placeholder variables here before we replace it with your own values
 
 ```
 PRIVATE_KEY=0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d
@@ -70,3 +70,17 @@ Next to generate your own personally known private key and address to be used in
 ```bash
 npx hardat create-account
 ```
+
+Copy the value of the _PRIVATE_KEY_ outputted in terminal and use it to the replace the curent one in your _.env_ file, also copy the account address and use it to replace the current value of _ACCOUNT_ADDRESS_ in the _.env_ file.
+
+Next fund your account address using the Celo Alfajores faucet. To do so visit https://celo.org/developers/faucet, paste your account address in the field input that says Testnet Address, validate the captacha and submit to request test funds.
+
+![Request testnet Celo](./images/output-6.png)
+
+You can confirm your balance by visiting https://alfajores.celoscan.io/. Paste your account address in the search explorer and click the search button.
+
+![Celoscan Explorer search](./images/output-7.png)
+
+You should be 1 CELO, 1 cReal, 1 cUSD, 1cEUR rich 🤑.
+
+![Celoscan balance](./images/output-8.png)
