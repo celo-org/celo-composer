@@ -1,18 +1,75 @@
-# Celo Composer Frontend
+# React Framework | Celo Composer
 
-## Getting Started
+Celo Composer support React boilerplate template. This React framework in based on [Scaffold-eth](https://github.com/scaffold-eth/scaffold-eth) theme. This starter kit support Progressive Web Application.
 
-### Install
+## Setup & Intallation
 
-```shell
+```bash
 yarn
 ```
 
-### Start
+Run `yarn` or `npm install` to install all the required dependencies to run the dApp.
 
-```shell
-yarn dev
+### Running React Framework with Hardhat
+
+If you are using React with Hardhat framework, follow the below steps to start your dApp.
+
+- Goto hardhat dirctory and install all the dependencies.
+
+```bash
+cd <app_name>/packages/hardhat
+yarn
 ```
+
+- Before deploying the contracts, you need to create `.env` file and add the `PRIVATE_KEY`.
+- Run the following command in `hardhat` directory to use `envexmaple` created by celo-composer.
+
+```bash
+mv .envexample .env
+```
+
+- Add the private key of the account you wish to use to deploy the contract in the `.env` file.
+
+#### Deploying contracts on Alfajores blockchain
+
+- Run the following command from the **root directory of the project.**
+
+```bash
+yarn hardhat-deploy --network alfajores
+```
+
+### Running React Framework with Truffle
+
+- Install truffle globally using following command.
+
+```bash
+npm install -g truffle // Might have to use sudo
+```
+
+- Before deploying the contracts, you need to create `.env` file and add the `PRIVATE_KEY`.
+- Run the following command in `truffle` directory to use `.envexmaple` created by celo-composer.
+
+```bash
+mv .envexample .env
+```
+
+- Add the private key of the account you wish to use to deploy the contract in the `.env` file.
+
+- Run the following command to compile & deploy all the contract in `contracts` directory.
+
+```bash
+truffle compile
+truffle deploy --network alfajores
+```
+
+#### Troubleshoot for Truffle
+
+The project created in `react-app` is by default created for hardhat, but it's really easy to use it for Truffle. Follow the below instructions to use Truffle.
+
+- Open the file - `packages/react-app/pages/index.tsx`
+- In `index.tsx`, there are few comments starting with `To use Truffle`. Go throught the files and uncomment the lines below these commands, and comment the line above it to use the `react-app` with `truffle`.
+
+> Note that you will need Alfajores Testnet CELO tokens in your wallet to deploy the contracts. You can get testnet CELO from [here](https://celo.org/developers/faucet).
 
 ## Dependencies
 

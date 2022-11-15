@@ -26,7 +26,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: "en",
-    locales: ["en"],
+    locales: ["en"]
   },
   plugins: [
     [
@@ -34,8 +34,8 @@ const config = {
       {
         indexDocs: true,
         indexDocSidebarParentCategories: 1,
-        indexBlog: false,
-      },
+        indexBlog: false
+      }
     ],
     // Main Readme
     [
@@ -46,7 +46,7 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/",
         outDir: "docs",
         documents: ["README.md"],
-        performCleanup: false,
+        performCleanup: false
         // noRuntimeDownloads: true,
         // modifyContent(filename, content) {
         //   let newContent = content
@@ -55,7 +55,7 @@ const config = {
         //       "https://github.com/celo-org/celo-composer/blob/readme-updates/images/readme/"
         //     )
         // },
-      },
+      }
     ],
     // React Readme
     [
@@ -66,8 +66,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-app/",
         outDir: "docs/frameworks/react-app",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // React + Tailwind Readme
     [
@@ -78,8 +78,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-app-tailwindcss/",
         outDir: "docs/frameworks/react-app-tailwind",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
 
     // React Native Readme
@@ -91,8 +91,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-native-app/",
         outDir: "docs/frameworks/react-native-app",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // React Native w/o Expo Readme
     [
@@ -103,8 +103,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/react-native-app-without-expo/",
         outDir: "docs/frameworks/react-native-app-without-expo",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // Flutter Readme
     [
@@ -112,11 +112,11 @@ const config = {
       {
         name: "celo-composer-flutter-app-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/flutter-app/",
+          "https://raw.githubusercontent.com/celo-org/celo-composer/docs/packages/flutter-app/",
         outDir: "docs/frameworks/flutter-app",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // Angular Readme
     [
@@ -127,8 +127,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/angular-app/",
         outDir: "docs/frameworks/angular-app",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // Hardhat Readme
     [
@@ -139,8 +139,8 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/hardhat/",
         outDir: "docs/frameworks/hardhat",
         documents: ["README.md"],
-        performCleanup: false,
-      },
+        performCleanup: false
+      }
     ],
     // Truffle Readme
     // [
@@ -163,9 +163,9 @@ const config = {
           "https://raw.githubusercontent.com/celo-org/celo-composer/readme-updates/packages/subgraphs/",
         outDir: "docs/frameworks/subgraphs",
         documents: ["README.md"],
-        performCleanup: false,
-      },
-    ],
+        performCleanup: false
+      }
+    ]
   ],
   presets: [
     [
@@ -177,14 +177,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/celo-org/celo-composer/issues/new/choose/",
+            "https://github.com/celo-org/celo-composer/issues/new/choose/"
         },
         blog: false,
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
-      }),
-    ],
+          customCss: require.resolve("./src/css/custom.css")
+        }
+      })
+    ]
   ],
 
   themeConfig:
@@ -194,21 +194,21 @@ const config = {
         title: "Celo Composer",
         logo: {
           alt: "Celo Logo",
-          src: "img/celo-logo.png",
+          src: "img/celo-logo.png"
         },
         items: [
           {
             type: "doc",
             docId: "README",
             position: "left",
-            label: "Docs",
+            label: "Docs"
           },
           {
             href: "https://github.com/celo-org/celo-composer/",
             label: "GitHub",
-            position: "right",
-          },
-        ],
+            position: "right"
+          }
+        ]
       },
       footer: {
         style: "dark",
@@ -218,40 +218,40 @@ const config = {
             items: [
               {
                 label: "Docs",
-                to: "/docs",
-              },
-            ],
+                to: "/docs"
+              }
+            ]
           },
           {
             title: "Community",
             items: [
               {
                 label: "Discord",
-                href: "https://discord.com/invite/atBpDfqQqX",
+                href: "https://discord.com/invite/atBpDfqQqX"
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/CeloOrg",
-              },
-            ],
+                href: "https://twitter.com/CeloOrg"
+              }
+            ]
           },
           {
             title: "More",
             items: [
               {
                 label: "GitHub",
-                href: "https://github.com/celo-org/celo-composer/",
-              },
-            ],
-          },
+                href: "https://github.com/celo-org/celo-composer/"
+              }
+            ]
+          }
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Celo Foundation, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Celo Foundation, Inc. Built with Docusaurus.`
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
-    }),
+        darkTheme: darkCodeTheme
+      }
+    })
 };
 
 module.exports = config;

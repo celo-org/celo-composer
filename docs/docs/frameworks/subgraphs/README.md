@@ -12,7 +12,7 @@ This README was created following [this post](https://docs.celo.org/blog/using-t
 
 Run
 
-```shell
+```bash
 graph init
 ```
 
@@ -27,7 +27,7 @@ graph init
 
 Run
 
-```shell
+```bash
 graph codegen
 ```
 
@@ -35,13 +35,13 @@ graph codegen
   - Find more information about deploying a subgraph to the hosted service on the Graph docs [here](https://thegraph.com/docs/en/hosted-service/deploy-subgraph-hosted/#create-a-hosted-service-account).
 - Authorize your cli 
 
-```shell
+```bash
 graph auth --product hosted-service <ACCESS_TOKEN>
 ```
 
 ## Deploy
 
-```shell
+```bash
 graph deploy --product hosted-service <GITHUB_USER>/<SUBGRAPH NAME>
 ```
 

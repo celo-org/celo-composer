@@ -22,8 +22,6 @@
   <p align="center">
     A comprehensive starter kit for rapid Web3 application development using Flutter.
     <br />
-    <!-- <a href="https://github.com/viral-sangani/walletconnect_flutter"><strong>Explore the docs »</strong></a>
-    <br /> -->
     <br />
     <a href="https://github.com/viral-sangani/walletconnect_flutter">View Demo</a>
     ·

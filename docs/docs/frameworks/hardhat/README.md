@@ -1,43 +1,32 @@
-# Basic Sample Hardhat Project on Celo
-
-[Hardhat Documentation](https://hardhat.org/getting-started/#overview)
+# Hardhat | Celo Composer
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
-Try running some of the following tasks:
+## Setup & Intallation
 
-```shell
-npx hardhat accounts
-npx hardhat devchain-keys  # print devchain keys
-npx hardhat create-account # print new key + account
-npx hardhat test           # run contract tests in ./test
-```
-
-## Alfajores Testnet Setup
+### Alfajores Testnet Setup
 
 **Note** This setup is not required when using a local development blockchain (like celo-devchain or Ganache).
 
 1. Create a `.env` file similar to `.envexample`.
-2. Add a private key. Generate a new one with `npx hardhat create-account`. Paste the private key in `.env`.
+2. Paste the private key in `.env`.
 3. Faucet your account with the Alfajores testnet faucet [here](https://celo.org/developers/faucet).
 
 ## Develop
 
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
-3. Deploy contracts with `yarn deploy`. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
+3. Deploy contracts with `yarn hardhat-deply` from the **root directory**. Optionally add the reset flag (`yarn hardhat-deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
-```shell
-npx hardhat --network [network] deploy
+```bash
+npx hardhat-deploy deploy --network [network name]
 ```
-  
-4. Auto deploy any contract updates by running `yarn watch`.
 
 Network configs are defined in `hardhat.config.js`.
 
 ## [Celo devchain](https://github.com/terminal-fi/celo-devchain)
 
-Run a local development Celo chain with `yarn devchain`. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
+Run a local development Celo chain with `yarn devchain` in the `packages/hardhat` folder. You can print the addresses of the [Celo protocol contracts](https://github.com/celo-org/celo-monorepo/tree/master/packages/protocol) with `npx @terminal-fi/celo-devchain --test`.
 
 This is a version of Ganache (@celo/ganache-cli) that deploys the Celo core protocol contracts when it starts.
 
@@ -47,13 +36,13 @@ This is a version of Ganache (@celo/ganache-cli) that deploys the Celo core prot
 
 ### Start
 
-```shell
+```bash
 npx celo-devchain --port 8545
 ```
 
 or
 
-```shell
+```bash
 yarn devchain
 ```
 
@@ -63,7 +52,7 @@ This setting defaults to the web3 v1 bindings because that is what is used by us
 
 You can change the output directory and target in `hardhat.config.js`.
 
-```shell
+```bash
 npx hardhat typechain
 ```
 
@@ -71,7 +60,7 @@ Read more about Typechain [here](https://github.com/dethcrypto/TypeChain) and mo
 
 ### Run sanity tests and print all core contract addresses
 
-```shell
+```bash
 npx @terminal-fi/celo-devchain --test
 ```
 
@@ -89,13 +78,13 @@ You can easily verify your contracts deployed to the associated networks with ha
 
 [Reference](https://docs.celo.org/developer/verify/hardhat)
 
-```shell
+```bash
 npx hardhat verify smart-contract-address parameter(s) --network alfajores
 ```
 
 On Mainnet:
 
-```shell
+```bash
 npx hardhat verify smart-contract-address parameter(s) --network celo
 ```
 
@@ -107,13 +96,13 @@ Additionally, you can easily verify your contracts deployed to the associated ne
 
 On Alfajores:
 
-```shell
+```bash
 npx hardhat --network alfajores sourcify
 ```
 
 On Mainnet:
 
-```shell
+```bash
 npx hardhat --network celo sourcify
 ```
 
