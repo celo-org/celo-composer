@@ -112,7 +112,7 @@ const config = {
       {
         name: "celo-composer-flutter-app-readme",
         sourceBaseUrl:
-          "https://raw.githubusercontent.com/celo-org/celo-composer/docs/packages/flutter-app/",
+          "https://raw.githubusercontent.com/alofeoluwafemi/celo-composer-on-steriod/docs/packages/flutter-app",
         outDir: "docs/frameworks/flutter-app",
         documents: ["README.md"],
         performCleanup: false
