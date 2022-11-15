@@ -8,7 +8,7 @@ Thanks to the folks on the Celo deverel team for making a major update that allo
 
 In this guide we will be setting up a celo composer project for using the React Nextjs package for our frontend and hardhat package for writing our smart contracts. We won't be including the graph package and as a choice of smart contract development environment we will be using **Hardhart** and not **Truffle**.
 
-### Step 1
+### Step 1: Setup Project
 
 Install the celo composer package gollably on your machine by running
 
@@ -42,3 +42,31 @@ When the installation is completed it will show you **💯 Done!**.
 If you open your new Celo Composer project in your favourite editor, your directory structure should look like below. I am currently use Celo Composer version _1.0.1_, so there might be some diffrence in the future if you are using a later version.
 
 ![Output-4](./images/output-5.png)
+
+## Step 2: Setup a Testnet Account
+
+_cd_ into _packages/hardhat_ from your terminal and run _yarn install_ to install needed dependecies for hardat package.
+
+```
+cd packages/hardhat
+
+yarn install
+```
+
+Before generating your own private key to use in the development environment, we need for do two things.
+
+* In the current _packages/hardhat_ folder, create _.env_ file 
+* Copy and paste the below placeholder variables here before we replace it with your own values
+
+```
+PRIVATE_KEY=0xba28d5cea192f121db5f1dd7f501532170bb7bb984c4d3747df3e251e529f77d
+ACCOUNT_ADDRESS=0x81cb394E24e5AeA53C3BD6f3d48b43e9A3817CC6
+```
+
+> Disclaimer: The above private key is publicly known, so do not use it or send any live funds to it. Hackers might put non witjdrawable token inside of it to tempt you to send live funds to it.
+
+Next to generate your own personally known private key and address to be used in your development environment. Run the below command in the _packages/hardhat_ folder root.
+
+```bash
+npx hardat create-account
+```
