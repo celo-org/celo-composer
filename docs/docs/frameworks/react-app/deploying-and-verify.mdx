@@ -39,4 +39,61 @@ In our own case let us confirm for the **Greeter** smart contract by visiting ht
 
 ![Celoscan contact deployed](./images/output-9.png)
 
-The above image shows a transaction of the transaction being deployed on Celo testnet Alfajores. Next let us verify the contract code such that anyone who browses this page can view the Smart conract code and aknowledge that our contract is safe to use.
+The above image shows a transaction of the smart contract being deployed on Celo testnet Alfajores. Next let us verify the contract code such that anyone who browses this page can view the Smart conract code and aknowledge that our contract is safe to use.
+
+## Step 2: Verify Contract
+
+There are several reasons why you might want to verify contracts you have deployed, and here are a few examples.
+
+- It lets others interact with the contract directly celoscan.
+- It’s a sign of transparency on your part.
+- More people will use a Dapp with a verified contract than one which isn't. An unverified contract is equally a scam or a project with malicious intentions
+
+To be able to verify our contract on celoscan, we need to get an **API KEY**.
+
+1. Visit https://celoscan.io/, signup or sign in as the case may be.
+2. Vist your profile https://celoscan.io/myaccount.
+3. Click on API-KEYs tab which leads you here https://celoscan.io/myapikey.
+4. Click on the **Add** button and add a new API Key.
+
+Copy the newly generated API Key and update your _packages/hardhat.env_ with the this.
+
+```
+CELOSCAN_API_KEY=K7KR894C***************FKS71K
+```
+
+Remember to replace the value with your own celo scan API Key.
+
+The format to run the command for verifying a smart contract is:
+
+```
+npx hardhat verify <CONTRACT_ADDRESS> <CONSTRUCTOR_ARGS> --network alfajores
+```
+
+To verify our exmaple Greeter smart contract that was deployed above, the command to run will be:
+
+```
+npx hardhat verify 0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc 'hello world' --network alfajores
+```
+
+If you are wondering where **hello world** comes from. Thats because the Greeter smart contract takes a contructor argument when deployed and the value that was passed is **hello world**.
+
+You can confirm this by opening _packages/hardhat/deploy/00-deploy.js_. Don't worry if its your first time with hardhat, in the **ERC721 NFT Example** page when we create,compile and deploy a new smart contract you will get a better understanding.
+
+Once the smart contract verification is successful, you should get a similar output like below.
+
+```bash
+Nothing to compile
+Successfully submitted source code for contract
+contracts/Greeter.sol:Greeter at 0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract Greeter on Etherscan.
+https://alfajores.celoscan.io/address/0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc#code
+```
+
+Visit the url printed out in terminal. In our case https://alfajores.celoscan.io/address/0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc#code, you will be presented with the verified smart contract.
+
+![Celoscan verified contract ](./images/output-10.png)
+
+Congratulations! 🎉. Next let us create a new ERC721 NFT Smartc ontract of our oun and launch the reach frontend to interact with it.

@@ -25,48 +25,48 @@ module.exports = {
     localhost: {
       url: "http://127.0.0.1:8545",
       accounts: {
-        mnemonic: DEVCHAIN_MNEMONIC,
-      },
+        mnemonic: DEVCHAIN_MNEMONIC
+      }
     },
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 44787,
+      chainId: 44787
     },
     alfajoresDatahub: {
       url: "https://celo-alfajores--rpc.datahub.figment.io/apikey/<API KEY>",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 44787,
+      chainId: 44787
     },
     celo: {
       url: "https://forno.celo.org",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 42220,
+      chainId: 42220
     },
     celoDatahub: {
       url: "https://celo-mainnet--rpc.datahub.figment.io/apikey/<API KEY>",
       accounts: [process.env.PRIVATE_KEY],
-      chainId: 42220,
-    },
+      chainId: 42220
+    }
   },
   etherscan: {
     apiKey: {
-        alfajores: process.env.CELOSCAN_API_KEY,
-        celo: process.env.CELOSCAN_API_KEY
-    },
+      alfajores: process.env.CELOSCAN_API_KEY,
+      celo: process.env.CELOSCAN_API_KEY
+    }
   },
   solidity: {
-    version: "0.8.17",
+    version: "0.8.17"
   },
   namedAccounts: {
-    deployer: 0,
+    deployer: 0
   },
   typechain: {
     outDir: "types",
     target: "web3-v1",
     alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
-    externalArtifacts: ["externalArtifacts/*.json"], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
-  },
+    externalArtifacts: ["externalArtifacts/*.json"] // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
+  }
 };
 
 // This is a sample Hardhat task. To learn how to create your own go to
