@@ -1,0 +1,42 @@
+---
+title: Deploying & Verify Contract
+description: Using Celo Composer, learn how to deploy and verify your first smart contract on Celo Alfajores.
+---
+
+## Step 1 : Deploy Contracts
+
+Now that you have your environment setup. The next thing to do is to compile the smart contracts that ships with the hardhat package so that we can startup our react app and see what it looks like.
+
+To do this, first cd back into the hardhat package if you have not.
+
+```
+cd packages/hardat
+```
+
+Run this command
+
+```
+yarn run deploy
+```
+
+You will get an output similar to this, although with a different tx hash and different address of where the COntracts where deployed on Alfajores testnet. We will confirm that shortly using the celoscan explorer.
+
+```bash
+yarn run v1.22.19
+$ hardhat deploy --export-all deployments/hardhat_contracts.json
+(node:20217) ExperimentalWarning: stream/web is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+Nothing to compile
+deploying "Greeter" (tx: 0xd55c23623b6462bf4268e5f337dfc6762a5bd1b9138f7c7aa45c21a6271ebf68)...: deployed at 0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc with 642741 gas
+deploying "Storage" (tx: 0xcb81fe66f2ae8f9d203517e8621ed371ea626be5a6c91446a31a7b226117632d)...: deployed at 0xce59F6E977EC8FCcdD95a1Ffd32eCCad614f4552 with 181777 gas
+deploying "SupportToken" (tx: 0x4667fb1fa152b5e48e90cf5e1769a303f7177b8aeaaacd67cd874fd739affce7)...: deployed at 0x1CF4cfb1ccDF2A570aF925fd6542F72d84666321 with 1342041 gas
+✨  Done in 25.75s.
+```
+
+To confirm, that we actually deployed **Greeter**, **Storage** and **SupportToken** contracts to Celo Alfajores testnet. Copy the addresses after **deployed at** on each line and confirm on the celscan explorer.
+
+In our own case let us confirm for the **Greeter** smart contract by visiting https://alfajores.celoscan.io/ and paste the address **0xbBCEC6E51d977D1896c99a4aF2a674d9859004bc** the the explorer search.
+
+![Celoscan contact deployed](./images/output-9.png)
+
+The above image shows a transaction of the transaction being deployed on Celo testnet Alfajores. Next let us verify the contract code such that anyone who browses this page can view the Smart conract code and aknowledge that our contract is safe to use.

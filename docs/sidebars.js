@@ -19,13 +19,13 @@ const sidebars = {
         },
         {
           type: "doc",
-          label: "Deploying your Contract",
-          id: "frameworks/react-app/deploying-your-contract"
+          label: "Deploying & Verify Contract",
+          id: "frameworks/react-app/deploying-and-verify"
         },
         {
           type: "doc",
-          label: "Verifying your Contract",
-          id: "frameworks/react-app/verifying-your-contract"
+          label: "ERC721 NFT Example",
+          id: "frameworks/react-app/nft-contract-example"
         }
       ]
       // id: "frameworks/react-app/README",
