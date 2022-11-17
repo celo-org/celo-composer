@@ -26,6 +26,11 @@ const sidebars = {
           type: "doc",
           label: "ERC721 NFT Example",
           id: "frameworks/react-app/nft-contract-example"
+        },
+        {
+          type: "doc",
+          label: "Hardhat Helper Scripts",
+          id: "frameworks/react-app/hardhat-scripts"
         }
       ]
       // id: "frameworks/react-app/README",

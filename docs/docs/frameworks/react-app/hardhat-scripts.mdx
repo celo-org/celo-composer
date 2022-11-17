@@ -1,0 +1,17 @@
+---
+title: Celo Composer Hardhat Scripts
+description: Celo Composer ships with some helper scripts in the package.json to make developement easier for you.
+---
+
+Celo Composer ships with some helper scripts in the package.json to make developement easier for you. Below we will brief be listing and explaining what each script and what it does.
+
+```shell
+yarn test                   Run the test in the hardhat package tests folder in current network set by hardhat.config.js
+yarn test-local             Run the test in the hardhat package tests folder in network hardhat
+yarn accounts               List address of all unlocked wallets as specified in hardhat.config.js
+yarn devchain
+yarn deploy                 Compile and deploy all contracts with new changes to current network
+yarn deploy-reset-watch     Compile and deploy all contracts with or without new changes. Compile & deploy them to current network.
+yarn watch                  Keep watching for new changes in new or existing contracts. Compile & deploy them to current network.
+yarn fork-mainnet
+```
