@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@celo/rainbowkit-celo": "^0.2.0",
+    "@celo/rainbowkit-celo": "^0.3.0",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
     "@rainbow-me/rainbowkit": "^0.7.4",
