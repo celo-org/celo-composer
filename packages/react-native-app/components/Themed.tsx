@@ -4,75 +4,76 @@
  */
 
 import {
-	Text as DefaultText,
-	View as DefaultView,
-	TouchableOpacity as DefaultTouchableOpacity,
+    Text as DefaultText,
+    View as DefaultView,
+    TouchableOpacity as DefaultTouchableOpacity,
 } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 
 export function useThemeColor(
-	props: { light?: string; dark?: string },
-	colorName: keyof typeof Colors.light & keyof typeof Colors.dark
+    props: { light?: string; dark?: string },
+    colorName: keyof typeof Colors.brand.light & keyof typeof Colors.brand.dark
 ) {
-	const theme = useColorScheme();
-	const colorFromProps = props[theme];
+    const theme = useColorScheme();
+    const colorFromProps = props[theme];
 
-	if (colorFromProps) {
-		return colorFromProps;
-	} else {
-		return Colors[theme][colorName];
-	}
+    if (colorFromProps) {
+        return colorFromProps;
+    } else {
+        return Colors.brand[theme][colorName];
+    }
 }
 
 type ThemeProps = {
-	lightColor?: string;
-	darkColor?: string;
+    lightColor?: string;
+    darkColor?: string;
 };
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type TouchableOpacityProps = ThemeProps &
-	DefaultTouchableOpacity["props"];
+    DefaultTouchableOpacity["props"];
 
 export function Text(props: TextProps) {
-	const { style, lightColor, darkColor, ...otherProps } = props;
-	const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
 
-	return <DefaultText style={[{ color }, style]} {...otherProps} />;
+    return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
-	const { style, lightColor, darkColor, ...otherProps } = props;
-	const backgroundColor = useThemeColor(
-		{ light: lightColor, dark: darkColor },
-		"background"
-	);
+    const { style, lightColor, darkColor, ...otherProps } = props;
+    const backgroundColor = useThemeColor(
+        { light: lightColor, dark: darkColor },
+        200
+    );
 
-	return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+    return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
 export function TouchableOpacity(props: TouchableOpacityProps) {
-	const { style, lightColor, darkColor, children, ...otherProps } = props;
-	const backgroundColor = useThemeColor(
-		{ light: Colors.dark.tint, dark: Colors.light.tint },
-		"background"
-	);
-	return (
-		<DefaultTouchableOpacity
-			style={[
-				{ backgroundColor },
-				style,
-				{
-					paddingHorizontal: 15,
-					paddingVertical: 7,
-					marginTop: 10,
-					borderRadius: 50,
-				},
-			]}
-			{...otherProps}>
-			{children}
-		</DefaultTouchableOpacity>
-	);
+    const { style, lightColor, darkColor, children, ...otherProps } = props;
+    const backgroundColor = useThemeColor(
+        { light: Colors.brand.dark.tint, dark: Colors.brand.light.tint },
+        "tint"
+    );
+    return (
+        <DefaultTouchableOpacity
+            style={[
+                { backgroundColor },
+                style,
+                {
+                    paddingHorizontal: 15,
+                    paddingVertical: 7,
+                    marginTop: 10,
+                    borderRadius: 50,
+                },
+            ]}
+            {...otherProps}
+        >
+            {children}
+        </DefaultTouchableOpacity>
+    );
 }
