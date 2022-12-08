@@ -60,7 +60,7 @@ function RootNavigator() {
                 />
             ) : (
                 <Stack.Screen
-                    name="Login"
+                    name="Root"
                     component={LoginScreen}
                     options={{ headerShown: false }}
                 />
@@ -86,7 +86,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
     const colorScheme = useColorScheme();
 
-    const contracts = deployedContracts["44787"]?.["alfajores"]?.contracts;
+    // const contracts = deployedContracts["44787"]?.["alfajores"]?.contracts;
 
     return (
         <SafeAreaProvider>
@@ -95,10 +95,12 @@ function BottomTabNavigator() {
                 initialRouteName="Greeter"
                 screenOptions={{
                     headerShown: true,
-                    tabBarActiveTintColor: Colors[colorScheme].tint,
+                    tabBarActiveTintColor: Colors["brand"].light.text,
+                    tabBarActiveBackgroundColor:
+                        Colors["brand"].light.background,
                 }}
             >
-                <BottomTab.Screen
+                {/* <BottomTab.Screen
                     name="Greeter"
                     children={(props) => (
                         <Greeter contractData={contracts.Greeter} {...props} />
@@ -134,7 +136,7 @@ function BottomTabNavigator() {
                         },
                         tabBarLabelPosition: "beside-icon",
                     }}
-                />
+                /> */}
                 <BottomTab.Screen
                     name="Account"
                     component={Account}
