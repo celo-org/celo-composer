@@ -8,7 +8,7 @@ type ThemeProps = {
 
 export type TouchableOpacityProps = ThemeProps & TouchableOpacity["props"];
 
-export function Button(props: TouchableOpacityProps) {
+export default function Button(props: TouchableOpacityProps) {
     const { style, lightColor, darkColor, children, ...otherProps } = props;
     const backgroundColor = useThemeColor(
         { light: lightColor, dark: darkColor },
