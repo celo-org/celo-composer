@@ -25,6 +25,7 @@ import Greeter from "../screens/Greeter";
 import Storage from "../screens/Storage";
 // import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import Account from "../screens/Account";
+import Docs from "../screens/Docs";
 
 export default function Navigation({
     colorScheme,
@@ -98,6 +99,9 @@ function BottomTabNavigator() {
                     tabBarActiveTintColor: Colors["brand"].light.text,
                     tabBarActiveBackgroundColor:
                         Colors["brand"].light.background,
+                    tabBarLabelPosition: "beside-icon",
+                    tabBarIconStyle: { display: "none" },
+                    tabBarLabelStyle: { textAlign: "center" },
                 }}
             >
                 {/* <BottomTab.Screen
@@ -137,6 +141,7 @@ function BottomTabNavigator() {
                         tabBarLabelPosition: "beside-icon",
                     }}
                 /> */}
+                <BottomTab.Screen name="Getting Started" component={Docs} />
                 <BottomTab.Screen
                     name="Account"
                     component={Account}
