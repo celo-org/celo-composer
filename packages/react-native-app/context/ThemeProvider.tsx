@@ -48,6 +48,33 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
             borderWidth: 1,
             alignSelf: "stretch",
         },
+        text: {
+            fontSize: 12,
+        },
+        h1: {
+            color: Colors["brand"].light.text,
+            fontSize: 48,
+        },
+        h2: {
+            color: Colors["brand"].light.text,
+            fontSize: 40,
+        },
+        h3: {
+            color: Colors["brand"].light.text,
+            fontSize: 32,
+        },
+        h4: {
+            color: Colors["brand"].light.text,
+            fontSize: 24,
+        },
+        h5: {
+            color: Colors["brand"].light.text,
+            fontSize: 16,
+        },
+        h6: {
+            color: Colors["brand"].light.text,
+            fontSize: 14,
+        },
     });
 
     return (
