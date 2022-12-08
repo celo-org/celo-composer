@@ -29,7 +29,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
             marginVertical: 20,
             height: 1,
             width: "85%",
-            backgroundColor: "#ffffff44",
+            backgroundColor: "#ffffff",
         },
         externalLink: {
             color: Colors["brand"].light.text,
