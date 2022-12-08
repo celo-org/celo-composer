@@ -13,6 +13,7 @@ export default {
             900: "#14532d",
             text: "#22c55e",
             tint: "#dcfce7",
+            background: "#FEF7C3",
         },
         dark: {
             50: "#f0fdf4",
@@ -27,6 +28,7 @@ export default {
             900: "#14532d",
             text: "#22c55e",
             tint: "#dcfce7",
+            background: "#FEF7C3",
         },
     },
 };
