@@ -56,6 +56,7 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 ## Prerequisites
 
 - Node
+- Git (v2.38 or higher)
 
 ## How to use Celo Composer
 
