@@ -1,6 +1,6 @@
-# React Framework + TailwindCSS | Celo Composer
+# React Framework + NextJS | Celo Composer
 
-Celo Composer support React boilerplate template with TwilwindCSS. This is a starterkit with no additional boilderplate code. It's a perfect starterkit to get your project started on Celo blockchain.
+Celo Composer support React boilerplate template with TailwindCSS. This is a starter kit with no additional boilerplate code. It's a perfect starter kit to get your project started on Celo blockchain.
 
 ## Setup & Intallation
 
@@ -21,14 +21,19 @@ yarn react-dev
 
 ## Dependencies
 
-- [react-celo](https://www.npmjs.com/package/@celo/react-celo) for web3 connection and account management
+### Default
 - [Next.js](https://nextjs.org/) app framework
 - [TailwindCSS](https://tailwindcss.com/) for UI
+
+### Optional
+> On CLI setup you'll be able to select your favorive front-end web3 library to interact with the Celo blockchain:
+- [react-celo](https://www.npmjs.com/package/@celo/react-celo), a React hook library for managing access to Celo with a built-in headless modal system for connecting to your users wallet of choice.
+- [rainbowkit-celo](https://www.npmjs.com/package/@celo/rainbowkit-celo), a plugin to help rainbowkit developers support the CELO protocol faster.
 
 ## Architecture
 
 - `/pages` includes the main application components (specifically `index.tsx` and `_app.tsx`)
-  - `_app.tsx` includes configurartion
+  - `_app.tsx` includes configuration
   - `index.tsx` is the main page of the application
 - `/components` includes components that are rendered in `index.tsx`
 - `/public` includes static files
