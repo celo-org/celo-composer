@@ -19,7 +19,7 @@ const createAsync = async (command) => {
     subgraphs: "TheGraph",
   };
 
-  const packageNameMap = {
+  let packageNameMap = {
     "react-app": "react-app",
     "react-native-app": "react-native-app",
     "react-native-app-without-expo": "react-native-app",
@@ -30,7 +30,13 @@ const createAsync = async (command) => {
     subgraphs: "subgraphs",
   };
 
+  let fELibraries = {
+    "rc": "React-celo",
+    "rk": "Rainbowkit-celo"
+  }
+
   let selectedPackages = [];
+  let selectedFELibrary = "";
 
   let { fEFramework } = await inquirer.prompt({
     type: "list",
@@ -57,6 +63,20 @@ const createAsync = async (command) => {
       Object.values(availablePackages).indexOf(fEFramework)
     ]
   );
+
+  if (fEFramework == availablePackages["react-app"]) {
+    let { fELibrary } = await inquirer.prompt({
+      type: "list",
+      name: "fELibrary",
+      message: "Choose web3 library for react app:",
+      default: fELibraries["rk"],
+      choices: [
+        fELibraries["rc"],
+        fELibraries["rk"]
+      ],
+    });
+    selectedFELibrary = fELibrary;
+  }
 
   let { scFramework } = await inquirer.prompt({
     type: "list",
@@ -145,16 +165,6 @@ const createAsync = async (command) => {
         { silent: true }
       );
 
-      // flutter project doesn't have package.json
-      if (selectedPackages[x] != availablePackages["flutter-app"]) {
-        // update name of each package.json project to work properly with monorepo
-        let packageFile = shell.cat(
-          `packages/${selectedPackages[x]}/package.json`
-        );
-        let projectPackage = JSON.parse(packageFile.stdout);
-        projectPackage.name = `@${projectName}/${selectedPackages[x]}`;
-      }
-
       // if project isn't web no need to netlify.toml
       if (
         selectedPackages[x] == availablePackages["react-native-app"] ||
@@ -190,22 +200,65 @@ const createAsync = async (command) => {
        */
 
       packages.forEach((package) => {
-        let localPackageJson = shell.cat(`packages/${package}/package.json`);
-        let parsed = JSON.parse(localPackageJson);
 
-        // Change the name of the project in package.json for the generated packages.
-        parsed["name"] = `@${projectName}/${package}`;
+        // flutter project doesn't have package.json
+        if (package != availablePackages["flutter-app"]) {
+        
+          let localPackageJson = shell.cat(`packages/${package}/package.json`);
+          let projectPackage = JSON.parse(localPackageJson);
 
-        // write back the changes to the package.json
-        shell
-          .echo(JSON.stringify(parsed, "", 4))
-          .to(`packages/${package}/package.json`);
+          // Change the name of the project in package.json for the generated packages.
+          projectPackage["name"] = `@${projectName}/${package}`;
 
-        Object.keys(parsed.scripts).forEach((key) => {
-          packageJson.scripts[
-            `${packageNameMap[package]}:${key}`
-          ] = `yarn workspace @${projectName}/${package} ${key}`;
-        });
+          // update front-end web3 library
+          if (package == packageNameMap["react-app"] && selectedFELibrary != "") {
+            switch (selectedFELibrary) {
+
+              // rainbowkit-celo
+              case fELibraries["rk"]:
+
+                // remove react-celo libraries in packages.json file
+                delete projectPackage.dependencies['@celo/react-celo'];
+                delete projectPackage.dependencies['@celo/contractkit'];
+      
+                // remove react-celo header component
+                shell.rm("/packages/react-app/components/HeaderRC.tsx");
+                shell.rm("/packages/react-app/pages/_appRC.tsx");
+                shell.mv("/packages/react-app/components/HeaderRK.tsx", "/packages/react-app/components/Header.tsx");
+                shell.sed('-i', 'import Header from "./HeaderRK";', 'import Header from "./Header";', '/packages/react-app/components/Layout.tsx');
+                break;
+              
+              // react-celo
+              case fELibraries["rc"]:
+
+                // remove rainbowkit-celo libraries in packages.json file
+                delete projectPackage["dependencies"]['@celo/rainbowkit-celo'];
+                delete projectPackage["dependencies"]['@rainbow-me/rainbowkit'];
+      
+                // remove rainbowkit-celo header component
+                shell.rm("/packages/react-app/components/HeaderRK.tsx");
+                shell.rm("/packages/react-app/pages/_app.tsx");
+                shell.mv("/packages/react-app/pages/_appRC.tsx", "/packages/react-app/pages/_app.tsx");
+                shell.mv("/packages/react-app/components/HeaderRC.tsx", "/packages/react-app/components/Header.tsx");
+                shell.sed('-i', 'import Header from "./HeaderRC";', 'import Header from "./Header";', '/packages/react-app/components/Layout.tsx');
+                break;
+            
+              default:
+                break;
+            }
+          }
+        
+          // write back the changes to the package.json
+          shell
+            .echo(JSON.stringify(projectPackage, "", 4))
+            .to(`packages/${package}/package.json`);
+        
+          Object.keys(projectPackage.scripts).forEach((key) => {
+            packageJson.scripts[
+              `${packageNameMap[package]}:${key}`
+            ] = `yarn workspace @${projectName}/${package} ${key}`;
+          });
+        }
       });
     }
 
