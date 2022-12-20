@@ -1,57 +1,61 @@
-import React from "react";
-import '@celo/react-celo/lib/styles.css';
-import { SnackbarProvider } from "notistack";
-import { ApolloProvider } from "@apollo/client";
-import client from "@/apollo-client";
-import { Alfajores, CeloProvider } from "@celo/react-celo";
-import { AppProps } from "next/app";
-import { CustomThemeProvider } from "@/contexts/userTheme";
-import { Provider } from "react-redux"
-import store from "@/state/index"
-import AppUpdater from "@/state/app/updater"
+import "../styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import type { AppProps } from "next/app";
+import {
+  connectorsForWallets,
+  RainbowKitProvider
+} from "@rainbow-me/rainbowkit";
+import { 
+  metaMaskWallet, 
+  omniWallet, 
+  walletConnectWallet 
+} from "@rainbow-me/rainbowkit/wallets";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
-function Updaters() {
+// Import known recommended wallets
+import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
+
+// Import CELO chain information
+import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
+
+import Layout from "../components/Layout";
+
+const { chains, provider } = configureChains(
+  [Alfajores, Celo],
+  [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default }) })]
+);
+
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended with CELO",
+    wallets: [
+      Valora({ chains }),
+      CeloWallet({ chains }),
+      CeloDance({ chains }),
+      metaMaskWallet({ chains }),
+      omniWallet({ chains }),
+      walletConnectWallet({ chains }),
+    ],
+  },
+]);
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
+
+function App({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <AppUpdater />
-    </>
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains} coolMode={true}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </RainbowKitProvider>
+    </WagmiConfig>
   )
 }
 
-function MyApp({ Component, pageProps }: AppProps): React.ReactElement {
-  return (
-    <Provider store={store}>
-      <CustomThemeProvider>
-        <CeloProvider
-          dapp={{
-            name: "Celo Composer",
-            description: "A demo dApp to showcase functionality",
-            url: "https://celo-composer.netlify.app/",
-            icon: "https://celo-composer.netlify.app/favicon.ico",
-          }}
-          network={Alfajores}
-          // networks={[Mainnet, Alfajores]}
-        >
-          <SnackbarProvider
-            maxSnack={3}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-          >
-            <Updaters/>
-            <ApolloProvider client={client}>
-              <div suppressHydrationWarning>
-                {typeof window === "undefined" ? null : (
-                  <Component {...pageProps} />
-                )}
-              </div>
-            </ApolloProvider>
-          </SnackbarProvider>
-        </CeloProvider>
-      </CustomThemeProvider>
-    </Provider>
-  );
-}
-
-export default MyApp;
+export default App;

@@ -1,6 +1,6 @@
 {
   "name": "@celo-composer/react-app",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,37 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.1",
-    "@babel/core": "^7.19.6",
-    "@celo/contractkit": "^2.3.0",
+    "@celo/contractkit": "^3.0.1",
+    "@celo/rainbowkit-celo": "^0.3.0",
     "@celo/react-celo": "^4.2.1",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.11",
-    "@reduxjs/toolkit": "^1.8.6",
-    "@types/react-redux": "^7.1.24",
-    "autoprefixer": "^10.4.13",
-    "bignumber.js": "^9.1.0",
-    "dayjs": "^1.11.6",
+    "@headlessui/react": "^1.7.3",
+    "@heroicons/react": "^2.0.12",
+    "@rainbow-me/rainbowkit": "^0.7.4",
     "ethers": "^5.7.2",
-    "graphql": "^16.6.0",
-    "next": "^12.0.10",
-    "next-pwa": "^5.6.0",
-    "notistack": "^2.0.8",
-    "postcss": "^8.4.18",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-redux": "^8.0.4",
-    "react-transition-group": "^4.4.5",
-    "redstone-api": "^0.4.11",
-    "typescript": "^4.8.4",
-    "web3": "^1.8.0"
+    "next": "13.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "wagmi": "^0.7.7"
   },
   "devDependencies": {
-    "@types/react": "18.0.1",
-    "eslint": "8.6.0",
-    "eslint-config-next": "12.0.10",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "@types/node": "18.11.7",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.26.0",
+    "eslint-config-next": "13.0.0",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
+    "typescript": "4.8.4"
+  },
+  "browser": {
+    "net": false
   }
 }
