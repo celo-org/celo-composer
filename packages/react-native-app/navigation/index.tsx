@@ -85,7 +85,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-    const colorScheme = useColorScheme();
+    const theme = useColorScheme();
 
     // const contracts = deployedContracts["44787"]?.["alfajores"]?.contracts;
 
@@ -98,7 +98,7 @@ function BottomTabNavigator() {
                     headerShown: true,
                     tabBarActiveTintColor: Colors["brand"].light.text,
                     tabBarActiveBackgroundColor:
-                        Colors["brand"].light.background,
+                        Colors["brand"][theme].background,
                     tabBarLabelPosition: "beside-icon",
                     tabBarIconStyle: { display: "none" },
                     tabBarLabelStyle: { textAlign: "center" },
