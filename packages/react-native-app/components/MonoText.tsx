@@ -3,7 +3,7 @@ import { Text, TextProps } from "./Themed";
 
 interface MonoTextProps {
     children: string;
-    additionalStyles: TextStyle;
+    additionalStyles?: TextStyle;
 }
 
 export default function MonoText({
