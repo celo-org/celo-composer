@@ -9,17 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@celo/contractkit": "^3.0.1",
-    "@celo/rainbowkit-celo": "^0.3.0",
+    "@celo/contractkit": "^3.1.0",
+    "@celo/rainbowkit-celo": "^0.4.0",
     "@celo/react-celo": "^4.2.1",
-    "@headlessui/react": "^1.7.3",
-    "@heroicons/react": "^2.0.12",
-    "@rainbow-me/rainbowkit": "^0.7.4",
+    "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
+    "@rainbow-me/rainbowkit": "^0.8.1",
     "ethers": "^5.7.2",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "wagmi": "^0.7.7"
+    "wagmi": "^0.10.11"
   },
   "devDependencies": {
     "@types/node": "18.11.7",
@@ -29,7 +29,7 @@
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.0",
     "postcss": "^8.4.18",
-    "tailwindcss": "^3.2.1",
+    "tailwindcss": "^3.2.4",
     "typescript": "4.8.4"
   },
   "browser": {
