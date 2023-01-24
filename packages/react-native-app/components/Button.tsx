@@ -17,7 +17,7 @@ export default function Button(props: TouchableOpacityProps) {
     return (
         <TouchableOpacity
             style={[
-                { backgroundColor },
+                { backgroundColor: "black" },
                 style,
                 {
                     paddingHorizontal: 15,

@@ -21,8 +21,6 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/LoginScreen";
-import Greeter from "../screens/Greeter";
-import Storage from "../screens/Storage";
 // import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import Account from "../screens/Account";
 import Docs from "../screens/Docs";
@@ -93,9 +91,9 @@ function BottomTabNavigator() {
         <SafeAreaProvider>
             <BottomTab.Navigator
                 // first screen visible after login
-                initialRouteName="Greeter"
+                initialRouteName="Docs"
                 screenOptions={{
-                    headerShown: true,
+                    headerShown: false,
                     tabBarActiveTintColor: Colors["brand"].light.text,
                     tabBarActiveBackgroundColor:
                         Colors["brand"][theme].background,
@@ -141,7 +139,7 @@ function BottomTabNavigator() {
                         tabBarLabelPosition: "beside-icon",
                     }}
                 /> */}
-                <BottomTab.Screen name="Getting Started" component={Docs} />
+                <BottomTab.Screen name="Docs" component={Docs} />
                 <BottomTab.Screen
                     name="Account"
                     component={Account}

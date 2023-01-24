@@ -8,6 +8,7 @@ import Web3 from "web3";
 import { ThemeContext } from "../context/ThemeProvider";
 import AccountAddress from "../components/AccountAddress";
 import AccountBalance from "../components/AccountBalance";
+import Colors from "../constants/Colors";
 
 export default function Account() {
     const connector = useWalletConnect();
@@ -32,7 +33,9 @@ export default function Account() {
             </View>
             <View style={styles.separator}></View>
             <Button onPress={() => connector.killSession()}>
-                <Text>Disconnect Wallet</Text>
+                <Text style={{ color: Colors.brand.snow }}>
+                    Disconnect Wallet
+                </Text>
             </Button>
         </View>
     );
