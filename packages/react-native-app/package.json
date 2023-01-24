@@ -43,7 +43,9 @@
         "react-native-web": "0.18.9",
         "stream-http": "^3.2.0",
         "vm-browserify": "^1.1.2",
-        "web3": "^1.8.0"
+        "web3": "^1.8.0",
+        "@celo/contractkit": "^3.1.0",
+        "stream-browserify": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.12.9",
