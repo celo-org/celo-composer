@@ -40,11 +40,12 @@
         "react-native-get-random-values": "^1.7.2",
         "react-native-safe-area-context": "4.4.1",
         "react-native-screens": "~3.18.1",
-        "react-native-tcp": "^4.0.0",
         "react-native-web": "0.18.9",
         "stream-http": "^3.2.0",
         "vm-browserify": "^1.1.2",
-        "web3": "^1.8.0"
+        "web3": "^1.8.0",
+        "@celo/contractkit": "^3.1.0",
+        "stream-browserify": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.12.9",

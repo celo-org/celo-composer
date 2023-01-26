@@ -17,13 +17,13 @@ export default function Button(props: TouchableOpacityProps) {
     return (
         <TouchableOpacity
             style={[
-                { backgroundColor },
+                { backgroundColor: "black" },
                 style,
                 {
                     paddingHorizontal: 15,
                     paddingVertical: 7,
                     marginTop: 10,
-                    borderRadius: 50,
+                    borderRadius: 5,
                 },
             ]}
             {...otherProps}

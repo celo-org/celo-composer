@@ -21,8 +21,6 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/LoginScreen";
-import Greeter from "../screens/Greeter";
-import Storage from "../screens/Storage";
 // import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import Account from "../screens/Account";
 import Docs from "../screens/Docs";
@@ -85,7 +83,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-    const colorScheme = useColorScheme();
+    const theme = useColorScheme();
 
     // const contracts = deployedContracts["44787"]?.["alfajores"]?.contracts;
 
@@ -93,12 +91,12 @@ function BottomTabNavigator() {
         <SafeAreaProvider>
             <BottomTab.Navigator
                 // first screen visible after login
-                initialRouteName="Greeter"
+                initialRouteName="Docs"
                 screenOptions={{
-                    headerShown: true,
+                    headerShown: false,
                     tabBarActiveTintColor: Colors["brand"].light.text,
                     tabBarActiveBackgroundColor:
-                        Colors["brand"].light.background,
+                        Colors["brand"][theme].background,
                     tabBarLabelPosition: "beside-icon",
                     tabBarIconStyle: { display: "none" },
                     tabBarLabelStyle: { textAlign: "center" },
@@ -141,7 +139,7 @@ function BottomTabNavigator() {
                         tabBarLabelPosition: "beside-icon",
                     }}
                 /> */}
-                <BottomTab.Screen name="Getting Started" component={Docs} />
+                <BottomTab.Screen name="Docs" component={Docs} />
                 <BottomTab.Screen
                     name="Account"
                     component={Account}
