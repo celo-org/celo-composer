@@ -28,6 +28,6 @@
         "web": {
             "favicon": "./assets/images/favicon.png"
         },
-        "plugins": ["android-manifest.plugin.js"]
+        "plugins": ["./android-manifest.plugin.js"]
     }
 }
