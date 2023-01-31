@@ -55,22 +55,21 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <ConnectButton showBalance={{smallScreen: true, largeScreen: false}} /> */}
-                {componentInitialized && address ? (
+                  {componentInitialized && address ? (
                     <button
-                        type="button"
-                        className="inline-flex items-center rounded border border-transparent bg-celo-yellow px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-celo-yellow focus:outline-none focus:ring-2 focus:ring-celo-green focus:ring-offset-2"
-                        onClick={disconnect}
+                      type="button"
+                      className="inline-flex content-center place-items-center rounded-full border border-wood bg-black py-2 px-5 text-md font-medium text-snow hover:bg-forest"
+                      onClick={disconnect}
                     >Disconnect</button>
-                ) : (
+                  ) : (
                     <button
-                        type="button"
-                        className="inline-flex items-center rounded border border-transparent bg-celo-green px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-celo-green focus:outline-none focus:ring-2 focus:ring-celo-yellow focus:ring-offset-2"
-                        onClick={() =>
-                            connect().catch((e) => console.log((e as Error).message))
-                        }
+                      type="button"
+                      className="inline-flex content-center place-items-center rounded-full border border-wood bg-forest py-2 px-5 text-md font-medium text-snow hover:bg-black"
+                      onClick={() =>
+                        connect().catch((e) => console.log((e as Error).message))
+                      }
                     >Connect</button>
-                )}
+                  )}
                 </div>
               </div>
             </div>
