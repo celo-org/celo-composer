@@ -23,7 +23,7 @@ import Layout from "../components/Layout";
 
 const { chains, provider } = configureChains(
   [Alfajores, Celo],
-  [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default }) })]
+  [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }) })]  
 );
 
 const connectors = connectorsForWallets([

@@ -232,18 +232,18 @@ const createAsync = async (command) => {
 
                             // remove react-celo header component
                             shell.rm(
-                                "/packages/react-app/components/HeaderRC.tsx"
+                                "packages/react-app/components/HeaderRC.tsx"
                             );
-                            shell.rm("/packages/react-app/pages/_appRC.tsx");
+                            shell.rm("packages/react-app/pages/_appRC.tsx");
                             shell.mv(
-                                "/packages/react-app/components/HeaderRK.tsx",
-                                "/packages/react-app/components/Header.tsx"
+                                "packages/react-app/components/HeaderRK.tsx",
+                                "packages/react-app/components/Header.tsx"
                             );
                             shell.sed(
                                 "-i",
                                 'import Header from "./HeaderRK";',
                                 'import Header from "./Header";',
-                                "/packages/react-app/components/Layout.tsx"
+                                "packages/react-app/components/Layout.tsx"
                             );
                             break;
 
@@ -259,22 +259,22 @@ const createAsync = async (command) => {
 
                             // remove rainbowkit-celo header component
                             shell.rm(
-                                "/packages/react-app/components/HeaderRK.tsx"
+                                "packages/react-app/components/HeaderRK.tsx"
                             );
-                            shell.rm("/packages/react-app/pages/_app.tsx");
+                            shell.rm("packages/react-app/pages/_app.tsx");
                             shell.mv(
-                                "/packages/react-app/pages/_appRC.tsx",
-                                "/packages/react-app/pages/_app.tsx"
+                                "packages/react-app/pages/_appRC.tsx",
+                                "packages/react-app/pages/_app.tsx"
                             );
                             shell.mv(
-                                "/packages/react-app/components/HeaderRC.tsx",
-                                "/packages/react-app/components/Header.tsx"
+                                "packages/react-app/components/HeaderRC.tsx",
+                                "packages/react-app/components/Header.tsx"
                             );
                             shell.sed(
                                 "-i",
-                                'import Header from "./HeaderRC";',
+                                'import Header from "./HeaderRK";',
                                 'import Header from "./Header";',
-                                "/packages/react-app/components/Layout.tsx"
+                                "packages/react-app/components/Layout.tsx"
                             );
                             break;
 

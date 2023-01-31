@@ -10,27 +10,27 @@
   },
   "dependencies": {
     "@celo/contractkit": "^3.1.0",
-    "@celo/rainbowkit-celo": "^0.4.0",
-    "@celo/react-celo": "^4.2.1",
-    "@headlessui/react": "^1.7.7",
-    "@heroicons/react": "^2.0.13",
+    "@celo/rainbowkit-celo": "^0.8.1",
+    "@celo/react-celo": "^4.3.0",
+    "@headlessui/react": "^1.7.8",
+    "@heroicons/react": "^2.0.14",
     "@rainbow-me/rainbowkit": "^0.8.1",
     "ethers": "^5.7.2",
-    "next": "13.0.0",
+    "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "wagmi": "^0.10.11"
+    "wagmi": "^0.11.2"
   },
   "devDependencies": {
-    "@types/node": "18.11.7",
-    "@types/react": "18.0.24",
-    "@types/react-dom": "18.0.8",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
-    "eslint": "8.26.0",
-    "eslint-config-next": "13.0.0",
-    "postcss": "^8.4.18",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
-    "typescript": "4.8.4"
+    "typescript": "4.9.5"
   },
   "browser": {
     "net": false
