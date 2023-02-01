@@ -89,9 +89,10 @@ npx @celo/celo-composer create
 ### <u>React</u>
 
 - Creating examples and experiment with React for your libraries and components.
-- Start the dApp with `yarn dev`/`npm run dev` and you are good to go.
+- Install dependencies with `yarn` or `npm i`.
+- Start the dApp with `yarn react-app:dev`/`npm run react-app:dev` and you are good to go.
 - Support for Website and Progressive Web Application.
-- Works with all major crypto wallet.
+- Works with all major crypto wallets.
 
 Check here to learn more about [Celo Composer - React](https://github.com/celo-org/celo-composer/main/packages/react-app/README.md)
 
