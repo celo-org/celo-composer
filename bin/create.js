@@ -4,6 +4,7 @@ const chalk = require("chalk");
 const ora = require("ora");
 const emoji = require("node-emoji");
 const { ensureDir, readdir } = require("fs-extra");
+const Os = require("os");
 
 const BASE_URL = "https://github.com/celo-org/celo-composer/";
 
@@ -179,20 +180,38 @@ const createAsync = async (command) => {
          * Some string manipulation so that packages looks like
          * eg:- ["react-app", "hardhat"] etc...
          */
-
-        let { stdout: packagesStdOut } = shell.exec("echo packages/*/", {
-            silent: true,
-        });
+        let packagesStdOut;
+        if(isWindows) {
+            let { stdout } = shell.exec("dir packages /b", {
+                silent: true,
+            });
+            packagesStdOut = stdout;
+        } else {
+            let { stdout } = shell.exec("echo packages/*/", {
+                silent: true,
+            });
+            packagesStdOut = stdout;
+        }
 
         /**
          * Node 14 and below doens't support replaceAll
          */
-        let packages = packagesStdOut
+        let packages;
+        if(isWindows) {
+            packages = packagesStdOut.replaceAll("\n", " ").replaceAll("\r", "").split(" ");
+            // remove empty strings from array
+            packages = packages.filter(function (el) {
+                return el != null && el != "";
+            });
+        } else {
+            // remove new line from packagesStdOut
+            packages = packagesStdOut
             .replace(/packages\//g, "")
             .replace(/\//g, "")
             .replace(/\n/g, "")
             .split(" ");
-
+            
+        }
         /**
          * For every package selected by user,
          * we read package.json of every package,
@@ -326,6 +345,10 @@ async function isOutputDirectoryEmpty(outputFolder, force = false) {
 const loading = (message) => {
     return ora(message).start();
 };
+
+function isWindows() {  
+    return Os.platform() === 'win32'
+}
 
 module.exports = {
     createAsync,
