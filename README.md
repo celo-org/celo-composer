@@ -94,7 +94,7 @@ npx @celo/celo-composer create
 - Support for Website and Progressive Web Application.
 - Works with all major crypto wallets.
 
-Check here to learn more about [Celo Composer - React](https://github.com/celo-org/celo-composer/main/packages/react-app/README.md)
+Check here to learn more about [Celo Composer - React](https://github.com/celo-org/celo-composer/blob/main/packages/react-app/README.md)
 
 ### <u>React Native</u>
 
@@ -104,7 +104,7 @@ Check here to learn more about [Celo Composer - React](https://github.com/celo-o
 - Working example app - The included example app shows how this all works together.
 - Easy to use and always updated with latest dependencies.
 
-Check here to learn more about [Celo Composer - React Native](https://github.com/celo-org/celo-composer/main/packages/react-native-app/README.md)
+Check here to learn more about [Celo Composer - React Native](https://github.com/celo-org/celo-composer/blob/main/packages/react-native-app/README.md)
 
 ### <u>Flutter</u>
 
@@ -114,14 +114,14 @@ Check here to learn more about [Celo Composer - React Native](https://github.com
 - Working example app - The included example app shows how this all works together.
 - Easy to use and always updated with latest dependencies.
 
-Check here to learn more about [Celo Composer - Flutter](https://github.com/celo-org/celo-composer/main/packages/flutter-app/README.md)
+Check here to learn more about [Celo Composer - Flutter](https://github.com/celo-org/celo-composer/blob/main/packages/flutter-app/README.md)
 
 ### <u>Angular</u>
 
 - Creating examples and experiment with Angular for your libraries and components.
 - Easy to setup and use.
 
-Check here to learn more about [Celo Composer - Angular](https://github.com/celo-org/celo-composer/main/packages/angular-app/README.md)
+Check here to learn more about [Celo Composer - Angular](https://github.com/celo-org/celo-composer/blob/main/packages/angular-app/README.md)
 
 <!-- USAGE EXAMPLES -->
 
