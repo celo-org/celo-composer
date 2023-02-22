@@ -10,16 +10,17 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 1. Create a `.env` file similar to `.envexample`.
 2. Paste the private key in `.env`.
+> note: depending on how you generate your private key, you may have to prepend `0x` in the private key does not already have it prepended. 
 3. Faucet your account with the Alfajores testnet faucet [here](https://celo.org/developers/faucet).
 
 ## Develop
 
 1. Write your contracts in `./contracts`.
 2. Update contract deployment scripts in `./deploy`.
-3. Deploy contracts with `yarn hardhat-deply` from the **root directory**. Optionally add the reset flag (`yarn hardhat-deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
+3. Deploy contracts with `yarn deploy` from the **root directory**. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
 ```bash
-npx hardhat-deploy deploy --network [network name]
+npx deploy --network [network name]
 ```
 
 Network configs are defined in `hardhat.config.js`.
