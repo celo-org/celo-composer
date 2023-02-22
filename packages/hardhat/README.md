@@ -20,7 +20,7 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 3. Deploy contracts with `yarn deploy` from the **root directory**. Optionally add the reset flag (`yarn deploy --reset`) to overwrite previous deployment info. The default deployment network is specified in `hardhat.config.js` and is set to `alfajores` initially. You can also overwrite previous deployments and redeploy when there are changes to the deployment script or contracts automatically by running `yarn deploy-reset-watch`. You can specify a specific network deployment directly with
 
 ```bash
-npx deploy --network [network name]
+npx hardhat deploy --network [network name]
 ```
 
 Network configs are defined in `hardhat.config.js`.
