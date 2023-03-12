@@ -1,4 +1,4 @@
-require("@nomicfoundation/hardhat-chai-matchers")
+require("@nomicfoundation/hardhat-chai-matchers");
 require("dotenv").config({ path: ".env" });
 require("hardhat-deploy");
 const { task } = require("hardhat/config");
