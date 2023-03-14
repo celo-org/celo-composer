@@ -186,7 +186,7 @@ const createAsync = async (command) => {
                 // Change the name of the project in package.json for the generated packages.
                 projectPackage["name"] = `@${projectName}/${package}`;
 
-                  // write back the changes to the package.json
+                // write back the changes to the package.json
                 shell
                     .echo(JSON.stringify(projectPackage, "", 4))
                     .to(`packages/${package}/package.json`);
@@ -271,6 +271,16 @@ const createAsync = async (command) => {
                     default:
                         break;
                 }
+                // write back the changes to the package.json
+                shell
+                    .echo(JSON.stringify(projectPackage, "", 4))
+                    .to(`packages/${package}/package.json`);
+
+                Object.keys(projectPackage.scripts).forEach((key) => {
+                    packageJson.scripts[
+                        `${packageNameMap[package]}:${key}`
+                    ] = `yarn workspace @${projectName}/${package} ${key}`;
+                });
             }
 
         }
