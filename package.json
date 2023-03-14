@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Get started building dApps on Celo",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "chalk": "5.2.0",
     "commander": "^10.0.0",
     "fs-extra": "^11.1.0",
-    "inquirer": "^9.1.4",
+    "inquirer": "^8.2.4",
     "node-emoji": "^1.11.0",
     "ora": "6.1.2",
     "shelljs": "^0.8.5",
