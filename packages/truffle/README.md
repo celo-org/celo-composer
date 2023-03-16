@@ -2,7 +2,7 @@
 
 This project demonstrates a basic Truffle use case. It comes with a sample contractand a sample script that deploys that contract.
 
-## Setup & Intallation
+## Setup & Installation
 
 ### Alfajores Testnet Setup
 

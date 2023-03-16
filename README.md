@@ -1,6 +1,6 @@
 <!-- TITLE -->
-
 <p align="center"> 
+  <img width="100px" src="https://github.com/celo-org/celo-composer/blob/main/images/readme/celo_isotype.svg" align="center" alt="Celo" />
  <h2 align="center">Celo Composer</h2>
  <p align="center">Build, deploy, and iterate quickly on decentralized applications using Celo.</p>
 </p>
@@ -35,7 +35,6 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
@@ -60,23 +59,21 @@ Celo Composer allows you to quickly build, deploy, and iterate on decentralized 
 
 ## Built With
 
-Celo Composer is built on Celo to make it simple to build dApps using a variety of front-end frameworks.
+Celo Composer is built on Celo to make it simple to build dApps using a variety of front-end frameworks, and libraries.
 
 - [Celo](https://celo.org/)
-- [Solidity](https://docs.soliditylang.org/en/v0.8.15/)
+- [Solidity](https://docs.soliditylang.org/en/v0.8.19/)
 - [Next.js](https://nextjs.org/)
 - [React.js](https://reactjs.org/)
 - [Material UI](https://mui.com/)
 - [React Native](https://reactnative.dev/)
 - [Flutter](https://docs.flutter.dev/)
+- [React-celo](https://github.com/celo-org/react-celo/)
+- [Rainbowkit-celo](https://github.com/celo-org/rainbowkit-celo)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
-
-## Getting Started
-
-To build your dApp, you'll need to install the dependencies, create a new project, and run the following commands:
 
 ## Prerequisites
 
@@ -85,68 +82,70 @@ To build your dApp, you'll need to install the dependencies, create a new projec
 
 ## How to use Celo Composer
 
-The easiest way to get started with Celo Composer is using `@celo/celo-composer`. This is a CLI tool enables you to quickly start building dApps on Celo for multiple frameworks including React, React Native (w/o Expo), Flutter and Angular. You can create the dApp using default Composer templates provided by Celo. To get started, use the following command:
+The easiest way to start with Celo Composer is using `@celo/celo-composer`. This CLI tool lets you quickly start building dApps on Celo for multiple frameworks, including React (with either react-celo or rainbowkit-celo), React Native (w/o Expo), Flutter, and Angular. To get started, just run the following command, and follow the steps:
 
 ```bash
-npx @celo/celo-composer create
+npx @celo/celo-composer@latest create
 ```
 
-#### This will prompt you to select the framework and the template you want to use
+### Front-end framework
 
-![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-create.png?raw=true)
+![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_1.png?raw=true)
 
-#### Once you select the framework and the template, it will ask you to select the smart contract development environment tool
+### Web3 library (for react-app)
 
-![Celo Composer tool selection](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-tool.png?raw=true)
+![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_2.png?raw=true)
 
-#### After selecting the tool, it will ask you whether you want subgraph support for your dApp
+### Smart contract framework
 
-![Celo Composer subgraph support](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-subgraph.png?raw=true)
+![Celo Composer tool selection](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_3.png?raw=true)
 
-#### Finally, it will ask you for the name of your dApp
+### Subgraph
 
-![Celo Composer dApp name](https://github.com/celo-org/celo-composer/blob/main/images/readme/celo-composer-project-name.png?raw=true)
+![Celo Composer subgraph support](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_4.png?raw=true)
 
-**_🔥Voila, you have your dApp ready to go. You can now start building your dApp on Celo._**
+### Name your dApp
 
+![Celo Composer dApp name](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_5.png?raw=true)
+
+**_🔥Voila, you have a dApp ready to go. Voila, you have a dApp ready to go. Start building your dApp on Celo._**
+
+### Getting started
+
+Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
 ## Supported Frameworks
 
-### <u>React</u>
+### React
 
-- Creating examples and experiment with React for your libraries and components.
-- Install dependencies with `yarn` or `npm i`.
-- Start the dApp with `yarn react-app:dev`/`npm run react-app:dev` and you are good to go.
 - Support for Website and Progressive Web Application.
 - Works with all major crypto wallets.
 
-Check here to learn more about [Celo Composer - React](https://github.com/celo-org/celo-composer/blob/main/packages/react-app/README.md)
+Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/react-app/README.md) to learn more about.
 
-### <u>React Native</u>
+### React Native
 
-- You don't need to configure anything. A reasonably good configuration of both development and production builds is handled for you so you can focus on writing code.
+- Out of the box config, just focus on buidl.
 - Support for Android and IOS.
-- Works with [Expo](https://expo.dev/) and without Expo.
-- Working example app - The included example app shows how this all works together.
-- Easy to use and always updated with latest dependencies.
+- Works with and without [Expo](https://expo.dev/).
+- Working example app included.
 
-Check here to learn more about [Celo Composer - React Native](https://github.com/celo-org/celo-composer/blob/main/packages/react-native-app/README.md)
+Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/react-native-app/README.md) to learn more about.
 
-### <u>Flutter</u>
+### Flutter
 
 - One command to get started - Type `flutter run` to start development in your mobile phone.
 - Works with all major mobile crypto wallets.
 - Support for Android, IOS (Web, Windows, and Linux coming soon).
-- Working example app - The included example app shows how this all works together.
-- Easy to use and always updated with latest dependencies.
+- Working example app included.
 
-Check here to learn more about [Celo Composer - Flutter](https://github.com/celo-org/celo-composer/blob/main/packages/flutter-app/README.md)
+Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/flutter-app/README.md) to learn more about.
 
-### <u>Angular</u>
+### Angular
 
-- Creating examples and experiment with Angular for your libraries and components.
-- Easy to setup and use.
+- Support for Website and Progressive Web Application.
+- Works with all major crypto wallets.
 
-Check here to learn more about [Celo Composer - Angular](https://github.com/celo-org/celo-composer/blob/main/packages/angular-app/README.md)
+Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/angular-app/README.md) to learn more about.
 
 <!-- USAGE EXAMPLES -->
 
@@ -163,7 +162,7 @@ Check here to learn more about [Celo Composer - Angular](https://github.com/celo
 - [Payable](https://solidity-by-example.org/payable/)
 - [Fallback](https://solidity-by-example.org/fallback/)
 
-📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.6.6/units-and-global-variables.html)
+📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.8.19/units-and-global-variables.html)
 
 ## Support
 
@@ -181,13 +180,7 @@ See the [open issues](https://github.com/celo-org/celo-composer/issues) for a fu
 
 ## Contributing
 
-As a contributor, you can add your own dApp to this repository and include it as a tab for others to access. Follow the steps below and reference existing files for additional details to help you get started.
-
-If you decide to try this out and find something confusing, consider opening an pull request to make things more clear for the next developer that comes through. If you improve the user interface or create new components that you think might be useful for other developers, consider opening a PR.
-
-We will happily compensate you for contributions. Anywhere between 5 and 50 cUSD (or more) depending on the work. This is dependent on the work that is done and is ultimately up to the discretion of the Celo Foundation developer relations team.
-
-You can view the associated bounty on Gitcoin [here](https://gitcoin.co/issue/celo-org/celo-progressive-dapp-starter/17/100028587).
+We welcome contributions from the community.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -199,6 +192,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 ## Contact
 
 - [@CeloDevs](https://twitter.com/CeloDevs)
-- [Discord](https://discord.com/invite/6yWMkgM)
+- [Discord](https://discord.com/invite/celo)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
