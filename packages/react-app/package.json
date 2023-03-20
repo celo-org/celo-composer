@@ -14,17 +14,17 @@
     "@celo/react-celo": "^5.0.3",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
-    "@rainbow-me/rainbowkit": "^0.12.1",
-    "ethers": "^6.1.0",
+    "@rainbow-me/rainbowkit": "^0.12.2",
+    "ethers": "^5.7.2",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "wagmi": "^0.12.1"
+    "wagmi": "^0.12.2"
   },
   "devDependencies": {
     "@types/node": "18.15.2",
     "@types/react": "18.0.27",
-    "@types/react-dom": "18.0.28",
+    "@types/react-dom": "18.0.11",
     "autoprefixer": "^10.4.14",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
