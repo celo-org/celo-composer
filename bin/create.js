@@ -177,7 +177,7 @@ const createAsync = async (command) => {
             }
 
             // flutter project doesn't have package.json
-            if (package != availablePackages["flutter-app"]) {
+            if (package != packageNameMap["flutter-app"]) {
                 let localPackageJson = shell.cat(
                     `packages/${package}/package.json`
                 );
