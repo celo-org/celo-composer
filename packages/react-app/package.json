@@ -9,17 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@celo/contractkit": "^3.2.0",
-    "@celo/rainbowkit-celo": "^0.11.0",
+    "@celo/contractkit": "^4.1.0",
+    "@celo/rainbowkit-celo": "^1.0.0",
     "@celo/react-celo": "^5.0.3",
-    "@headlessui/react": "^1.7.13",
-    "@heroicons/react": "^2.0.16",
-    "@rainbow-me/rainbowkit": "^0.12.2",
-    "ethers": "^5.7.2",
+    "@headlessui/react": "^1.7.14",
+    "@heroicons/react": "^2.0.18",
+    "@rainbow-me/rainbowkit": "^1.0.0",
+    "ethers": "^6.3.0",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "wagmi": "^0.12.2"
+    "viem": "^0.3.30",
+    "wagmi": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "18.15.2",
