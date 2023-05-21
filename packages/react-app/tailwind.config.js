@@ -18,7 +18,7 @@ module.exports = {
         "fig": "#1E002B",
         /** functional */
         "snow": "#FFFFFF",
-        "onyx": "#CCCCCC",
+        "onyx": "#000000",
         "success": "#329F3B",
         "error": "#E70532",
         "disabled": "#9B9B9B",
