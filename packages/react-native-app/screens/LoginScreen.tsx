@@ -1,9 +1,8 @@
 import { useWalletConnect } from "@walletconnect/react-native-dapp";
 import { StyleSheet } from "react-native";
 import { RootStackScreenProps } from "../types";
-import { Text, View } from "../components/Themed";
-import ConnectWallet from "../components/ConnectWallet";
-import Button from "../components/Button";
+import { View } from "../components/Themed";
+import { Web3Button } from "@web3modal/react-native";
 
 export default function LoginScreen({
     navigation,
@@ -11,7 +10,7 @@ export default function LoginScreen({
     const connector = useWalletConnect();
     return (
         <View style={styles.container}>
-            <ConnectWallet />
+            <Web3Button />
         </View>
     );
 }

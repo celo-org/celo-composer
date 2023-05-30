@@ -7,6 +7,10 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { ThemeProvider } from "./context/ThemeProvider";
+import { Web3Modal } from "@web3modal/react-native";
+import { providerMetadata, sessionParams } from "./constants/Config";
+
+import { ENV_PROJECT_ID } from "@env";
 
 export default function App() {
     const isLoadingComplete = useCachedResources();
@@ -25,6 +29,11 @@ export default function App() {
                 <SafeAreaProvider>
                     <Navigation colorScheme={colorScheme} />
                     <StatusBar />
+                    <Web3Modal
+                        projectId={ENV_PROJECT_ID}
+                        providerMetadata={providerMetadata}
+                        sessionParams={sessionParams}
+                    />
                 </SafeAreaProvider>
             </ThemeProvider>
         );

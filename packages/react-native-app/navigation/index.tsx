@@ -13,7 +13,6 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Button } from "react-native";
-import { useWalletConnect } from "@walletconnect/react-native-dapp";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
@@ -24,6 +23,7 @@ import LoginScreen from "../screens/LoginScreen";
 // import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import Account from "../screens/Account";
 import Docs from "../screens/Docs";
+import { useWeb3Modal } from "@web3modal/react-native";
 
 export default function Navigation({
     colorScheme,
@@ -47,7 +47,7 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-    const connector = useWalletConnect();
+    const { isConnected } = useWeb3Modal();
     return (
         <Stack.Navigator>
             {connector.connected ? (
