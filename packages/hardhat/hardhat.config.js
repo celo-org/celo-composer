@@ -46,7 +46,7 @@ module.exports = {
         },
     },
     solidity: {
-        version: "0.8.17",
+        version: "0.8.19",
     },
     namedAccounts: {
         deployer: 0,
@@ -85,7 +85,7 @@ task(
     }
 );
 
-task("create-account", "Prints a new private key", async (taskArgs, hre) => {
+task("create-account", "Prints a new private key", async (hre) => {
     const wallet = new hre.ethers.Wallet.createRandom();
     console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
     console.log();
