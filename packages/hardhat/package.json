@@ -41,6 +41,7 @@
         "@ethersproject/abi": "^5.7.0",
         "@ethersproject/bytes": "^5.7.0",
         "@ethersproject/providers": "^5.7.2",
+        "@openzeppelin/contracts": "^4.9.1",
         "@redstone-finance/evm-connector": "^0.0.15",
         "ganache": "^7.5.0",
         "source-map-support": "^0.5.21",
