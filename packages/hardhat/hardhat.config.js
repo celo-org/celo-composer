@@ -48,7 +48,6 @@ module.exports = {
     solidity: {
         version: "0.8.19",
     },
-
     /**
      * Named Accounts become available as variable names in scripts
      * Learn more: https://github.com/wighawag/hardhat-deploy#1-namedaccounts-ability-to-name-addresses
@@ -99,7 +98,11 @@ task("create-account", "Prints a new private key", async (hre) => {
     console.log(`Your account address: `, wallet.address);
 });
 
-task("print-account", "Prints the address of the account", () => {
-    const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
-    console.log(`Account: `, wallet.address);
-});
+task(
+    "print-account",
+    "Prints the address of the account associated with the private key in .env file",
+    () => {
+        const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
+        console.log(`Account: `, wallet.address);
+    }
+);
