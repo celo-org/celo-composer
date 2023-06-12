@@ -1,13 +1,9 @@
-require("@nomicfoundation/hardhat-chai-matchers");
 require("dotenv").config({ path: ".env" });
 require("hardhat-deploy");
 const { task } = require("hardhat/config");
-require("@nomiclabs/hardhat-ethers");
-require("@typechain/hardhat");
 require("hardhat-celo");
 
 const defaultNetwork = "alfajores";
-const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
 
 // This is the mnemonic used by celo-devchain
 const DEVCHAIN_MNEMONIC =
