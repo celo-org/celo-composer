@@ -37,6 +37,7 @@ module.exports = {
     },
     etherscan: {
         apiKey: {
+            // Get it from here: https://celoscan.io/myapikey
             alfajores: process.env.CELOSCAN_API_KEY,
             celo: process.env.CELOSCAN_API_KEY,
         },
