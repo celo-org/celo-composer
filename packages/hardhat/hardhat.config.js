@@ -48,8 +48,15 @@ module.exports = {
     solidity: {
         version: "0.8.19",
     },
+
+    /**
+     * Named Accounts become available as variable names in scripts
+     * Learn more: https://github.com/wighawag/hardhat-deploy#1-namedaccounts-ability-to-name-addresses
+     */
     namedAccounts: {
         deployer: 0,
+        alice: 1,
+        bob: 2,
     },
     typechain: {
         outDir: "types",
