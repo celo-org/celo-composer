@@ -37,6 +37,11 @@
     semver "^7.3.5"
     web3 "1.3.6"
 
+"@celo/contracts@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@celo/contracts/-/contracts-9.0.0.tgz#1465d685c4b48515c09ca81fdd41b1d06142dbc5"
+  integrity sha512-+DLFoV6mYQh4vLoYlcyArrgcU1zJAbb5BbBLKTbUnNkuGSYCoNqvik0OfpujhJ44SHlX+BERbW3ydzdj+kFVpg==
+
 "@celo/ganache-cli@git+https://github.com/celo-org/ganache-cli.git#e933297":
   version "6.6.1"
   resolved "git+https://github.com/celo-org/ganache-cli.git#e93329707efbe899ac2f32a30ccf2badbbec8bdf"

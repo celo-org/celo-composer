@@ -79,6 +79,14 @@ You can get a local copy of mainnet by forking with Ganache. Learn more about [f
 
 There is a script provided (`yarn fork-mainnet`) to fork mainnet and fund the same test accounts that come with Celo devchain. Sometimes sending transactions from the first account (which defaults to `0x5409ED021D9299bf6814279A6A1411A7e866A631`) is delayed and sending test transactions from the other accounts works better for some reason. :shrug: The private keys of the associated test accounts are printed in `account_keys.json`.
 
+## Celo Core Contracts
+
+You can easily import Celo Core contracts to be used by your contracts like so:
+
+```solidity
+import '@celo/contracts/common/Accounts.sol';
+```
+
 ## Verify your contracts
 
 ### hardhat-celo
