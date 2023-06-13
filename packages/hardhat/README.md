@@ -10,7 +10,15 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 1. Create a `.env` file similar to `.envexample`.
 2. Paste the private key in `.env`.
-> note: depending on how you generate your private key, you may have to prepend `0x` in the private key does not already have it prepended. 
+
+Alternatively, you can also run the following command to generate a new account
+
+```sh
+npx hardhat create-account
+```
+
+> **Note** : Depending on how you generate your private key, you may have to prepend `0x` in the private key does not already have it prepended.
+
 3. Faucet your account with the Alfajores testnet faucet [here](https://celo.org/developers/faucet).
 
 ## Develop
@@ -105,20 +113,4 @@ On Mainnet:
 
 ```bash
 npx hardhat --network celo sourcify
-```
-
-## Deploy with [Figment Datahub](https://datahub.figment.io/)
-
-Figment Datahub provides RPC & REST APIs for Celo network. To learn more about Datahub refer this doc - [https://docs.figment.io/introduction/what-is-datahub](https://docs.figment.io/introduction/what-is-datahub). Follow these steps to deploy your smart contract with Figment datahub's RPC.
-
-- Create account on [Datahub](https://datahub.figment.io/).
-- On the dashboard, click on `Create new app` and select **Celo** from the protocol list.
-- Once you have created an app, copy the api key.
-- Edit `hardhat.config.js` and update `alfajoresDatahub` and `celoDatahub` with the API Key.
-- Run the test or deploy the contract with following commands.
-
-```bash
-npx hardhat run scripts/run.ts --network alfajoresDatahub
-
-npx hardhat run scripts/deploy.ts --network celoDatahub
 ```

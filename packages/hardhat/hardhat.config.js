@@ -88,10 +88,9 @@ task(
     }
 );
 
-task("create-account", "Prints a new private key", async (hre) => {
+task("create-account", "Prints a new private key", async () => {
     const wallet = new hre.ethers.Wallet.createRandom();
     console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
-    console.log();
     console.log(`Your account address: `, wallet.address);
 });
 
