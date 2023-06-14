@@ -20,7 +20,6 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/LoginScreen";
-// import deployedContracts from "@celo-composer/hardhat/deployments/hardhat_contracts.json";
 import Account from "../screens/Account";
 import Docs from "../screens/Docs";
 import { useWeb3Modal } from "@web3modal/react-native";
@@ -50,7 +49,7 @@ function RootNavigator() {
     const { isConnected } = useWeb3Modal();
     return (
         <Stack.Navigator>
-            {connector.connected ? (
+            {isConnected ? (
                 <Stack.Screen
                     name="Root"
                     // the Root path renders the component mentioned below.

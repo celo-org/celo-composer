@@ -10,6 +10,7 @@ import { ThemeProvider } from "./context/ThemeProvider";
 import { Web3Modal } from "@web3modal/react-native";
 import { providerMetadata, sessionParams } from "./constants/Config";
 
+// @ts-expect-error - `@env` is a virtualised module via Babel config.
 import { ENV_PROJECT_ID } from "@env";
 
 export default function App() {
