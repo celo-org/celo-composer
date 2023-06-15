@@ -7,9 +7,10 @@ import AccountAddress from "../components/AccountAddress";
 import AccountBalance from "../components/AccountBalance";
 import Colors from "../constants/Colors";
 import { useWeb3Modal } from "@web3modal/react-native";
+import { BlockchainActions } from "../components/BlockchainActions";
 
 export default function Account() {
-    const { address } = useWeb3Modal();
+    const { address, provider } = useWeb3Modal();
     const { styles } = useContext(ThemeContext);
     const [accountLink, setAccountLink] = useState();
     useEffect(() => {
@@ -23,18 +24,18 @@ export default function Account() {
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
-                <Text style={styles.title}>Account Info</Text>
+                <Text style={styles.title}>Connected As:</Text>
                 <Button style={styles.externalLink} onPress={handlePress}>
                     <AccountAddress />
                     <AccountBalance />
                 </Button>
+                <BlockchainActions />
             </View>
-            <View style={styles.separator}></View>
-            {/* <Button onPress={() => connector.killSession()}>
+            <Button onPress={() => provider?.disconnect()}>
                 <Text style={{ color: Colors.brand.snow }}>
                     Disconnect Wallet
                 </Text>
-            </Button> */}
+            </Button>
         </View>
     );
 }
