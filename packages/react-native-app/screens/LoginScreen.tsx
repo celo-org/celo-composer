@@ -8,7 +8,17 @@ export default function LoginScreen({
 }: RootStackScreenProps<"Root">) {
     return (
         <View style={styles.container}>
-            <Web3Button />
+            <Web3Button
+                style={[
+                    { backgroundColor: "black" },
+                    {
+                        paddingHorizontal: 15,
+                        paddingVertical: 7,
+                        marginTop: 10,
+                        borderRadius: 5,
+                    },
+                ]}
+            />
         </View>
     );
 }

@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Button } from "react-native";
+import { ColorSchemeName } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
@@ -84,8 +84,6 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 function BottomTabNavigator() {
     const theme = useColorScheme();
 
-    // const contracts = deployedContracts["44787"]?.["alfajores"]?.contracts;
-
     return (
         <SafeAreaProvider>
             <BottomTab.Navigator
@@ -96,60 +94,26 @@ function BottomTabNavigator() {
                     tabBarActiveTintColor: Colors["brand"].light.text,
                     tabBarActiveBackgroundColor:
                         Colors["brand"][theme].background,
-                    tabBarLabelPosition: "beside-icon",
-                    tabBarIconStyle: { display: "none" },
                     tabBarLabelStyle: { textAlign: "center" },
                 }}
             >
-                {/* <BottomTab.Screen
-                    name="Greeter"
-                    children={(props) => (
-                        <Greeter contractData={contracts.Greeter} {...props} />
-                    )}
+                <BottomTab.Screen
+                    name="Docs"
                     options={() => ({
-                        title: "Greeter Contract",
-                        headerShown: false,
-                        // render icons if any
-                        tabBarIcon: ({
-                            focused: boolean,
-                            color: string,
-                            size: number,
-                        }) => {
+                        tabBarIcon: () => {
                             return <></>;
                         },
                         tabBarLabelPosition: "beside-icon",
                     })}
+                    component={Docs}
                 />
-                <BottomTab.Screen
-                    name="Storage"
-                    children={(props) => (
-                        <Storage contractData={contracts.Storage} {...props} />
-                    )}
-                    options={{
-                        title: "Storage Contract",
-                        headerShown: false,
-                        tabBarIcon: ({
-                            focused: boolean,
-                            color: string,
-                            size: number,
-                        }) => {
-                            return <></>;
-                        },
-                        tabBarLabelPosition: "beside-icon",
-                    }}
-                /> */}
-                <BottomTab.Screen name="Docs" component={Docs} />
                 <BottomTab.Screen
                     name="Account"
                     component={Account}
                     options={() => ({
                         title: "Account",
                         headerShown: false,
-                        tabBarIcon: ({
-                            focused: boolean,
-                            color: string,
-                            size: number,
-                        }) => {
+                        tabBarIcon: () => {
                             return <></>;
                         },
                         tabBarLabelPosition: "beside-icon",
