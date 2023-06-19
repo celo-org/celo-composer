@@ -1,4 +1,4 @@
-package com.reactnativeappwithoutexpo.newarchitecture;
+package com.celocomposer.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.reactnativeappwithoutexpo.BuildConfig;
-import com.reactnativeappwithoutexpo.newarchitecture.components.MainComponentsRegistry;
-import com.reactnativeappwithoutexpo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.celocomposer.BuildConfig;
+import com.celocomposer.newarchitecture.components.MainComponentsRegistry;
+import com.celocomposer.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
