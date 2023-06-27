@@ -9,16 +9,15 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@celo/rainbowkit-celo": "^1.0.0",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^2.0.18",
-        "@rainbow-me/rainbowkit": "^1.0.0",
+        "@rainbow-me/rainbowkit": "^1.0.2",
         "ethers": "^5.7.2",
         "next": "^13.4.2",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "viem": "^0.3.30",
-        "wagmi": "^1.0.5"
+        "wagmi": "^1.2"
     },
     "devDependencies": {
         "@types/node": "^20.2.1",
