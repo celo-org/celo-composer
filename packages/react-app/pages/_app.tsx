@@ -1,9 +1,5 @@
 import type { AppProps } from "next/app";
-import {
-    RainbowKitProvider,
-    getDefaultWallets,
-    connectorsForWallets,
-} from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
@@ -11,15 +7,15 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Alfajores, Celo } from "@/chains";
-const projectId = process.env.WC_PROJECT_ID as string; // get one at https://cloud.walletconnect.com/app
+const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID as string; // get one at https://cloud.walletconnect.com/app
 
 const { chains, publicClient } = configureChains(
     [Celo, Alfajores],
     [publicProvider()]
 );
 
-const { wallets } = getDefaultWallets({
-    appName: "RainbowKit demo",
+const { connectors } = getDefaultWallets({
+    appName: "Celo Composer",
     projectId,
     chains,
 });
@@ -27,8 +23,6 @@ const { wallets } = getDefaultWallets({
 const appInfo = {
     appName: "Celo Composer",
 };
-
-const connectors = connectorsForWallets([...wallets]);
 
 const wagmiConfig = createConfig({
     autoConnect: true,
