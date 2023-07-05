@@ -1,18 +1,16 @@
 // @ts-expect-error - `@env` is a virtualised module via Babel config.
 import {ENV_PROJECT_ID} from '@env';
 
-import React from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Web3Modal} from '@web3modal/react-native';
 import {useEffect} from 'react';
-import {LogBox} from 'react-native';
+import {LogBox, StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {providerMetadata, sessionParams} from './constants/Config';
+import {ThemeProvider} from './context/ThemeProvider';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import {ThemeProvider} from './context/ThemeProvider';
-import {Web3Modal} from '@web3modal/react-native';
-import {providerMetadata, sessionParams} from './constants/Config';
 
-console.log(ENV_PROJECT_ID);
+console.log('ENV_PROJECT_ID', ENV_PROJECT_ID);
 
 const App = () => {
   const colorScheme = useColorScheme();
