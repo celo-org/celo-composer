@@ -1,13 +1,16 @@
-import React from 'react';
-import {Platform, StatusBar, StyleSheet} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+// @ts-expect-error - `@env` is a virtualised module via Babel config.
+import {ENV_PROJECT_ID} from '@env';
+
+import {Web3Modal} from '@web3modal/react-native';
 import {useEffect} from 'react';
-import {LogBox} from 'react-native';
+import {LogBox, StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {providerMetadata, sessionParams} from './constants/Config';
+import {ThemeProvider} from './context/ThemeProvider';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import {ThemeProvider} from './context/ThemeProvider';
-import WalletConnectProvider from '@walletconnect/react-native-dapp';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+console.log('ENV_PROJECT_ID', ENV_PROJECT_ID);
 
 const App = () => {
   const colorScheme = useColorScheme();
@@ -18,31 +21,19 @@ const App = () => {
   }, []);
 
   return (
-    <WalletConnectProvider
-      bridge="https://bridge.walletconnect.org"
-      clientMeta={{
-        name: 'Celo Composer React Native without expo',
-        description: 'React Native Starter Project to build on Celo',
-        url: 'https://celo.org',
-        icons: ['https://walletconnect.org/walletconnect-logo.png'],
-      }}
-      redirectUrl={
-        Platform.OS === 'web'
-          ? window.location.origin
-          : `rnWithoutExpoCeloComposer://`
-      }
-      storageOptions={{
-        asyncStorage: AsyncStorage,
-      }}>
-      <ThemeProvider>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar
-            barStyle={colorScheme == 'dark' ? 'light-content' : 'dark-content'}
-          />
-        </SafeAreaProvider>
-      </ThemeProvider>
-    </WalletConnectProvider>
+    <ThemeProvider>
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar
+          barStyle={colorScheme == 'dark' ? 'light-content' : 'dark-content'}
+        />
+        <Web3Modal
+          projectId={ENV_PROJECT_ID}
+          providerMetadata={providerMetadata}
+          sessionParams={sessionParams}
+        />
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 };
 

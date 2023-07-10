@@ -1,29 +1,21 @@
 import {useState, useEffect, useContext} from 'react';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  TextInput,
-  Linking,
-  Alert,
-} from 'react-native';
-import {useWalletConnect} from '@walletconnect/react-native-dapp';
-import {Text, View, TouchableOpacity} from '../components/Themed';
-import Web3 from 'web3';
-import Colors from '../constants/Colors';
+import {Linking, Alert} from 'react-native';
+import {Text, View} from '../components/Themed';
 import {ThemeContext} from '../context/ThemeProvider';
-import React from 'react';
-
-const web3 = new Web3('https://alfajores-forno.celo-testnet.org');
+import {useWeb3Modal} from '@web3modal/react-native';
+import Button from '../components/Button';
+import AccountAddress from '../components/AccountAddress';
+import AccountBalance from '../components/AccountBalance';
+import Colors from '../constants/Colors';
+import {BlockchainActions} from '../components/BlockchainActions';
 
 export default function Account() {
-  const connector = useWalletConnect();
+  const {address, provider} = useWeb3Modal();
   const {styles} = useContext(ThemeContext);
   const [accountLink, setAccountLink] = useState<string>('');
   useEffect(() => {
-    setAccountLink(
-      `https://alfajores-blockscout.celo-testnet.org/address/${connector.accounts[0]}`,
-    );
-  }, [connector]);
+    setAccountLink(`https://celoscan.io/address/${address}`);
+  }, [address]);
 
   async function handlePress() {
     const supported = await Linking.canOpenURL(accountLink);
@@ -41,19 +33,15 @@ export default function Account() {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         <Text style={styles.title}>Account Info</Text>
-        <TouchableOpacity style={styles.externalLink} onPress={handlePress}>
-          <Text style={styles.externalLink}>
-            {`${connector.accounts[0].substr(
-              0,
-              5,
-            )}...${connector.accounts[0].substr(-5)}`}
-          </Text>
-        </TouchableOpacity>
+        <Button style={styles.externalLink} onPress={handlePress}>
+          <AccountAddress />
+          <AccountBalance />
+        </Button>
+        <BlockchainActions />
       </View>
-      <View style={styles.separator}></View>
-      <TouchableOpacity onPress={() => connector.killSession()}>
-        <Text>Disconnect Wallet</Text>
-      </TouchableOpacity>
+      <Button onPress={() => provider?.disconnect()}>
+        <Text style={{color: Colors.brand.snow}}>Disconnect Wallet</Text>
+      </Button>
     </View>
   );
 }
