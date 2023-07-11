@@ -12,9 +12,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
+            display: "flex",
             alignItems: "center",
             justifyContent: "center",
             padding: 20,
+            backgroundColor: Colors.brand.light.background,
         },
         innerContainer: {
             width: "100%",
@@ -22,7 +24,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         },
         title: {
             fontSize: 20,
-            fontWeight: "bold",
+            fontWeight: "500",
             color: Colors["brand"].light.text,
         },
         separator: {
@@ -37,6 +39,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
             textDecorationColor: "white",
             textDecorationLine: "underline",
             backgroundColor: "transparent",
+            fontSize: 12,
         },
         textInput: {
             borderColor: Colors["brand"].light.text,
@@ -66,6 +69,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         h4: {
             color: Colors["brand"].light.text,
             fontSize: 24,
+            fontWeight: "400",
         },
         h5: {
             color: Colors["brand"].light.text,
