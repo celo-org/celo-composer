@@ -31,11 +31,6 @@ const createAsync = async (command) => {
         subgraphs: "subgraphs",
     };
 
-    let fELibraries = {
-        rc: "react-celo",
-        rk: "rainbowkit-celo",
-    };
-
     let selectedPackages = [];
     let selectedFELibrary = "";
 
@@ -64,17 +59,6 @@ const createAsync = async (command) => {
             Object.values(availablePackages).indexOf(fEFramework)
         ]
     );
-
-    if (fEFramework == availablePackages["react-app"]) {
-        let { fELibrary } = await inquirer.prompt({
-            type: "list",
-            name: "fELibrary",
-            message: "Choose web3 library for react app:",
-            default: fELibraries["rk"],
-            choices: [fELibraries["rc"], fELibraries["rk"]],
-        });
-        selectedFELibrary = fELibrary;
-    }
 
     let { scFramework } = await inquirer.prompt({
         type: "list",
@@ -158,14 +142,12 @@ const createAsync = async (command) => {
         };
 
         for (let x = 0; x < selectedPackages.length; x++) {
-
             let package = selectedPackages[x];
 
             // clone to local only the projects user wants
-            shell.exec(
-                `git sparse-checkout add packages/${package}`,
-                { silent: true }
-            );
+            shell.exec(`git sparse-checkout add packages/${package}`, {
+                silent: true,
+            });
 
             // if project isn't web no need to netlify.toml
             if (
@@ -199,79 +181,12 @@ const createAsync = async (command) => {
             }
 
             // update front-end web3 library
-            if (
-                package == packageNameMap["react-app"] &&
-                selectedFELibrary != ""
-            ) {
-                shell.echo(`Customizing ${package} with ${selectedFELibrary}...\n`);
+            if (package == packageNameMap["react-app"]) {
                 let localPackageJson = shell.cat(
                     `packages/${package}/package.json`
                 );
                 let projectPackage = JSON.parse(localPackageJson);
-                switch (selectedFELibrary) {
-                    // rainbowkit-celo
-                    case fELibraries["rk"]:
-                        shell.echo(`rainbowkit-celo`);
-                        // remove react-celo libraries in packages.json file
-                        delete projectPackage.dependencies[
-                            "@celo/react-celo"
-                        ];
-                        delete projectPackage.dependencies[
-                            "@celo/contractkit"
-                        ];
 
-                        // remove react-celo header component
-                        shell.rm(
-                            "packages/react-app/components/HeaderRC.tsx"
-                        );
-                        shell.rm("packages/react-app/pages/_appRC.tsx");
-                        shell.mv(
-                            "packages/react-app/components/HeaderRK.tsx",
-                            "packages/react-app/components/Header.tsx"
-                        );
-                        shell.sed(
-                            "-i",
-                            'import Header from "./HeaderRK";',
-                            'import Header from "./Header";',
-                            "packages/react-app/components/Layout.tsx"
-                        );
-                        break;
-
-                    // react-celo
-                    case fELibraries["rc"]:
-                        // remove rainbowkit-celo libraries in packages.json file
-                        delete projectPackage["dependencies"][
-                            "@celo/rainbowkit-celo"
-                        ];
-                        delete projectPackage["dependencies"][
-                            "@rainbow-me/rainbowkit"
-                        ];
-
-                        // remove rainbowkit-celo header component
-                        shell.rm(
-                            "packages/react-app/components/HeaderRK.tsx"
-                        );
-                        shell.rm("packages/react-app/pages/_app.tsx");
-                        shell.mv(
-                            "packages/react-app/pages/_appRC.tsx",
-                            "packages/react-app/pages/_app.tsx"
-                        );
-                        shell.mv(
-                            "packages/react-app/components/HeaderRC.tsx",
-                            "packages/react-app/components/Header.tsx"
-                        );
-                        shell.sed(
-                            "-i",
-                            'import Header from "./HeaderRK";',
-                            'import Header from "./Header";',
-                            "packages/react-app/components/Layout.tsx"
-                        );
-                        break;
-
-                    default:
-                        break;
-                }
-                // write back the changes to the package.json
                 shell
                     .echo(JSON.stringify(projectPackage, "", 4))
                     .to(`packages/${package}/package.json`);
@@ -282,7 +197,6 @@ const createAsync = async (command) => {
                     ] = `yarn workspace @${projectName}/${package} ${key}`;
                 });
             }
-
         }
         /**
          * Getting all packages selected by the user
@@ -291,7 +205,7 @@ const createAsync = async (command) => {
          * eg:- ["react-app", "hardhat"] etc...
          */
         let packagesStdOut;
-        if(isWindows) {
+        if (isWindows) {
             let { stdout } = shell.exec("dir packages /b", {
                 silent: true,
             });
@@ -307,8 +221,11 @@ const createAsync = async (command) => {
          * Node 14 and below doens't support replaceAll
          */
         let packages;
-        if(isWindows) {
-            packages = packagesStdOut.replaceAll("\n", " ").replaceAll("\r", "").split(" ");
+        if (isWindows) {
+            packages = packagesStdOut
+                .replaceAll("\n", " ")
+                .replaceAll("\r", "")
+                .split(" ");
             // remove empty strings from array
             packages = packages.filter(function (el) {
                 return el != null && el != "";
@@ -316,14 +233,11 @@ const createAsync = async (command) => {
         } else {
             // remove new line from packagesStdOut
             packages = packagesStdOut
-            .replace(/packages\//g, "")
-            .replace(/\//g, "")
-            .replace(/\n/g, "")
-            .split(" ");
-            
+                .replace(/packages\//g, "")
+                .replace(/\//g, "")
+                .replace(/\n/g, "")
+                .split(" ");
         }
-        
-      
 
         shell.exec("rm -rf .git");
         shell.exec("git init --quiet --initial-branch=main");
@@ -356,8 +270,8 @@ const loading = (message) => {
     return ora(message).start();
 };
 
-function isWindows() {  
-    return Os.platform() === 'win32'
+function isWindows() {
+    return Os.platform() === "win32";
 }
 
 module.exports = {

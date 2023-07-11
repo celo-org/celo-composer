@@ -11,20 +11,16 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import * as React from 'react';
-import {ColorSchemeName, Button} from 'react-native';
-import {useWalletConnect} from '@walletconnect/react-native-dapp';
+import {ColorSchemeName} from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList, RootTabParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import LoginScreen from '../screens/LoginScreen';
-import Greeter from '../screens/Greeter';
-import Storage from '../screens/Storage';
-import deployedContracts from '@celo-composer/hardhat/deployments/hardhat_contracts.json';
 import Account from '../screens/Account';
+import Docs from '../screens/Docs';
+import {useWeb3Modal} from '@web3modal/react-native';
 
 export default function Navigation({
   colorScheme,
@@ -47,10 +43,10 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const connector = useWalletConnect();
+  const {isConnected} = useWeb3Modal();
   return (
     <Stack.Navigator>
-      {connector.connected ? (
+      {isConnected ? (
         <Stack.Screen
           name="Root"
           // the Root path renders the component mentioned below.
@@ -59,7 +55,7 @@ function RootNavigator() {
         />
       ) : (
         <Stack.Screen
-          name="Login"
+          name="Root"
           component={LoginScreen}
           options={{headerShown: false}}
         />
@@ -69,9 +65,6 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{title: 'Oops!'}}
       />
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -83,47 +76,28 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
-  //   const contracts = deployedContracts['44787']?.['alfajores']?.contracts;
+  const theme = useColorScheme();
 
   return (
     <SafeAreaProvider>
       <BottomTab.Navigator
         // first screen visible after login
-        initialRouteName="Greeter"
+        initialRouteName="Docs"
         screenOptions={{
-          headerShown: true,
-          tabBarActiveTintColor: Colors[colorScheme].tint,
+          headerShown: false,
+          tabBarActiveTintColor: Colors['brand'].light.text,
+          tabBarActiveBackgroundColor: Colors['brand'][theme].background,
+          tabBarLabelStyle: {textAlign: 'center'},
         }}>
         <BottomTab.Screen
-          name="Greeter"
-          children={props => (
-            <Greeter contractData={contracts.Greeter} {...props} />
-          )}
+          name="Docs"
           options={() => ({
-            title: 'Greeter Contract',
-            headerShown: false,
-            // render icons if any
-            tabBarIcon: ({focused: boolean, color: string, size: number}) => {
+            tabBarIcon: () => {
               return <></>;
             },
             tabBarLabelPosition: 'beside-icon',
           })}
-        />
-        <BottomTab.Screen
-          name="Storage"
-          children={props => (
-            <Storage contractData={contracts.Storage} {...props} />
-          )}
-          options={{
-            title: 'Storage Contract',
-            headerShown: false,
-            tabBarIcon: ({focused: boolean, color: string, size: number}) => {
-              return <></>;
-            },
-            tabBarLabelPosition: 'beside-icon',
-          }}
+          component={Docs}
         />
         <BottomTab.Screen
           name="Account"
@@ -131,7 +105,7 @@ function BottomTabNavigator() {
           options={() => ({
             title: 'Account',
             headerShown: false,
-            tabBarIcon: ({focused: boolean, color: string, size: number}) => {
+            tabBarIcon: () => {
               return <></>;
             },
             tabBarLabelPosition: 'beside-icon',

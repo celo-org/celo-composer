@@ -1,13 +1,9 @@
-require("@nomicfoundation/hardhat-chai-matchers");
 require("dotenv").config({ path: ".env" });
 require("hardhat-deploy");
 const { task } = require("hardhat/config");
-require("@nomiclabs/hardhat-ethers");
-require("@typechain/hardhat");
 require("hardhat-celo");
 
 const defaultNetwork = "alfajores";
-const mnemonicPath = "m/44'/52752'/0'/0"; // derivation path used by Celo
 
 // This is the mnemonic used by celo-devchain
 const DEVCHAIN_MNEMONIC =
@@ -41,15 +37,22 @@ module.exports = {
     },
     etherscan: {
         apiKey: {
+            // Get it from here: https://celoscan.io/myapikey
             alfajores: process.env.CELOSCAN_API_KEY,
             celo: process.env.CELOSCAN_API_KEY,
         },
     },
     solidity: {
-        version: "0.8.17",
+        version: "0.8.19",
     },
+    /**
+     * Named Accounts become available as variable names in scripts
+     * Learn more: https://github.com/wighawag/hardhat-deploy#1-namedaccounts-ability-to-name-addresses
+     */
     namedAccounts: {
         deployer: 0,
+        alice: 1,
+        bob: 2,
     },
     typechain: {
         outDir: "types",
@@ -85,14 +88,17 @@ task(
     }
 );
 
-task("create-account", "Prints a new private key", async (taskArgs, hre) => {
+task("create-account", "Prints a new private key", async () => {
     const wallet = new hre.ethers.Wallet.createRandom();
     console.log(`PRIVATE_KEY="` + wallet.privateKey + `"`);
-    console.log();
     console.log(`Your account address: `, wallet.address);
 });
 
-task("print-account", "Prints the address of the account", () => {
-    const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
-    console.log(`Account: `, wallet.address);
-});
+task(
+    "print-account",
+    "Prints the address of the account associated with the private key in .env file",
+    () => {
+        const wallet = new hre.ethers.Wallet(process.env.PRIVATE_KEY);
+        console.log(`Account: `, wallet.address);
+    }
+);
