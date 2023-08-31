@@ -5,7 +5,10 @@
     "scripts": {
         "test": "hardhat test",
         "test-local": "hardhat test --network hardhat",
+<<<<<<< HEAD
         "create-account": "hardhat create-account",
+=======
+>>>>>>> patch-hardhat-celo-version-change
         "accounts": "hardhat accounts",
         "devchain": "npx celo-devchain --port 8545",
         "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
