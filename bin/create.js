@@ -16,7 +16,6 @@ const createAsync = async (command) => {
         "flutter-app": "Flutter",
         "angular-app": "Angular",
         hardhat: "Hardhat",
-        truffle: "Truffle",
         subgraphs: "TheGraph",
     };
 
@@ -27,7 +26,6 @@ const createAsync = async (command) => {
         "flutter-app": "flutter-app",
         "angular-app": "angular-app",
         hardhat: "hardhat",
-        truffle: "truffle",
         subgraphs: "subgraphs",
     };
 
@@ -65,11 +63,7 @@ const createAsync = async (command) => {
         name: "scFramework",
         message: "Choose smart-contract framework:",
         default: availablePackages["hardhat"],
-        choices: [
-            availablePackages["hardhat"],
-            availablePackages["truffle"],
-            "None",
-        ],
+        choices: [availablePackages["hardhat"], "None"],
     });
 
     if (scFramework !== "None") {
