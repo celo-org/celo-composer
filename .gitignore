@@ -39,3 +39,6 @@ nb-configuration.xml
 *.swp
 
 PROPOSAL.md
+
+# Local Netlify folder
+.netlify
