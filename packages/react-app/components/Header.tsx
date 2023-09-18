@@ -13,7 +13,7 @@ export default function Header() {
   });
 
   useEffect(() => {
-    if (window.ethereum.isMiniPay) {
+    if (window.ethereum && window.ethereum.isMiniPay) {
       setHideConnectBtn(true);
       connect();
     }
