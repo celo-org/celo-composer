@@ -12,6 +12,7 @@
         "@celo/rainbowkit-celo": "^1.0.1",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^2.0.18",
+        "@netlify/plugin-nextjs": "^4.40.1",
         "@rainbow-me/rainbowkit": "^1.0.2",
         "ethers": "^5.7.2",
         "next": "^13.4.2",
