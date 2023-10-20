@@ -16,14 +16,19 @@
     "bin/*"
   ],
   "dependencies": {
+    "celo": "^1.1.5",
     "chalk": "4.1.2",
     "commander": "^9.4.0",
     "fs-extra": "^10.1.0",
     "inquirer": "^8.2.4",
     "node-emoji": "^1.11.0",
     "ora": "5.4.1",
+    "package-lock.json": "^1.0.0",
+    "package.json": "^0.0.0",
     "shelljs": "^0.8.5",
-    "yargs": "17.5.1"
+    "test": "^3.3.0",
+    "yargs": "17.5.1",
+    "yarn.lock": "^0.0.1-security"
   },
   "main": "bin/index.js",
   "keywords": [
