@@ -9,27 +9,27 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@celo/rainbowkit-celo": "^1.0.1",
-        "@headlessui/react": "^1.7.14",
+        "@celo/rainbowkit-celo": "^1.1.0",
+        "@headlessui/react": "^1.7.17",
         "@heroicons/react": "^2.0.18",
-        "@rainbow-me/rainbowkit": "^1.0.2",
-        "ethers": "^5.7.2",
-        "next": "^13.4.2",
+        "@rainbow-me/rainbowkit": "^1.2.0",
+        "ethers": "^6.8.0",
+        "next": "^14.0.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
-        "viem": "^0.3.30",
-        "wagmi": "^1.2"
+        "viem": "^1.18.2",
+        "wagmi": "^1.4"
     },
     "devDependencies": {
-        "@types/node": "^20.2.1",
-        "@types/react": "^18.2.6",
-        "@types/react-dom": "^18.2.4",
-        "autoprefixer": "^10.4.14",
-        "eslint": "^8.40.0",
-        "eslint-config-next": "^13.4.2",
-        "postcss": "^8.4.23",
-        "tailwindcss": "^3.3.2",
-        "typescript": "^5.0.4"
+        "@types/node": "^20.8.10",
+        "@types/react": "^18.2.33",
+        "@types/react-dom": "^18.2.14",
+        "autoprefixer": "^10.4.16",
+        "eslint": "^8.52.0",
+        "eslint-config-next": "^14.0.1",
+        "postcss": "^8.4.31",
+        "tailwindcss": "^3.3.5",
+        "typescript": "^5.2.2"
     },
     "browser": {
         "net": false
