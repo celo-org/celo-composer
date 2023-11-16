@@ -11,6 +11,7 @@ let stdin = {
 
 program
   .command("create")
+  .option("-t, --template <name>", "Template to use")
   .description("Generate a new Celo Composer project")
   .action(createAsync);
 
