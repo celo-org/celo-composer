@@ -2,30 +2,28 @@
     "name": "@celo-composer/hardhat",
     "version": "1.0.0",
     "license": "MIT",
-    "scripts": {
-        "test": "hardhat test",
-        "test-local": "hardhat test --network hardhat",
-        "create-account": "hardhat create-account",
-        "accounts": "hardhat accounts",
-        "devchain": "npx celo-devchain --port 8545",
-        "deploy": "hardhat deploy --export-all deployments/hardhat_contracts.json",
-        "deploy-reset-watch": "hardhat deploy --reset --watch --export-all deployments/hardhat_contracts.json",
-        "watch": "node scripts/watch.js",
-        "fork-mainnet": "ganache --fork.url https://forno.celo.org --wallet.mnemonic 'concert load couple harbor equip island argue ramp clarify fence smart topic' --wallet.accountKeysPath './account_keys.json' --gasPrice 875000000"
-    },
     "devDependencies": {
-        "@terminal-fi/celo-devchain": "^4.0.1",
-        "@typechain/web3-v1": "^6.0.1",
-        "bip39": "^3.0.4",
-        "dotenv": "^16.0.3",
-        "hardhat-celo": "^0.0.6",
-        "hardhat-deploy": "^0.11.19",
-        "node-watch": "^0.7.3"
+        "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
+        "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+        "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+        "@nomiclabs/hardhat-ethers": "^2.0.0",
+        "@nomiclabs/hardhat-etherscan": "^3.0.0",
+        "@typechain/ethers-v5": "^10.1.0",
+        "@typechain/hardhat": "^6.1.2",
+        "@types/chai": "^4.2.0",
+        "@types/mocha": ">=9.1.0",
+        "chai": "^4.2.0",
+        "hardhat": "^2.19.1",
+        "hardhat-gas-reporter": "^1.0.8",
+        "solidity-coverage": "^0.8.1",
+        "ts-node": ">=8.0.0",
+        "typechain": "^8.1.0",
+        "typescript": ">=4.5.0"
+    },
+    "scripts": {
+        "compile": "npx hardhat compile"
     },
     "dependencies": {
-        "@celo/contracts": "^9.0.0",
-        "@openzeppelin/contracts": "^4.9.3",
-        "ganache": "^7.5.0",
-        "typescript": "^4.8.4"
+        "dotenv": "^16.3.1"
     }
 }
