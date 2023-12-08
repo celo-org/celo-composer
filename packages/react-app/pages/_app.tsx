@@ -3,8 +3,9 @@ import celoGroups from "@celo/rainbowkit-celo/lists";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
-import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { WagmiConfig, configureChains, createConfig, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
+import { createPublicClient, http } from "viem";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 
@@ -26,8 +27,11 @@ const appInfo = {
 };
 
 const wagmiConfig = createConfig({
-  connectors,
-  publicClient: publicClient,
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
 });
 
 function App({ Component, pageProps }: AppProps) {
