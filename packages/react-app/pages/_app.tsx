@@ -1,11 +1,10 @@
 import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
 import celoGroups from "@celo/rainbowkit-celo/lists";
-import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { WagmiConfig, configureChains, createConfig, mainnet } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
-import { createPublicClient, http } from "viem";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 
@@ -16,10 +15,10 @@ const { chains, publicClient } = configureChains(
   [publicProvider()]
 );
 
-const connectors = celoGroups({
-  chains,
-  projectId,
-  appName: (typeof document === "object" && document.title) || "Your App Name",
+const { connectors } = getDefaultWallets({
+  appName: 'My RainbowKit App',
+  projectId: 'YOUR_PROJECT_ID',
+  chains
 });
 
 const appInfo = {
@@ -28,10 +27,8 @@ const appInfo = {
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
+  connectors,
+  publicClient
 });
 
 function App({ Component, pageProps }: AppProps) {
