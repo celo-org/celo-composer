@@ -88,6 +88,82 @@ const createAsync = async (command) => {
     console.log(chalk.blue("Happy coding! 🎉\n\n"));
 
     return;
+  } else if (command.template == "minipay") {
+    let { projectName } = await inquirer.prompt({
+      type: "input",
+      name: "projectName",
+      message: "Project name: ",
+    });
+
+    const pwd = process.cwd();
+    shell.cd(pwd);
+    shell.exec(
+      `git clone https://github.com/celo-org/minipay-template.git ${projectName}`
+    );
+    shell.cd(projectName);
+    const packageJsonPath = join(pwd, projectName, "package.json");
+    fs.readFile(packageJsonPath, "utf8", (err, data) => {
+      if (err) {
+        console.error("Error reading the file:", err);
+        return;
+      }
+
+      // Parse the JSON data
+      const packageData = JSON.parse(data);
+
+      // Modify the "name" field
+      packageData.name = projectName; // Replace 'new-name' with your desired name
+
+      // Convert the JSON data back to a string
+      const updatedData = JSON.stringify(packageData, null, 2);
+
+      // Write the updated data back to the package.json file
+      fs.writeFile(packageJsonPath, updatedData, "utf8", (err) => {
+        if (err) {
+          console.error("Error writing to the file:", err);
+          return;
+        }
+      });
+    });
+    shell.exec("rm -rf .git");
+    shell.exec("git init --quiet --initial-branch=main");
+    shell.exec("git add .");
+    console.log(
+      chalk.green(
+        "\n\n🚀 Your starter project has been successfully created!\n"
+      )
+    );
+
+    console.log("Before you start the project, please follow these steps:\n");
+
+    console.log(chalk.cyan("1.") + " Rename the file:");
+    console.log(chalk.yellow("   packages/react-app/.env.template"));
+    console.log("   to");
+    console.log(chalk.yellow("   packages/react-app/.env.local\n"));
+
+    console.log(
+      chalk.cyan("2.") +
+        " Open the newly renamed " +
+        chalk.yellow(".env.local") +
+        " file and add all the required environment variables.\n"
+    );
+
+    console.log(
+      "Once you've done that, you're all set to start your project!\n"
+    );
+    console.log(
+      chalk.green(
+        "Run `yarn install` and `yarn dev` from packages/react folder to start the project\n"
+      )
+    );
+
+    console.log(
+      chalk.green("Thank you for using Celo Composer!") +
+        " If you have any questions or need further assistance, please refer to the README or reach out to our team.\n"
+    );
+
+    console.log(chalk.blue("Happy coding! 🎉\n\n"));
+    return;
   }
   let availablePackages = {
     "react-app": "React",
