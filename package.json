@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "description": "Get started building dApps on Celo",
   "repository": {
     "type": "git",
