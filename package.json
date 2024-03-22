@@ -1,39 +1,39 @@
 {
-  "name": "@celo/celo-composer",
-  "version": "1.0.13",
-  "description": "Get started building dApps on Celo",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/celo-org/celo-composer.git"
-  },
-  "author": "celo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/celo-org/celo-composer/issues"
-  },
-  "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
-  "workspaces": [
-    "bin/*"
-  ],
-  "dependencies": {
-    "chalk": "4.1.2",
-    "commander": "^9.4.0",
-    "fs-extra": "^10.1.0",
-    "inquirer": "^8.2.4",
-    "node-emoji": "^1.11.0",
-    "ora": "5.4.1",
-    "shelljs": "^0.8.5",
-    "yargs": "17.5.1"
-  },
-  "main": "bin/index.js",
-  "keywords": [
-    "celo-composer",
-    "celo"
-  ],
-  "bin": {
-    "celo-composer": "bin/index.js"
-  },
-  "files": [
-    "bin"
-  ]
+    "name": "@celo/celo-composer",
+    "version": "1.0.14",
+    "description": "Get started building dApps on Celo",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/celo-org/celo-composer.git"
+    },
+    "author": "celo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/celo-org/celo-composer/issues"
+    },
+    "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
+    "workspaces": [
+        "bin/*"
+    ],
+    "dependencies": {
+        "chalk": "4.1.2",
+        "commander": "^9.4.0",
+        "fs-extra": "^10.1.0",
+        "inquirer": "^8.2.4",
+        "node-emoji": "^1.11.0",
+        "ora": "5.4.1",
+        "shelljs": "^0.8.5",
+        "yargs": "17.5.1"
+    },
+    "main": "bin/index.js",
+    "keywords": [
+        "celo-composer",
+        "celo"
+    ],
+    "bin": {
+        "celo-composer": "bin/index.js"
+    },
+    "files": [
+        "bin"
+    ]
 }
