@@ -4,18 +4,16 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { injected } from "wagmi/connectors";
 
 export default function Header() {
     const [hideConnectBtn, setHideConnectBtn] = useState(false);
-    const { connect } = useConnect({
-        connector: new InjectedConnector(),
-    });
+    const { connect } = useConnect();
 
     useEffect(() => {
         if (window.ethereum && window.ethereum.isMiniPay) {
             setHideConnectBtn(true);
-            connect();
+            connect({ connector: injected({ target: "metaMask" }) });
         }
     }, []);
 
@@ -92,10 +90,4 @@ export default function Header() {
             )}
         </Disclosure>
     );
-}
-
-declare global {
-    interface Window {
-        ethereum: any;
-    }
 }
