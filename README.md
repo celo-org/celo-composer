@@ -108,11 +108,12 @@ npx @celo/celo-composer@latest create
 
 ![Celo Composer dApp name](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_5.png?raw=true)
 
-**_🔥Voila, you have a dApp ready to go. Voila, you have a dApp ready to go. Start building your dApp on Celo._**
+**_🔥Voila, you have a dApp ready to go. Start building on Celo!_**
 
 ### Getting started
 
 Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
+
 ## Supported Frameworks
 
 ### React
@@ -189,6 +190,7 @@ We welcome contributions from the community.
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
+
 ## Contact
 
 - [@CeloDevs](https://twitter.com/CeloDevs)
