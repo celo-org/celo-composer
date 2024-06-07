@@ -629,9 +629,9 @@
     ordinal "^1.0.3"
 
 "@nomicfoundation/hardhat-network-helpers@^1.0.0":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-network-helpers/-/hardhat-network-helpers-1.0.9.tgz#767449e8a2acda79306ac84626117583d95d25aa"
-  integrity sha512-OXWCv0cHpwLUO2u7bFxBna6dQtCC2Gg/aN/KtJLO7gmuuA28vgmVKYFRCDUqrbjujzgfwQ2aKyZ9Y3vSmDqS7Q==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@nomicfoundation/hardhat-network-helpers/-/hardhat-network-helpers-1.0.11.tgz#64096829661b960b88679bd5c4fbcb50654672d1"
+  integrity sha512-uGPL7QSKvxrHRU69dx8jzoBvuztlLCtyFsbgfXIwIjnO3dqZRz2GNMHJoO3C3dIiUNM6jdNF4AUnoQKDscdYrA==
   dependencies:
     ethereumjs-util "^7.1.4"
 
@@ -947,9 +947,9 @@
   integrity sha512-dJvrYWxP/UcXm36Qn36fxhUKu8A/xMRXVT2cliFF1Z7UA9liG5Psj3ezNSZw+5puH2czDXRLcXQxf8JbJt0ejg==
 
 "@types/node@*":
-  version "20.10.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.0.tgz#16ddf9c0a72b832ec4fcce35b8249cf149214617"
-  integrity sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==
+  version "20.14.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.2.tgz#a5f4d2bcb4b6a87bffcaa717718c5a0f208f4a18"
+  integrity sha512-xyu6WAMVwv6AKFLB+e/7ySZVr/0zLCzOa7rSpq6jNwpqOrUbcACDWC+53d4n2QHOnDou0fbIsg8wZu/sxrnI4Q==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1715,10 +1715,23 @@ dotenv@^16.3.1:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
   integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
 
-elliptic@6.5.4, elliptic@^6.5.2, elliptic@^6.5.4:
+elliptic@6.5.4, elliptic@^6.5.2:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
+  dependencies:
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
+    hash.js "^1.0.0"
+    hmac-drbg "^1.0.1"
+    inherits "^2.0.4"
+    minimalistic-assert "^1.0.1"
+    minimalistic-crypto-utils "^1.0.1"
+
+elliptic@^6.5.4:
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.5.tgz#c715e09f78b6923977610d4c2346d6ce22e6dded"
+  integrity sha512-7EjbcmUm17NQFu4Pmgmq2olYMj8nwMnpcddByChSUjArp8F5DQWcIcpriwO4ZToLNAJig0yiyjswfyGNje/ixw==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -2911,7 +2924,12 @@ node-emoji@^1.10.0:
   dependencies:
     lodash "^4.17.21"
 
-node-gyp-build@^4.2.0, node-gyp-build@^4.3.0:
+node-gyp-build@^4.2.0:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.8.1.tgz#976d3ad905e71b76086f4f0b0d3637fe79b6cda5"
+  integrity sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==
+
+node-gyp-build@^4.3.0:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.7.1.tgz#cd7d2eb48e594874053150a9418ac85af83ca8f7"
   integrity sha512-wTSrZ+8lsRRa3I3H8Xr65dLWSgCvY2l4AOnaeKdPA9TB/WYMPaTcrzf3rXvFoVvjKNVnu0CcWSx54qq9GKRUYg==
