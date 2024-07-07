@@ -1,6 +1,0 @@
-{
-  "compilerOptions": {
-    "jsx": "react-jsx" /* Specify JSX code generation: 'preserve', 'react-native', 'react', 'react-jsx' or 'react-jsxdev'. */,
-    "strict": true /* Enable all strict type-checking options. */
-  }
-}

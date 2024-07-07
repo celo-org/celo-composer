@@ -1,39 +1,95 @@
 {
-    "name": "@celo/celo-composer",
-    "version": "1.0.14",
-    "description": "Get started building dApps on Celo",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/celo-org/celo-composer.git"
-    },
-    "author": "celo",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/celo-org/celo-composer/issues"
-    },
-    "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
-    "workspaces": [
-        "bin/*"
+  "name": "celo-composer",
+  "version": "1.0.14",
+  "description": "Get started building dApps on Celo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celo-org/celo-composer.git"
+  },
+  "author": "celo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/celo-org/celo-composer/issues"
+  },
+  "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
+  "workspaces": [
+    "bin/*"
+  ],
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@oclif/plugin-help": "^6",
+    "@oclif/plugin-plugins": "^5",
+    "chalk": "4.1.2",
+    "commander": "^9.4.0",
+    "execa": "^9.3.0",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.4",
+    "lodash.kebabcase": "^4.1.1",
+    "node-emoji": "^1.11.0",
+    "ora": "5.4.1",
+    "shelljs": "^0.8.5",
+    "yargs": "17.5.1"
+  },
+  "devDependencies": {
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^4",
+    "@types/chai": "^4",
+    "@types/inquirer": "^9.0.7",
+    "@types/lodash.kebabcase": "^4.1.9",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9",
+    "mocha": "^10",
+    "oclif": "^4",
+    "shx": "^0.3.3",
+    "ts-node": "^10",
+    "typescript": "^5"
+  },
+  "keywords": [
+    "celo-composer",
+    "celo"
+  ],
+  "bin": {
+    "celo-composer": "./bin/run.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true,
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "main": "dist/index.js",
+  "type": "module",
+  "oclif": {
+    "bin": "celo-composer",
+    "dirname": "celo-composer",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
     ],
-    "dependencies": {
-        "chalk": "4.1.2",
-        "commander": "^9.4.0",
-        "fs-extra": "^10.1.0",
-        "inquirer": "^8.2.4",
-        "node-emoji": "^1.11.0",
-        "ora": "5.4.1",
-        "shelljs": "^0.8.5",
-        "yargs": "17.5.1"
-    },
-    "main": "bin/index.js",
-    "keywords": [
-        "celo-composer",
-        "celo"
-    ],
-    "bin": {
-        "celo-composer": "bin/index.js"
-    },
-    "files": [
-        "bin"
-    ]
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif manifest && oclif readme",
+    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md"
+  },
+  "types": "dist/index.d.ts"
 }
