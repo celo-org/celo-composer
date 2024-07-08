@@ -19,6 +19,15 @@ import {
   packageNameMap,
 } from "../utils/constant.js";
 
+const requiredNodeVersion = 20;
+const currentNodeVersion = process.versions.node.split(".")[0];
+
+if (Number.parseInt(currentNodeVersion, 10) < requiredNodeVersion) {
+  throw new Error(
+    `Error: Node.js version ${requiredNodeVersion} or higher is required. You are using Node.js ${process.versions.node}.`
+  );
+}
+
 export default class Create extends Command {
   static override args = {};
 
