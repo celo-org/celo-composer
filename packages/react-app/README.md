@@ -13,7 +13,7 @@ Run `yarn` or `npm install` to install all the required dependencies to run the 
 > React + Tailwind CSS Template does not have any dependency on hardhat and truffle.
 > This starterkit does not include connection of Hardhat/Truffle with ReactJS. It's up to the user to integrate smart contract with ReactJS. This gives user more flexibily over the dApp.
 
--   To start the dApp, run the following command.
+- To start the dApp, run the following command.
 
 ```bash
 yarn react-dev
@@ -23,14 +23,25 @@ yarn react-dev
 
 ### Default
 
--   [Next.js](https://nextjs.org/) app framework
--   [TailwindCSS](https://tailwindcss.com/) for UI
--   [rainbowkit-celo](https://www.npmjs.com/package/@celo/rainbowkit-celo), a plugin to help rainbowkit developers support the CELO protocol faster.
+- [Next.js](https://nextjs.org/) app framework
+- [TailwindCSS](https://tailwindcss.com/) for UI
+- [rainbowkit-celo](https://www.npmjs.com/package/@celo/rainbowkit-celo), a plugin to help rainbowkit developers support the CELO protocol faster.
 
 ## Architecture
 
--   `/pages` includes the main application components (specifically `index.tsx` and `_app.tsx`)
-    -   `_app.tsx` includes configuration
-    -   `index.tsx` is the main page of the application
--   `/components` includes components that are rendered in `index.tsx`
--   `/public` includes static files
+- `/pages` includes the main application components (specifically `index.tsx` and `_app.tsx`)
+  - `_app.tsx` includes configuration
+  - `index.tsx` is the main page of the application
+- `/components` includes components that are rendered in `index.tsx`
+- `/public` includes static files
+
+## Environment Variables
+
+Create a WalletConnect Cloud Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/)
+
+Provide the WalletConnect Cloud Project ID in your `.env` file to use WalletConnect in your project. As shown in the `.env.example` file.
+
+
+```typescript
+NEXT_PUBLIC_WC_PROJECT_ID=YOUR_EXAMPLE_PROJECT_ID;
+```
