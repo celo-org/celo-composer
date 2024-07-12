@@ -74,7 +74,7 @@ Celo Composer is built on Celo to make it simple to build dApps using a variety 
 
 ## Prerequisites
 
-- Node (v20)
+- Node (v20 or higher)
 - Git (v2.38 or higher)
 
 ## How to use Celo Composer

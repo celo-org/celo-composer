@@ -90,6 +90,13 @@ export const displayInstructions = () => {
   console.log(chalk.yellow("   yarn dev\n"));
 
   console.log(
+    "If you prefer to use npm, you can run the following commands instead:\n"
+  );
+
+  console.log(chalk.yellow("   npm install"));
+  console.log(chalk.yellow("   npm run dev\n"));
+
+  console.log(
     chalk.green("Thank you for using Celo Composer!") +
       " If you have any questions or need further assistance, please refer to the README or reach out to our team.\n"
   );
