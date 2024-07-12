@@ -121,7 +121,36 @@ Project Owner name:
 
 - Step 7: Wait for Project Creation: The CLI will now create the project based on your inputs. This may take a few minutes.
 
-**_🔥Voila, you have a dApp ready to go. Voila, you have a dApp ready to go. Start building your dApp on Celo._**
+- Step 8: Follow the instructions to start the project. The same will be displayed on the console after the project is created.
+
+```text
+🚀 Your starter project has been successfully created!
+
+Before you start the project, please follow these steps:
+
+1. Rename the file:
+   packages/react-app/.env.template
+   to
+   packages/react-app/.env
+
+2. Open the newly renamed .env file and add all the required environment variables.
+
+Once you've done that, you're all set to start your project!
+
+Run the following commands from the packages/react-app folder to start the project:
+
+   yarn install
+   yarn dev
+
+If you prefer npm, you can run:
+
+   npm install
+   npm run dev
+
+Thank you for using Celo Composer! If you have any questions or need further assistance, please refer to the README or reach out to our team.
+```
+
+**_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
 
 ### Getting started
 
