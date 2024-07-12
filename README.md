@@ -1,5 +1,5 @@
 <!-- TITLE -->
-<p align="center"> 
+<p align="center">
   <img width="100px" src="https://github.com/celo-org/celo-composer/blob/main/images/readme/celo_isotype.svg" align="center" alt="Celo" />
  <h2 align="center">Celo Composer</h2>
  <p align="center">Build, deploy, and iterate quickly on decentralized applications using Celo.</p>
@@ -65,11 +65,8 @@ Celo Composer is built on Celo to make it simple to build dApps using a variety 
 - [Solidity](https://docs.soliditylang.org/en/v0.8.19/)
 - [Next.js](https://nextjs.org/)
 - [React.js](https://reactjs.org/)
-- [Material UI](https://mui.com/)
-- [React Native](https://reactnative.dev/)
-- [Flutter](https://docs.flutter.dev/)
-- [React-celo](https://github.com/celo-org/react-celo/)
-- [Rainbowkit-celo](https://github.com/celo-org/rainbowkit-celo)
+- [viem](https://viem.sh/)
+- [Hardhat](https://hardhat.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -77,75 +74,126 @@ Celo Composer is built on Celo to make it simple to build dApps using a variety 
 
 ## Prerequisites
 
-- Node
+- Node (v20 or higher)
 - Git (v2.38 or higher)
 
 ## How to use Celo Composer
 
 The easiest way to start with Celo Composer is using `@celo/celo-composer`. This CLI tool lets you quickly start building dApps on Celo for multiple frameworks, including React (with either react-celo or rainbowkit-celo), React Native (w/o Expo), Flutter, and Angular. To get started, just run the following command, and follow the steps:
 
+- Step 1
+
 ```bash
 npx @celo/celo-composer@latest create
 ```
 
-### Front-end framework
+- Step 2: Provide the Project Name: You will be prompted to enter the name of your project.
 
-![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_1.png?raw=true)
+```text
+What is your project name: 
+```
 
-### Web3 library (for react-app)
+- Step 3: Choose to Use Hardhat: You will be asked if you want to use Hardhat. Select Yes or No.
 
-![Celo Composer select framework](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_2.png?raw=true)
+```text
+Do you want to use Hardhat? (Y/n)
+```
 
-### Smart contract framework
+- Step 4: Choose to Use a Template: You will be asked if you want to use a template. Select `Yes` or `No`.
 
-![Celo Composer tool selection](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_3.png?raw=true)
+```text
+Do you want to use a template?
+```
 
-### Subgraph
+- Step 5: Select a Template: If you chose to use a template, you will be prompted to select a template from the list provided.
 
-![Celo Composer subgraph support](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_4.png?raw=true)
+```text
+- Minipay
+- Valora
+- Social Connect
+```
 
-### Name your dApp
+- Step 6: Provide the Project Owner's Name: You will be asked to enter the project owner's name.
 
-![Celo Composer dApp name](https://github.com/celo-org/celo-composer/blob/main/images/readme/cc_step_5.png?raw=true)
+```text
+Project Owner name:
+```
 
-**_🔥Voila, you have a dApp ready to go. Voila, you have a dApp ready to go. Start building your dApp on Celo._**
+- Step 7: Wait for Project Creation: The CLI will now create the project based on your inputs. This may take a few minutes.
+
+- Step 8: Follow the instructions to start the project. The same will be displayed on the console after the project is created.
+
+```text
+🚀 Your starter project has been successfully created!
+
+Before you start the project, please follow these steps:
+
+1. Rename the file:
+   packages/react-app/.env.template
+   to
+   packages/react-app/.env
+
+2. Open the newly renamed .env file and add all the required environment variables.
+
+Once you've done that, you're all set to start your project!
+
+Run the following commands from the packages/react-app folder to start the project:
+
+   yarn install
+   yarn dev
+
+If you prefer npm, you can run:
+
+   npm install
+   npm run dev
+
+Thank you for using Celo Composer! If you have any questions or need further assistance, please refer to the README or reach out to our team.
+```
+
+**_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
 
 ### Getting started
 
 Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
+
 ## Supported Frameworks
 
-### React
+### React / Nextjs
 
 - Support for Website and Progressive Web Application.
 - Works with all major crypto wallets.
 
-Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/react-app/README.md) to learn more about.
+Check [nextjs docs](https://nextjs.org/docs) to learn more about it.
 
-### React Native
+### Hardhat
 
-- Out of the box config, just focus on buidl.
-- Support for Android and IOS.
-- Works with and without [Expo](https://expo.dev/).
-- Working example app included.
+- Robust framework for building and testing smart contracts.
+- Compatible with various Ethereum development tools and plugins.
 
-Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/react-native-app/README.md) to learn more about.
+Check [hardhat docs](https://hardhat.org/hardhat-runner/docs/getting-started) to learn more about it.
 
-### Flutter
+## Supported Templates
 
-- One command to get started - Type `flutter run` to start development in your mobile phone.
-- Works with all major mobile crypto wallets.
-- Support for Android, IOS (Web, Windows, and Linux coming soon).
-- Working example app included.
+### Minipay
 
-Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/flutter-app/README.md) to learn more about.
+- Pre-built template for creating a mini-payment application.
+- Seamless integration with Celo blockchain for handling payments.
 
-### Angular
+Checkout [minipay docs](https://docs.celo.org/developer/build-on-minipay/overview) to learn more about it.
 
-- Support for Website and Progressive Web Application.
-- Works with all major crypto wallets.
+### Valora
 
-Check [package readme](https://github.com/celo-org/celo-composer/blob/main/packages/angular-app/README.md) to learn more about.
+- Template designed for Valora wallet integration.
+- Facilitates easy wallet connectivity and transaction management.
+
+Checkout [valora docs](https://docs.valora.xyz/) to learn more about it.
+
+### Social Connect
+
+- Template for building applications with social connectivity features.
+- Supports various social login methods and user interactions.
+
+Checkout [social connect docs](https://github.com/celo-org/social-connect) to learn more about it.
 
 <!-- USAGE EXAMPLES -->
 
