@@ -8,6 +8,33 @@
 
 3. For verification you will need [Celoscan API Key](https://celoscan.io/myapikey) `CELOSCAN_API_KEY` set in `.env`.
 
+4. Compile the contract 
+
+```bash
+npx hardhat compile
+```
+
+5. Deploy the contract
+
+```bash
+npx hardhat ignition deploy ./ignition/modules/Lock.js --network <network-name>
+```
+
+On Alfajores
+
+```bash
+npx hardhat ignition deploy ./ignition/modules/Lock.js --network alfajores
+```
+
+
+On Celo Mainnet
+
+```bash
+npx hardhat ignition deploy ./ignition/modules/Lock.js --network celo
+```
+
+6. Verify the contract
+
 For Alfajores (Testnet) Verification
 
 ```bash
