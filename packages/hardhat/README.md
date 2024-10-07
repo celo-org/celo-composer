@@ -4,11 +4,11 @@
 
 1. Create a copy of `.env.example` and rename it to `.env`.
 
-2. For Deploying you will need `PRIVATE_KEY` set in `.env`.
+   1. For the **smart contract deployment** you will need the `PRIVATE_KEY` set in `.env`.
 
-3. For verification you will need [Celoscan API Key](https://celoscan.io/myapikey) `CELOSCAN_API_KEY` set in `.env`.
+   2. For the **smart contract verification** you will need a [Celoscan API Key](https://celoscan.io/myapikey) `CELOSCAN_API_KEY` set in `.env`.
 
-4. Compile the contract 
+2. Compile the contract 
 
 ```bash
 npx hardhat compile
@@ -41,7 +41,7 @@ For Alfajores (Testnet) Verification
 npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network alfajores
 ```
 
-For Mainnet Verification
+For Celo Mainnet Verification
 
 ```bash
 npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network celo
