@@ -4,19 +4,40 @@ Celo Composer support React boilerplate template with TailwindCSS. This is a sta
 
 ## Setup & Installation
 
+
+### Set environment variables
+
+Create a copy of `.env.example` and rename it to `.env`.
+
+#### Add Wallet Connect ID
+
+You will need a Wallet Connect ID to run the project. You can create one here: https://cloud.walletconnect.com/sign-in
+
+Add the Wallet Connect ID in the `.env` file. 
+
+### Install dependencies
+
+Install all the required dependencies to run the dApp.
+
+Using **yarn**
+
 ```bash
 yarn
 ```
 
-Run `yarn` or `npm install` to install all the required dependencies to run the dApp.
+or using **npm**
 
-> React + Tailwind CSS Template does not have any dependency on hardhat and truffle.
-> This starterkit does not include connection of Hardhat/Truffle with ReactJS. It's up to the user to integrate smart contract with ReactJS. This gives user more flexibily over the dApp.
+```bash
+npm i
+```
+
+> React + Tailwind CSS Template does not have any dependency on hardhat.
+> This starterkit does not include connection of Hardhat/Truffle with ReactJS. It's up to the user to integrate smart contract with ReactJS. This gives user more flexibility over the dApp.
 
 -   To start the dApp, run the following command.
 
 ```bash
-yarn react-dev
+yarn dev
 ```
 
 ## Dependencies
