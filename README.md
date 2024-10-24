@@ -195,6 +195,10 @@ Checkout [valora docs](https://docs.valora.xyz/) to learn more about it.
 
 Checkout [social connect docs](https://github.com/celo-org/social-connect) to learn more about it.
 
+## UI Components
+
+To learn how to add UI components using ShadCN in this project, refer to the [UI Components Guide](./UI_COMPONENTS.md).
+
 <!-- USAGE EXAMPLES -->
 
 ## 🔭 Learning Solidity

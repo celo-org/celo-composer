@@ -97,6 +97,17 @@ export const displayInstructions = () => {
   console.log(chalk.yellow("   npm run dev\n"));
 
   console.log(
+    chalk.green(
+      "For adding UI components using ShadCN, please refer to the following guide:"
+    )
+  );
+  console.log(
+    chalk.blue(
+      "   https://github.com/celo-org/celo-composer/blob/main/UI_COMPONENTS.md\n"
+    )
+  );
+
+  console.log(
     chalk.green("Thank you for using Celo Composer!") +
       " If you have any questions or need further assistance, please refer to the README or reach out to our team.\n"
   );
