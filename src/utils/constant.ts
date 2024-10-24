@@ -48,6 +48,10 @@ export const getTemplateUrl = (template: string) => {
       return "https://github.com/celo-org/valora-template.git";
     }
 
+    case "Next.js App Router": {
+      return "https://github.com/Philix27/celo-composer-nextjs-approuter.git";
+    }
+
     default: {
       return "https://github.com/celo-org/minipay-template.git";
     }

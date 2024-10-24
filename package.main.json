@@ -54,7 +54,7 @@
     "celo"
   ],
   "bin": {
-    "celo-local": "./bin/run.js"
+    "celo-composer": "./bin/run.js"
   },
   "engines": {
     "node": ">=18.0.0"
