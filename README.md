@@ -188,12 +188,9 @@ Checkout [minipay docs](https://docs.celo.org/developer/build-on-minipay/overvie
 
 Checkout [valora docs](https://docs.valora.xyz/) to learn more about it.
 
-### Social Connect
+## Continuous Deployment
 
-- Template for building applications with social connectivity features.
-- Supports various social login methods and user interactions.
-
-Checkout [social connect docs](https://github.com/celo-org/social-connect) to learn more about it.
+For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./DEPLOYMENT_GUIDE.md).
 
 <!-- USAGE EXAMPLES -->
 
