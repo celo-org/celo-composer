@@ -190,7 +190,7 @@ Checkout [valora docs](https://docs.valora.xyz/) to learn more about it.
 
 ## Continuous Deployment
 
-For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./DEPLOYMENT_GUIDE.md).
+For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
 
 <!-- USAGE EXAMPLES -->
 
