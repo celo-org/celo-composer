@@ -54,7 +54,9 @@
 
 ## About The Project
 
-Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, examples, and Celo specific functionality to help you get started with your next dApp.
+Celo Composer allows you to quickly build, deploy, and iterate on decentralized applications using Celo. It provides a number of frameworks, templates, deployment and component support, and Celo specific functionality to help you get started with your next dApp. 
+
+It is the perfect lightweight starter-kit for any hackathon and for quickly testing out integrations and deployments on Celo.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

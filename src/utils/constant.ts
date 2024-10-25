@@ -36,9 +36,6 @@ export const getProjectJson = (projectName: string, author: string) => ({
 
 export const getTemplateUrl = (template: string) => {
   switch (template) {
-    case "Social Connect": {
-      return "https://github.com/celo-org/socialconnect-template.git";
-    }
 
     case "Minipay": {
       return "https://github.com/celo-org/minipay-template.git";
@@ -96,7 +93,7 @@ export const displayInstructions = () => {
   );
   console.log(
     chalk.blue(
-      "   https://github.com/celo-org/celo-composer/blob/main/DEPLOYMENT_GUIDE.md\n"
+      "https://github.com/celo-org/celo-composer/blob/main/docs/DEPLOYMENT_GUIDE.md"
     )
   );
 
@@ -107,7 +104,7 @@ export const displayInstructions = () => {
   );
   console.log(
     chalk.blue(
-      "   https://github.com/celo-org/celo-composer/blob/main/UI_COMPONENTS.md\n"
+      "https://github.com/celo-org/celo-composer/blob/main/docs/UI_COMPONENTS.md\n"
     )
   );
 
