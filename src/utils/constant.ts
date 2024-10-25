@@ -36,9 +36,6 @@ export const getProjectJson = (projectName: string, author: string) => ({
 
 export const getTemplateUrl = (template: string) => {
   switch (template) {
-    case "Social Connect": {
-      return "https://github.com/celo-org/socialconnect-template.git";
-    }
 
     case "Minipay": {
       return "https://github.com/celo-org/minipay-template.git";
@@ -96,7 +93,18 @@ export const displayInstructions = () => {
   );
   console.log(
     chalk.blue(
-      "   https://github.com/celo-org/celo-composer/blob/main/DEPLOYMENT_GUIDE.md\n"
+      "https://github.com/celo-org/celo-composer/blob/main/docs/DEPLOYMENT_GUIDE.md"
+    )
+  );
+
+  console.log(
+    chalk.green(
+      "For adding UI components using ShadCN, please refer to the following guide:"
+    )
+  );
+  console.log(
+    chalk.blue(
+      "https://github.com/celo-org/celo-composer/blob/main/docs/UI_COMPONENTS.md\n"
     )
   );
 
