@@ -25,29 +25,30 @@
 
 <!-- TABLE OF CONTENTS -->
 
-<details>
+<div>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
+    <li><a href="#about-the-project">About The Project</a></li>
+      <ol>
         <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+     </ol>
+    <li><a href="#how-to-use-celo-composer">How to use Celo Composer</a></li>
+        <ol>
+          <li><a href="#install-dependencies">Install Dependencies</a></li>
+          <li><a href="#supported-frameworks">Supported Frameworks</a></li>
+          <li><a href="#supported-templates">Supported Templates</a></li>
+          <li><a href="#deploy-with-vercel">Deploy with Vercel</a></li>
+          <li><a href="#add-ui-components">Add UI Components</a></li>
+        </ol>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#support">Support</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
-</details>
+</div>
 
 <!-- ABOUT THE PROJECT -->
 
@@ -152,7 +153,7 @@ Thank you for using Celo Composer! If you have any questions or need further ass
 
 **_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
 
-### Getting started
+### Install dependencies
 
 Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
 
@@ -188,30 +189,14 @@ Checkout [minipay docs](https://docs.celo.org/developer/build-on-minipay/overvie
 
 Checkout [valora docs](https://docs.valora.xyz/) to learn more about it.
 
-## Continuous Deployment
+## Deploy with Vercel
 
-For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
+The Celo Composer is a great tool for hackathons and fast deployments. We created a guide for you, using the Vercel CLI to create a live deployment in minutes. For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
 
-## UI Components
+## Add UI Components
 
-To learn how to add UI components using ShadCN in this project, refer to the [UI Components Guide](./UI_COMPONENTS.md).
+To keep the Celo Composer as lightwieght as possible we didn't add any components but rather a guide on how to add the components you need yourself with a very simple to use components library. To learn how to add UI components using [ShadCN](https://ui.shadcn.com/) in this project, refer to the [UI Components Guide](./UI_COMPONENTS.md).
 
-<!-- USAGE EXAMPLES -->
-
-## 🔭 Learning Solidity
-
-📕 Read the docs: <https://docs.soliditylang.org>
-
-- [Primitive Data Types](https://solidity-by-example.org/primitives/)
-- [Mappings](https://solidity-by-example.org/mapping/)
-- [Structs](https://solidity-by-example.org/structs/)
-- [Modifiers](https://solidity-by-example.org/function-modifier/)
-- [Events](https://solidity-by-example.org/events/)
-- [Inheritance](https://solidity-by-example.org/inheritance/)
-- [Payable](https://solidity-by-example.org/payable/)
-- [Fallback](https://solidity-by-example.org/fallback/)
-
-📧 Learn the [Solidity globals and units](https://solidity.readthedocs.io/en/v0.8.19/units-and-global-variables.html)
 
 ## Support
 
