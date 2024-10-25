@@ -63,10 +63,11 @@ Celo Composer is built on Celo to make it simple to build dApps using a variety 
 
 - [Celo](https://celo.org/)
 - [Solidity](https://docs.soliditylang.org/en/v0.8.19/)
-- [Next.js](https://nextjs.org/)
-- [React.js](https://reactjs.org/)
-- [viem](https://viem.sh/)
 - [Hardhat](https://hardhat.org/)
+- [React.js](https://reactjs.org/)
+- [Next.js](https://nextjs.org/)
+- [viem](https://viem.sh/)
+- [Tailwind](https://tailwindcss.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -110,7 +111,6 @@ Do you want to use a template?
 ```text
 - Minipay
 - Valora
-- Social Connect
 ```
 
 - Step 6: Provide the Project Owner's Name: You will be asked to enter the project owner's name.
