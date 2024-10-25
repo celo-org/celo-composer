@@ -90,11 +90,15 @@ export const displayInstructions = () => {
   console.log(chalk.yellow("   yarn dev\n"));
 
   console.log(
-    "If you prefer to use npm, you can run the following commands instead:\n"
+    chalk.green(
+      "For detailed instructions on deploying the project using Vercel CLI, please refer to the Deployment Guide:"
+    )
   );
-
-  console.log(chalk.yellow("   npm install"));
-  console.log(chalk.yellow("   npm run dev\n"));
+  console.log(
+    chalk.blue(
+      "   https://github.com/celo-org/celo-composer/blob/main/DEPLOYMENT_GUIDE.md\n"
+    )
+  );
 
   console.log(
     chalk.green(
