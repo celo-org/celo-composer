@@ -137,11 +137,15 @@ Project Owner name:
 
 Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
 
+```bash
    yarn
+```
 
 If you prefer npm, you can run:
 
+```bash
    npm install
+```
 
 ## Deploy a Smart Contract
 
@@ -181,7 +185,6 @@ If you prefer npm, you can run:
    npm run dev
 
 Thank you for using Celo Composer! If you have any questions or need further assistance, please refer to the README or reach out to our team.
-```
 
 **_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
 
