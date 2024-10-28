@@ -178,11 +178,15 @@ Once you've done that, you're all set to start your project!
 
 Run the following commands from the `packages/react-app` folder to start the project:
 
+```bash
    yarn dev
+```
 
 If you prefer npm, you can run:
 
+```bash
    npm run dev
+```
 
 Thank you for using Celo Composer! If you have any questions or need further assistance, please refer to the README or reach out to our team.
 
