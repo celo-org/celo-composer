@@ -158,7 +158,7 @@ For quick development follow these three steps:
 3. Run the following commands from the `packages/hardhat` folder to deploy your smart contract to the Celo Testnet Alfajores:
 
 ```bash
-npx hardhat ignition deploy ./ignition/modules/Lock.js --network alfajores
+npx hardhat ignition deploy ./ignition/modules/Lock.ts --network alfajores
 ```
 
 ## Deploy your Dapp Locally
