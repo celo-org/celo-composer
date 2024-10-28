@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/celo-org/celo-composer.git"
   },
+  "private": true,
   "author": "celo",
   "license": "MIT",
   "bugs": {
