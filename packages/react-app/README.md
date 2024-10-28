@@ -11,9 +11,14 @@ Create a copy of `.env.example` and rename it to `.env`.
 
 #### Add Wallet Connect ID
 
-You will need a Wallet Connect ID to run the project. You can create one here: https://cloud.walletconnect.com/sign-in
+Create a WalletConnect Cloud Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/)
 
-Add the Wallet Connect ID in the `.env` file. 
+Provide the WalletConnect Cloud Project ID in your `.env` file to use WalletConnect in your project. As shown in the `.env.example` file.
+
+```typescript
+NEXT_PUBLIC_WC_PROJECT_ID=YOUR_EXAMPLE_PROJECT_ID;
+```
+
 
 ### Install dependencies
 
@@ -46,23 +51,12 @@ yarn dev
 
 - [Next.js](https://nextjs.org/) app framework
 - [TailwindCSS](https://tailwindcss.com/) for UI
-- [rainbowkit-celo](https://www.npmjs.com/package/@celo/rainbowkit-celo), a plugin to help rainbowkit developers support the CELO protocol faster.
 
 ## Architecture
 
-- `/pages` includes the main application components (specifically `index.tsx` and `_app.tsx`)
-  - `_app.tsx` includes configuration
-  - `index.tsx` is the main page of the application
-- `/components` includes components that are rendered in `index.tsx`
+- `/pages` includes the main application components (specifically `layout.tsx` and `page.tsx`)
+  - `layout.tsx` includes configuration
+  - `page.tsx` is the main page of the application
+- `/components` includes components that are rendered in `page.tsx`
 - `/public` includes static files
 
-## Environment Variables
-
-Create a WalletConnect Cloud Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/)
-
-Provide the WalletConnect Cloud Project ID in your `.env` file to use WalletConnect in your project. As shown in the `.env.example` file.
-
-
-```typescript
-NEXT_PUBLIC_WC_PROJECT_ID=YOUR_EXAMPLE_PROJECT_ID;
-```
