@@ -36,9 +36,6 @@ export const getProjectJson = (projectName: string, author: string) => ({
 
 export const getTemplateUrl = (template: string) => {
   switch (template) {
-    case "Social Connect": {
-      return "https://github.com/celo-org/socialconnect-template.git";
-    }
 
     case "Minipay": {
       return "https://github.com/celo-org/minipay-template.git";
@@ -90,11 +87,26 @@ export const displayInstructions = () => {
   console.log(chalk.yellow("   yarn dev\n"));
 
   console.log(
-    "If you prefer to use npm, you can run the following commands instead:\n"
+    chalk.green(
+      "For detailed instructions on deploying the project using Vercel CLI, please refer to the Deployment Guide:"
+    )
+  );
+  console.log(
+    chalk.blue(
+      "https://github.com/celo-org/celo-composer/blob/main/docs/DEPLOYMENT_GUIDE.md"
+    )
   );
 
-  console.log(chalk.yellow("   npm install"));
-  console.log(chalk.yellow("   npm run dev\n"));
+  console.log(
+    chalk.green(
+      "For adding UI components using ShadCN, please refer to the following guide:"
+    )
+  );
+  console.log(
+    chalk.blue(
+      "https://github.com/celo-org/celo-composer/blob/main/docs/UI_COMPONENTS.md\n"
+    )
+  );
 
   console.log(
     chalk.green("Thank you for using Celo Composer!") +
