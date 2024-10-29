@@ -38,8 +38,8 @@
           <li><a href="#install-dependencies">Install Dependencies</a></li>
           <li><a href="#deploy-a-smart-contract">Deploy a Smart Contract</a></li>
           <li><a href="#deploy-your-dapp-locally">Deploy your Dapp Locally</a></li>
-          <li><a href="#deploy-with-vercel">Deploy with Vercel</a></li>
           <li><a href="#add-ui-components">Add UI Components</a></li>
+          <li><a href="#deploy-with-vercel">Deploy with Vercel</a></li>
           <li><a href="#supported-frameworks">Supported Frameworks</a></li>
           <li><a href="#supported-templates">Supported Templates</a></li>
         </ol>
@@ -135,7 +135,7 @@ Project Owner name:
 ## Install Dependencies
 
 
-Once your custom dApp has been created, just install dependencies, either with `yarn` or `npm i`, and run the respective script from the `package.json` file.
+Once your custom dApp has been created, just install dependencies, either with yarn:
 
 ```bash
    yarn
@@ -149,11 +149,11 @@ If you prefer npm, you can run:
 
 ## Deploy a Smart Contract
 
-Find the detailed instructions on how to run your smart contract in the [`hardhat` README.md](./packages/hardhat/README.md).
+Find the detailed instructions on how to run your smart contract in [packages/hardhat/README.md](./packages/hardhat/README.md).
 
 For quick development follow these three steps:
 
-1. Add your `PRIVATE_KEY` into the `.env`.
+1. Change `packages/hardhat/env.template` to `packages/hardhat/env` and add your `PRIVATE_KEY` into the `.env` file.
 2. Make sure your wallet is funded when deploying to testnet or mainnet. You can get test tokens for deploying it on Alfajores from the [Celo Faucet](https://faucet.celo.org/alfajores).
 3. Run the following commands from the `packages/hardhat` folder to deploy your smart contract to the Celo Testnet Alfajores:
 
@@ -192,13 +192,14 @@ Thank you for using Celo Composer! If you have any questions or need further ass
 
 **_🔥Voila, you have a dApp ready to go. Start building your dApp on Celo._**
 
-## Deploy with Vercel
-
-The Celo Composer is a great tool for hackathons and fast deployments. We created a guide for you, using the Vercel CLI to create a live deployment in minutes. For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
 
 ## Add UI Components
 
-To keep the Celo Composer as lightwieght as possible we didn't add any components but rather a guide on how to add the components you need yourself with a very simple to use components library. To learn how to add UI components using [ShadCN](https://ui.shadcn.com/) in this project, refer to the [UI Components Guide](./UI_COMPONENTS.md).
+To keep the Celo Composer as lightwieght as possible we didn't add any components but rather a guide on how to add the components you need yourself with a very simple to use components library. To learn how to add UI components using [ShadCN](https://ui.shadcn.com/) in this project, refer to the [UI Components Guide](./docs/UI_COMPONENTS.md).
+
+## Deploy with Vercel
+
+The Celo Composer is a great tool for hackathons and fast deployments. We created a guide for you, using the Vercel CLI to create a live deployment in minutes. For detailed instructions on deploying the Next.js app using Vercel CLI, refer to the [Deployment Guide](./docs/DEPLOYMENT_GUIDE.md).
 
 
 ## Supported Frameworks
