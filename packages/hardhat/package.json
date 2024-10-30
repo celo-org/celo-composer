@@ -1,5 +1,7 @@
 {
   "name": "hardhat-project",
+  "license": "MIT",
+  "version": "1.0.0",
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
     "@nomicfoundation/hardhat-ethers": "^3.0.0",
@@ -14,6 +16,7 @@
     "@typechain/hardhat": "^9.1.0",
     "@types/chai": "^4.3.16",
     "@types/mocha": "^10.0.7",
+    "chai": "^4.2.0",
     "chain": "^0.4.0",
     "hardhat": "^2.22.15",
     "hardhat-gas-reporter": "^1.0.8",
