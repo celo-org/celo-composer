@@ -13,7 +13,7 @@
 npx hardhat compile
 ```
 
-5. Deploy the contract
+3. Deploy the contract
 
 Make sure your wallet is funded when deploying to testnet or mainnet. You can get test tokens for deploying it on Alfajores from the [Celo Faucet](https://faucet.celo.org/alfajores).
 
@@ -34,18 +34,24 @@ On Celo Mainnet
 npx hardhat ignition deploy ./ignition/modules/Lock.ts --network celo
 ```
 
-1. Verify the contract
+4. Verify the contract
 
 For Alfajores (Testnet) Verification
 
 ```bash
-npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network alfajores
+npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network alfajores
+```
+
+For the Lock.sol contract that could look like this:
+
+```bash
+npx hardhat verify 0x756Af13eafF4Ef0D9e294222F9A922226567C39e 1893456000  --network alfajores
 ```
 
 For Celo Mainnet Verification
 
 ```bash
-npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network celo
+npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network celo
 ```
 
 Check the file `hardhat.config.js` for Celo specific hardhat configuration.
