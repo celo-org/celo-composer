@@ -6,6 +6,16 @@ import { HardhatUserConfig } from 'hardhat/config';
 dotEnvConfig();
 
 const config: HardhatUserConfig = {
+  networks: {
+    alfajores: {
+      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
+      url: 'https://alfajores-forno.celo-testnet.org',
+    },
+    celo: {
+      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
+      url: 'https://forno.celo.org',
+    },
+  },
   etherscan: {
     apiKey: {
       alfajores: process.env.CELOSCAN_API_KEY ?? '',
@@ -30,15 +40,8 @@ const config: HardhatUserConfig = {
       },
     ],
   },
-  networks: {
-    alfajores: {
-      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
-      url: 'https://alfajores-forno.celo-testnet.org',
-    },
-    celo: {
-      accounts: [process.env.PRIVATE_KEY ?? '0x0'],
-      url: 'https://forno.celo.org',
-    },
+  sourcify: {
+    enabled: false,
   },
   solidity: '0.8.24',
 };

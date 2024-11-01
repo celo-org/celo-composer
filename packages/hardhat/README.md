@@ -39,13 +39,13 @@ npx hardhat ignition deploy ./ignition/modules/Lock.ts --network celo
 For Alfajores (Testnet) Verification
 
 ```bash
-npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network alfajores
+npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network alfajores
 ```
 
 For Celo Mainnet Verification
 
 ```bash
-npx hardhat verify [CONTRACT_ADDRESS] [...CONSTRUCTOR_ARGS] --network celo
+npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network celo
 ```
 
 Check the file `hardhat.config.js` for Celo specific hardhat configuration.
