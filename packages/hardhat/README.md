@@ -42,6 +42,12 @@ For Alfajores (Testnet) Verification
 npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network alfajores
 ```
 
+For the Lock.sol contract that could look like this:
+
+```bash
+npx hardhat verify 0x756Af13eafF4Ef0D9e294222F9A922226567C39e 1893456000  --network alfajores
+```
+
 For Celo Mainnet Verification
 
 ```bash
