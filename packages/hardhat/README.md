@@ -13,7 +13,7 @@
 npx hardhat compile
 ```
 
-5. Deploy the contract
+3. Deploy the contract
 
 Make sure your wallet is funded when deploying to testnet or mainnet. You can get test tokens for deploying it on Alfajores from the [Celo Faucet](https://faucet.celo.org/alfajores).
 
@@ -34,7 +34,7 @@ On Celo Mainnet
 npx hardhat ignition deploy ./ignition/modules/Lock.ts --network celo
 ```
 
-1. Verify the contract
+4. Verify the contract
 
 For Alfajores (Testnet) Verification
 
