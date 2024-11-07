@@ -55,3 +55,17 @@ npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network celo
 ```
 
 Check the file `hardhat.config.js` for Celo specific hardhat configuration.
+
+5. ABI Synchronization
+The project includes automatic ABI synchronization with your React frontend. ABIs are synced to `../react-app/src/abis/` during compilation.
+
+**Usage**
+- ABIs automatically sync on every `npx hardhat compile`
+- To sync ABIs manually without compilation:
+```bash
+npm run sync:abis
+```
+
+### Configuration
+- The sync script is made executable automatically during `npm install`
+- To disable automatic syncing, remove the sync-abis.js call from the compile script in package.json
