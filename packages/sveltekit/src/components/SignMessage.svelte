@@ -2,7 +2,7 @@
 <script lang="ts">
 	import { signMessage } from '@wagmi/core';
 	// import { signMessage } from '@wagmi/core/dist/types/exports';
-	import toast from 'svelte-french-toast';
+	import { toast } from 'svelte-sonner';
 	import { wagmiConfig } from '$lib/web3';
 
 	let signature: string | undefined;

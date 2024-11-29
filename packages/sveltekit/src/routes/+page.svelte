@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Toaster } from 'svelte-french-toast';
 	import { Button, Wallet, Network, SignMessage } from 'components';
 	import { account, modal, getBalance, disconnect } from 'lib/web3';
 	import { browser } from '$app/environment';
@@ -59,5 +58,3 @@
 		{/if}
 	</div>
 </div>
-
-<Toaster />

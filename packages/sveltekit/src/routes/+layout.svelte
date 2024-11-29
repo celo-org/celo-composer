@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-
+	import { Toaster } from 'svelte-sonner';
 	import { celoAlfajores, celo, sepolia } from 'viem/chains';
 	import { ethereumClient, publicClient, web3Modal } from '../store';
 	import { Web3Modal } from '@web3modal/html';
@@ -55,3 +55,4 @@
 
 	<slot />
 </div>
+<Toaster position="top-center" />
