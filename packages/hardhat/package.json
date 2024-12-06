@@ -29,12 +29,14 @@
     "dotenv": "^16.4.5"
   },
   "scripts": {
-    "compile": "hardhat compile",
+    "postinstall": "chmod +x sync-abis.js",
+    "compile": "hardhat compile && node sync-abis.js",
     "tsc": "npx tsc -p . && cp typechain/*.d.ts dist/typechain/",
     "build": "yarn compile && yarn tsc",
     "clean": "hardhat clean",
     "run:node": "hardhat node",
     "test": "hardhat test",
-    "prettier": "prettier --write 'contracts/**/*.sol' '**/*.ts'"
+    "prettier": "prettier --write 'contracts/**/*.sol' '**/*.ts'",
+    "sync:abis": "node sync-abis.js"
   }
 }
