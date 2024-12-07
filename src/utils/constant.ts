@@ -36,13 +36,16 @@ export const getProjectJson = (projectName: string, author: string) => ({
 
 export const getTemplateUrl = (template: string) => {
   switch (template) {
-
     case "Minipay": {
       return "https://github.com/celo-org/minipay-template.git";
     }
 
     case "Valora": {
       return "https://github.com/celo-org/valora-template.git";
+    }
+
+    case "Flutter": {
+      return "https://github.com/emee-dev/flutter-template.git";
     }
 
     default: {

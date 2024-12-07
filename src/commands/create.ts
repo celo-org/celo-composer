@@ -21,6 +21,7 @@ import {
 
 const requiredNodeVersion = 20;
 const currentNodeVersion = process.versions.node.split(".")[0];
+const TEMPLATES = ["Minipay", "Valora", "Social Connect", "Flutter"] as const;
 
 if (Number.parseInt(currentNodeVersion, 10) < requiredNodeVersion) {
   throw new Error(
@@ -79,10 +80,13 @@ export default class Create extends Command {
       type: "confirm",
     });
 
-    let template = "";
+    type Template = (typeof TEMPLATES)[number];
+
+    let template = "" as Template;
+
     if (useTemplate) {
       const { templateName } = await inquirer.prompt({
-        choices: ["Minipay", "Valora", "Social Connect"],
+        choices: TEMPLATES,
         default: "Minipay",
         message: "Which template do you want to use?",
         name: "templateName",
@@ -113,7 +117,7 @@ export default class Create extends Command {
 
     const spinner = loading(`Generating custom Celo Composer project...\n`);
     try {
-      if (template === "") {
+      if (template === ("" as string)) {
         await execa(
           "git",
           [
@@ -186,6 +190,8 @@ export default class Create extends Command {
         packageJson.author = ownerName;
         const updatedData = JSON.stringify(packageJson, null, 2);
         await fs.writeFile(packageJsonPath, updatedData, "utf8");
+
+        // TODO check if hardhat was required and if it was not then remove it after git clone
       }
 
       const gitDir = path.join(process.cwd(), projectName, ".git");
