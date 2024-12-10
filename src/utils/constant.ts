@@ -45,7 +45,7 @@ export const getTemplateUrl = (template: string) => {
     }
 
     case "Flutter": {
-      return "https://github.com/emee-dev/flutter-template.git";
+      return "https://github.com/Immadominion/flutter-template.git";
     }
 
     default: {
