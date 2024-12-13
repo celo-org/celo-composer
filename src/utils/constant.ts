@@ -45,7 +45,7 @@ export const getTemplateUrl = (template: string) => {
     }
 
     case "Sveltekit": {
-      return "https://github.com/celo-org/svelte-template";
+      return "https://github.com/celo-org/svelte-template.git";
     }
 
     default: {
