@@ -10,22 +10,14 @@ import { injected } from 'wagmi/connectors';
 
 export default function Header() {
   const [hideConnectBtn, setHideConnectBtn] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const { connect } = useConnect();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted && window?.ethereum?.isMiniPay) {
+    if (window.ethereum && window.ethereum.isMiniPay) {
       setHideConnectBtn(true);
       connect({ connector: injected({ target: 'metaMask' }) });
     }
-  }, [mounted, connect]);
-
-  // Prevent hydration errors by not rendering anything until mounted
-  if (!mounted) return null;
+  }, []);
 
   return (
     <Disclosure as="nav" className="bg-prosperity border-b border-black">
@@ -64,7 +56,7 @@ export default function Header() {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {!hideConnectBtn && mounted && (
+                {!hideConnectBtn && (
                   <ConnectButton
                     showBalance={{
                       smallScreen: true,
@@ -85,6 +77,7 @@ export default function Header() {
               >
                 Home
               </Disclosure.Button>
+              {/* Add here your custom menu elements */}
             </div>
           </Disclosure.Panel>
         </>
