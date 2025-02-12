@@ -35,7 +35,8 @@
   },
   "resolutions": {
     "wagmi": "^2.5.7",
-    "viem": "^2.7.12"
+    "viem": "^2.7.12",
+    "bufferutil": "^4.0.8"
   },
   "browser": {
     "net": false
