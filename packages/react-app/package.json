@@ -1,5 +1,5 @@
 {
-  "name": "@examples/react-app",
+  "name": "@test-cc-feb/react-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,31 +11,33 @@
   "dependencies": {
     "@headlessui/react": "^2.1.10",
     "@heroicons/react": "^2.1.5",
-    "@rainbow-me/rainbowkit": "^2.2.0",
-    "@tanstack/react-query": "^5.59.16",
-    "@wagmi/connectors": "5.3.3",
+    "@rainbow-me/rainbowkit": "^2.0.0",
+    "@tanstack/react-query": "^5.17.19",
     "encoding": "^0.1.13",
-    "ethers": "^6.13.4",
-    "next": "^15.0.1",
-    "pino-pretty": "^11.3.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "viem": "2.21.34",
-    "wagmi": "2.12.25"
+    "next": "^15.1.7",
+    "pino-pretty": "^13.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "viem": "^2.7.12",
+    "wagmi": "^2.5.7",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@types/node": "^22.7.9",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.13.0",
-    "eslint-config-next": "^15.0.1",
+    "eslint-config-next": "^15.1.7",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3"
+    "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "wagmi": "^2.5.7",
+    "viem": "^2.7.12"
   },
   "browser": {
     "net": false
-  },
-  "author": "Viral sangani"
+  }
 }
