@@ -18,8 +18,8 @@
     "pino-pretty": "^13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "^2.7.12",
-    "wagmi": "^2.5.7",
+    "viem": "^2.7.15",
+    "wagmi": "^2.5.8",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -34,11 +34,17 @@
     "typescript": "^5.3.3"
   },
   "resolutions": {
-    "wagmi": "^2.5.7",
-    "viem": "^2.7.12",
-    "bufferutil": "^4.0.8"
+    "wagmi": "^2.5.8",
+    "viem": "^2.7.15",
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.3",
+    "@walletconnect/universal-provider": "^2.11.0",
+    "@walletconnect/ethereum-provider": "^2.11.0"
   },
   "browser": {
     "net": false
+  },
+  "overrides": {
+    "bufferutil": "^4.0.8"
   }
 }
