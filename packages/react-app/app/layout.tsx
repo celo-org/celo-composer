@@ -1,6 +1,4 @@
-import '@/styles/globals.css';
-
-import { AppProvider } from '@/providers/AppProvider';
+import '../styles/globals.css';
 
 export default function RootLayout({
   children,
@@ -10,7 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppProvider>{children}</AppProvider>
+        {children}
       </body>
     </html>
   );
