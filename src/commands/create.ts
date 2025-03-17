@@ -163,10 +163,11 @@ export default class Create extends Command {
           for (const key of Object.keys(projectPackage.scripts)) {
             projectPackageJson.scripts[
               `${packageNameMap[pkg]}:${key}`
-            ] = `yarn workspace @${projectName}/${pkg} ${key}`;
+            ] = `cd packages/${pkg}; yarn ${key}`;
           }
         }
 
+        delete projectPackageJson.workspaces;
         const packageJsonContent = JSON.stringify(projectPackageJson, null, 2);
         const packageJsonPath = path.join(projectName, "package.json");
         await fs.writeFile(packageJsonPath, packageJsonContent, "utf8");
