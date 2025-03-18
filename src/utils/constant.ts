@@ -29,6 +29,12 @@ export const getProjectJson = (projectName: string, author: string) => ({
     type: "git",
     url: "git+https://github.com/celo-org/celo-composer.git",
   },
+  resolutions: {
+    "@wagmi/connectors": "5.7.7",
+    "@wagmi/core": "2.16.7",
+    "viem": "2.23.2",
+    "wagmi": "2.14.11",
+  },
   scripts: {},
   version: "1.0.0",
   workspaces: ["packages/*"],
@@ -36,7 +42,6 @@ export const getProjectJson = (projectName: string, author: string) => ({
 
 export const getTemplateUrl = (template: string) => {
   switch (template) {
-
     case "Minipay": {
       return "https://github.com/celo-org/minipay-template.git";
     }
