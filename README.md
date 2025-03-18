@@ -5,7 +5,7 @@
  <p align="center">Build, deploy, and iterate quickly on decentralized applications using Celo.</p>
 </p>
   <p align="center">
-    <a href="[https://github.com/celo-org/celo-composer/stargazers">
+    <a href="https://github.com/celo-org/celo-composer/stargazers">
       <img alt="GitHub Contributors" src="https://img.shields.io/github/stars/celo-org/celo-composer?color=FCFF52" />
     </a>
     <a href="https://github.com/celo-org/celo-composer/graphs/contributors">
