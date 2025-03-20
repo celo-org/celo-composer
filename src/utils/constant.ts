@@ -32,6 +32,8 @@ export const getProjectJson = (projectName: string, author: string) => ({
   resolutions: {
     "@wagmi/connectors": "5.7.7",
     "@wagmi/core": "2.16.7",
+    "@walletconnect/utils": "^2.19.1",
+    "elliptic": "6.6.1",
     "viem": "2.23.2",
     "wagmi": "2.14.11",
   },
