@@ -52,6 +52,10 @@ export const getTemplateUrl = (template: string) => {
       return "https://github.com/celo-org/valora-template.git";
     }
 
+    case "Sveltekit": {
+      return "https://github.com/celo-org/svelte-template.git";
+    }
+
     default: {
       return "https://github.com/celo-org/minipay-template.git";
     }
