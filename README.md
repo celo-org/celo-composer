@@ -26,23 +26,28 @@
 ---
 
 ## **Table of Contents**
-1. [About The Project](#about-the-project)
-   - [Built With](#built-with)
-   - [Prerequisites](#prerequisites)
-2. [How to use Celo Composer](#how-to-use-celo-composer)
-   - [Install Dependencies](#install-dependencies)
-   - [Deploy a Smart Contract](#deploy-a-smart-contract)
-   - [Deploy Your Dapp Locally](#deploy-your-dapp-locally)
-   - [Add UI Components](#add-ui-components)
-   - [Deploy with Vercel](#deploy-with-vercel)
-   - [Supported Frameworks](#supported-frameworks)
-   - [Supported Templates](#supported-templates)
-3. [Usage](#usage)
-4. [Support](#support)
-5. [Roadmap](#roadmap)
-6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
+- [**Table of Contents**](#table-of-contents)
+- [**About The Project**](#about-the-project)
+- [**Built With**](#built-with)
+- [**Prerequisites**](#prerequisites)
+- [**How to use Celo Composer**](#how-to-use-celo-composer)
+  - [**Installation Steps**](#installation-steps)
+- [**Install Dependencies**](#install-dependencies)
+- [**Deploy a Smart Contract**](#deploy-a-smart-contract)
+- [**Deploy Your Dapp Locally**](#deploy-your-dapp-locally)
+- [**Add UI Components**](#add-ui-components)
+- [**Deploy with Vercel**](#deploy-with-vercel)
+- [**Supported Frameworks**](#supported-frameworks)
+  - [**React / Next.js**](#react--nextjs)
+  - [**Hardhat**](#hardhat)
+- [**Supported Templates**](#supported-templates)
+  - [**Minipay**](#minipay)
+  - [**Valora**](#valora)
+- [**Support**](#support)
+- [**Roadmap**](#roadmap)
+- [**Contributing**](#contributing)
+- [**License**](#license)
+- [**Contact**](#contact)
 
 ---
 
@@ -122,7 +127,11 @@ npx hardhat ignition deploy ./ignition/modules/Lock.ts --network alfajores
 Before starting your project, follow these steps:
 
 1. Rename `.env.template` to `.env` in `packages/react-app/`.
-2. Add your WalletConnect Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/).
+2. Open the newly renamed .env file and add your [Reown Project ID (used to be called Wallet Connect)](https://cloud.reown.com/).
+
+Once you've done that, you're all set to start your project!
+
+Run the following commands from the `packages/react-app` folder to start the project:
 
 Start the local server:
 
@@ -158,8 +167,9 @@ Deploying with Vercel is quick and easy. Follow our [Deployment Guide](./docs/DE
 ---
 
 ## **Supported Templates**
+
 ### **Minipay**
-- Pre-configured for building a mini-payment dApp on Celo  
+- Pre-configured for building a MiniApp ofr MiniPay on Celo  
 📖 [Minipay Docs](https://docs.celo.org/developer/build-on-minipay/overview)
 
 ### **Valora**
@@ -171,7 +181,6 @@ Deploying with Vercel is quick and easy. Follow our [Deployment Guide](./docs/DE
 ## **Support**
 Join the Celo community on Discord:  
 📌 [Celo Discord](https://chat.celo.org)  
-💬 [Repo Support Channel](https://discord.com/channels/600834479145353243/941003424298856448)
 
 ---
 
@@ -194,5 +203,3 @@ Distributed under the **MIT License**. See [`LICENSE.txt`](./LICENSE.txt) for de
 ## **Contact**
 - **Twitter:** [@CeloDevs](https://x.com/CeloDevs)
 - **Discord:** [Celo Developer Community](https://discord.com/invite/celo)
-
-<p align="right">(<a href="#top">Back to top</a>)</p>

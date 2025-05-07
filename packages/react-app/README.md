@@ -9,14 +9,14 @@ Celo Composer support React boilerplate template with TailwindCSS. This is a sta
 
 Create a copy of `.env.example` and rename it to `.env`.
 
-#### Add Wallet Connect ID
+#### Add Reown ID
 
-Create a WalletConnect Cloud Project ID from [WalletConnect Cloud](https://cloud.walletconnect.com/)
+Create a [Reown Project ID (used to be called Wallet Connect)](https://cloud.reown.com/).
 
-Provide the WalletConnect Cloud Project ID in your `.env` file to use WalletConnect in your project. As shown in the `.env.example` file.
+Provide the Reown ID in your `.env` file to use it in your project. As shown in the `.env.example` file.
 
 ```typescript
-NEXT_PUBLIC_WC_PROJECT_ID=YOUR_EXAMPLE_PROJECT_ID;
+REOWN_PROJECT_ID=YOUR_EXAMPLE_PROJECT_ID;
 ```
 
 
