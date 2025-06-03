@@ -33,12 +33,6 @@ npx @celo/celo-composer@latest create \
   --no-hardhat \
   -t Valora
 
-# Create a project with Social Connect template
-npx @celo/celo-composer@latest create \
-  --name social-app \
-  --owner "Dev Team" \
-  --hardhat \
-  --template "Social Connect"
 ```
 
 ### Partial inline command (mix of flags and prompts)
@@ -56,13 +50,13 @@ npx @celo/celo-composer@latest create --name my-new-project
 
 ## Available Flags
 
-| Flag           | Short | Description                      | Values                                |
-| -------------- | ----- | -------------------------------- | ------------------------------------- |
-| `--name`       | `-n`  | Name of the project              | Any string (converted to kebab-case)  |
-| `--owner`      | `-o`  | Project owner name               | Any string                            |
-| `--hardhat`    |       | Include Hardhat in the project   | Boolean flag                          |
-| `--no-hardhat` |       | Exclude Hardhat from the project | Boolean flag                          |
-| `--template`   | `-t`  | Template to use                  | `Minipay`, `Valora`, `Social Connect` |
+| Flag           | Short | Description                      | Values                               |
+| -------------- | ----- | -------------------------------- | ------------------------------------ |
+| `--name`       | `-n`  | Name of the project              | Any string (converted to kebab-case) |
+| `--owner`      | `-o`  | Project owner name               | Any string                           |
+| `--hardhat`    |       | Include Hardhat in the project   | Boolean flag                         |
+| `--no-hardhat` |       | Exclude Hardhat from the project | Boolean flag                         |
+| `--template`   | `-t`  | Template to use                  | `Minipay`, `Valora`                  |
 
 ## Test Commands
 

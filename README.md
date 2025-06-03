@@ -119,7 +119,7 @@ npx @celo/celo-composer@latest create --name my-project --hardhat
 - `--owner, -o`: Project owner name
 - `--hardhat`: Include Hardhat in the project
 - `--no-hardhat`: Exclude Hardhat from the project
-- `--template, -t`: Template to use (`Minipay`, `Valora`, or `Social Connect`)
+- `--template, -t`: Template to use (`Minipay`, or `Valora`)
 
 ### **Installation Steps**
 
