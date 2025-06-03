@@ -1,6 +1,6 @@
 /* eslint-disable perfectionist/sort-imports */
 /* eslint-disable no-await-in-loop */
-import { Command } from "@oclif/core";
+import { Command, Flags } from "@oclif/core";
 import chalk from "chalk";
 import { execa } from "execa";
 import fs from "fs-extra";
@@ -33,76 +33,141 @@ export default class Create extends Command {
 
   static override description = "Create a new Celo Project";
 
-  static override examples = ["<%= config.bin %> <%= command.id %>"];
+  static override examples = [
+    "<%= config.bin %> <%= command.id %>",
+    '<%= config.bin %> <%= command.id %> --name my-celo-app --owner "John Doe" --hardhat --template Minipay',
+    '<%= config.bin %> <%= command.id %> -n my-app -o "Jane Smith" --no-hardhat',
+  ];
 
-  static override flags = {};
+  static override flags = {
+    name: Flags.string({
+      char: "n",
+      description: "Name of the project",
+      required: false,
+    }),
+    owner: Flags.string({
+      char: "o",
+      description: "Project owner name",
+      required: false,
+    }),
+    hardhat: Flags.boolean({
+      description: "Include Hardhat in the project",
+      required: false,
+      allowNo: true,
+    }),
+    template: Flags.string({
+      char: "t",
+      description: "Template to use for the project",
+      options: ["Minipay", "Valora"],
+      required: false,
+    }),
+  };
 
   public async run(): Promise<void> {
-    // const { args, flags } = await this.parse(Create);
+    const { flags } = await this.parse(Create);
 
     const packages = ["react-app"];
 
-    const { projectName } = await inquirer.prompt({
-      filter(input: string) {
-        return kebabCase(input.trim()); // Optional: Format the project name to kebab-case
-      },
-      message: "What is your project name: ",
-      name: "projectName",
-      type: "input",
-      validate(input: string) {
-        const valid = /^[\w-]+$/.test(input);
-        if (!valid) {
-          return "Project name must only contain letters, numbers, dashes, and underscores.";
-        }
+    // Project name - use flag or prompt
+    let projectName: string;
+    if (flags.name) {
+      projectName = kebabCase(flags.name.trim());
 
-        if (input.trim() === "") {
-          return "Project name cannot be empty.";
-        }
+      // Validate project name
+      const isValid = /^[\w-]+$/.test(projectName);
+      if (!isValid) {
+        this.error(
+          "Project name must only contain letters, numbers, dashes, and underscores."
+        );
+      }
+      if (projectName.trim() === "") {
+        this.error("Project name cannot be empty.");
+      }
+    } else {
+      const response = await inquirer.prompt({
+        filter(input: string) {
+          return kebabCase(input.trim());
+        },
+        message: "What is your project name: ",
+        name: "projectName",
+        type: "input",
+        validate(input: string) {
+          const valid = /^[\w-]+$/.test(input);
+          if (!valid) {
+            return "Project name must only contain letters, numbers, dashes, and underscores.";
+          }
 
-        return true;
-      },
-    });
+          if (input.trim() === "") {
+            return "Project name cannot be empty.";
+          }
 
-    const { hardhatRequired } = await inquirer.prompt({
-      default: true,
-
-      message: "Do you want to use Hardhat?",
-      name: "hardhatRequired",
-      type: "confirm",
-    });
-    if (hardhatRequired) packages.push("hardhat");
-
-    const { useTemplate } = await inquirer.prompt({
-      default: false,
-      message: "Do you want to use a template?",
-      name: "useTemplate",
-      type: "confirm",
-    });
-
-    let template = "";
-    if (useTemplate) {
-      const { templateName } = await inquirer.prompt({
-        choices: ["Minipay", "Valora", "Social Connect"],
-        default: "Minipay",
-        message: "Which template do you want to use?",
-        name: "templateName",
-        type: "list",
+          return true;
+        },
       });
-      template = templateName;
+      projectName = response.projectName;
     }
 
-    const { ownerName } = await inquirer.prompt({
-      message: "Project Owner name: ",
-      name: "ownerName",
-      type: "input",
-      validate(input: string) {
-        if (input.trim() === "") {
-          return "Owner name cannot be empty.";
-        }
+    // Hardhat choice - use flag or prompt
+    let hardhatRequired: boolean;
+    if (flags.hardhat !== undefined) {
+      hardhatRequired = flags.hardhat;
+    } else {
+      const response = await inquirer.prompt({
+        default: true,
+        message: "Do you want to use Hardhat?",
+        name: "hardhatRequired",
+        type: "confirm",
+      });
+      hardhatRequired = response.hardhatRequired;
+    }
+    if (hardhatRequired) packages.push("hardhat");
 
-        return true;
-      },
-    });
+    // Template choice - use flag or prompt
+    let template = "";
+    if (flags.template) {
+      template = flags.template;
+    } else {
+      const { useTemplate } = await inquirer.prompt({
+        default: false,
+        message: "Do you want to use a template?",
+        name: "useTemplate",
+        type: "confirm",
+      });
+
+      if (useTemplate) {
+        const { templateName } = await inquirer.prompt({
+          choices: ["Minipay", "Valora", "Social Connect"],
+          default: "Minipay",
+          message: "Which template do you want to use?",
+          name: "templateName",
+          type: "list",
+        });
+        template = templateName;
+      }
+    }
+
+    // Owner name - use flag or prompt
+    let ownerName: string;
+    if (flags.owner) {
+      ownerName = flags.owner.trim();
+      if (ownerName === "") {
+        this.error("Owner name cannot be empty.");
+      }
+    } else {
+      const response = await inquirer.prompt({
+        message: "Project Owner name: ",
+        name: "ownerName",
+        type: "input",
+        validate(input: string) {
+          if (input.trim() === "") {
+            return "Owner name cannot be empty.";
+          }
+
+          return true;
+        },
+      });
+      ownerName = response.ownerName;
+    }
 
     const pwd = process.cwd();
     const outputDir = `${pwd}/${projectName}`;
