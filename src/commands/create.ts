@@ -148,7 +148,7 @@ export default class Create extends Command {
 
       if (useTemplate) {
         const { templateName } = await inquirer.prompt({
-          choices: ["Minipay", "Valora", "Social Connect"],
+          choices: ["Minipay", "Valora"],
           default: "Minipay",
           message: "Which template do you want to use?",
           name: "templateName",
