@@ -68,6 +68,14 @@ export default class Create extends Command {
 
     const packages = ["react-app"];
 
+    // Detect if we're in inline mode (any flags provided) vs interactive mode
+    const isInlineMode = !!(
+      flags.name ||
+      flags.owner ||
+      flags.hardhat !== undefined ||
+      flags.template
+    );
+
     // Project name - use flag or prompt
     let projectName: string;
     if (flags.name) {
@@ -122,11 +130,15 @@ export default class Create extends Command {
     }
     if (hardhatRequired) packages.push("hardhat");
 
-    // Template choice - use flag or prompt
+    // Template choice - use flag, skip in inline mode, or prompt in interactive mode
     let template = "";
     if (flags.template) {
       template = flags.template;
+    } else if (isInlineMode) {
+      // In inline mode, if no template is specified, default to no template
+      template = "";
     } else {
+      // Only prompt for template in interactive mode
       const { useTemplate } = await inquirer.prompt({
         default: false,
         message: "Do you want to use a template?",
