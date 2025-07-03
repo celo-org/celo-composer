@@ -52,6 +52,10 @@ export const getTemplateUrl = (template: string) => {
       return "https://github.com/celo-org/valora-template.git";
     }
 
+    case "Farcaster": {
+      return "https://github.com/celo-org/farcaster-template.git";
+    }
+
     default: {
       return "https://github.com/celo-org/minipay-template.git";
     }
@@ -121,4 +125,77 @@ export const displayInstructions = () => {
   );
 
   console.log(chalk.blue.bold("Happy coding! 🎉\n"));
+};
+
+export const displayFarcasterInstructions = () => {
+  console.log(
+    chalk.green.bold(
+      "\n🚀 Your Farcaster Frame project has been successfully created!\n"
+    )
+  );
+
+  console.log(
+    chalk.bold("Before you start the project, please follow these steps:\n")
+  );
+
+  console.log(chalk.cyan("1.") + " Rename the file:");
+  console.log(chalk.yellow("   packages/react-app/.env.template"));
+  console.log("   to");
+  console.log(chalk.yellow("   packages/react-app/.env\n"));
+
+  console.log(
+    chalk.cyan("2.") +
+      " Open the newly renamed " +
+      chalk.yellow(".env") +
+      " file and add your environment variables:"
+  );
+  console.log(
+    chalk.yellow("   NEXT_PUBLIC_WC_PROJECT_ID=your_walletconnect_project_id")
+  );
+  console.log(chalk.yellow("   NEXT_PUBLIC_BASE_URL=http://localhost:3000"));
+  console.log(chalk.yellow("   NEXT_PUBLIC_CELO_NETWORK=alfajores\n"));
+
+  console.log(
+    chalk.cyan("3.") +
+      " Get your WalletConnect Cloud Project ID from " +
+      chalk.blue("https://cloud.walletconnect.com\n")
+  );
+
+  console.log(
+    chalk.cyan("4.") + " Update your Farcaster Frame configuration in:"
+  );
+  console.log(chalk.yellow("   packages/react-app/public/.well-known/\n"));
+
+  console.log(
+    chalk.bold("Once you've done that, you're all set to start your project!\n")
+  );
+
+  console.log(
+    chalk.green.bold(
+      "Run the following commands from the packages/react-app folder to start the project:\n"
+    )
+  );
+  console.log(chalk.yellow("   yarn install"));
+  console.log(chalk.yellow("   yarn dev\n"));
+
+  console.log(
+    chalk.green(
+      "For deploying your Farcaster Frame, please refer to the Deployment Guide:"
+    )
+  );
+  console.log(
+    chalk.blue(
+      "https://github.com/celo-org/celo-composer/blob/main/docs/DEPLOYMENT_GUIDE.md"
+    )
+  );
+
+  console.log(chalk.green("For Frame development and testing, visit:"));
+  console.log(chalk.blue("https://warpcast.com/~/developers/frames\n"));
+
+  console.log(
+    chalk.green("Thank you for using Celo Composer!") +
+      " If you have any questions or need further assistance, please refer to the README or reach out to our team.\n"
+  );
+
+  console.log(chalk.blue.bold("Happy Frame building! 🎨\n"));
 };

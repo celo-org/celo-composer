@@ -13,6 +13,7 @@ import ora from "ora";
 
 import {
   BASE_URL,
+  displayFarcasterInstructions,
   displayInstructions,
   getProjectJson,
   getTemplateUrl,
@@ -36,6 +37,7 @@ export default class Create extends Command {
   static override examples = [
     "<%= config.bin %> <%= command.id %>",
     '<%= config.bin %> <%= command.id %> --name my-celo-app --owner "John Doe" --hardhat --template Minipay',
+    '<%= config.bin %> <%= command.id %> --name my-farcaster-app --owner "Jane Smith" --hardhat --template Farcaster',
     '<%= config.bin %> <%= command.id %> -n my-app -o "Jane Smith" --no-hardhat',
   ];
 
@@ -58,7 +60,7 @@ export default class Create extends Command {
     template: Flags.string({
       char: "t",
       description: "Template to use for the project",
-      options: ["Minipay", "Valora"],
+      options: ["Minipay", "Valora", "Farcaster"],
       required: false,
     }),
   };
@@ -148,7 +150,7 @@ export default class Create extends Command {
 
       if (useTemplate) {
         const { templateName } = await inquirer.prompt({
-          choices: ["Minipay", "Valora"],
+          choices: ["Minipay", "Valora", "Farcaster"],
           default: "Minipay",
           message: "Which template do you want to use?",
           name: "templateName",
@@ -283,7 +285,13 @@ export default class Create extends Command {
         symbol: emoji.get("100"),
         text: chalk.green(" Done!"),
       });
-      displayInstructions();
+
+      // Display template-specific instructions
+      if (template === "Farcaster") {
+        displayFarcasterInstructions();
+      } else {
+        displayInstructions();
+      }
     } catch (error: unknown) {
       console.error(error);
       this.log("Error generating project");
