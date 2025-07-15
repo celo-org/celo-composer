@@ -37,6 +37,7 @@ export default class Create extends Command {
     "<%= config.bin %> <%= command.id %>",
     '<%= config.bin %> <%= command.id %> --name my-celo-app --owner "John Doe" --hardhat --template Minipay',
     '<%= config.bin %> <%= command.id %> -n my-app -o "Jane Smith" --no-hardhat',
+    '<%= config.bin %> <%= command.id %> --name my-ai-agent --owner "Developer" --template "AI Agent"',
   ];
 
   static override flags = {
@@ -58,7 +59,7 @@ export default class Create extends Command {
     template: Flags.string({
       char: "t",
       description: "Template to use for the project",
-      options: ["Minipay", "Valora"],
+      options: ["Minipay", "Valora", "AI Agent"],
       required: false,
     }),
   };
@@ -148,7 +149,7 @@ export default class Create extends Command {
 
       if (useTemplate) {
         const { templateName } = await inquirer.prompt({
-          choices: ["Minipay", "Valora"],
+          choices: ["Minipay", "Valora", "AI Agent"],
           default: "Minipay",
           message: "Which template do you want to use?",
           name: "templateName",
