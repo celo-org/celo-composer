@@ -1,0 +1,39 @@
+"use client"
+
+import { useState, useEffect } from 'react'
+import '@rainbow-me/rainbowkit/styles.css'
+import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { WagmiProvider } from 'wagmi'
+import { celo, celoAlfajores } from 'wagmi/chains'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+
+const config = getDefaultConfig({
+  appName: '{{projectName}}',
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
+  chains: [celo, celoAlfajores],
+  ssr: true,
+})
+
+const queryClient = new QueryClient()
+
+export function WalletProvider({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return <>{children}</>
+  }
+
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}

@@ -8,6 +8,7 @@ import { validateProjectName } from '../utils/validation';
 
 interface CreateOptions {
   description?: string;
+  wallet?: string;
   skipInstall?: boolean;
   yes?: boolean;
 }
@@ -20,6 +21,7 @@ export async function createCommand(projectName?: string, options: CreateOptions
     const answers = options.yes ? {
       projectName: projectName || 'my-celo-app',
       description: options.description || 'A new Celo blockchain project',
+      walletProvider: options.wallet || 'rainbowkit',
       installDependencies: options.skipInstall ? false : true,
     } : await inquirer.prompt([
       {
@@ -38,6 +40,17 @@ export async function createCommand(projectName?: string, options: CreateOptions
         when: !options.description,
       },
       {
+        type: 'list',
+        name: 'walletProvider',
+        message: 'Which wallet provider would you like to use?',
+        choices: [
+          { name: 'RainbowKit (Recommended)', value: 'rainbowkit' },
+          { name: 'None (Skip wallet integration)', value: 'none' },
+        ],
+        default: 'rainbowkit',
+        when: !options.wallet,
+      },
+      {
         type: 'confirm',
         name: 'installDependencies',
         message: 'Install dependencies?',
@@ -48,6 +61,7 @@ export async function createCommand(projectName?: string, options: CreateOptions
 
     const finalProjectName = projectName || answers.projectName;
     const finalDescription = options.description || answers.description;
+    const finalWalletProvider = options.wallet || answers.walletProvider;
     const shouldInstall = options.skipInstall ? false : (answers.installDependencies ?? true);
 
     // Validate project name
@@ -72,6 +86,7 @@ export async function createCommand(projectName?: string, options: CreateOptions
       await generateProject({
         projectName: finalProjectName,
         description: finalDescription,
+        walletProvider: finalWalletProvider,
         projectPath,
         installDependencies: shouldInstall,
       });

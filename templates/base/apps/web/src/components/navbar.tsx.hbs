@@ -11,11 +11,12 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+{{#if (eq walletProvider "rainbowkit")}}
+import { WalletConnectButton } from "@/components/connect-button"
+{{/if}}
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Documentation", href: "/docs" },
 ]
 
 export function Navbar() {
@@ -46,7 +47,13 @@ export function Navbar() {
                     {link.name}
                   </Link>
                 ))}
-                <Button className="mt-2">Connect Wallet</Button>
+                <div className="mt-4">
+                  {{#if (eq walletProvider "rainbowkit")}}
+                  <WalletConnectButton />
+                  {{else}}
+                  <Button className="w-full">Connect Wallet</Button>
+                  {{/if}}
+                </div>
               </nav>
             </SheetContent>
           </Sheet>
@@ -80,23 +87,11 @@ export function Navbar() {
               {link.name}
             </Link>
           ))}
+          {{#if (eq walletProvider "rainbowkit")}}
+          <WalletConnectButton />
+          {{else}}
           <Button variant="outline">Connect Wallet</Button>
-        </nav>
-        <nav className="flex flex-col gap-4 mt-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-base font-medium transition-colors hover:text-primary ${
-                pathname === link.href
-                  ? "text-foreground"
-                  : "text-foreground/60"
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Button className="mt-2">Connect Wallet</Button>
+          {{/if}}
         </nav>
       </div>
     </header>

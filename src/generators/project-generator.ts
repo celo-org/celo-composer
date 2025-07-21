@@ -9,12 +9,13 @@ const execAsync = promisify(exec);
 export interface ProjectConfig {
   projectName: string;
   description: string;
+  walletProvider: string;
   projectPath: string;
   installDependencies: boolean;
 }
 
 export async function generateProject(config: ProjectConfig): Promise<void> {
-  const { projectName, description, projectPath, installDependencies } = config;
+  const { projectName, description, walletProvider, projectPath, installDependencies } = config;
 
   // Use the professional template-driven generator
   const templateGenerator = new TemplateGenerator();
@@ -22,6 +23,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
   const plopConfig: PlopConfig = {
     projectName,
     description,
+    walletProvider,
     projectPath,
     installDependencies,
   };

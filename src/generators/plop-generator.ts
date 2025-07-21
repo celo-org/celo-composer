@@ -6,6 +6,7 @@ import fs from 'fs-extra';
 export interface PlopConfig {
   projectName: string;
   description: string;
+  walletProvider: string;
   projectPath: string;
   installDependencies?: boolean;
 }
@@ -18,7 +19,7 @@ export class TemplateGenerator {
    * Generate a new Celo project using templates
    */
   async generateProject(config: PlopConfig): Promise<void> {
-    const { projectName, description, projectPath } = config;
+    const { projectName, description, walletProvider, projectPath } = config;
 
     try {
       // Ensure the parent directory exists
@@ -38,6 +39,7 @@ export class TemplateGenerator {
       const results = await generator.runActions({
         projectName,
         description,
+        walletProvider,
         destinationPath: projectPath,
       });
 
