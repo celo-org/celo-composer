@@ -9,14 +9,19 @@ import { validateProjectName } from '../utils/validation';
 interface CreateOptions {
   description?: string;
   skipInstall?: boolean;
+  yes?: boolean;
 }
 
 export async function createCommand(projectName?: string, options: CreateOptions = {}): Promise<void> {
   try {
     console.log(chalk.blue.bold('\n🚀 Welcome to Celo Composer CLI!\n'));
 
-    // Get project details through interactive prompts
-    const answers = await inquirer.prompt([
+    // If --yes flag is provided, skip all prompts and use defaults/flags
+    const answers = options.yes ? {
+      projectName: projectName || 'my-celo-app',
+      description: options.description || 'A new Celo blockchain project',
+      installDependencies: options.skipInstall ? false : true,
+    } : await inquirer.prompt([
       {
         type: 'input',
         name: 'projectName',
@@ -39,7 +44,7 @@ export async function createCommand(projectName?: string, options: CreateOptions
         default: true,
         when: !options.skipInstall,
       },
-    ]);
+    ] as any);
 
     const finalProjectName = projectName || answers.projectName;
     const finalDescription = options.description || answers.description;

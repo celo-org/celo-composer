@@ -1,0 +1,90 @@
+"use client"
+
+import Link from "next/link"
+import Image from "next/image"
+import { usePathname } from "next/navigation"
+import { Menu } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Documentation", href: "/docs" },
+]
+
+export function Navbar() {
+  const pathname = usePathname()
+  
+  return (
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image 
+              src="/celo-logo.png" 
+              alt="Celo Logo" 
+              width={32} 
+              height={32} 
+              className="h-8 w-8"
+            />
+            <span className="hidden font-bold sm:inline-block">
+              {{projectName}}
+            </span>
+          </Link>
+        </div>
+        
+        {/* Desktop navigation */}
+        <nav className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === link.href
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Button variant="outline">Connect Wallet</Button>
+        </nav>
+        
+        {/* Mobile navigation */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="md:hidden">
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <nav className="flex flex-col gap-4 mt-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-base font-medium transition-colors hover:text-primary ${
+                    pathname === link.href
+                      ? "text-foreground"
+                      : "text-foreground/60"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <Button className="mt-2">Connect Wallet</Button>
+            </nav>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </header>
+  )
+}

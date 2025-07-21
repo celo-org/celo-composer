@@ -42,6 +42,17 @@ export default function (plop: NodePlopAPI): void {
         },
         verbose: true,
       },
+      // Copy all static assets (images, etc.)
+      {
+        type: 'addMany',
+        destination: '{{destinationPath}}/',
+        base: 'templates/base/',
+        templateFiles: ['templates/base/**/*', '!templates/base/**/*.hbs'],
+        globOptions: {
+          dot: true,
+        },
+        verbose: true,
+      },
     ],
   });
 
