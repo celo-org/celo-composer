@@ -1,4 +1,5 @@
 import { NodePlopAPI } from 'plop';
+import nodePlop from 'node-plop';
 import path from 'path';
 import fs from 'fs-extra';
 
@@ -13,56 +14,47 @@ export interface PlopConfig {
  * Professional template-driven project generator using Plop.js
  */
 export class TemplateGenerator {
-  private plop: NodePlopAPI;
-
-  constructor() {
-    this.plop = this.initializePlop();
-  }
-
   /**
    * Generate a new Celo project using templates
    */
   async generateProject(config: PlopConfig): Promise<void> {
     const { projectName, description, projectPath } = config;
 
-    // Ensure the parent directory exists
-    await fs.ensureDir(path.dirname(projectPath));
+    try {
+      // Ensure the parent directory exists
+      await fs.ensureDir(path.dirname(projectPath));
 
-    // Get the generator and run it
-    const generator = this.plop.getGenerator('celo-project');
-    
-    // Run the generator with the provided configuration
-    const results = await generator.runActions({
-      projectName,
-      description,
-      destinationPath: projectPath,
-    });
+      // Initialize plop asynchronously
+      const plopfilePath = path.join(__dirname, '../../plopfile.ts');
+      const plopInstance = await nodePlop(plopfilePath, {
+        destBasePath: process.cwd(),
+        force: false
+      });
 
-    // Check if generation was successful
-    if (results.failures && results.failures.length > 0) {
-      throw new Error(`Template generation failed: ${results.failures.map(f => f.error).join(', ')}`);
+      // Get the generator asynchronously
+      const generator = plopInstance.getGenerator('celo-project');
+      
+      // Run the generator with the provided configuration
+      const results = await generator.runActions({
+        projectName,
+        description,
+        destinationPath: projectPath,
+      });
+
+      // Check if generation was successful
+      if (results.failures && results.failures.length > 0) {
+        throw new Error(`Template generation failed: ${results.failures.map(f => f.error).join(', ')}`);
+      }
+    } catch (error) {
+      console.error('Error generating project:', error);
+      throw error;
     }
-
-    return;
-  }
-
-  /**
-   * Initialize Plop.js with our configuration
-   */
-  private initializePlop(): NodePlopAPI {
-    // Import plop dynamically to avoid module loading issues
-    const plop = require('plop');
-    
-    // Load the plopfile configuration
-    const plopfilePath = path.join(__dirname, '../../plopfile.ts');
-    const nodePlop = plop(plopfilePath, {
-      destBasePath: process.cwd(),
-    });
-
-    return nodePlop;
   }
 }
 
+/**
+ * Run the Plop generator with the provided configuration
+ */
 export async function runPlopGenerator(config: PlopConfig): Promise<void> {
   const generator = new TemplateGenerator();
   await generator.generateProject(config);

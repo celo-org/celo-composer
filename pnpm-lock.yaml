@@ -20,6 +20,9 @@ importers:
       inquirer:
         specifier: ^9.2.12
         version: 9.3.7
+      node-plop:
+        specifier: ^0.32.0
+        version: 0.32.0
       ora:
         specifier: ^7.0.1
         version: 7.0.1
