@@ -1,0 +1,72 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Welcome to {{projectName}}
+          </h1>
+          <p className="text-xl text-gray-600">
+            {{description}}
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>🚀 Get Started</CardTitle>
+              <CardDescription>
+                Start building your Celo application with this modern stack
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  This project includes:
+                </p>
+                <ul className="text-sm space-y-2">
+                  <li>✅ Next.js 14 with App Router</li>
+                  <li>✅ TypeScript for type safety</li>
+                  <li>✅ Tailwind CSS for styling</li>
+                  <li>✅ shadcn/ui components</li>
+                  <li>✅ Turborepo for monorepo management</li>
+                </ul>
+                <Button className="w-full">
+                  Start Building
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>🌍 Celo Integration</CardTitle>
+              <CardDescription>
+                Ready for Celo blockchain development
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Next steps for Celo integration:
+                </p>
+                <ul className="text-sm space-y-2">
+                  <li>🔗 Add wallet connection</li>
+                  <li>📝 Deploy smart contracts</li>
+                  <li>💰 Integrate with Celo tokens</li>
+                  <li>📱 Build for MiniPay</li>
+                </ul>
+                <Button variant="outline" className="w-full">
+                  Learn More
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </main>
+  );
+}
