@@ -6,15 +6,46 @@ import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { WagmiProvider } from 'wagmi'
 import { celo, celoAlfajores } from 'wagmi/chains'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { http } from 'wagmi'
 
-const config = getDefaultConfig({
-  appName: '{{projectName}}',
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-  chains: [celo, celoAlfajores],
-  ssr: true,
+// Create config with proper SSR handling
+let config: any = null
+
+function getWagmiConfig() {
+  if (!config) {
+    config = getDefaultConfig({
+      appName: '{{projectName}}',
+      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
+      chains: [celo, celoAlfajores],
+      transports: {
+        [celo.id]: http(),
+        [celoAlfajores.id]: http(),
+      },
+      ssr: true,
+    })
+  }
+  return config
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
 })
 
-const queryClient = new QueryClient()
+function WalletProviderInner({ children }: { children: React.ReactNode }) {
+  return (
+    <WagmiProvider config={getWagmiConfig()}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  )
+}
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
@@ -23,17 +54,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     setMounted(true)
   }, [])
 
+  // Show children without wallet functionality during SSR
   if (!mounted) {
     return <>{children}</>
   }
 
-  return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          {children}
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  )
+  return <WalletProviderInner>{children}</WalletProviderInner>
 }

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu } from "lucide-react"
+import { Menu, ExternalLink } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,37 +17,53 @@ import { WalletConnectButton } from "@/components/connect-button"
 
 const navLinks = [
   { name: "Home", href: "/" },
+  { name: "Docs", href: "https://docs.celo.org", external: true },
 ]
 
 export function Navbar() {
   const pathname = usePathname()
   
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          {/* Mobile menu button (hamburger) shown only on small screens */}
+          {/* Mobile menu button */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden mr-1">
+              <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
-              <nav className="flex flex-col gap-4 mt-8">
+            <SheetContent side="left" className="w-80">
+              <div className="flex items-center gap-2 mb-8">
+                <Image 
+                  src="/celo-logo.png" 
+                  alt="Celo Logo" 
+                  width={32}
+                  height={32}
+                  className="h-8 w-auto"
+                />
+                <span className="font-bold text-lg">
+                  {{projectName}}
+                </span>
+              </div>
+              <nav className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-base font-medium transition-colors hover:text-primary ${
-                      pathname === link.href ? "text-foreground" : "text-foreground/60"
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
+                    className={`flex items-center gap-2 text-base font-medium transition-colors hover:text-primary ${
+                      pathname === link.href ? "text-foreground" : "text-foreground/70"
                     }`}
                   >
                     {link.name}
+                    {link.external && <ExternalLink className="h-4 w-4" />}
                   </Link>
                 ))}
-                <div className="mt-4">
+                <div className="mt-6 pt-6 border-t">
                   {{#if (eq walletProvider "rainbowkit")}}
                   <WalletConnectButton />
                   {{else}}
@@ -58,7 +74,8 @@ export function Navbar() {
             </SheetContent>
           </Sheet>
 
-          <Link href="/" className="flex items-center space-x-2">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Image 
               src="/celo-logo.png" 
               alt="Celo Logo" 
@@ -66,32 +83,38 @@ export function Navbar() {
               height={32}
               className="h-8 w-auto"
             />
-            <span className="hidden font-bold sm:inline-block">
+            <span className="hidden font-bold text-xl sm:inline-block">
               {{projectName}}
             </span>
           </Link>
         </div>
         
         {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noopener noreferrer" : undefined}
+              className={`flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-primary ${
                 pathname === link.href
                   ? "text-foreground"
-                  : "text-foreground/60"
+                  : "text-foreground/70"
               }`}
             >
               {link.name}
+              {link.external && <ExternalLink className="h-4 w-4" />}
             </Link>
           ))}
-          {{#if (eq walletProvider "rainbowkit")}}
-          <WalletConnectButton />
-          {{else}}
-          <Button variant="outline">Connect Wallet</Button>
-          {{/if}}
+          
+          <div className="flex items-center gap-3">
+            {{#if (eq walletProvider "rainbowkit")}}
+            <WalletConnectButton />
+            {{else}}
+            <Button variant="outline" size="sm">Connect Wallet</Button>
+            {{/if}}
+          </div>
         </nav>
       </div>
     </header>
