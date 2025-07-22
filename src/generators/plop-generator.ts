@@ -3,10 +3,14 @@ import nodePlop from 'node-plop';
 import path from 'path';
 import fs from 'fs-extra';
 
+// Register TypeScript support for plop
+require('tsx/cjs');
+
 export interface PlopConfig {
   projectName: string;
   description: string;
   walletProvider: string;
+  contractFramework: string;
   projectPath: string;
   installDependencies?: boolean;
 }
@@ -19,14 +23,14 @@ export class TemplateGenerator {
    * Generate a new Celo project using templates
    */
   async generateProject(config: PlopConfig): Promise<void> {
-    const { projectName, description, walletProvider, projectPath } = config;
+    const { projectName, description, walletProvider, contractFramework, projectPath } = config;
 
     try {
       // Ensure the parent directory exists
       await fs.ensureDir(path.dirname(projectPath));
 
       // Initialize plop asynchronously
-      const plopfilePath = path.join(__dirname, '../../plopfile.ts');
+      const plopfilePath = path.join(__dirname, '../../plopfile.js');
       const plopInstance = await nodePlop(plopfilePath, {
         destBasePath: process.cwd(),
         force: false
@@ -40,7 +44,8 @@ export class TemplateGenerator {
         projectName,
         description,
         walletProvider,
-        destinationPath: projectPath,
+        contractFramework,
+        projectPath,
       });
 
       // Check if generation was successful

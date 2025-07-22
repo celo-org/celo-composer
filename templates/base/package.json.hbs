@@ -8,7 +8,12 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
-    "type-check": "turbo type-check"
+    "type-check": "turbo type-check"{{#if (eq contractFramework "hardhat")}},
+    "contracts:compile": "turbo run compile --filter=hardhat",
+    "contracts:test": "turbo run test --filter=hardhat",
+    "contracts:deploy": "turbo run deploy --filter=hardhat",
+    "contracts:deploy:alfajores": "turbo run deploy:alfajores --filter=hardhat",
+    "contracts:deploy:celo": "turbo run deploy:celo --filter=hardhat"{{/if}}
   },
   "devDependencies": {
     "@types/node": "^20.8.0",

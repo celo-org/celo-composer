@@ -22,21 +22,31 @@ A modern Celo blockchain application built with Next.js, TypeScript, and Turbore
 
 This is a monorepo managed by Turborepo with the following structure:
 
-- `apps/web` - Next.js application with embedded UI components and utilities
+- `apps/web` - Next.js application with embedded UI components and utilities{{#if (eq contractFramework "hardhat")}}
+- `apps/hardhat` - Smart contract development environment{{/if}}
 
 ## Available Scripts
 
 - `pnpm dev` - Start development servers
 - `pnpm build` - Build all packages and apps
 - `pnpm lint` - Lint all packages and apps
-- `pnpm type-check` - Run TypeScript type checking
+- `pnpm type-check` - Run TypeScript type checking{{#if (eq contractFramework "hardhat")}}
+
+### Smart Contract Scripts
+
+- `pnpm contracts:compile` - Compile smart contracts
+- `pnpm contracts:test` - Run smart contract tests
+- `pnpm contracts:deploy` - Deploy contracts to local network
+- `pnpm contracts:deploy:alfajores` - Deploy to Celo Alfajores testnet
+- `pnpm contracts:deploy:celo` - Deploy to Celo mainnet{{/if}}
 
 ## Tech Stack
 
 - **Framework**: Next.js 14 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui
+- **UI Components**: shadcn/ui{{#if (eq contractFramework "hardhat")}}
+- **Smart Contracts**: Hardhat with Viem{{/if}}
 - **Monorepo**: Turborepo
 - **Package Manager**: PNPM
 

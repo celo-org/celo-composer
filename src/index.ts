@@ -17,6 +17,7 @@ program
   .argument('[project-name]', 'Name of the project')
   .option('-d, --description <description>', 'Project description')
   .option('-w, --wallet <provider>', 'Wallet provider (rainbowkit)')
+  .option('-c, --contracts <framework>', 'Smart contract framework (hardhat)')
   .option('--skip-install', 'Skip package installation')
   .option('-y, --yes', 'Skip all prompts and use defaults')
   .action(createCommand);

@@ -10,12 +10,13 @@ export interface ProjectConfig {
   projectName: string;
   description: string;
   walletProvider: string;
+  contractFramework: string;
   projectPath: string;
   installDependencies: boolean;
 }
 
 export async function generateProject(config: ProjectConfig): Promise<void> {
-  const { projectName, description, walletProvider, projectPath, installDependencies } = config;
+  const { projectName, description, walletProvider, contractFramework, projectPath, installDependencies } = config;
 
   // Use the professional template-driven generator
   const templateGenerator = new TemplateGenerator();
@@ -24,6 +25,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     projectName,
     description,
     walletProvider,
+    contractFramework,
     projectPath,
     installDependencies,
   };

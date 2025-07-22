@@ -16,6 +16,22 @@
     },
     "clean": {
       "cache": false
-    }
+    }{{#if (eq contractFramework "hardhat")}},
+    "compile": {
+      "dependsOn": ["^compile"],
+      "outputs": ["artifacts/**", "cache/**", "typechain-types/**"]
+    },
+    "test": {
+      "dependsOn": ["compile"]
+    },
+    "deploy": {
+      "dependsOn": ["compile"]
+    },
+    "deploy:alfajores": {
+      "dependsOn": ["compile"]
+    },
+    "deploy:celo": {
+      "dependsOn": ["compile"]
+    }{{/if}}
   }
 }

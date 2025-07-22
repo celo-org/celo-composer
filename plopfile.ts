@@ -66,6 +66,23 @@ export default function (plop: NodePlopAPI): void {
         },
         verbose: true,
       },
+      // Conditionally add Hardhat smart contract development
+      {
+        type: "addMany",
+        destination: "{{destinationPath}}/apps/hardhat/",
+        base: "templates/contracts/hardhat/",
+        templateFiles: "templates/contracts/hardhat/**/*.hbs",
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: any) => {
+          if (data.contractFramework !== "hardhat") {
+            return "Skipping Hardhat - different contract framework selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
     ],
   });
 
