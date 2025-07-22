@@ -30,7 +30,7 @@ export class TemplateGenerator {
       await fs.ensureDir(path.dirname(projectPath));
 
       // Initialize plop asynchronously
-      const plopfilePath = path.join(__dirname, '../../plopfile.js');
+      const plopfilePath = path.join(__dirname, '../plopfile.js');
       const plopInstance = await nodePlop(plopfilePath, {
         destBasePath: process.cwd(),
         force: false

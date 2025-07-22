@@ -1,6 +1,10 @@
-import Link from "next/link" import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card" import { ExternalLink, Zap, Shield,
-Globe } from "lucide-react" export default function Home() { return (
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { ExternalLink, Zap, Shield, Globe } from "lucide-react";
+
+export default function Home() {
+  return (
 <main className="flex-1">
   {/* Hero Section */}
   <section className="relative py-20 lg:py-32">
@@ -59,4 +63,5 @@ Globe } from "lucide-react" export default function Home() { return (
   </section>
 
 </main>
-) }
+  );
+}

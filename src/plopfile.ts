@@ -1,6 +1,6 @@
 import { NodePlopAPI } from "plop";
 
-export default function (plop: NodePlopAPI): void {
+module.exports = function (plop: NodePlopAPI): void {
   // Set the base path for templates
   plop.setDefaultInclude({ generators: true });
 
