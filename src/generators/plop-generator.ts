@@ -2,8 +2,7 @@ import fs from "fs-extra";
 import nodePlop from "node-plop";
 import path from "path";
 
-// Register TypeScript support for plop
-require("tsx/cjs");
+// TypeScript compilation handles TS support - no runtime tsx needed
 
 export interface PlopConfig {
   projectName: string;
