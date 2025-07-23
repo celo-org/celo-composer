@@ -1,4 +1,5 @@
 import { NodePlopAPI } from "plop";
+import path from "path";
 
 module.exports = function (plop: NodePlopAPI): void {
   // Set the base path for templates
@@ -33,9 +34,9 @@ module.exports = function (plop: NodePlopAPI): void {
       // Copy all template files from base template
       {
         type: "addMany",
-        destination: "{{destinationPath}}/",
-        base: "templates/base/",
-        templateFiles: "templates/base/**/*.hbs",
+        destination: "{{projectPath}}/",
+        base: path.join(__dirname, "../templates/base/"),
+        templateFiles: path.join(__dirname, "../templates/base/**/*.hbs"),
         globOptions: {
           dot: true,
         },
@@ -44,9 +45,9 @@ module.exports = function (plop: NodePlopAPI): void {
       // Copy all static assets (images, etc.)
       {
         type: "addMany",
-        destination: "{{destinationPath}}/",
-        base: "templates/base/",
-        templateFiles: ["templates/base/**/*", "!templates/base/**/*.hbs"],
+        destination: "{{projectPath}}/",
+        base: path.join(__dirname, "../templates/base/"),
+        templateFiles: [path.join(__dirname, "../templates/base/**/*"), "!" + path.join(__dirname, "../templates/base/**/*.hbs")],
         globOptions: {
           dot: true,
         },
@@ -55,9 +56,9 @@ module.exports = function (plop: NodePlopAPI): void {
       // Conditionally add RainbowKit wallet components
       {
         type: "addMany",
-        destination: "{{destinationPath}}/apps/web/src/components/",
-        base: "templates/wallets/rainbowkit/",
-        templateFiles: "templates/wallets/rainbowkit/*.tsx.hbs",
+        destination: "{{projectPath}}/apps/web/src/components/",
+        base: path.join(__dirname, "../templates/wallets/rainbowkit/"),
+        templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/*.tsx.hbs"),
         skip: (data: any) => {
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
@@ -69,9 +70,9 @@ module.exports = function (plop: NodePlopAPI): void {
       // Conditionally add Hardhat smart contract development
       {
         type: "addMany",
-        destination: "{{destinationPath}}/apps/hardhat/",
-        base: "templates/contracts/hardhat/",
-        templateFiles: "templates/contracts/hardhat/**/*.hbs",
+        destination: "{{projectPath}}/apps/hardhat/",
+        base: path.join(__dirname, "../templates/contracts/hardhat/"),
+        templateFiles: path.join(__dirname, "../templates/contracts/hardhat/**/*.hbs"),
         globOptions: {
           dot: true,
         },

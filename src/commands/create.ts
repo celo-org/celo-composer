@@ -23,7 +23,7 @@ export async function createCommand(projectName?: string, options: CreateOptions
       projectName: projectName || 'my-celo-app',
       description: options.description || 'A new Celo blockchain project',
       walletProvider: options.wallet || 'rainbowkit',
-      contractFramework: options.contracts || 'hardhat',
+      contractFramework: options.contracts || 'none',
       installDependencies: options.skipInstall ? false : true,
     } : await inquirer.prompt([
       {
