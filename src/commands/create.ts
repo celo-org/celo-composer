@@ -22,66 +22,80 @@ export async function createCommand(
     console.log(chalk.blue.bold("\n🚀 Welcome to Celo Composer CLI!\n"));
 
     // If --yes flag is provided, skip all prompts and use defaults/flags
-    const answers = options.yes
-      ? {
-          projectName: projectName || "my-celo-app",
-          description: options.description || "A new Celo blockchain project",
-          walletProvider: options.walletProvider || "rainbowkit",
-          contractFramework: options.contracts || "none",
-          installDependencies: options.skipInstall ? false : true,
-        }
-      : await inquirer.prompt([
-          {
-            type: "input",
-            name: "projectName",
-            message: "What is your project name?",
-            default: projectName || "my-celo-app",
-            validate: validateProjectName,
-            when: !projectName,
-          },
-          {
-            type: "input",
-            name: "description",
-            message: "Project description:",
-            default: options.description || "A new Celo blockchain project",
-            when: !options.description,
-          },
-          {
-            type: "list",
-            name: "walletProvider",
-            message: "Which wallet provider would you like to use?",
-            choices: [
-              { name: "RainbowKit", value: "rainbowkit" },
-              { name: "Thirdweb", value: "thirdweb" },
-              { name: "None (Skip wallet integration)", value: "none" },
-            ],
-            default: "rainbowkit",
-            when: !options.walletProvider,
-          },
-          {
-            type: "list",
-            name: "contractFramework",
-            message:
-              "Which smart contract development framework would you like to use?",
-            choices: [
-              { name: "Hardhat (Recommended)", value: "hardhat" },
-              { name: "None (Skip smart contract development)", value: "none" },
-            ],
-            default: "hardhat",
-            when: !options.contracts,
-          },
-          {
-            type: "confirm",
-            name: "installDependencies",
-            message: "Install dependencies?",
-            default: true,
-            when: !options.skipInstall,
-          },
-        ]);
+    // Check if any CLI options are provided (auto-mode)
+    const hasCliOptions = !!(
+      options.description ||
+      options.walletProvider ||
+      options.contracts ||
+      options.skipInstall ||
+      options.yes
+    );
+
+    const answers =
+      options.yes || hasCliOptions
+        ? {
+            projectName: projectName || "my-celo-app",
+            description: options.description || "A new Celo blockchain project",
+            walletProvider: options.walletProvider || "rainbowkit",
+            contractFramework: options.contracts || "none",
+            installDependencies: options.skipInstall ? false : true,
+          }
+        : await inquirer.prompt([
+            {
+              type: "input",
+              name: "projectName",
+              message: "What is your project name?",
+              default: projectName || "my-celo-app",
+              validate: validateProjectName,
+              when: !projectName,
+            },
+            {
+              type: "input",
+              name: "description",
+              message: "Project description:",
+              default: options.description || "A new Celo blockchain project",
+              when: !options.description,
+            },
+            {
+              type: "list",
+              name: "walletProvider",
+              message: "Which wallet provider would you like to use?",
+              choices: [
+                { name: "RainbowKit", value: "rainbowkit" },
+                { name: "Thirdweb", value: "thirdweb" },
+                { name: "None (Skip wallet integration)", value: "none" },
+              ],
+              default: "rainbowkit",
+              when: !options.walletProvider,
+            },
+            {
+              type: "list",
+              name: "contractFramework",
+              message:
+                "Which smart contract development framework would you like to use?",
+              choices: [
+                { name: "Hardhat (Recommended)", value: "hardhat" },
+                {
+                  name: "None (Skip smart contract development)",
+                  value: "none",
+                },
+              ],
+              default: "hardhat",
+              when: !options.contracts,
+            },
+            {
+              type: "confirm",
+              name: "installDependencies",
+              message: "Install dependencies?",
+              default: true,
+              when: !options.skipInstall,
+            },
+          ]);
 
     const finalProjectName = projectName || answers.projectName;
     const finalDescription = options.description || answers.description;
-    const finalWalletProvider = options.walletProvider || answers.walletProvider;
+    const finalWalletProvider =
+      options.walletProvider || answers.walletProvider;
     const finalContractFramework =
       options.contracts || answers.contractFramework;
     const shouldInstall = options.skipInstall
