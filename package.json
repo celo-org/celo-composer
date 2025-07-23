@@ -1,6 +1,6 @@
 {
-  "name": "celo-composer-cli",
-  "version": "1.0.0",
+  "name": "@celo/celo-composer",
+  "version": "2.2.0",
   "description": "CLI tool for generating customizable Celo blockchain starter kits",
   "main": "dist/index.js",
   "bin": {
@@ -12,7 +12,9 @@
     "start": "tsc && node dist/index.js",
     "test": "jest",
     "lint": "eslint src --ext .ts",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepublishOnly": "pnpm clean && pnpm build && pnpm test",
+    "prepack": "pnpm build"
   },
   "keywords": [
     "celo",
@@ -23,6 +25,23 @@
   ],
   "author": "Celo Team",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/celo-org/celo-composer.git"
+  },
+  "homepage": "https://github.com/celo-org/celo-composer",
+  "bugs": {
+    "url": "https://github.com/celo-org/celo-composer/issues"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "chalk": "^5.3.0",
     "commander": "^11.1.0",

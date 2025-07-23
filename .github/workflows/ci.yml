@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18, 20]
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Lint code
+        run: pnpm lint
+        
+      - name: Build project
+        run: pnpm build
+        
+      - name: Run tests
+        run: pnpm test
+        
+      - name: Test CLI installation
+        run: |
+          npm pack
+          npm install -g ./celo-celo-composer-*.tgz
+          celo-composer --help
+          
+      - name: Test project generation
+        run: |
+          mkdir test-output
+          cd test-output
+          echo "Testing CLI project generation..."
+          # Test with default options
+          celo-composer create test-project --yes
+          cd test-project
+          pnpm install
+          pnpm build
+
+  build-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Check build artifacts
+        run: |
+          pnpm build
+          ls -la dist/
+          # Verify main entry point exists
+          test -f dist/index.js
+          # Verify templates directory exists
+          test -d templates
+          echo "Build artifacts verified successfully"

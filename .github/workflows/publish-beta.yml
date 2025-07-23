@@ -1,0 +1,113 @@
+name: Publish Beta to NPM
+
+on:
+  push:
+    tags:
+      - 'v*-beta*'
+      - 'v*-alpha*'
+      - 'v*-rc*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Beta version to publish (e.g., 2.2.0-beta.1)'
+        required: true
+        default: '2.2.0-beta.1'
+      tag:
+        description: 'NPM dist-tag (beta, alpha, rc)'
+        required: true
+        default: 'beta'
+
+jobs:
+  publish-beta:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Lint code
+        run: pnpm lint
+        
+      - name: Build project
+        run: pnpm build
+        
+      - name: Run tests
+        run: pnpm test
+        
+      - name: Update version (if manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          
+      - name: Determine dist-tag
+        id: dist-tag
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            # Extract tag from git tag (e.g., v2.2.0-beta.1 -> beta)
+            TAG_NAME=${GITHUB_REF#refs/tags/v}
+            if [[ $TAG_NAME == *"-beta"* ]]; then
+              echo "tag=beta" >> $GITHUB_OUTPUT
+            elif [[ $TAG_NAME == *"-alpha"* ]]; then
+              echo "tag=alpha" >> $GITHUB_OUTPUT
+            elif [[ $TAG_NAME == *"-rc"* ]]; then
+              echo "tag=rc" >> $GITHUB_OUTPUT
+            else
+              echo "tag=beta" >> $GITHUB_OUTPUT
+            fi
+          fi
+          
+      - name: Publish to NPM (Beta)
+        run: npm publish --tag ${{ steps.dist-tag.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Create GitHub Pre-release (if tag push)
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }} (Pre-release)
+          body: |
+            ## Pre-release Version ${{ github.ref_name }}
+            
+            ⚠️ **This is a pre-release version** - use with caution in production environments.
+            
+            ## Installation
+            
+            ```bash
+            npm install -g @celo/celo-composer@${{ steps.dist-tag.outputs.tag }}
+            ```
+            
+            ## Usage
+            
+            ```bash
+            npx @celo/celo-composer@${{ steps.dist-tag.outputs.tag }} create my-celo-app
+            ```
+            
+            ## Changes in this Pre-release
+            
+            - See [CHANGELOG.md](./CHANGELOG.md) for detailed changes
+            
+            ## Feedback
+            
+            Please report any issues or feedback on our [GitHub Issues](https://github.com/celo-org/celo-composer/issues).
+          draft: false
+          prerelease: true
