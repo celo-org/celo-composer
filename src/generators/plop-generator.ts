@@ -1,10 +1,9 @@
-import { NodePlopAPI } from 'plop';
-import nodePlop from 'node-plop';
-import path from 'path';
-import fs from 'fs-extra';
+import fs from "fs-extra";
+import nodePlop from "node-plop";
+import path from "path";
 
 // Register TypeScript support for plop
-require('tsx/cjs');
+require("tsx/cjs");
 
 export interface PlopConfig {
   projectName: string;
@@ -23,22 +22,28 @@ export class TemplateGenerator {
    * Generate a new Celo project using templates
    */
   async generateProject(config: PlopConfig): Promise<void> {
-    const { projectName, description, walletProvider, contractFramework, projectPath } = config;
+    const {
+      projectName,
+      description,
+      walletProvider,
+      contractFramework,
+      projectPath,
+    } = config;
 
     try {
       // Ensure the parent directory exists
       await fs.ensureDir(path.dirname(projectPath));
 
       // Initialize plop asynchronously
-      const plopfilePath = path.join(__dirname, '../plopfile.ts');
+      const plopfilePath = path.join(__dirname, "../plopfile.js");
       const plopInstance = await nodePlop(plopfilePath, {
         destBasePath: projectPath,
-        force: false
+        force: false,
       });
 
       // Get the generator asynchronously
-      const generator = plopInstance.getGenerator('celo-project');
-      
+      const generator = plopInstance.getGenerator("celo-project");
+
       // Run the generator with the provided configuration
       const results = await generator.runActions({
         projectName,
@@ -50,10 +55,14 @@ export class TemplateGenerator {
 
       // Check if generation was successful
       if (results.failures && results.failures.length > 0) {
-        throw new Error(`Template generation failed: ${results.failures.map(f => f.error).join(', ')}`);
+        throw new Error(
+          `Template generation failed: ${results.failures
+            .map((f) => f.error)
+            .join(", ")}`
+        );
       }
     } catch (error) {
-      console.error('Error generating project:', error);
+      console.error("Error generating project:", error);
       throw error;
     }
   }

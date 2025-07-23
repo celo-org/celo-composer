@@ -11,7 +11,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-{{#if (eq walletProvider "rainbowkit")}}
+{{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
 import { WalletConnectButton } from "@/components/connect-button"
 {{/if}}
 
@@ -64,7 +64,7 @@ export function Navbar() {
                   </Link>
                 ))}
                 <div className="mt-6 pt-6 border-t">
-                  {{#if (eq walletProvider "rainbowkit")}}
+                  {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
                   <WalletConnectButton />
                   {{else}}
                   <Button className="w-full">Connect Wallet</Button>
@@ -109,7 +109,7 @@ export function Navbar() {
           ))}
           
           <div className="flex items-center gap-3">
-            {{#if (eq walletProvider "rainbowkit")}}
+            {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
             <WalletConnectButton />
             {{else}}
             <Button variant="outline" size="sm">Connect Wallet</Button>

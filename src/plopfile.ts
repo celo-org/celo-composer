@@ -57,11 +57,39 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/components/",
-        base: path.join(__dirname, "../templates/wallets/rainbowkit/"),
-        templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/*.tsx.hbs"),
+        base: path.join(__dirname, "../templates/wallets/rainbowkit/components/"),
+        templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: any) => {
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Conditionally add Thirdweb wallet components
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/src/components/",
+        base: path.join(__dirname, "../templates/wallets/thirdweb/components/"),
+        templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/components/*.tsx.hbs"),
+        skip: (data: any) => {
+          if (data.walletProvider !== "thirdweb") {
+            return "Skipping Thirdweb - different wallet provider selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Conditionally add Thirdweb wallet lib
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/src/lib/",
+        base: path.join(__dirname, "../templates/wallets/thirdweb/lib/"),
+        templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/lib/*.ts.hbs"),
+        skip: (data: any) => {
+          if (data.walletProvider !== "thirdweb") {
+            return "Skipping Thirdweb lib - different wallet provider selected";
           }
           return false;
         },
@@ -109,4 +137,11 @@ module.exports = function (plop: NodePlopAPI): void {
 
   // Helper to check if wallet provider equals a value
   plop.setHelper("eq", (a: any, b: any) => a === b);
+
+  // Helper for logical OR operations
+  plop.setHelper("or", (...args: any[]) => {
+    // Remove the last argument which is the Handlebars options object
+    const values = args.slice(0, -1);
+    return values.some(value => !!value);
+  });
 }

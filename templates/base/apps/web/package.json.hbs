@@ -22,7 +22,8 @@
     "@rainbow-me/rainbowkit": "^2.0.0",
     "@tanstack/react-query": "^5.0.0",
     "viem": "^2.0.0",
-    "wagmi": "^2.0.0"{{/if}}
+    "wagmi": "^2.0.0"{{/if}}{{#if (eq walletProvider "thirdweb")}},
+    "thirdweb": "^5.0.0"{{/if}}
   },
   "devDependencies": {
     "@types/node": "^20.8.0",

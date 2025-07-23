@@ -6,6 +6,9 @@ import { Navbar } from '@/components/navbar';
 {{#if (eq walletProvider "rainbowkit")}}
 import { WalletProvider } from "@/components/wallet-provider"
 {{/if}}
+{{#if (eq walletProvider "thirdweb")}}
+import { WalletProvider } from "@/components/wallet-provider"
+{{/if}}
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -24,7 +27,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {/* Navbar is included on all pages */}
         <div className="relative flex min-h-screen flex-col">
-          {{#if (eq walletProvider "rainbowkit")}}
+          {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
           <WalletProvider>
             <Navbar />
             <main className="flex-1">
