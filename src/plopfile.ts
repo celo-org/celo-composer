@@ -1,6 +1,14 @@
 import { NodePlopAPI } from "plop";
 import path from "path";
 
+interface PlopData {
+  projectName: string;
+  description: string;
+  walletProvider: string;
+  contractFramework: string;
+  installDependencies: boolean;
+}
+
 module.exports = function (plop: NodePlopAPI): void {
   // Set the base path for templates
   plop.setDefaultInclude({ generators: true });
@@ -13,7 +21,7 @@ module.exports = function (plop: NodePlopAPI): void {
         type: "input",
         name: "projectName",
         message: "Project name:",
-        validate: (input: string) => {
+        validate: (input: string): string | boolean => {
           if (!input || input.trim().length === 0) {
             return "Project name is required";
           }
@@ -59,7 +67,7 @@ module.exports = function (plop: NodePlopAPI): void {
         destination: "{{projectPath}}/apps/web/src/components/",
         base: path.join(__dirname, "../templates/wallets/rainbowkit/components/"),
         templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/components/*.tsx.hbs"),
-        skip: (data: any) => {
+        skip: (data: PlopData): string | false => {
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
           }
@@ -73,7 +81,7 @@ module.exports = function (plop: NodePlopAPI): void {
         destination: "{{projectPath}}/apps/web/src/components/",
         base: path.join(__dirname, "../templates/wallets/thirdweb/components/"),
         templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/components/*.tsx.hbs"),
-        skip: (data: any) => {
+        skip: (data: PlopData): string | false => {
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb - different wallet provider selected";
           }
@@ -87,7 +95,7 @@ module.exports = function (plop: NodePlopAPI): void {
         destination: "{{projectPath}}/apps/web/src/lib/",
         base: path.join(__dirname, "../templates/wallets/thirdweb/lib/"),
         templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/lib/*.ts.hbs"),
-        skip: (data: any) => {
+        skip: (data: PlopData): string | false => {
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb lib - different wallet provider selected";
           }
@@ -104,7 +112,7 @@ module.exports = function (plop: NodePlopAPI): void {
         globOptions: {
           dot: true,
         },
-        skip: (data: any) => {
+        skip: (data: PlopData): string | false => {
           if (data.contractFramework !== "hardhat") {
             return "Skipping Hardhat - different contract framework selected";
           }
@@ -136,10 +144,10 @@ module.exports = function (plop: NodePlopAPI): void {
   });
 
   // Helper to check if wallet provider equals a value
-  plop.setHelper("eq", (a: any, b: any) => a === b);
+  plop.setHelper("eq", (a: unknown, b: unknown): boolean => a === b);
 
   // Helper for logical OR operations
-  plop.setHelper("or", (...args: any[]) => {
+  plop.setHelper("or", (...args: unknown[]): boolean => {
     // Remove the last argument which is the Handlebars options object
     const values = args.slice(0, -1);
     return values.some(value => !!value);

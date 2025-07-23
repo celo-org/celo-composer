@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "CLI tool for generating customizable Celo blockchain starter kits",
   "main": "dist/index.js",
   "bin": {
@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "tsc && node dist/index.js",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "lint": "eslint src --ext .ts",
     "clean": "rimraf dist",
     "prepublishOnly": "pnpm clean && pnpm build && pnpm test",

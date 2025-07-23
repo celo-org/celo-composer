@@ -77,7 +77,7 @@ export async function createCommand(
             default: true,
             when: !options.skipInstall,
           },
-        ] as any);
+        ]);
 
     const finalProjectName = projectName || answers.projectName;
     const finalDescription = options.description || answers.description;

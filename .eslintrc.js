@@ -1,13 +1,15 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
+    project: './tsconfig.json',
   },
   env: {
     node: true,
@@ -20,4 +22,5 @@ module.exports = {
     'prefer-const': 'error',
     'no-var': 'error',
   },
+  ignorePatterns: ['dist/', 'node_modules/', '*.js'],
 };
