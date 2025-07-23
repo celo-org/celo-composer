@@ -145,7 +145,8 @@ export async function createCommand(
       }
 
       console.log(chalk.white("  pnpm dev"));
-      console.log(chalk.gray("\nHappy coding! 🚀\n"));
+      console.log(chalk.gray("\nYour project has been initialized with Git and an initial commit has been created."));
+      console.log(chalk.gray("Happy coding! 🚀\n"));
     } catch (error) {
       spinner.fail("Failed to generate project");
       throw error;
