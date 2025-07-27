@@ -1,7 +1,6 @@
 /* eslint-disable perfectionist/sort-imports */
 /* eslint-disable no-await-in-loop */
 import { Command, Flags } from "@oclif/core";
-import chalk from "chalk";
 import { execa } from "execa";
 import fs from "fs-extra";
 import inquirer from "inquirer";
@@ -9,7 +8,6 @@ import kebabCase from "lodash.kebabcase";
 import emoji from "node-emoji";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import ora from "ora";
 
 import {
   BASE_URL,
@@ -65,6 +63,7 @@ export default class Create extends Command {
   };
 
   public async run(): Promise<void> {
+    const { default: chalk } = await import("chalk");
     const { flags } = await this.parse(Create);
 
     const packages = ["react-app"];
@@ -120,7 +119,8 @@ export default class Create extends Command {
     let hardhatRequired: boolean;
     if (flags.hardhat !== undefined) {
       hardhatRequired = flags.hardhat;
-    } else {
+    }
+    else {
       const response = await inquirer.prompt({
         default: true,
         message: "Do you want to use Hardhat?",
@@ -189,7 +189,7 @@ export default class Create extends Command {
       this.error(`Project directory already exists: ${outputDir}`);
     }
 
-    const spinner = loading(`Generating custom Celo Composer project...\n`);
+    const spinner = await loading(`Generating custom Celo Composer project...\n`);
     try {
       if (template === "") {
         await execa(
@@ -301,4 +301,7 @@ export const isOutputDirectoryEmpty = async (outputFolder: string) => {
   }
 };
 
-export const loading = (message: string) => ora(message).start();
+export const loading = async (message: string) => {
+  const { default: ora } = await import("ora");
+  return ora(message).start();
+};

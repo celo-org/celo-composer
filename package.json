@@ -82,6 +82,7 @@
     }
   },
   "scripts": {
+    "dev": "oclif dev",
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts",
     "postpack": "shx rm -f oclif.manifest.json",
