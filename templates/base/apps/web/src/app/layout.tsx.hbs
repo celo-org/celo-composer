@@ -13,10 +13,43 @@ import { WalletProvider } from "@/components/wallet-provider"
 
 const inter = Inter({ subsets: ['latin'] });
 
+{{#if (eq templateType "farcaster-miniapp")}}
+const appUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+// Embed metadata for Farcaster sharing
+const frame = {
+  version: "1",
+  imageUrl: `${appUrl}/opengraph-image.png`,
+  button: {
+    title: "Launch {{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+    action: {
+      type: "launch_frame",
+      name: "{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+      url: appUrl,
+      splashImageUrl: `${appUrl}/icon.png`,
+      splashBackgroundColor: "#ffffff",
+    },
+  },
+};
+
+export const metadata: Metadata = {
+  title: '{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}',
+  description: '{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}',
+  openGraph: {
+    title: '{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}',
+    description: '{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}',
+    images: [`${appUrl}/opengraph-image.png`],
+  },
+  other: {
+    "fc:frame": JSON.stringify(frame),
+  },
+};
+{{else}}
 export const metadata: Metadata = {
   title: '{{projectName}}',
   description: '{{description}}',
 };
+{{/if}}
 
 export default function RootLayout({
   children,
