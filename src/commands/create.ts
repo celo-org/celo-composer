@@ -14,6 +14,11 @@ interface CreateOptions {
   contracts?: string; // Smart contract framework option
   skipInstall?: boolean;
   yes?: boolean;
+  // Farcaster miniapp specific options
+  miniappName?: string;
+  miniappDescription?: string;
+  miniappTags?: string;
+  miniappTagline?: string;
 }
 
 interface PromptAnswers {
@@ -23,6 +28,11 @@ interface PromptAnswers {
   walletProvider?: string;
   contractFramework?: string;
   installDependencies?: boolean;
+  // Farcaster miniapp specific fields
+  miniappName?: string;
+  miniappDescription?: string;
+  miniappTags?: string;
+  miniappTagline?: string;
 }
 
 export async function createCommand(
@@ -96,6 +106,50 @@ export async function createCommand(
                 return !options.walletProvider && templateType !== "farcaster-miniapp";
               },
             },
+            // Farcaster miniapp specific prompts
+            {
+              type: "input",
+              name: "miniappName",
+              message: "Miniapp display name:",
+              default: (answers: { projectName?: string }): string => {
+                const name = projectName || answers.projectName || "My Celo App";
+                return name.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+              },
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType = options.templateType || answers.templateType;
+                return templateType === "farcaster-miniapp" && !options.miniappName;
+              },
+            },
+            {
+              type: "input",
+              name: "miniappDescription",
+              message: "Miniapp description:",
+              default: "A new Celo blockchain miniapp",
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType = options.templateType || answers.templateType;
+                return templateType === "farcaster-miniapp" && !options.miniappDescription;
+              },
+            },
+            {
+              type: "input",
+              name: "miniappTags",
+              message: "Miniapp tags (comma-separated):",
+              default: "mini-app,celo,blockchain",
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType = options.templateType || answers.templateType;
+                return templateType === "farcaster-miniapp" && !options.miniappTags;
+              },
+            },
+            {
+              type: "input",
+              name: "miniappTagline",
+              message: "Miniapp tagline:",
+              default: "Built on Celo",
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType = options.templateType || answers.templateType;
+                return templateType === "farcaster-miniapp" && !options.miniappTagline;
+              },
+            },
             {
               type: "list",
               name: "contractFramework",
@@ -123,6 +177,59 @@ export async function createCommand(
     const finalProjectName = projectName || answers.projectName || "my-celo-app";
     const finalDescription = options.description || answers.description || "A new Celo blockchain project";
     const finalTemplateType = options.templateType || answers.templateType || "basic";
+
+    // Farcaster miniapp specific prompts - only ask if template is farcaster-miniapp and values not provided via CLI
+    let farcasterAnswers: {
+      miniappName?: string;
+      miniappDescription?: string;
+      miniappTags?: string;
+      miniappTagline?: string;
+    } = {};
+
+    if (finalTemplateType === "farcaster-miniapp" && !options.yes) {
+      const farcasterPrompts = [];
+      
+      if (!options.miniappName) {
+        farcasterPrompts.push({
+          type: "input" as const,
+          name: "miniappName" as const,
+          message: "Miniapp display name:",
+          default: finalProjectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+        });
+      }
+      
+      if (!options.miniappDescription) {
+        farcasterPrompts.push({
+          type: "input" as const,
+          name: "miniappDescription" as const,
+          message: "Miniapp description:",
+          default: "A new Celo blockchain miniapp",
+        });
+      }
+      
+      if (!options.miniappTags) {
+        farcasterPrompts.push({
+          type: "input" as const,
+          name: "miniappTags" as const,
+          message: "Miniapp tags (comma-separated):",
+          default: "mini-app,celo,blockchain",
+        });
+      }
+      
+      if (!options.miniappTagline) {
+        farcasterPrompts.push({
+          type: "input" as const,
+          name: "miniappTagline" as const,
+          message: "Miniapp tagline:",
+          default: "Built on Celo",
+        });
+      }
+      
+      if (farcasterPrompts.length > 0) {
+        farcasterAnswers = await inquirer.prompt(farcasterPrompts);
+      }
+    }
+
     const finalWalletProvider =
       options.walletProvider || answers.walletProvider || (finalTemplateType === "farcaster-miniapp" ? "none" : "rainbowkit");
     const finalContractFramework =
@@ -130,6 +237,13 @@ export async function createCommand(
     const shouldInstall = options.skipInstall
       ? false
       : answers.installDependencies ?? true;
+    
+    // Farcaster miniapp specific values
+    const finalMiniappName = options.miniappName || farcasterAnswers.miniappName || answers.miniappName || 
+      finalProjectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    const finalMiniappDescription = options.miniappDescription || farcasterAnswers.miniappDescription || answers.miniappDescription || "A new Celo blockchain miniapp";
+    const finalMiniappTags = options.miniappTags || farcasterAnswers.miniappTags || answers.miniappTags || "mini-app,celo,blockchain";
+    const finalMiniappTagline = options.miniappTagline || farcasterAnswers.miniappTagline || answers.miniappTagline || "Built on Celo";
 
     // Validate project name
     const validation = validateProjectName(finalProjectName);
@@ -162,6 +276,11 @@ export async function createCommand(
         contractFramework: finalContractFramework,
         projectPath,
         installDependencies: shouldInstall,
+        // Farcaster miniapp specific values
+        miniappName: finalMiniappName,
+        miniappDescription: finalMiniappDescription,
+        miniappTags: finalMiniappTags,
+        miniappTagline: finalMiniappTagline,
       });
 
       spinner.succeed("Project generated successfully!");

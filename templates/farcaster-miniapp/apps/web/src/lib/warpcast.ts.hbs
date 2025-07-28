@@ -6,19 +6,9 @@ import { env } from "@/lib/env";
  * @returns The farcaster manifest for the frame
  */
 export async function getFarcasterManifest() {
-  let frameName = "{{projectName}}";
-  let noindex = false;
+  const frameName = "{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}";
   const appUrl = env.NEXT_PUBLIC_URL;
-  if (appUrl.includes("localhost")) {
-    frameName += " Local";
-    noindex = true;
-  } else if (appUrl.includes("ngrok")) {
-    frameName += " NGROK";
-    noindex = true;
-  } else if (appUrl.includes("https://dev.")) {
-    frameName += " Dev";
-    noindex = true;
-  }
+  const noindex = appUrl.includes("localhost") || appUrl.includes("ngrok") || appUrl.includes("https://dev.");
 
   // Check if account association is properly configured
   const hasValidAccountAssociation = 
@@ -26,7 +16,10 @@ export async function getFarcasterManifest() {
     env.NEXT_PUBLIC_FARCASTER_PAYLOAD !== "build-time-placeholder" &&
     env.NEXT_PUBLIC_FARCASTER_SIGNATURE !== "build-time-placeholder";
 
-  if (!hasValidAccountAssociation) {
+  // In development mode, allow placeholder values for testing
+  const isDevelopment = env.NEXT_PUBLIC_APP_ENV === "development" || appUrl.includes("localhost");
+  
+  if (!hasValidAccountAssociation && !isDevelopment) {
     throw new Error(
       "Account association not configured. Please generate your account association at: https://farcaster.xyz/~/developers/mini-apps/manifest?domain=" + 
       new URL(appUrl).hostname + 
@@ -34,12 +27,20 @@ export async function getFarcasterManifest() {
     );
   }
 
+  // Use development fallback values if in development mode and no real values are set
+  const accountAssociation = hasValidAccountAssociation ? {
+    header: env.NEXT_PUBLIC_FARCASTER_HEADER,
+    payload: env.NEXT_PUBLIC_FARCASTER_PAYLOAD,
+    signature: env.NEXT_PUBLIC_FARCASTER_SIGNATURE,
+  } : {
+    // Development fallback - these are placeholder values for local testing
+    header: "eyJmaWQiOjEyMzQ1LCJ0eXBlIjoiY3VzdG9keSIsImtleSI6IjB4ZGV2ZWxvcG1lbnRfa2V5In0",
+    payload: "eyJkb21haW4iOiJsb2NhbGhvc3QifQ",
+    signature: "0xdev_signature_placeholder_for_local_testing_only"
+  };
+
   return {
-    accountAssociation: {
-      header: env.NEXT_PUBLIC_FARCASTER_HEADER,
-      payload: env.NEXT_PUBLIC_FARCASTER_PAYLOAD,
-      signature: env.NEXT_PUBLIC_FARCASTER_SIGNATURE,
-    },
+    accountAssociation,
     frame: {
       version: "1",
       name: frameName,
@@ -50,14 +51,19 @@ export async function getFarcasterManifest() {
       splashImageUrl: `${appUrl}/opengraph-image.png`,
       splashBackgroundColor: "#FFFFFF",
       webhookUrl: `${appUrl}/api/webhook`,
+      // Required chains for Celo integration
+      requiredChains: [
+        "eip155:42220", // Celo mainnet
+        "eip155:44787"  // Celo Alfajores testnet
+      ],
       // Metadata https://github.com/farcasterxyz/miniapps/discussions/191
-      subtitle: "{{description}}", // 30 characters, no emojis or special characters, short description under app name
-      description: "{{description}}", // 170 characters, no emojis or special characters, promotional message displayed on Mini App Page
+      subtitle: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}", // 30 characters, no emojis or special characters, short description under app name
+      description: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}", // 170 characters, no emojis or special characters, promotional message displayed on Mini App Page
       primaryCategory: "social",
-      tags: ["mini-app", "celo"], // up to 5 tags, filtering/search tags
-      tagline: "Built on Celo", // 30 characters, marketing tagline should be punchy and descriptive
+      tags: {{#if miniappTags}}"{{miniappTags}}".split(",").map(tag => tag.trim()){{else}}["mini-app", "celo"]{{/if}}, // up to 5 tags, filtering/search tags
+      tagline: "{{#if miniappTagline}}{{miniappTagline}}{{else}}Built on Celo{{/if}}", // 30 characters, marketing tagline should be punchy and descriptive
       ogTitle: `${frameName}`, // 30 characters, app name + short tag, Title case, no emojis
-      ogDescription: "{{description}}", // 100 characters, summarize core benefits in 1-2 lines
+      ogDescription: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}", // 100 characters, summarize core benefits in 1-2 lines
       screenshotUrls: [
         // 1284 x 2778, visual previews of the app, max 3 screenshots
         `${appUrl}/opengraph-image.png`,

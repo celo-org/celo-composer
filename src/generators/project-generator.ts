@@ -16,10 +16,15 @@ export interface ProjectConfig {
   contractFramework: string;
   projectPath: string;
   installDependencies: boolean;
+  // Farcaster miniapp specific fields
+  miniappName?: string;
+  miniappDescription?: string;
+  miniappTags?: string;
+  miniappTagline?: string;
 }
 
 export async function generateProject(config: ProjectConfig): Promise<void> {
-  const { projectName, description, templateType, walletProvider, contractFramework, projectPath, installDependencies } = config;
+  const { projectName, description, templateType, walletProvider, contractFramework, projectPath, installDependencies, miniappName, miniappDescription, miniappTags, miniappTagline } = config;
 
   // Use the professional template-driven generator
   const templateGenerator = new TemplateGenerator();
@@ -32,6 +37,11 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     contractFramework,
     projectPath,
     installDependencies,
+    // Farcaster miniapp specific values
+    miniappName,
+    miniappDescription,
+    miniappTags,
+    miniappTagline,
   };
 
   // Generate project using templates

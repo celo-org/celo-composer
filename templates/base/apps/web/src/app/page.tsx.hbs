@@ -1,6 +1,42 @@
-import Link from "next/link";
+{{#if (eq templateType "farcaster-miniapp")}}import { Metadata } from "next";
+{{/if}}import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Zap } from "lucide-react";
+
+{{#if (eq templateType "farcaster-miniapp")}}
+const appUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+// Embed metadata for Farcaster sharing
+const frame = {
+  version: "1",
+  imageUrl: `${appUrl}/opengraph-image.png`,
+  button: {
+    title: "Launch {{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+    action: {
+      type: "launch_frame",
+      name: "{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+      url: appUrl,
+      splashImageUrl: `${appUrl}/icon.png`,
+      splashBackgroundColor: "#ffffff",
+    },
+  },
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+    description: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}",
+    openGraph: {
+      title: "{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}",
+      description: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}",
+      images: [`${appUrl}/opengraph-image.png`],
+    },
+    other: {
+      "fc:frame": JSON.stringify(frame),
+    },
+  };
+}
+{{/if}}
 
 export default function Home() {
   return (
@@ -14,7 +50,7 @@ export default function Home() {
           className="inline-flex items-center gap-2 px-3 py-1 mb-8 text-sm font-medium bg-primary/10 text-primary rounded-full border border-primary/20"
         >
           <Zap className="h-4 w-4" />
-          Built on Celo
+          {{#if (eq templateType "farcaster-miniapp")}}{{#if miniappTagline}}{{miniappTagline}}{{else}}Built on Celo{{/if}}{{else}}Built on Celo{{/if}}
         </div>
 
         {/* Main Heading */}
@@ -22,15 +58,14 @@ export default function Home() {
           className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
           Welcome to{" "}
-          <span className="text-primary">{{projectName}}</span>
+          <span className="text-primary">{{#if (eq templateType "farcaster-miniapp")}}{{#if miniappName}}{{miniappName}}{{else}}{{projectName}}{{/if}}{{else}}{{projectName}}{{/if}}</span>
         </h1>
 
         {/* Subtitle */}
         <p
           className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed"
         >
-          Start building your decentralized application on Celo. Fast and secure
-          blockchain for everyone.
+          {{#if (eq templateType "farcaster-miniapp")}}{{#if miniappDescription}}{{miniappDescription}}{{else}}Start building your decentralized application on Celo. Fast and secure blockchain for everyone.{{/if}}{{else}}Start building your decentralized application on Celo. Fast and secure blockchain for everyone.{{/if}}
         </p>
 
         {/* CTA Buttons */}

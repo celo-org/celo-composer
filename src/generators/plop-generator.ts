@@ -12,6 +12,11 @@ export interface PlopConfig {
   contractFramework: string;
   projectPath: string;
   installDependencies?: boolean;
+  // Farcaster miniapp specific fields
+  miniappName?: string;
+  miniappDescription?: string;
+  miniappTags?: string;
+  miniappTagline?: string;
 }
 
 /**

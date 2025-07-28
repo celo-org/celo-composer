@@ -178,6 +178,26 @@ module.exports = function (plop: NodePlopAPI): void {
           return false;
         },
       },
+      // Copy Farcaster Miniapp static assets (images, etc.)
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/public/",
+        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/"),
+        templateFiles: [
+          path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/*"),
+          "!" + path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/**/*.hbs")
+        ],
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "farcaster-miniapp") {
+            return "Skipping Farcaster Miniapp assets - different template type selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
     ],
   });
 
