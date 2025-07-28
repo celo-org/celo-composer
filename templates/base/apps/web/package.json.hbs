@@ -1,0 +1,51 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0",
+    "lucide-react": "^0.292.0"{{#if (eq walletProvider "rainbowkit")}},
+    "@rainbow-me/rainbowkit": "^2.0.0",
+    "@tanstack/react-query": "^5.0.0",
+    "viem": "^2.0.0",
+    "wagmi": "^2.0.0"{{/if}}{{#if (eq walletProvider "thirdweb")}},
+    "thirdweb": "^5.0.0"{{/if}}{{#if (eq templateType "farcaster-miniapp")}},
+    "@farcaster/frame-sdk": "^0.0.61",
+    "@farcaster/frame-core": "latest",
+    "@farcaster/miniapp-wagmi-connector": "latest",
+    "@farcaster/quick-auth": "latest",
+    "@t3-oss/env-nextjs": "^0.12.0",
+    "@tanstack/react-query": "^5.64.2",
+    "eruda": "^3.2.3",
+    "jose": "^5.9.6",
+    "viem": "^2.27.2",
+    "wagmi": "^2.14.12",
+    "zod": "^3.24.1"{{/if}}
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "^14.0.0",
+    "typescript": "^5.2.2",
+    "tailwindcss": "^3.4.4",
+    "postcss": "^8.4.35",
+    "autoprefixer": "^10.4.17",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}
