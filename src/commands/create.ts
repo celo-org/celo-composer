@@ -106,50 +106,6 @@ export async function createCommand(
                 return !options.walletProvider && templateType !== "farcaster-miniapp";
               },
             },
-            // Farcaster miniapp specific prompts
-            {
-              type: "input",
-              name: "miniappName",
-              message: "Miniapp display name:",
-              default: (answers: { projectName?: string }): string => {
-                const name = projectName || answers.projectName || "My Celo App";
-                return name.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-              },
-              when: (answers: { templateType?: string }): boolean => {
-                const templateType = options.templateType || answers.templateType;
-                return templateType === "farcaster-miniapp" && !options.miniappName;
-              },
-            },
-            {
-              type: "input",
-              name: "miniappDescription",
-              message: "Miniapp description:",
-              default: "A new Celo blockchain miniapp",
-              when: (answers: { templateType?: string }): boolean => {
-                const templateType = options.templateType || answers.templateType;
-                return templateType === "farcaster-miniapp" && !options.miniappDescription;
-              },
-            },
-            {
-              type: "input",
-              name: "miniappTags",
-              message: "Miniapp tags (comma-separated):",
-              default: "mini-app,celo,blockchain",
-              when: (answers: { templateType?: string }): boolean => {
-                const templateType = options.templateType || answers.templateType;
-                return templateType === "farcaster-miniapp" && !options.miniappTags;
-              },
-            },
-            {
-              type: "input",
-              name: "miniappTagline",
-              message: "Miniapp tagline:",
-              default: "Built on Celo",
-              when: (answers: { templateType?: string }): boolean => {
-                const templateType = options.templateType || answers.templateType;
-                return templateType === "farcaster-miniapp" && !options.miniappTagline;
-              },
-            },
             {
               type: "list",
               name: "contractFramework",
