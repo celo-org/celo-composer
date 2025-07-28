@@ -41,7 +41,7 @@ export async function getFarcasterManifest() {
 
   return {
     accountAssociation,
-    frame: {
+    miniapp: {
       version: "1",
       name: frameName,
       iconUrl: `${appUrl}/icon.png`,
@@ -51,11 +51,6 @@ export async function getFarcasterManifest() {
       splashImageUrl: `${appUrl}/opengraph-image.png`,
       splashBackgroundColor: "#FFFFFF",
       webhookUrl: `${appUrl}/api/webhook`,
-      // Required chains for Celo integration
-      requiredChains: [
-        "eip155:42220", // Celo mainnet
-        "eip155:44787"  // Celo Alfajores testnet
-      ],
       // Metadata https://github.com/farcasterxyz/miniapps/discussions/191
       subtitle: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}", // 30 characters, no emojis or special characters, short description under app name
       description: "{{#if miniappDescription}}{{miniappDescription}}{{else}}{{description}}{{/if}}", // 170 characters, no emojis or special characters, promotional message displayed on Mini App Page
