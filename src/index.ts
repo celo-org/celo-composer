@@ -16,6 +16,7 @@ program
   .description('Create a new Celo project')
   .argument('[project-name]', 'Name of the project')
   .option('-d, --description <description>', 'Project description')
+  .option('-t, --template <type>', 'Template type (basic, farcaster-miniapp)')
   .option('--wallet-provider <provider>', 'Wallet provider (rainbowkit, thirdweb, none)')
   .option('-c, --contracts <framework>', 'Smart contract framework (hardhat)')
   .option('--skip-install', 'Skip package installation')

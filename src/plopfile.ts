@@ -6,6 +6,7 @@ interface PlopData {
   description: string;
   walletProvider: string;
   contractFramework: string;
+  templateType: string;
   installDependencies: boolean;
 }
 
@@ -68,6 +69,9 @@ module.exports = function (plop: NodePlopAPI): void {
         base: path.join(__dirname, "../templates/wallets/rainbowkit/components/"),
         templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
+          if (data.templateType === "farcaster-miniapp") {
+            return "Skipping RainbowKit - Farcaster Miniapp uses its own wallet components";
+          }
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
           }
@@ -82,6 +86,9 @@ module.exports = function (plop: NodePlopAPI): void {
         base: path.join(__dirname, "../templates/wallets/thirdweb/components/"),
         templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
+          if (data.templateType === "farcaster-miniapp") {
+            return "Skipping Thirdweb - Farcaster Miniapp uses its own wallet components";
+          }
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb - different wallet provider selected";
           }
@@ -96,6 +103,9 @@ module.exports = function (plop: NodePlopAPI): void {
         base: path.join(__dirname, "../templates/wallets/thirdweb/lib/"),
         templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/lib/*.ts.hbs"),
         skip: (data: PlopData): string | false => {
+          if (data.templateType === "farcaster-miniapp") {
+            return "Skipping Thirdweb lib - Farcaster Miniapp uses its own wallet components";
+          }
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb lib - different wallet provider selected";
           }
@@ -119,6 +129,54 @@ module.exports = function (plop: NodePlopAPI): void {
           return false;
         },
         verbose: true,
+      },
+      // Conditionally add Farcaster Miniapp template files
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/src/",
+        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/src/"),
+        templateFiles: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/src/**/*.hbs"),
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "farcaster-miniapp") {
+            return "Skipping Farcaster Miniapp - different template type selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Conditionally add Farcaster Miniapp configuration files
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/",
+        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/"),
+        templateFiles: [
+          path.join(__dirname, "../templates/farcaster-miniapp/apps/web/.eslintrc.json.hbs")
+        ],
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "farcaster-miniapp") {
+            return "Skipping Farcaster Miniapp config - different template type selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Add Farcaster setup documentation
+      {
+        type: "add",
+        path: "{{projectPath}}/FARCASTER_SETUP.md",
+        templateFile: path.join(__dirname, "../templates/farcaster-miniapp/FARCASTER_SETUP.md.hbs"),
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "farcaster-miniapp") {
+            return "Skipping Farcaster setup guide - different template type selected";
+          }
+          return false;
+        },
       },
     ],
   });

@@ -3,10 +3,11 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 
 import { Navbar } from '@/components/navbar';
-{{#if (eq walletProvider "rainbowkit")}}
+{{#if (eq templateType "farcaster-miniapp")}}
+import Providers from "@/components/providers"
+{{else if (eq walletProvider "rainbowkit")}}
 import { WalletProvider } from "@/components/wallet-provider"
-{{/if}}
-{{#if (eq walletProvider "thirdweb")}}
+{{else if (eq walletProvider "thirdweb")}}
 import { WalletProvider } from "@/components/wallet-provider"
 {{/if}}
 
@@ -27,7 +28,14 @@ export default function RootLayout({
       <body className={inter.className}>
         {/* Navbar is included on all pages */}
         <div className="relative flex min-h-screen flex-col">
-          {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
+          {{#if (eq templateType "farcaster-miniapp")}}
+          <Providers>
+            <Navbar />
+            <main className="flex-1">
+              {children}
+            </main>
+          </Providers>
+          {{else if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
           <WalletProvider>
             <Navbar />
             <main className="flex-1">

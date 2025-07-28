@@ -7,6 +7,7 @@ import path from "path";
 export interface PlopConfig {
   projectName: string;
   description: string;
+  templateType: string;
   walletProvider: string;
   contractFramework: string;
   projectPath: string;
@@ -24,6 +25,7 @@ export class TemplateGenerator {
     const {
       projectName,
       description,
+      templateType,
       walletProvider,
       contractFramework,
       projectPath,
@@ -47,6 +49,7 @@ export class TemplateGenerator {
       const results = await generator.runActions({
         projectName,
         description,
+        templateType,
         walletProvider,
         contractFramework,
         projectPath,

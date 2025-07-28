@@ -8,10 +8,21 @@ import { validateProjectName } from "../utils/validation";
 
 interface CreateOptions {
   description?: string;
+  template?: string;
+  templateType?: string;
   walletProvider?: string;
   contracts?: string; // Smart contract framework option
   skipInstall?: boolean;
   yes?: boolean;
+}
+
+interface PromptAnswers {
+  projectName?: string;
+  description?: string;
+  templateType?: string;
+  walletProvider?: string;
+  contractFramework?: string;
+  installDependencies?: boolean;
 }
 
 export async function createCommand(
@@ -25,17 +36,20 @@ export async function createCommand(
     // Check if any CLI options are provided (auto-mode)
     const hasCliOptions = !!(
       options.description ||
+      options.template ||
+      options.templateType ||
       options.walletProvider ||
       options.contracts ||
       options.skipInstall ||
       options.yes
     );
 
-    const answers =
+    const answers: PromptAnswers =
       options.yes || hasCliOptions
         ? {
             projectName: projectName || "my-celo-app",
             description: options.description || "A new Celo blockchain project",
+            templateType: options.template || options.templateType || "basic",
             walletProvider: options.walletProvider || "rainbowkit",
             contractFramework: options.contracts || "none",
             installDependencies: options.skipInstall ? false : true,
@@ -58,6 +72,17 @@ export async function createCommand(
             },
             {
               type: "list",
+              name: "templateType",
+              message: "Which template would you like to use?",
+              choices: [
+                { name: "Basic Template", value: "basic" },
+                { name: "Farcaster Miniapp", value: "farcaster-miniapp" },
+              ],
+              default: "basic",
+              when: !options.templateType,
+            },
+            {
+              type: "list",
               name: "walletProvider",
               message: "Which wallet provider would you like to use?",
               choices: [
@@ -66,7 +91,10 @@ export async function createCommand(
                 { name: "None (Skip wallet integration)", value: "none" },
               ],
               default: "rainbowkit",
-              when: !options.walletProvider,
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType = options.templateType || answers.templateType;
+                return !options.walletProvider && templateType !== "farcaster-miniapp";
+              },
             },
             {
               type: "list",
@@ -92,12 +120,13 @@ export async function createCommand(
             },
           ]);
 
-    const finalProjectName = projectName || answers.projectName;
-    const finalDescription = options.description || answers.description;
+    const finalProjectName = projectName || answers.projectName || "my-celo-app";
+    const finalDescription = options.description || answers.description || "A new Celo blockchain project";
+    const finalTemplateType = options.templateType || answers.templateType || "basic";
     const finalWalletProvider =
-      options.walletProvider || answers.walletProvider;
+      options.walletProvider || answers.walletProvider || (finalTemplateType === "farcaster-miniapp" ? "none" : "rainbowkit");
     const finalContractFramework =
-      options.contracts || answers.contractFramework;
+      options.contracts || answers.contractFramework || "none";
     const shouldInstall = options.skipInstall
       ? false
       : answers.installDependencies ?? true;
@@ -128,6 +157,7 @@ export async function createCommand(
       await generateProject({
         projectName: finalProjectName,
         description: finalDescription,
+        templateType: finalTemplateType,
         walletProvider: finalWalletProvider,
         contractFramework: finalContractFramework,
         projectPath,
