@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.3.5] - 2025-08-06
+
+### Fixed
+- Resolved file conflict issue during project generation by removing the base `connect-button.tsx.hbs` and ensuring wallet-specific templates are used.
+
+## [2.3.4] - 2025-08-05
+
+### Changed
+- Updated docs config with SEO metadata and replaced favicon with new Celo logo.
+
+## [2.3.3] - 2025-08-04
+
+### Added
+- Added wallet connection and miniapp installation UI to the Farcaster template.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
