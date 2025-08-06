@@ -1,14 +1,27 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Celo Composer",
-  "openapi": "3.1.0",
-  "theme": "mint",
+  "theme": "maple",
   "colors": {
     "primary": "#35D07F",
     "light": "#5DD893",
     "dark": "#2BA66B"
   },
   "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/celo-org/celo-composer",
+        "icon": "github"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Started",
+      "href": "https://celo.org/"
+    }
+  },
   "navigation": {
     "groups": [
       {
@@ -65,9 +78,13 @@
       }
     ]
   },
-  "footerSocials": {
-    "github": "https://github.com/celo-org/celo-composer",
-    "twitter": "https://twitter.com/Celo"
+  "footer": {
+    "socials": {
+      "x": "https://x.com/celo",
+      "github": "https://github.com/celo-org",
+      "youtube": "https://www.youtube.com/@CeloOrg",
+      "linkedin": "https://www.linkedin.com/company/celo-foundation"
+    }
   },
   "seo": {
     "indexing": "all",
@@ -88,7 +105,9 @@
       "cursor"
     ]
   },
-  "x-mcp": {
-    "enabled": true
+  "errors": {
+    "404": {
+      "redirect": true
+    }
   }
 }
