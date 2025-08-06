@@ -1,6 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Celo Composer",
+  "openapi": "3.1.0",
   "theme": "mint",
   "colors": {
     "primary": "#35D07F",
@@ -67,5 +68,27 @@
   "footerSocials": {
     "github": "https://github.com/celo-org/celo-composer",
     "twitter": "https://twitter.com/Celo"
+  },
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "Celo Composer",
+      "og:description": "Celo Composer is a command-line tool for generating customizable Celo blockchain starter kits with a monorepo structure."
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor"
+    ]
+  },
+  "x-mcp": {
+    "enabled": true
   }
 }
