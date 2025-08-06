@@ -1,0 +1,51 @@
+---
+title: Hardhat
+description: "Develop, test, and deploy smart contracts using the Hardhat integration."
+icon: "terminal"
+---
+
+Celo Composer provides a seamless integration with Hardhat, the industry-standard development environment for Ethereum and EVM-compatible chains. This allows you to build, test, and deploy your Solidity smart contracts with ease, right from within your monorepo.
+
+## Hardhat Integration
+
+When you choose to include the Hardhat framework (by selecting it in the interactive prompts or using the `--contracts hardhat` flag), Celo Composer sets up a dedicated `apps/hardhat` application for you.
+
+This application comes with:
+
+- **Pre-configured Hardhat**: The `hardhat.config.ts` file is already set up for Celo mainnet and the Alfajores testnet.
+- **Sample Contract**: A simple `Lock.sol` contract to get you started.
+- **Comprehensive Tests**: A full test suite for the sample contract using Viem and Hardhat's testing utilities.
+- **Deployment Scripts**: A deployment module using Hardhat Ignition, the modern way to deploy your contracts.
+- **TypeChain Support**: Automatically generated TypeScript bindings for your contracts, providing type safety when you interact with them from your frontend.
+
+## Environment Variables
+
+To deploy and verify your smart contracts, you'll need to set up your environment variables. In the `apps/hardhat` directory, you'll find a `.env.example` file. Create a copy of it named `.env` and add the following variables:
+
+- **`PRIVATE_KEY`**: The private key of the wallet you'll use for deploying contracts. This is required for deploying to any live network.
+  <Warning>
+    This is highly sensitive and should be handled with extreme care. Do not
+    commit this to version control.
+  </Warning>
+- **`CELOSCAN_API_KEY`**: (Optional) Your API key from [Celoscan](https://celoscan.io/) for automatically verifying your deployed contracts.
+- **`REPORT_GAS`**: (Optional) Set to `true` to enable the gas reporter, which provides a detailed breakdown of gas usage for your contract's functions during testing.
+
+## Monorepo Scripts
+
+The root `package.json` of your project is updated with convenient scripts to manage your smart contracts:
+
+- **`pnpm contracts:compile`**: Compiles your Solidity contracts and generates TypeChain bindings.
+- **`pnpm contracts:test`**: Runs the test suite for your contracts.
+- **`pnpm contracts:deploy`**: Deploys your contracts to the configured network (defaults to a local Hardhat node).
+- **`pnpm contracts:deploy:alfajores`**: Deploys your contracts specifically to the Alfajores testnet.
+- **`pnpm contracts:deploy:celo`**: Deploys your contracts to the Celo mainnet.
+
+## Development Workflow
+
+1.  **Write your contracts** in the `apps/hardhat/contracts` directory.
+2.  **Write tests** for your contracts in the `apps/hardhat/test` directory.
+3.  **Run `pnpm contracts:compile`** to compile your contracts.
+4.  **Run `pnpm contracts:test`** to ensure everything is working as expected.
+5.  **Deploy your contracts** using one of the `deploy` scripts.
+
+Once deployed, your frontend application in `apps/web` can easily import the contract ABIs and addresses from the `apps/hardhat` application to start interacting with them on the blockchain.

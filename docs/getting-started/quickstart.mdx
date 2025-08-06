@@ -1,0 +1,56 @@
+---
+title: Quick Start
+description: "Create and run your first Celo dApp in under 5 minutes."
+icon: "rocket"
+---
+
+This guide will walk you through creating a new Celo project, understanding its structure, and running it locally.
+
+## 1. Create a New Project
+
+To create a new project, open your terminal and run:
+
+```bash
+npx @celo/celo-composer@latest create my-celo-app
+```
+
+The CLI will guide you through a series of prompts to configure your project. For this quick start, you can accept the default options by pressing `Enter` for each prompt.
+
+<Info>
+  **Pro Tip:** You can also run `npx @celo/celo-composer@latest create my-celo-app --yes` to skip all prompts and use the default settings automatically.
+</Info>
+
+## 2. Navigate to Your Project
+
+Once the project is created, navigate into the project directory:
+
+```bash
+cd my-celo-app
+```
+
+## 3. Run the Development Server
+
+To start the local development server, run the following command:
+
+```bash
+pnpm dev
+```
+
+This will start the frontend application on `http://localhost:3000`. Open this URL in your browser to see your new Celo dApp in action!
+
+## Project Structure Overview
+
+Your new project has a monorepo structure, managed by Turborepo. Here's a quick look at the key directories:
+
+- **`apps/web`**: This is your Next.js frontend application.
+- **`apps/hardhat`**: If you chose to include a smart contract framework like Hardhat, your contracts and tests will be located here.
+
+## What's Next?
+
+Congratulations! You've successfully created and run your first Celo dApp using Celo Composer.
+
+Now you can explore the other sections of these docs to learn more about:
+
+- **[Core Concepts](/core-concepts/project-structure)**: Understand the project structure in more detail.
+- **[CLI Reference](/cli-reference/create-command)**: Learn about all the available CLI commands and options.
+- **[Templates & Integrations](/templates/web-app-template)**: Discover the available templates and integrations.

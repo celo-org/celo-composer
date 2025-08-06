@@ -1,0 +1,52 @@
+---
+title: Templates & Integrations
+description: "Learn about the available templates and integrations in Celo Composer."
+icon: "box"
+---
+
+Celo Composer uses a powerful template system to let you generate projects that are tailored to your specific needs. You can choose a base template and then layer on integrations like wallet providers and smart contract frameworks.
+
+## Base Templates
+
+You can select a base template using the `--template` flag during project creation.
+
+<CardGroup cols={2}>
+  <Card title="Basic Web App" icon="globe">
+    A standard Next.js 14+ web application with a modern UI, built with shadcn/ui and Tailwind CSS. Perfect for most dApp projects.
+  </Card>
+  <Card title="Farcaster Miniapp" icon="message-square">
+    A specialized template for building Farcaster Miniapps, with Farcaster SDK and Frame development support pre-configured.
+  </Card>
+</CardGroup>
+
+## Wallet Providers
+
+Choose a wallet provider to handle user authentication and transaction signing. Use the `--wallet-provider` flag.
+
+<CardGroup cols={3}>
+  <Card title="RainbowKit" icon="rainbow">
+    A popular, easy-to-use wallet connector for React apps.
+  </Card>
+  <Card title="Thirdweb" icon="cubes">
+    A complete Web3 development framework with powerful wallet tools.
+  </Card>
+  <Card title="None" icon="x-circle">
+    Don't include a pre-configured wallet provider. Useful if you want to integrate your own solution.
+  </Card>
+</CardGroup>
+
+## Smart Contract Frameworks
+
+Celo Composer can set up a smart contract development environment for you. Use the `--contracts` flag.
+
+<CardGroup cols={1}>
+  <Card title="Hardhat" icon="hardhat">
+    The industry-standard framework for Ethereum and EVM-compatible chains. Comes with a pre-configured environment for Celo networks, including deployment scripts and tests.
+  </Card>
+</CardGroup>
+
+## How it Works
+
+When you run `celo-composer create`, the CLI uses Plop.js to dynamically generate the project files based on your selections. It copies the base template and then conditionally adds the files and configurations for your chosen integrations.
+
+This approach ensures that your project only includes the code it needs, keeping it clean and optimized.

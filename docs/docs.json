@@ -1,0 +1,71 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Celo Composer",
+  "theme": "mint",
+  "colors": {
+    "primary": "#35D07F",
+    "light": "#5DD893",
+    "dark": "#2BA66B"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "icon": "rocket",
+        "pages": [
+          "getting-started/introduction",
+          "getting-started/installation",
+          "getting-started/quickstart"
+        ]
+      },
+      {
+        "group": "Core Concepts",
+        "icon": "book-open",
+        "pages": ["core-concepts/project-structure", "core-concepts/templates"]
+      },
+      {
+        "group": "CLI Reference",
+        "icon": "terminal",
+        "pages": ["cli-reference/create-command", "cli-reference/configuration"]
+      },
+      {
+        "group": "Templates",
+        "icon": "clone",
+        "pages": ["templates/web-app-template", "templates/farcaster-miniapp"]
+      },
+      {
+        "group": "Integrations",
+        "icon": "plug",
+        "pages": [
+          {
+            "group": "Wallet Integration",
+            "icon": "wallet",
+            "pages": [
+              "integrations/wallets/rainbowkit",
+              "integrations/wallets/thirdweb"
+            ]
+          },
+          {
+            "group": "Smart Contracts",
+            "icon": "file",
+            "pages": ["integrations/contracts/hardhat"]
+          }
+        ]
+      },
+      {
+        "group": "Development",
+        "icon": "code",
+        "pages": [
+          "development/workflow",
+          "development/deployment",
+          "development/troubleshooting"
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "github": "https://github.com/celo-org/celo-composer",
+    "twitter": "https://twitter.com/Celo"
+  }
+}

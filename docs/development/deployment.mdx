@@ -1,0 +1,53 @@
+---
+title: Deployment
+description: "Learn how to deploy your Celo dApp to production."
+icon: "upload"
+---
+
+Once you've built your application, the final step is to deploy it so that users can access it. Since the frontend of a Celo Composer project is a standard Next.js application, you can deploy it to any platform that supports Next.js.
+
+## Recommended Platforms
+
+Here are some popular platforms for deploying Next.js applications:
+
+<CardGroup cols={2}>
+  <Card title="Vercel" icon="triangle">
+    The creators of Next.js, Vercel provides a seamless deployment experience
+    with first-class support for all Next.js features.
+  </Card>
+  <Card title="Netlify" icon="netlify">
+    A powerful platform for building and deploying modern web applications, with
+    great support for Next.js.
+  </Card>
+</CardGroup>
+
+## General Deployment Steps
+
+While the specific steps may vary depending on the platform you choose, the general process is as follows:
+
+1.  **Push to a Git Provider**: Push your project's code to a Git repository on a platform like GitHub, GitLab, or Bitbucket.
+
+2.  **Connect Your Repository**: Connect your Git repository to your chosen deployment platform (e.g., Vercel).
+
+3.  **Configure Build Settings**:
+
+    - **Framework Preset**: Select `Next.js`.
+    - **Build Command**: `pnpm build`.
+    - **Output Directory**: `apps/web/dist` (or as configured in your `next.config.js`).
+    - **Install Command**: `pnpm install`.
+
+4.  **Set Environment Variables**: Add the environment variables from your local `.env` file to the deployment platform's settings. Make sure to use the production values for things like API keys and RPC URLs.
+
+    <Warning>
+      Never commit your `.env` file. Always use the secure environment variable
+      management provided by your deployment platform.
+    </Warning>
+
+5.  **Deploy**: Trigger a new deployment. The platform will pull your code, build the application, and deploy it to a public URL.
+
+## Deploying Smart Contracts
+
+Your smart contracts need to be deployed to a public network (like Alfajores testnet or Celo mainnet) before your frontend application can interact with them.
+
+- Use the `pnpm contracts:deploy:alfajores` or `pnpm contracts:deploy:celo` scripts to deploy your contracts.
+- After deployment, you will get the contract addresses. You need to update your frontend's environment variables with these new addresses so it knows where to find the contracts on-chain.

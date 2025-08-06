@@ -1,0 +1,33 @@
+---
+title: Project Structure
+description: "Understand the monorepo architecture of your Celo Composer project."
+icon: "backpack"
+---
+
+Celo Composer generates projects with a modern monorepo structure, designed for scalability, code sharing, and efficient development. We use PNPM workspaces and Turborepo to manage the monorepo.
+
+Here's a typical directory layout:
+
+```plaintext
+my-celo-app/
+├── apps/
+│   ├── web/          # Next.js frontend application
+│   └── hardhat/      # Optional: Hardhat smart contracts
+├── package.json      # Root package.json
+├── pnpm-workspace.yaml # Defines the workspace
+└── turbo.json        # Turborepo configuration
+```
+
+## `apps` Directory
+
+The `apps` directory contains the individual applications within your monorepo. All parts of your project, including the frontend and smart contracts, are treated as separate applications.
+
+- **`apps/web`**: This is the main Next.js web application that serves as the user-facing frontend of your dApp.
+
+- **`apps/hardhat`** (Optional): If you choose to include the Hardhat framework, it will be set up as a separate application here. It contains your Solidity smart contracts, deployment scripts, and tests.
+
+## Tooling
+
+- **PNPM Workspaces**: PNPM is used to manage dependencies and link local packages together. The `pnpm-workspace.yaml` file at the root defines which directories are part of the workspace.
+
+- **Turborepo**: Turborepo is a high-performance build system for JavaScript and TypeScript monorepos. It speeds up your development workflow by caching build outputs and running tasks in parallel. The `turbo.json` file configures the task pipeline for your monorepo.

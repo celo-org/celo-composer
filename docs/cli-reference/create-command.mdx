@@ -1,0 +1,66 @@
+---
+title: "`create` Command"
+description: "Detailed reference for the `create` command in Celo Composer."
+icon: "code"
+---
+
+The `create` command is the primary command in Celo Composer. It allows you to generate a new Celo project with a variety of configurations.
+
+## Usage
+
+```bash
+npx @celo/celo-composer@latest create [project-name] [options]
+```
+
+### Arguments
+
+- **`[project-name]`** (optional): The name of your project. If you don't provide a name here, the CLI will prompt you for one.
+
+### Options
+
+You can use the following flags to customize your project generation. Using any of these flags will bypass the interactive prompts for those options.
+
+| Flag                | Description                                             | Default (if not provided) |
+| ------------------- | ------------------------------------------------------- | ------------------------- |
+| `-d, --description` | A short description for your project.                   | Interactive prompt        |
+| `-t, --template`    | The template type (`basic` or `farcaster-miniapp`).     | `basic`                   |
+| `--wallet-provider` | The wallet provider (`rainbowkit`, `thirdweb`, `none`). | `rainbowkit`              |
+| `-c, --contracts`   | The smart contract framework (`hardhat`).               | `hardhat`                 |
+| `--skip-install`    | Skip the automatic installation of dependencies.        | `false`                   |
+| `-y, --yes`         | Skip all interactive prompts and use default values.    | `false`                   |
+
+## Examples
+
+### Interactive Mode
+
+Run the command without any flags to enter the interactive mode, where the CLI will guide you through the setup process.
+
+```bash
+npx @celo/celo-composer@latest create my-awesome-dapp
+```
+
+### Non-Interactive Mode (with flags)
+
+Create a new project with specific configurations by using flags. This is useful for scripting and automation.
+
+```bash
+# Create a Farcaster Miniapp with Thirdweb and no smart contracts
+npx @celo/celo-composer@latest create my-farcaster-app \
+  --template farcaster-miniapp \
+  --wallet-provider thirdweb \
+  --contracts none
+```
+
+### Using the `--yes` Flag
+
+Create a project with all default settings, skipping all prompts.
+
+```bash
+npx @celo/celo-composer@latest create my-default-project --yes
+```
+
+This will generate a project with the following default configuration:
+
+- **Template**: `basic`
+- **Wallet Provider**: `rainbowkit`
+- **Contracts**: `hardhat`
