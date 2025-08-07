@@ -150,7 +150,7 @@ module.exports = function (plop: NodePlopAPI): void {
       // Conditionally add Hardhat smart contract development
       {
         type: "addMany",
-        destination: "{{projectPath}}/apps/hardhat/",
+        destination: "{{projectPath}}/packages/contracts/",
         base: path.join(__dirname, "../templates/contracts/hardhat/"),
         templateFiles: path.join(__dirname, "../templates/contracts/hardhat/**/*.hbs"),
         globOptions: {
@@ -159,6 +159,24 @@ module.exports = function (plop: NodePlopAPI): void {
         skip: (data: PlopData): string | false => {
           if (data.contractFramework !== "hardhat") {
             return "Skipping Hardhat - different contract framework selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+
+      // Conditionally add Foundry smart contract development
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/packages/contracts/",
+        base: path.join(__dirname, "../templates/contracts/foundry/"),
+        templateFiles: path.join(__dirname, "../templates/contracts/foundry/**/*.hbs"),
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: PlopData): string | false => {
+          if (data.contractFramework !== "foundry") {
+            return "Skipping Foundry - different contract framework selected";
           }
           return false;
         },

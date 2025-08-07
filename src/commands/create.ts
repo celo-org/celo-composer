@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { spawn } from "child_process";
 import fs from "fs-extra";
 import inquirer from "inquirer";
 import ora from "ora";
@@ -28,6 +29,7 @@ interface PromptAnswers {
   walletProvider?: string;
   contractFramework?: string;
   installDependencies?: boolean;
+  installFoundry?: boolean;
   // Farcaster miniapp specific fields
   miniappName?: string;
   miniappDescription?: string;
@@ -103,7 +105,8 @@ export async function createCommand(
               ],
               default: "rainbowkit",
               when: (answers: { templateType?: string }): boolean => {
-                const templateType = options.templateType || answers.templateType;
+                const templateType =
+                  options.templateType || answers.templateType;
                 return (
                   !options.walletProvider &&
                   templateType !== "farcaster-miniapp" &&
@@ -117,7 +120,8 @@ export async function createCommand(
               message:
                 "Which smart contract development framework would you like to use?",
               choices: [
-                { name: "Hardhat (Recommended)", value: "hardhat" },
+                { name: "Hardhat", value: "hardhat" },
+                { name: "Foundry", value: "foundry" },
                 {
                   name: "None (Skip smart contract development)",
                   value: "none",
@@ -128,6 +132,15 @@ export async function createCommand(
             },
             {
               type: "confirm",
+              name: "installFoundry",
+              message:
+                "Install Foundry dependencies? (This will run 'foundryup' if Foundry is not detected)",
+              default: true,
+              when: (answers: { contractFramework: string }) =>
+                answers.contractFramework === "foundry",
+            },
+            {
+              type: "confirm",
               name: "installDependencies",
               message: "Install dependencies?",
               default: true,
@@ -135,9 +148,14 @@ export async function createCommand(
             },
           ]);
 
-    const finalProjectName = projectName || answers.projectName || "my-celo-app";
-    const finalDescription = options.description || answers.description || "A new Celo blockchain project";
-    const finalTemplateType = options.templateType || answers.templateType || "basic";
+    const finalProjectName =
+      projectName || answers.projectName || "my-celo-app";
+    const finalDescription =
+      options.description ||
+      answers.description ||
+      "A new Celo blockchain project";
+    const finalTemplateType =
+      options.templateType || answers.templateType || "basic";
 
     // Farcaster miniapp specific prompts - only ask if template is farcaster-miniapp and values not provided via CLI
     let farcasterAnswers: {
@@ -149,16 +167,19 @@ export async function createCommand(
 
     if (finalTemplateType === "farcaster-miniapp" && !options.yes) {
       const farcasterPrompts = [];
-      
+
       if (!options.miniappName) {
         farcasterPrompts.push({
           type: "input" as const,
           name: "miniappName" as const,
           message: "Miniapp display name:",
-          default: finalProjectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+          default: finalProjectName
+            .split("-")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" "),
         });
       }
-      
+
       if (!options.miniappDescription) {
         farcasterPrompts.push({
           type: "input" as const,
@@ -167,7 +188,7 @@ export async function createCommand(
           default: "A new Celo blockchain miniapp",
         });
       }
-      
+
       if (!options.miniappTags) {
         farcasterPrompts.push({
           type: "input" as const,
@@ -176,7 +197,7 @@ export async function createCommand(
           default: "mini-app,celo,blockchain",
         });
       }
-      
+
       if (!options.miniappTagline) {
         farcasterPrompts.push({
           type: "input" as const,
@@ -185,7 +206,7 @@ export async function createCommand(
           default: "Built on Celo",
         });
       }
-      
+
       if (farcasterPrompts.length > 0) {
         farcasterAnswers = await inquirer.prompt(farcasterPrompts);
       }
@@ -204,13 +225,31 @@ export async function createCommand(
     const shouldInstall = options.skipInstall
       ? false
       : answers.installDependencies ?? true;
-    
+
     // Farcaster miniapp specific values
-    const finalMiniappName = options.miniappName || farcasterAnswers.miniappName || answers.miniappName || 
-      finalProjectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    const finalMiniappDescription = options.miniappDescription || farcasterAnswers.miniappDescription || answers.miniappDescription || "A new Celo blockchain miniapp";
-    const finalMiniappTags = options.miniappTags || farcasterAnswers.miniappTags || answers.miniappTags || "mini-app,celo,blockchain";
-    const finalMiniappTagline = options.miniappTagline || farcasterAnswers.miniappTagline || answers.miniappTagline || "Built on Celo";
+    const finalMiniappName =
+      options.miniappName ||
+      farcasterAnswers.miniappName ||
+      answers.miniappName ||
+      finalProjectName
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    const finalMiniappDescription =
+      options.miniappDescription ||
+      farcasterAnswers.miniappDescription ||
+      answers.miniappDescription ||
+      "A new Celo blockchain miniapp";
+    const finalMiniappTags =
+      options.miniappTags ||
+      farcasterAnswers.miniappTags ||
+      answers.miniappTags ||
+      "mini-app,celo,blockchain";
+    const finalMiniappTagline =
+      options.miniappTagline ||
+      farcasterAnswers.miniappTagline ||
+      answers.miniappTagline ||
+      "Built on Celo";
 
     // Validate project name
     const validation = validateProjectName(finalProjectName);
@@ -226,6 +265,25 @@ export async function createCommand(
         chalk.red(`❌ Directory "${finalProjectName}" already exists!`)
       );
       process.exit(1);
+    }
+
+    // Conditionally install Foundry if selected
+    if (finalContractFramework === "foundry" && answers.installFoundry) {
+      const spinner = ora("Checking Foundry installation...").start();
+      try {
+        const isFoundryInstalled = await commandExists("forge");
+        if (isFoundryInstalled) {
+          spinner.succeed("Foundry is already installed.");
+        } else {
+          spinner.text = "Foundry not found. Installing via foundryup...";
+          await installFoundry();
+          spinner.succeed("Foundry installed successfully.");
+        }
+      } catch (error) {
+        spinner.fail("Foundry installation failed.");
+        console.error(error);
+        process.exit(1);
+      }
     }
 
     console.log(
@@ -252,6 +310,38 @@ export async function createCommand(
 
       spinner.succeed("Project generated successfully!");
 
+      // If Foundry is the selected contract framework, install its dependencies
+      if (finalContractFramework === "foundry") {
+        const contractsPath = path.join(projectPath, "packages", "contracts");
+        const forgeSpinner = ora("Installing Foundry dependencies...").start();
+        try {
+          await new Promise<void>((resolve, reject) => {
+            const installProcess = spawn(
+              "forge",
+              ["install", "foundry-rs/forge-std", "--no-commit"],
+              { cwd: contractsPath, stdio: "pipe" }
+            );
+
+            installProcess.on("close", (code) => {
+              if (code === 0) {
+                resolve();
+              } else {
+                reject(new Error(`'forge install' failed with code ${code}`));
+              }
+            });
+
+            installProcess.on("error", (err) => {
+              reject(err);
+            });
+          });
+          forgeSpinner.succeed("Foundry dependencies installed successfully.");
+        } catch (error) {
+          forgeSpinner.fail("Failed to install Foundry dependencies.");
+          console.error(error);
+          // We don't exit here, just warn the user.
+        }
+      }
+
       console.log(chalk.green.bold("\n🎉 Your Celo project is ready!\n"));
       console.log(chalk.cyan("Next steps:"));
       console.log(chalk.white(`  cd ${finalProjectName}`));
@@ -261,7 +351,11 @@ export async function createCommand(
       }
 
       console.log(chalk.white("  pnpm dev"));
-      console.log(chalk.gray("\nYour project has been initialized with Git and an initial commit has been created."));
+      console.log(
+        chalk.gray(
+          "\nYour project has been initialized with Git and an initial commit has been created."
+        )
+      );
       console.log(chalk.gray("Happy coding! 🚀\n"));
     } catch (error) {
       spinner.fail("Failed to generate project");
@@ -274,4 +368,61 @@ export async function createCommand(
     );
     process.exit(1);
   }
+}
+
+// Helper function to check if a command exists
+function commandExists(command: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const check = spawn("command", ["-v", command], { stdio: "ignore" });
+    check.on("close", (code) => resolve(code === 0));
+    check.on("error", () => resolve(false));
+  });
+}
+
+// Helper function to install Foundry
+function installFoundry(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const curl = spawn("curl", ["-L", "https://foundry.paradigm.xyz"]);
+    const bash = spawn("bash", [], { stdio: ["pipe", "pipe", "pipe"] });
+
+    curl.stdout.pipe(bash.stdin);
+
+    let errorOutput = "";
+    bash.stderr.on("data", (data) => {
+      errorOutput += data.toString();
+    });
+
+    bash.on("close", (code) => {
+      if (code === 0) {
+        // After installation, the script suggests adding foundry to the path.
+        // We will run it directly from the installation location to avoid shell restarts.
+        if (!process.env.HOME) {
+          return reject(
+            new Error(
+              "HOME environment variable not set. Cannot find foundryup."
+            )
+          );
+        }
+        const foundryup = spawn(
+          path.join(process.env.HOME, ".foundry", "bin", "foundryup")
+        );
+        foundryup.on("close", (exitCode) => {
+          if (exitCode === 0) {
+            resolve();
+          } else {
+            reject(new Error(`foundryup command failed with code ${exitCode}`));
+          }
+        });
+      } else {
+        reject(
+          new Error(
+            `Installation script failed with code ${code}: ${errorOutput}`
+          )
+        );
+      }
+    });
+
+    curl.on("error", (err) => reject(err));
+    bash.on("error", (err) => reject(err));
+  });
 }

@@ -67,7 +67,10 @@
           {
             "group": "Smart Contracts",
             "icon": "file",
-            "pages": ["integrations/contracts/hardhat"]
+            "pages": [
+              "integrations/contracts/hardhat",
+              "integrations/contracts/foundry"
+            ]
           }
         ]
       },
