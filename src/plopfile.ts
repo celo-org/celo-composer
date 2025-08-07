@@ -69,8 +69,11 @@ module.exports = function (plop: NodePlopAPI): void {
         base: path.join(__dirname, "../templates/wallets/rainbowkit/components/"),
         templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (data.templateType === "farcaster-miniapp") {
-            return "Skipping RainbowKit - Farcaster Miniapp uses its own wallet components";
+          if (
+            data.templateType === "farcaster-miniapp" ||
+            data.templateType === "minipay"
+          ) {
+            return "Skipping RainbowKit - This template uses its own wallet components";
           }
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
@@ -78,6 +81,37 @@ module.exports = function (plop: NodePlopAPI): void {
           return false;
         },
         verbose: true,
+      },
+      // Conditionally add Minipay wallet components
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/web/src/components/",
+        base: path.join(__dirname, "../templates/minipay/components/"),
+        templateFiles: [
+          path.join(__dirname, "../templates/minipay/components/connect-button.tsx.hbs"),
+          path.join(__dirname, "../templates/minipay/components/wallet-provider.tsx.hbs"),
+          path.join(__dirname, "../templates/minipay/components/user-balance.tsx.hbs"),
+        ],
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "minipay") {
+            return "Skipping Minipay wallet components - different template selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Conditionally add Minipay tailwind config
+      {
+        type: "add",
+        path: "{{projectPath}}/apps/web/tailwind.config.js",
+        templateFile: path.join(__dirname, "../templates/minipay/tailwind.config.js.hbs"),
+        force: true, // Overwrite the base tailwind config
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "minipay") {
+            return "Skipping Minipay tailwind config - different template selected";
+          }
+          return false;
+        },
       },
       // Conditionally add Thirdweb wallet components
       {

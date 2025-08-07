@@ -6,6 +6,9 @@ import { useAccount, useConnect } from "wagmi";
 {{else}}
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+{{#if (eq templateType 'minipay')}}
+import { UserBalance } from "@/components/user-balance";
+{{/if}}
 import { Zap } from "lucide-react";
 {{/if}}
 
@@ -203,6 +206,11 @@ export default function Home() {
         >
           Start building your decentralized application on Celo. Fast and secure blockchain for everyone.
         </p>
+
+        {{#if (eq templateType 'minipay')}}
+        {/* User Balance Display */}
+        <UserBalance />
+        {{/if}}
 
         {/* CTA Buttons */}
         <div

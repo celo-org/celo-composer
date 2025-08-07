@@ -87,6 +87,7 @@ export async function createCommand(
               choices: [
                 { name: "Basic Template", value: "basic" },
                 { name: "Farcaster Miniapp", value: "farcaster-miniapp" },
+                { name: "Minipay App", value: "minipay" },
               ],
               default: "basic",
               when: !options.templateType,
@@ -103,7 +104,11 @@ export async function createCommand(
               default: "rainbowkit",
               when: (answers: { templateType?: string }): boolean => {
                 const templateType = options.templateType || answers.templateType;
-                return !options.walletProvider && templateType !== "farcaster-miniapp";
+                return (
+                  !options.walletProvider &&
+                  templateType !== "farcaster-miniapp" &&
+                  templateType !== "minipay"
+                );
               },
             },
             {
@@ -187,7 +192,13 @@ export async function createCommand(
     }
 
     const finalWalletProvider =
-      options.walletProvider || answers.walletProvider || (finalTemplateType === "farcaster-miniapp" ? "none" : "rainbowkit");
+      options.walletProvider ||
+      answers.walletProvider ||
+      (finalTemplateType === "farcaster-miniapp"
+        ? "none"
+        : finalTemplateType === "minipay"
+        ? "rainbowkit"
+        : "rainbowkit");
     const finalContractFramework =
       options.contracts || answers.contractFramework || "none";
     const shouldInstall = options.skipInstall

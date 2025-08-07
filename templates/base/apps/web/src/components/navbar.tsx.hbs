@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
-import { WalletConnectButton } from "@/components/connect-button"
+import { ConnectButton } from "@/components/connect-button"
 {{/if}}
 
 const navLinks = [
@@ -37,13 +37,7 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
               <div className="flex items-center gap-2 mb-8">
-                <Image 
-                  src="/celo-logo.png" 
-                  alt="Celo Logo" 
-                  width={32}
-                  height={32}
-                  className="h-8 w-auto"
-                />
+
                 <span className="font-bold text-lg">
                   {{projectName}}
                 </span>
@@ -65,7 +59,13 @@ export function Navbar() {
                 ))}
                 <div className="mt-6 pt-6 border-t">
                   {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
-                  <WalletConnectButton />
+                    {{#if (eq templateType 'minipay')}}
+                  <Button asChild className="w-full">
+                    <ConnectButton />
+                  </Button>
+                    {{else}}
+                  <ConnectButton />
+                    {{/if}}
                   {{else}}
                   <Button className="w-full">Connect Wallet</Button>
                   {{/if}}
@@ -76,13 +76,7 @@ export function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <Image 
-              src="/celo-logo.png" 
-              alt="Celo Logo" 
-              width={32}
-              height={32}
-              className="h-8 w-auto"
-            />
+
             <span className="hidden font-bold text-xl sm:inline-block">
               {{projectName}}
             </span>
@@ -110,7 +104,7 @@ export function Navbar() {
           
           <div className="flex items-center gap-3">
             {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
-            <WalletConnectButton />
+            <ConnectButton />
             {{else}}
             <Button variant="outline" size="sm">Connect Wallet</Button>
             {{/if}}
