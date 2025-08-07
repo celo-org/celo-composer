@@ -44,7 +44,12 @@ npx @celo/celo-composer@latest create my-awesome-dapp
 Create a new project with specific configurations by using flags. This is useful for scripting and automation.
 
 ```bash
-# Create a Farcaster Miniapp with Thirdweb and no smart contracts
+npx @celo/celo-composer@latest create --template minipay
+```
+
+This command creates a new project using the Minipay template, which is optimized for integration with the Minipay mobile wallet. It comes with a pre-configured wallet connection and a mobile-first UI.
+
+```bash
 npx @celo/celo-composer@latest create my-farcaster-app \
   --template farcaster-miniapp \
   --wallet-provider thirdweb \

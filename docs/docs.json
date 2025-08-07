@@ -46,7 +46,11 @@
       {
         "group": "Templates",
         "icon": "clone",
-        "pages": ["templates/web-app-template", "templates/farcaster-miniapp"]
+        "pages": [
+          "templates/web-app-template",
+          "templates/farcaster-miniapp",
+          "templates/minipay"
+        ]
       },
       {
         "group": "Integrations",
