@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { exec } from "child_process";
 import fs from "fs-extra";
-import ora from "ora";
+import { Ora } from "ora";
 import path from "path";
 import { promisify } from "util";
 import { PlopConfig, TemplateGenerator } from "./plop-generator";
@@ -16,6 +16,7 @@ export interface ProjectConfig {
   contractFramework: string;
   projectPath: string;
   installDependencies: boolean;
+  spinner: Ora;
   // Farcaster miniapp specific fields
   miniappName?: string;
   miniappDescription?: string;
@@ -24,7 +25,20 @@ export interface ProjectConfig {
 }
 
 export async function generateProject(config: ProjectConfig): Promise<void> {
-  const { projectName, description, templateType, walletProvider, contractFramework, projectPath, installDependencies, miniappName, miniappDescription, miniappTags, miniappTagline } = config;
+  const {
+    projectName,
+    description,
+    templateType,
+    walletProvider,
+    contractFramework,
+    projectPath,
+    installDependencies,
+    spinner,
+    miniappName,
+    miniappDescription,
+    miniappTags,
+    miniappTagline,
+  } = config;
 
   // Use the professional template-driven generator
   const templateGenerator = new TemplateGenerator();
@@ -49,7 +63,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
 
   // Install dependencies if requested
   if (installDependencies) {
-    const spinner = ora("Installing dependencies...").start();
+    spinner.text = "Installing dependencies...";
     try {
       await execAsync("pnpm install", { cwd: projectPath });
       spinner.succeed("Dependencies installed successfully!");
@@ -58,23 +72,25 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
       console.log(
         chalk.yellow("You can install them manually later with: pnpm install")
       );
+      // Restart spinner for the next step if installation fails
+      spinner.start();
     }
   }
 
   // Initialize Git repository and create initial commit
-  const gitSpinner = ora("Initializing Git repository...").start();
+  spinner.start("Initializing Git repository...");
   try {
     // Check if Git is installed
     try {
       await execAsync("git --version");
     } catch (error) {
-      gitSpinner.warn("Git is not installed. Skipping Git initialization.");
+      spinner.warn("Git is not installed. Skipping Git initialization.");
       return;
     }
 
     // Initialize Git repository
     await execAsync("git init", { cwd: projectPath });
-    
+
     // Create .gitignore if it doesn't exist
     const gitignorePath = path.join(projectPath, ".gitignore");
     if (!fs.existsSync(gitignorePath)) {
@@ -109,15 +125,24 @@ yarn-error.log*
     }
 
     // Add all files and create initial commit
-    await execAsync("git add .", { cwd: projectPath });
-    await execAsync('git commit -m "Initial commit"', { 
+    await execAsync(`git config user.name "Celo Composer"`, {
       cwd: projectPath,
-      env: { ...process.env, GIT_AUTHOR_NAME: "Celo Composer", GIT_AUTHOR_EMAIL: "composer@celo.org" }
+    });
+    await execAsync(`git config user.email "support@celo.org"`, {
+      cwd: projectPath,
     });
 
-    gitSpinner.succeed("Git repository initialized with initial commit");
+    await execAsync("git add -A", { cwd: projectPath });
+    await execAsync(`git commit -m "feat: initial commit from Celo Composer"`, {
+      cwd: projectPath,
+    });
+    spinner.succeed("Git repository initialized with initial commit");
   } catch (error) {
-    gitSpinner.fail("Failed to initialize Git repository");
-    console.log(chalk.yellow("You can initialize Git manually later with: git init && git add . && git commit -m 'Initial commit'"));
+    spinner.fail("Failed to initialize Git repository");
+    console.log(
+      chalk.yellow(
+        "You can initialize Git manually later with: git init && git add . && git commit -m 'Initial commit'"
+      )
+    );
   }
 }

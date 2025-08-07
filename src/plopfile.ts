@@ -150,7 +150,7 @@ module.exports = function (plop: NodePlopAPI): void {
       // Conditionally add Hardhat smart contract development
       {
         type: "addMany",
-        destination: "{{projectPath}}/packages/contracts/",
+        destination: "{{projectPath}}/apps/contracts/",
         base: path.join(__dirname, "../templates/contracts/hardhat/"),
         templateFiles: path.join(__dirname, "../templates/contracts/hardhat/**/*.hbs"),
         globOptions: {
@@ -168,7 +168,7 @@ module.exports = function (plop: NodePlopAPI): void {
       // Conditionally add Foundry smart contract development
       {
         type: "addMany",
-        destination: "{{projectPath}}/packages/contracts/",
+        destination: "{{projectPath}}/apps/contracts/",
         base: path.join(__dirname, "../templates/contracts/foundry/"),
         templateFiles: path.join(__dirname, "../templates/contracts/foundry/**/*.hbs"),
         globOptions: {

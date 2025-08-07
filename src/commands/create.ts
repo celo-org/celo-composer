@@ -42,7 +42,7 @@ export async function createCommand(
   options: CreateOptions = {}
 ): Promise<void> {
   try {
-    console.log(chalk.blue.bold("\n🚀 Welcome to Celo Composer CLI!\n"));
+    console.log(chalk.blue.bold("\n🟨 Welcome to Celo Composer CLI!\n"));
 
     // If --yes flag is provided, skip all prompts and use defaults/flags
     // Check if any CLI options are provided (auto-mode)
@@ -294,6 +294,7 @@ export async function createCommand(
 
     try {
       await generateProject({
+        spinner,
         projectName: finalProjectName,
         description: finalDescription,
         templateType: finalTemplateType,
@@ -308,12 +309,10 @@ export async function createCommand(
         miniappTagline: finalMiniappTagline,
       });
 
-      spinner.succeed("Project generated successfully!");
-
       // If Foundry is the selected contract framework, install its dependencies
       if (finalContractFramework === "foundry") {
-        const contractsPath = path.join(projectPath, "packages", "contracts");
-        const forgeSpinner = ora("Installing Foundry dependencies...").start();
+        const contractsPath = path.join(projectPath, "apps", "contracts");
+        spinner.start("Installing Foundry dependencies...");
         try {
           await new Promise<void>((resolve, reject) => {
             const installProcess = spawn(
@@ -334,9 +333,9 @@ export async function createCommand(
               reject(err);
             });
           });
-          forgeSpinner.succeed("Foundry dependencies installed successfully.");
+          spinner.succeed("Foundry dependencies installed successfully.");
         } catch (error) {
-          forgeSpinner.fail("Failed to install Foundry dependencies.");
+          spinner.fail("Failed to install Foundry dependencies.");
           console.error(error);
           // We don't exit here, just warn the user.
         }
