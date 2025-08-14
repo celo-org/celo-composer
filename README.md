@@ -148,13 +148,32 @@ npm install
 
 For detailed instructions, refer to [`packages/hardhat/README.md`](./packages/hardhat/README.md).
 
+### **Network Migration Notice**
+
+Celo Sepolia is the new long-term developer testnet and is now the recommended testnet for development. Alfajores will be deprecated on September 30, 2025.
+
+**Key Differences:**
+- **Celo Sepolia**: Chain ID 11142220
+- **Alfajores**: Chain ID 44787, will be deprecated in September 2025
+
+**Get test tokens:**
+- [Celo Sepolia Token Faucet](https://faucet.celo.org/celo-sepolia)
+- [Google Cloud Web3 Faucet](https://cloud.google.com/application/web3/faucet/celo/sepolia)
+
+**Test Celo Sepolia Support:**
+See [test-celo-sepolia.md](./test-celo-sepolia.md) for testing examples.
+
 Quick steps:
 
 1. Rename `packages/hardhat/.env.template` to `packages/hardhat/.env` and add your `PRIVATE_KEY`.
-2. Ensure your wallet has test funds from the [Celo Faucet](https://faucet.celo.org/alfajores).
+2. Ensure your wallet has test funds from the [Celo Faucet](https://faucet.celo.org/alfajores) or [Celo Sepolia Faucet](https://faucet.celo.org/celo-sepolia).
 3. Deploy the contract:
 
 ```bash
+# On Celo Sepolia (Recommended)
+npx hardhat ignition deploy ./ignition/modules/Lock.ts --network celo-sepolia
+
+# On Alfajores (Legacy - deprecated Sept 2025)
 npx hardhat ignition deploy ./ignition/modules/Lock.ts --network alfajores
 ```
 
