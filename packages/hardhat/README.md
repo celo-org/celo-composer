@@ -27,6 +27,15 @@ On Alfajores
 npx hardhat ignition deploy ./ignition/modules/Lock.ts --network alfajores
 ```
 
+On Celo Sepolia (Recommended Testnet)
+
+```bash
+npx hardhat ignition deploy ./ignition/modules/Lock.ts --network celo-sepolia
+```
+
+> **Note**: Celo Sepolia is the new long-term developer testnet. Alfajores will be deprecated on September 30, 2025. Get test tokens from:
+> - [Celo Sepolia Token Faucet](https://faucet.celo.org/celo-sepolia)
+> - [Google Cloud Web3 Faucet](https://cloud.google.com/application/web3/faucet/celo/sepolia)
 
 On Celo Mainnet
 
@@ -46,6 +55,18 @@ For the Lock.sol contract that could look like this:
 
 ```bash
 npx hardhat verify 0x756Af13eafF4Ef0D9e294222F9A922226567C39e 1893456000  --network alfajores
+```
+
+For Celo Sepolia (Testnet) Verification
+
+```bash
+npx hardhat verify <CONTRACT_ADDRESS>  <CONSTRUCTOR_ARGS> --network celo-sepolia
+```
+
+For the Lock.sol contract that could look like this:
+
+```bash
+npx hardhat verify 0x756Af13eafF4Ef0D9e294222F9A922226567C39e 1893456000  --network celo-sepolia
 ```
 
 For Celo Mainnet Verification
@@ -85,3 +106,18 @@ The project includes automatic ABI synchronization with your React frontend. ABI
 ##### Configuration
 - The sync script (`sync-abis.js`) is made executable automatically during `npm install` or `yarn install` by the `postinstall` hook in `package.json`.
 - **To disable automatic syncing**, remove the `sync-abis.js` call from the `compile` script in `package.json`. This configuration provides a flexible and consistent workflow for both `yarn` and `npm` users.
+
+### **Celo Sepolia Support**
+
+This project now supports Celo Sepolia testnet (Chain ID: 11142220) alongside the existing Alfajores and Mainnet networks.
+
+**What's New:**
+- Celo Sepolia network configuration
+- Contract deployment to Celo Sepolia
+- Contract verification on Celo Sepolia Blockscout
+- React app integration with Celo Sepolia
+
+**Migration Note:**
+- Celo Sepolia is the new long-term developer testnet
+- Alfajores will be deprecated on September 30, 2025
+- Consider migrating your development to Celo Sepolia
