@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "2.3.7",
+  "version": "2.4.0",
   "description": "CLI tool for generating customizable Celo blockchain starter kits",
   "main": "dist/index.js",
   "bin": {
@@ -64,6 +64,7 @@
     "eslint": "^8.50.0",
     "jest": "^29.7.0",
     "rimraf": "^5.0.5",
+    "ts-jest": "^29.4.1",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2"
   },
