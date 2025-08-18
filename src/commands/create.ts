@@ -58,14 +58,33 @@ export async function createCommand(
 
     const answers: PromptAnswers =
       options.yes || hasCliOptions
-        ? {
-            projectName: projectName || "my-celo-app",
-            description: options.description || "A new Celo blockchain project",
-            templateType: options.template || options.templateType || "basic",
-            walletProvider: options.walletProvider || "rainbowkit",
-            contractFramework: options.contracts || "none",
-            installDependencies: options.skipInstall ? false : true,
-          }
+        ? ((): PromptAnswers => {
+            const autoTemplateType =
+              options.template || options.templateType || "basic";
+            const autoWallet = options.walletProvider
+              ? options.walletProvider
+              : autoTemplateType === "farcaster-miniapp" ||
+                autoTemplateType === "ai-chat"
+              ? "none"
+              : autoTemplateType === "minipay"
+              ? "rainbowkit"
+              : "rainbowkit";
+            const autoContracts = options.contracts
+              ? options.contracts
+              : autoTemplateType === "farcaster-miniapp" ||
+                autoTemplateType === "ai-chat"
+              ? "none"
+              : "hardhat";
+            return {
+              projectName: projectName || "my-celo-app",
+              description:
+                options.description || "A new Celo blockchain project",
+              templateType: autoTemplateType,
+              walletProvider: autoWallet,
+              contractFramework: autoContracts,
+              installDependencies: options.skipInstall ? false : true,
+            };
+          })()
         : await inquirer.prompt([
             {
               type: "input",
@@ -90,6 +109,7 @@ export async function createCommand(
                 { name: "Basic Template", value: "basic" },
                 { name: "Farcaster Miniapp", value: "farcaster-miniapp" },
                 { name: "Minipay App", value: "minipay" },
+                { name: "AI Agent Chat App", value: "ai-chat" },
               ],
               default: "basic",
               when: !options.templateType,
@@ -110,7 +130,8 @@ export async function createCommand(
                 return (
                   !options.walletProvider &&
                   templateType !== "farcaster-miniapp" &&
-                  templateType !== "minipay"
+                  templateType !== "minipay" &&
+                  templateType !== "ai-chat"
                 );
               },
             },
@@ -128,7 +149,12 @@ export async function createCommand(
                 },
               ],
               default: "hardhat",
-              when: !options.contracts,
+              when: (answers: { templateType?: string }): boolean => {
+                const templateType =
+                  options.templateType || answers.templateType;
+                if (templateType === "ai-chat") return false;
+                return !options.contracts;
+              },
             },
             {
               type: "confirm",
@@ -215,13 +241,20 @@ export async function createCommand(
     const finalWalletProvider =
       options.walletProvider ||
       answers.walletProvider ||
-      (finalTemplateType === "farcaster-miniapp"
+      (finalTemplateType === "farcaster-miniapp" ||
+      finalTemplateType === "ai-chat"
         ? "none"
         : finalTemplateType === "minipay"
         ? "rainbowkit"
         : "rainbowkit");
-    const finalContractFramework =
-      options.contracts || answers.contractFramework || "none";
+    let finalContractFramework = options.contracts || answers.contractFramework;
+    if (!finalContractFramework) {
+      finalContractFramework =
+        finalTemplateType === "ai-chat" ||
+        finalTemplateType === "farcaster-miniapp"
+          ? "none"
+          : "hardhat";
+    }
     const shouldInstall = options.skipInstall
       ? false
       : answers.installDependencies ?? true;

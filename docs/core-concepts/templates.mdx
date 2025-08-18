@@ -22,6 +22,11 @@ You can select a base template using the `--template` flag during project creati
     A specialized template for building Farcaster Miniapps, with Farcaster SDK
     and Frame development support pre-configured.
   </Card>
+  <Card title="AI Chat" icon="bot">
+    A standalone Next.js AI chat app. This template is copied as-is (raw copy),
+    bypassing Handlebars/Plop rendering. Ideal when you want a complete app
+    without monorepo scaffolding.
+  </Card>
 </CardGroup>
 
 ## Wallet Providers
@@ -60,5 +65,7 @@ Celo Composer can set up a smart contract development environment for you. Use t
 ## How it Works
 
 When you run `celo-composer create`, the CLI uses Plop.js to dynamically generate the project files based on your selections. It copies the base template and then conditionally adds the files and configurations for your chosen integrations.
+
+Note: The `ai-chat` template uses a raw copy path (no Plop). Unwanted files (like `.env`, `.next`, `node_modules`, `artifacts`) are filtered out automatically during copy.
 
 This approach ensures that your project only includes the code it needs, keeping it clean and optimized.

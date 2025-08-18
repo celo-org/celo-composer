@@ -14,7 +14,8 @@
     "lint": "eslint src --ext .ts",
     "clean": "rimraf dist",
     "prepublishOnly": "pnpm clean && pnpm build && pnpm test",
-    "prepack": "pnpm build"
+    "prepack": "pnpm build && node scripts/prepack-prune.cjs",
+    "postpack": "node scripts/postpack-restore.cjs"
   },
   "keywords": [
     "celo",

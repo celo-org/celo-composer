@@ -23,7 +23,7 @@ You can use the following flags to customize your project generation. Using any 
 | Flag                | Description                                                  | Default (if not provided) |
 | ------------------- | ------------------------------------------------------------ | ------------------------- |
 | `-d, --description` | A short description for your project.                        | Interactive prompt        |
-| `-t, --template`    | The template type (`basic`, `farcaster-miniapp`, `minipay`). | `basic`                   |
+| `-t, --template`    | The template type (`basic`, `farcaster-miniapp`, `minipay`, `ai-chat`). | `basic`                   |
 | `--wallet-provider` | The wallet provider (`rainbowkit`, `thirdweb`, `none`).      | `rainbowkit`              |
 | `-c, --contracts`   | The smart contract framework (`hardhat`, `foundry`, `none`). | `hardhat`                 |
 | `--skip-install`    | Skip the automatic installation of dependencies.             | `false`                   |
@@ -55,6 +55,15 @@ npx @celo/celo-composer@latest create my-farcaster-app \
   --wallet-provider thirdweb \
   --contracts none
 ```
+
+```bash
+npx @celo/celo-composer@latest create my-ai-chat \
+  --template ai-chat \
+  --contracts none \
+  --wallet-provider none
+```
+
+The `ai-chat` template is a standalone Next.js app copied as-is (no Handlebars rendering). Wallet and contracts prompts are skipped by default.
 
 ### Using the `--yes` Flag
 
