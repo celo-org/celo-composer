@@ -1,5 +1,6 @@
 import { NodePlopAPI } from "plop";
 import path from "path";
+import { getTemplatesPath } from "./utils/paths.js";
 
 interface PlopData {
   projectName: string;
@@ -10,9 +11,12 @@ interface PlopData {
   installDependencies: boolean;
 }
 
-module.exports = function (plop: NodePlopAPI): void {
+export default function (plop: NodePlopAPI): void {
   // Set the base path for templates
   plop.setDefaultInclude({ generators: true });
+  
+  // Get templates path using ESM-compatible method
+  const templatesPath = getTemplatesPath(import.meta.url);
 
   // Configure the Celo project generator
   plop.setGenerator("celo-project", {
@@ -44,8 +48,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/",
-        base: path.join(__dirname, "../templates/base/"),
-        templateFiles: path.join(__dirname, "../templates/base/**/*.hbs"),
+        base: path.join(templatesPath, "base/"),
+        templateFiles: path.join(templatesPath, "base/**/*.hbs"),
         globOptions: {
           dot: true,
         },
@@ -55,8 +59,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/",
-        base: path.join(__dirname, "../templates/base/"),
-        templateFiles: [path.join(__dirname, "../templates/base/**/*"), "!" + path.join(__dirname, "../templates/base/**/*.hbs")],
+        base: path.join(templatesPath, "base/"),
+        templateFiles: [path.join(templatesPath, "base/**/*"), "!" + path.join(templatesPath, "base/**/*.hbs")],
         globOptions: {
           dot: true,
         },
@@ -66,8 +70,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/components/",
-        base: path.join(__dirname, "../templates/wallets/rainbowkit/components/"),
-        templateFiles: path.join(__dirname, "../templates/wallets/rainbowkit/components/*.tsx.hbs"),
+        base: path.join(templatesPath, "wallets/rainbowkit/components/"),
+        templateFiles: path.join(templatesPath, "wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
           if (
             data.templateType === "farcaster-miniapp" ||
@@ -86,11 +90,11 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/components/",
-        base: path.join(__dirname, "../templates/minipay/components/"),
+        base: path.join(templatesPath, "minipay/components/"),
         templateFiles: [
-          path.join(__dirname, "../templates/minipay/components/connect-button.tsx.hbs"),
-          path.join(__dirname, "../templates/minipay/components/wallet-provider.tsx.hbs"),
-          path.join(__dirname, "../templates/minipay/components/user-balance.tsx.hbs"),
+          path.join(templatesPath, "minipay/components/connect-button.tsx.hbs"),
+          path.join(templatesPath, "minipay/components/wallet-provider.tsx.hbs"),
+          path.join(templatesPath, "minipay/components/user-balance.tsx.hbs"),
         ],
         skip: (data: PlopData): string | false => {
           if (data.templateType !== "minipay") {
@@ -104,7 +108,7 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "add",
         path: "{{projectPath}}/apps/web/tailwind.config.js",
-        templateFile: path.join(__dirname, "../templates/minipay/tailwind.config.js.hbs"),
+        templateFile: path.join(templatesPath, "minipay/tailwind.config.js.hbs"),
         force: true, // Overwrite the base tailwind config
         skip: (data: PlopData): string | false => {
           if (data.templateType !== "minipay") {
@@ -117,8 +121,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/components/",
-        base: path.join(__dirname, "../templates/wallets/thirdweb/components/"),
-        templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/components/*.tsx.hbs"),
+        base: path.join(templatesPath, "wallets/thirdweb/components/"),
+        templateFiles: path.join(templatesPath, "wallets/thirdweb/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
           if (data.templateType === "farcaster-miniapp") {
             return "Skipping Thirdweb - Farcaster Miniapp uses its own wallet components";
@@ -134,8 +138,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/lib/",
-        base: path.join(__dirname, "../templates/wallets/thirdweb/lib/"),
-        templateFiles: path.join(__dirname, "../templates/wallets/thirdweb/lib/*.ts.hbs"),
+        base: path.join(templatesPath, "wallets/thirdweb/lib/"),
+        templateFiles: path.join(templatesPath, "wallets/thirdweb/lib/*.ts.hbs"),
         skip: (data: PlopData): string | false => {
           if (data.templateType === "farcaster-miniapp") {
             return "Skipping Thirdweb lib - Farcaster Miniapp uses its own wallet components";
@@ -151,8 +155,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/contracts/",
-        base: path.join(__dirname, "../templates/contracts/hardhat/"),
-        templateFiles: path.join(__dirname, "../templates/contracts/hardhat/**/*.hbs"),
+        base: path.join(templatesPath, "contracts/hardhat/"),
+        templateFiles: path.join(templatesPath, "contracts/hardhat/**/*.hbs"),
         globOptions: {
           dot: true,
         },
@@ -169,8 +173,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/contracts/",
-        base: path.join(__dirname, "../templates/contracts/foundry/"),
-        templateFiles: path.join(__dirname, "../templates/contracts/foundry/**/*.hbs"),
+        base: path.join(templatesPath, "contracts/foundry/"),
+        templateFiles: path.join(templatesPath, "contracts/foundry/**/*.hbs"),
         globOptions: {
           dot: true,
         },
@@ -186,8 +190,8 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/src/",
-        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/src/"),
-        templateFiles: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/src/**/*.hbs"),
+        base: path.join(templatesPath, "farcaster-miniapp/apps/web/src/"),
+        templateFiles: path.join(templatesPath, "farcaster-miniapp/apps/web/src/**/*.hbs"),
         globOptions: {
           dot: true,
         },
@@ -203,9 +207,9 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/",
-        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/"),
+        base: path.join(templatesPath, "farcaster-miniapp/apps/web/"),
         templateFiles: [
-          path.join(__dirname, "../templates/farcaster-miniapp/apps/web/.eslintrc.json.hbs")
+          path.join(templatesPath, "farcaster-miniapp/apps/web/.eslintrc.json.hbs")
         ],
         globOptions: {
           dot: true,
@@ -222,7 +226,7 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "add",
         path: "{{projectPath}}/FARCASTER_SETUP.md",
-        templateFile: path.join(__dirname, "../templates/farcaster-miniapp/FARCASTER_SETUP.md.hbs"),
+        templateFile: path.join(templatesPath, "farcaster-miniapp/FARCASTER_SETUP.md.hbs"),
         skip: (data: PlopData): string | false => {
           if (data.templateType !== "farcaster-miniapp") {
             return "Skipping Farcaster setup guide - different template type selected";
@@ -234,10 +238,10 @@ module.exports = function (plop: NodePlopAPI): void {
       {
         type: "addMany",
         destination: "{{projectPath}}/apps/web/public/",
-        base: path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/"),
+        base: path.join(templatesPath, "farcaster-miniapp/apps/web/public/"),
         templateFiles: [
-          path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/*"),
-          "!" + path.join(__dirname, "../templates/farcaster-miniapp/apps/web/public/**/*.hbs")
+          path.join(templatesPath, "farcaster-miniapp/apps/web/public/*"),
+          "!" + path.join(templatesPath, "farcaster-miniapp/apps/web/public/**/*.hbs")
         ],
         globOptions: {
           dot: true,
