@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "CLI tool for generating customizable Celo blockchain starter kits",
   "main": "dist/index.js",
   "bin": {
@@ -48,10 +48,10 @@
     "commander": "^11.1.0",
     "fs-extra": "^11.1.1",
     "inquirer": "^8.2.5",
-    "node-plop": "^0.32.0",
+    "node-plop": "^0.31.1",
     "ora": "^5.4.1",
     "path": "^0.12.7",
-    "plop": "^4.0.1"
+    "plop": "^3.1.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
