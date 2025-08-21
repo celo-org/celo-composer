@@ -44,18 +44,18 @@
     "access": "public"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
+    "chalk": "^4.1.2",
     "commander": "^11.1.0",
     "fs-extra": "^11.1.1",
-    "inquirer": "^9.2.12",
+    "inquirer": "^8.2.5",
     "node-plop": "^0.32.0",
-    "ora": "^7.0.1",
+    "ora": "^5.4.1",
     "path": "^0.12.7",
     "plop": "^4.0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/inquirer": "^9.0.7",
+    "@types/inquirer": "^8.2.10",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.8.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
