@@ -1,6 +1,6 @@
 {
   "name": "@celo/celo-composer",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "description": "CLI tool for generating customizable Celo blockchain starter kits",
   "main": "dist/index.js",
   "bin": {
