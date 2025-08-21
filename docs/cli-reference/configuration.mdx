@@ -1,0 +1,32 @@
+---
+title: Project Configuration
+description: "Learn how to configure your Celo Composer project."
+icon: "sliders"
+---
+
+Your Celo Composer project is configured primarily through environment variables. This allows you to manage sensitive information like API keys and private keys securely, without hardcoding them into your application.
+
+## Environment Variables
+
+When you create a new project, a `.env.example` file is generated in the root of your project. To set up your local environment, you should:
+
+1.  **Create a copy** of this file and name it `.env`.
+2.  **Fill in the required values** in the `.env` file.
+
+```bash
+# Copy the example file
+cp .env.example .env
+```
+
+<Warning>
+  The `.env` file contains sensitive information and is included in the `.gitignore` file by default. **Never commit your `.env` file to version control.**
+</Warning>
+
+
+
+## Build & Deployment Configuration
+
+- **`turbo.json`**: This file configures the build pipeline for your monorepo using Turborepo. You can define the dependencies between your packages and applications here.
+- **`next.config.js`**: Located in `apps/web`, this file allows you to customize the configuration for your Next.js application.
+
+For most use cases, you won't need to modify these files, but they are available for advanced configuration if needed.

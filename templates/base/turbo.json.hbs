@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {},
+    "type-check": {
+      "dependsOn": ["^type-check"]
+    },
+    "clean": {
+      "cache": false
+    }{{#if (eq contractFramework "hardhat")}},
+    "compile": {
+      "dependsOn": ["^compile"],
+      "outputs": ["artifacts/**", "cache/**", "typechain-types/**"]
+    },
+    "test": {
+      "dependsOn": ["compile"]
+    },
+    "deploy": {
+      "dependsOn": ["compile"]
+    },
+    "deploy:alfajores": {
+      "dependsOn": ["compile"]
+    },
+    "deploy:celo": {
+      "dependsOn": ["compile"]
+    }{{/if}}
+  }
+}

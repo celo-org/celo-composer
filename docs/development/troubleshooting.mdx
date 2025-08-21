@@ -1,0 +1,69 @@
+---
+title: Troubleshooting
+description: "Find solutions to common problems and errors."
+icon: "clover"
+---
+
+Encountering issues is a normal part of development. This guide provides solutions to some of the most common problems you might face when using Celo Composer.
+
+## `indexedDB is not defined` Error
+
+This is a common Server-Side Rendering (SSR) issue that occurs when a library tries to access browser-specific APIs (like `window` or `indexedDB`) on the server.
+
+**Solution:**
+
+Celo Composer templates are designed to handle this by dynamically importing components that cause issues, ensuring they only render on the client side. If you've added new libraries that cause this error, you may need to apply a similar pattern:
+
+```tsx
+import dynamic from "next/dynamic";
+
+const MyClientOnlyComponent = dynamic(
+  () => import("../components/MyClientOnlyComponent"),
+  { ssr: false }
+);
+
+export default function Page() {
+  return (
+    <div>
+      {/* This component will only be rendered on the client */}
+      <MyClientOnlyComponent />
+    </div>
+  );
+}
+```
+
+## Installation Issues
+
+**Problem**: `celo-composer: command not found`
+
+**Solution**: This usually means the global installation didn't work correctly or your shell's `PATH` is not configured to find global Node modules.
+
+1.  **Verify Installation**: Make sure you have installed the package globally with `npm install -g @celo/celo-composer`.
+2.  **Check PATH**: Ensure that your Node.js global bin directory is in your shell's `PATH`. You can find the directory by running `npm config get prefix`.
+
+**Problem**: Errors during `pnpm install`.
+
+**Solution**:
+
+1.  **Check Node/PNPM Versions**: Ensure you are using the recommended versions of Node.js (v18+) and PNPM (v8+).
+2.  **Clear Cache**: Try clearing the PNPM cache with `pnpm store prune` and then run `pnpm install` again.
+
+## Hardhat & Smart Contract Errors
+
+**Problem**: Contract compilation fails.
+
+**Solution**:
+
+1.  **Check Solidity Version**: Ensure the `solidity` version in your `hardhat.config.ts` matches the pragma statement in your contract files.
+2.  **Clean Cache**: Run `pnpm contracts:compile --force` to do a clean compilation.
+
+**Problem**: Deployment script fails due to authentication or network issues.
+
+**Solution**:
+
+1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` and `CELO_PROVIDER_URL` are correctly set up in your `.env` file.
+2.  **Check Account Balance**: Make sure the wallet associated with your `PRIVATE_KEY` has enough funds (e.g., Alfajores Celo) to pay for the deployment gas fees.
+
+## Still Stuck?
+
+If you're still encountering issues, feel free to open an issue on our [GitHub repository](https://github.com/celo-org/celo-composer).

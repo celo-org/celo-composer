@@ -1,0 +1,120 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Celo Composer",
+  "theme": "maple",
+  "colors": {
+    "primary": "#35D07F",
+    "light": "#5DD893",
+    "dark": "#2BA66B"
+  },
+  "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/celo-org/celo-composer",
+        "icon": "github"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Started",
+      "href": "https://celo.org/"
+    }
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Getting Started",
+        "icon": "rocket",
+        "pages": [
+          "getting-started/introduction",
+          "getting-started/installation",
+          "getting-started/quickstart"
+        ]
+      },
+      {
+        "group": "Core Concepts",
+        "icon": "book-open",
+        "pages": ["core-concepts/project-structure", "core-concepts/templates"]
+      },
+      {
+        "group": "CLI Reference",
+        "icon": "terminal",
+        "pages": ["cli-reference/create-command", "cli-reference/configuration"]
+      },
+      {
+        "group": "Templates",
+        "icon": "clone",
+        "pages": [
+          "templates/web-app-template",
+          "templates/farcaster-miniapp",
+          "templates/minipay"
+        ]
+      },
+      {
+        "group": "Integrations",
+        "icon": "plug",
+        "pages": [
+          {
+            "group": "Wallet Integration",
+            "icon": "wallet",
+            "pages": [
+              "integrations/wallets/rainbowkit",
+              "integrations/wallets/thirdweb"
+            ]
+          },
+          {
+            "group": "Smart Contracts",
+            "icon": "file",
+            "pages": [
+              "integrations/contracts/hardhat",
+              "integrations/contracts/foundry"
+            ]
+          }
+        ]
+      },
+      {
+        "group": "Development",
+        "icon": "code",
+        "pages": [
+          "development/workflow",
+          "development/deployment",
+          "development/troubleshooting"
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/celo",
+      "github": "https://github.com/celo-org",
+      "youtube": "https://www.youtube.com/@CeloOrg",
+      "linkedin": "https://www.linkedin.com/company/celo-foundation"
+    }
+  },
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "Celo Composer",
+      "og:description": "Celo Composer is a command-line tool for generating customizable Celo blockchain starter kits with a monorepo structure."
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor"
+    ]
+  },
+  "errors": {
+    "404": {
+      "redirect": true
+    }
+  }
+}

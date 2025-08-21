@@ -1,0 +1,57 @@
+---
+title: Development Workflow
+description: "Learn the typical development workflow for a Celo Composer project."
+icon: "hotel"
+---
+
+Celo Composer is designed to provide a smooth and efficient development experience. Here’s a look at a typical workflow when building your dApp.
+
+## 1. Local Development
+
+To start working on your project, run the local development server:
+
+```bash
+pnpm dev
+```
+
+This command uses Turborepo to start all the applications in your monorepo in development mode. For a standard project, this will start your Next.js web app on `http://localhost:3000`.
+
+Any changes you make to your code in any of the `apps/*` directories will trigger a hot reload, so you can see your changes in the browser instantly.
+
+## 2. Smart Contract Development
+
+If your project includes smart contracts, your workflow will typically involve these steps:
+
+1.  **Write Contracts**: Add or modify your Solidity contracts in `apps/hardhat/contracts`.
+2.  **Compile**: Run `pnpm contracts:compile` to compile your contracts and generate TypeScript types.
+3.  **Test**: Write and run tests for your contracts using `pnpm contracts:test`.
+4.  **Deploy**: Deploy your contracts to a local network or a testnet like Alfajores using the `pnpm contracts:deploy` scripts.
+
+## 3. Building for Production
+
+When you're ready to build your application for production, you can use the build command:
+
+```bash
+pnpm build
+```
+
+This command, powered by Turborepo, will create an optimized production build for all the applications in your monorepo. The output will be placed in the `dist` directory for each app (e.g., `apps/web/dist`).
+
+## 4. Debugging
+
+- **Frontend Debugging**: You can use your browser's developer tools to debug the Next.js application, just like any other web app.
+- **Smart Contract Debugging**: Hardhat provides excellent debugging tools, including `console.log` support in your Solidity contracts, which will print logs to the terminal when you run your tests.
+
+## 5. Adding Dependencies
+
+To add a new dependency to a specific app or package, use the PNPM `--filter` flag:
+
+```bash
+# Add a dependency to the web app
+pnpm add <package-name> --filter web
+
+# Add a dependency to the hardhat app
+pnpm add <package-name> --filter hardhat
+```
+
+This ensures that the dependency is added to the correct `package.json` file within your monorepo.

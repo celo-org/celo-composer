@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-    - name: Discussions
-      url: https://github.com/celo-org/celo-composer/discussions
-      about: General discussions about Celo Composer.
-    - name: Documentation
-      url: https://docs.celo.org/
-      about: Need help getting started with Celo Composer? Check out the official docs!

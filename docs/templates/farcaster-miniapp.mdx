@@ -1,0 +1,37 @@
+---
+title: Farcaster Miniapp Template
+description: "Learn how to build Farcaster Miniapps with Celo Composer."
+icon: "podcast"
+tag: "NEW"
+---
+
+The Farcaster Miniapp template provides a powerful starting point for building applications that run directly inside the Farcaster ecosystem. These interactive apps can be embedded into casts, allowing users to engage with your dApp without leaving their feed—ideal for in-frame games, NFT mints, or governance votes.
+
+This template extends the Basic Web App template with essential Farcaster features:
+
+- **Farcaster SDK**: Pre-installed and configured for building and validating Frames.
+- **Example Frame**: A sample Frame route to get you started quickly.
+- **Authentication**: Basic Farcaster authentication to verify user identity.
+- **Manifest Endpoint**: Serves the required `.well-known/farcaster.json` manifest for app discovery.
+
+## Environment Variables
+
+Create a `.env` file at the root of your project and add the following variables. For local development, use an `ngrok` URL for `NEXT_PUBLIC_URL`.
+
+- **`NEXT_PUBLIC_URL`**: Your app's public URL.
+- **`JWT_SECRET`**: A secret for signing JWTs. Generate one with `openssl rand -base64 32`.
+- **`NEXT_PUBLIC_APP_ENV`**: `development` or `production`.
+
+### Manifest Signature
+
+To make your Miniapp discoverable, you must sign a manifest with your Farcaster account. This generates the following three variables:
+
+- `NEXT_PUBLIC_FARCASTER_HEADER`
+- `NEXT_PUBLIC_FARCASTER_PAYLOAD`
+- `NEXT_PUBLIC_FARCASTER_SIGNATURE`
+
+<Info>
+  To generate these values, deploy your app and visit
+  `https://farcaster.xyz/~/developers/mini-apps/manifest?domain=YOUR_DOMAIN` to
+  sign the manifest.
+</Info>
