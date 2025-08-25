@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { createCommand } from './commands/create';
+import { createCommand } from './commands/create.js';
 import chalk from 'chalk';
 
 const program = new Command();
