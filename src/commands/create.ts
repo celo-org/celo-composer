@@ -4,8 +4,8 @@ import fs from "fs-extra";
 import inquirer from "inquirer";
 import ora from "ora";
 import path from "path";
-import { generateProject } from "../generators/project-generator";
-import { validateProjectName } from "../utils/validation";
+import { generateProject } from "../generators/project-generator.js";
+import { validateProjectName } from "../utils/validation.js";
 
 interface CreateOptions {
   description?: string;
