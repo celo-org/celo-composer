@@ -1,7 +1,8 @@
 import fs from "fs-extra";
 import nodePlop from "node-plop";
 import path from "path";
-import { safeCopyTemplate } from "../utils/safe-copy";
+import { safeCopyTemplate } from "../utils/safe-copy.js";
+import { getTemplatesPath, getPlopfilePath } from "../utils/paths.js";
 
 // TypeScript compilation handles TS support - no runtime tsx needed
 
@@ -43,12 +44,10 @@ export class TemplateGenerator {
 
       // Fast path: raw copy for standalone AI chat template (no Plop rendering)
       if (templateType === "ai-chat") {
-        // __dirname is dist/generators at runtime; go up twice to package root, then into templates
+        // Get templates path using ESM-compatible method
+        const templatesPath = getTemplatesPath(import.meta.url);
         const sourcePath = path.join(
-          __dirname,
-          "..",
-          "..",
-          "templates",
+          templatesPath,
           "ai",
           "chat-template"
         );
@@ -69,7 +68,7 @@ export class TemplateGenerator {
       }
 
       // Initialize plop asynchronously
-      const plopfilePath = path.join(__dirname, "../plopfile.js");
+      const plopfilePath = getPlopfilePath(import.meta.url);
       const plopInstance = await nodePlop(plopfilePath, {
         destBasePath: projectPath,
         force: false,

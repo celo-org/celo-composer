@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import { Ora } from "ora";
 import path from "path";
 import { promisify } from "util";
-import { PlopConfig, TemplateGenerator } from "./plop-generator";
+import { PlopConfig, TemplateGenerator } from "./plop-generator.js";
 
 const execAsync = promisify(exec);
 
