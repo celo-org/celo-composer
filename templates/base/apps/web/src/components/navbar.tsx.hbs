@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
-import { ConnectButton } from "@/components/connect-button"
+import { WalletConnectButton } from "@/components/connect-button"
 {{/if}}
 
 const navLinks = [
@@ -61,10 +61,10 @@ export function Navbar() {
                   {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
                     {{#if (eq templateType 'minipay')}}
                   <Button asChild className="w-full">
-                    <ConnectButton />
+                    <WalletConnectButton />
                   </Button>
                     {{else}}
-                  <ConnectButton />
+                  <WalletConnectButton />
                     {{/if}}
                   {{else}}
                   <Button className="w-full">Connect Wallet</Button>
@@ -104,7 +104,7 @@ export function Navbar() {
           
           <div className="flex items-center gap-3">
             {{#if (or (eq walletProvider "rainbowkit") (eq walletProvider "thirdweb"))}}
-            <ConnectButton />
+            <WalletConnectButton />
             {{else}}
             <Button variant="outline" size="sm">Connect Wallet</Button>
             {{/if}}
