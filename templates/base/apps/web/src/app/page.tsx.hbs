@@ -38,8 +38,8 @@ export default function Home() {
       }
     }
   }, [isMiniAppReady, isInMiniappEnvironment, isConnected, isConnecting, connectors, connect]);
-  // Use connected wallet address if available, otherwise fall back to user custody/verification
-  const walletAddress = address || user?.custody || user?.verifications?.[0] || "0x1e4B...605B";
+  // Use connected wallet address if available, otherwise show not connected
+  const walletAddress = address || user?.custody || user?.verifications?.[0] || null;
   const displayName = user?.displayName || user?.username || "User";
   const username = user?.username || "@user";
   const pfpUrl = user?.pfpUrl;
@@ -88,11 +88,11 @@ export default function Home() {
                   <div className={`w-2 h-2 rounded-full ${
                     isConnected ? 'bg-green-500' : isConnecting ? 'bg-yellow-500' : 'bg-gray-400'
                   }`}></div>
-                  {isConnected ? 'Connected' : isConnecting ? 'Connecting...' : 'Disconnected'}
+                  {isConnected ? 'Connected' : isConnecting ? 'Connecting...' : 'Not Connected'}
                 </div>
               </div>
               <p className="text-sm text-gray-700 font-mono">
-                {formatAddress(walletAddress)}
+                {walletAddress ? formatAddress(walletAddress) : 'No wallet connected'}
               </p>
             </div>
           </div>
