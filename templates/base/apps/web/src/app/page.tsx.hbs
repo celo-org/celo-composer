@@ -22,18 +22,22 @@ export default function Home() {
   const { address, isConnected, isConnecting } = useAccount();
   const { connect, connectors } = useConnect();
   
-  // Auto-connect wallet when miniapp is ready
+  // Extract user data from context
+  const user = context?.user;
+  
+  // Check if we're in a Farcaster miniapp environment
+  // We're in a miniapp if we have user data from the Farcaster SDK
+  const isInMiniappEnvironment = !!user;
+  
+  // Auto-connect wallet when miniapp is ready (only in miniapp environment)
   useEffect(() => {
-    if (isMiniAppReady && !isConnected && !isConnecting && connectors.length > 0) {
+    if (isMiniAppReady && isInMiniappEnvironment && !isConnected && !isConnecting && connectors.length > 0) {
       const farcasterConnector = connectors.find(c => c.id === 'farcaster');
       if (farcasterConnector) {
         connect({ connector: farcasterConnector });
       }
     }
-  }, [isMiniAppReady, isConnected, isConnecting, connectors, connect]);
-  
-  // Extract user data from context
-  const user = context?.user;
+  }, [isMiniAppReady, isInMiniappEnvironment, isConnected, isConnecting, connectors, connect]);
   // Use connected wallet address if available, otherwise fall back to user custody/verification
   const walletAddress = address || user?.custody || user?.verifications?.[0] || "0x1e4B...605B";
   const displayName = user?.displayName || user?.username || "User";
