@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.11] - 2024-10-16
+
+### Fixed
+- Fixed critical template path resolution bug when running CLI via npx
+- Templates directory now correctly located whether running from dist/, dist/subdirectory/, or src/
+- All template types (basic, farcaster-miniapp, minipay, ai-chat) now generate successfully when installed from npm
+- Fixed development mode (pnpm dev) to correctly locate plopfile.ts instead of plopfile.js
+
 ## [2.3.5] - 2025-08-06
 
 ### Fixed

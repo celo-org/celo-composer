@@ -13,16 +13,29 @@ export function getDirname(importMetaUrl: string): string {
  */
 export function getTemplatesPath(importMetaUrl: string): string {
   const currentDir = getDirname(importMetaUrl);
-  // At runtime, we're in dist/, so go up to package root, then into templates/
-  // During development, we might be in src/, so handle both cases
+  
+  // Determine if we're running from dist or src
   const isInDist = currentDir.includes('/dist') || currentDir.endsWith('/dist');
+  
   let templatesPath: string;
   if (isInDist) {
-    // From dist/generators/ or dist/utils/ go up to package root, then into templates/
-    templatesPath = join(currentDir, '..', 'templates');
+    // Check if we're directly in dist/ or in a subdirectory
+    if (currentDir.endsWith('/dist')) {
+      // From dist/ go up ONE level to package root, then into templates/
+      templatesPath = join(currentDir, '..', 'templates');
+    } else {
+      // From dist/generators/ or dist/utils/ go up TWO levels to package root, then into templates/
+      templatesPath = join(currentDir, '..', '..', 'templates');
+    }
   } else {
-    // From src/ go up to package root, then into templates/
-    templatesPath = join(currentDir, '..', '..', 'templates');
+    // From src/ or src/subdirectory/ determine how many levels to go up
+    if (currentDir.endsWith('/src')) {
+      // From src/ go up ONE level to package root, then into templates/
+      templatesPath = join(currentDir, '..', 'templates');
+    } else {
+      // From src/generators/ or src/utils/ go up TWO levels to package root, then into templates/
+      templatesPath = join(currentDir, '..', '..', 'templates');
+    }
   }
   
   return templatesPath;
@@ -37,10 +50,10 @@ export function getPlopfilePath(importMetaUrl: string): string {
   // During development, we might be in src/generators/, so handle both cases
   const isInDist = currentDir.includes('/dist') || currentDir.endsWith('/dist');
   if (isInDist) {
-    // From dist/generators/ go up to dist/, then to plopfile.js
+    // From dist/generators/ go up to dist/, then to plopfile.js (compiled)
     return join(currentDir, '..', 'plopfile.js');
   } else {
-    // From src/generators/ go up to src/, then to plopfile.js
-    return join(currentDir, '..', 'plopfile.js');
+    // From src/generators/ go up to src/, then to plopfile.ts (TypeScript source)
+    return join(currentDir, '..', 'plopfile.ts');
   }
 }
