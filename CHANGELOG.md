@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.12] - 2025-10-16
+
+### Changed
+- Updated AI Chat template to use latest Gemini 2.5 models (gemini-2.5-flash and gemini-2.5-pro)
+- Replaced deprecated Gemini 1.5 models with Gemini 2.5 versions for improved performance and capabilities
+
 ## [2.4.11] - 2024-10-16
 
 ### Fixed
