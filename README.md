@@ -33,7 +33,7 @@ This project combines **Decentralized Finance (DeFi)** with a **mobile salary ma
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/micro-savings-platform.git
+git clone [https://github.com/yourusername/micro-savings-platform.git](https://github.com/berkcicekk/celo-savemny-project-zonguldak)
 
 # 2. Enter the directory
 cd micro-savings-platform
