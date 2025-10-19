@@ -46,3 +46,7 @@ npx hardhat compile
 npx hardhat run scripts/deploy.js --network alfajores
 
 
+<img width="1421" height="652" alt="image" src="https://github.com/user-attachments/assets/25ee6f8f-f96e-4991-9f6d-48fdd70456ab" />
+
+
+
