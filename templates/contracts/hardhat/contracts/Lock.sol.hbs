@@ -1,34 +1,64 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.28;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-// Uncomment this line to use console.log
-// import "hardhat/console.sol";
+/**
+ * @title MicroSavingsPayroll
+ * @dev Basit bir örnek: maaş ödemesi ve CELO staking mantığı
+ */
+contract MicroSavingsPayroll {
 
-contract Lock {
-    uint public unlockTime;
-    address payable public owner;
+    address public owner;                      // Platform sahibi
+    mapping(address => uint256) public balances;  // Kullanıcı bakiyeleri
+    mapping(address => uint256) public staked;    // Stake edilmiş miktar
 
-    event Withdrawal(uint amount, uint when);
+    event SalaryPaid(address indexed user, uint256 amount);
+    event Staked(address indexed user, uint256 amount);
+    event Unstaked(address indexed user, uint256 amount);
 
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
-
-        unlockTime = _unlockTime;
-        owner = payable(msg.sender);
+    constructor() {
+        owner = msg.sender;
     }
 
-    function withdraw() public {
-        // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call");
+        _;
+    }
 
-        require(block.timestamp >= unlockTime, "You can't withdraw yet");
-        require(msg.sender == owner, "You aren't the owner");
+    /**
+     * @dev Kullanıcıya maaş ödemesi yapar (örneğin stablecoin transferi yerine CELO native token)
+     */
+    function paySalary(address user) external payable onlyOwner {
+        require(msg.value > 0, "Salary must be greater than 0");
+        balances[user] += msg.value;
+        emit SalaryPaid(user, msg.value);
+    }
 
-        emit Withdrawal(address(this).balance, block.timestamp);
+    /**
+     * @dev Kullanıcı maaş bakiyesinin bir kısmını stake eder
+     */
+    function stake(uint256 amount) external {
+        require(balances[msg.sender] >= amount, "Insufficient balance");
+        balances[msg.sender] -= amount;
+        staked[msg.sender] += amount;
+        emit Staked(msg.sender, amount);
+    }
 
-        owner.transfer(address(this).balance);
+    /**
+     * @dev Kullanıcı stake ettiği miktarı geri alır (örnek amaçlı, faiz eklenmemiştir)
+     */
+    function unstake(uint256 amount) external {
+        require(staked[msg.sender] >= amount, "Not enough staked");
+        staked[msg.sender] -= amount;
+        balances[msg.sender] += amount;
+        emit Unstaked(msg.sender, amount);
+    }
+
+    /**
+     * @dev Kullanıcı bakiyesini çeker
+     */
+    function withdraw(uint256 amount) external {
+        require(balances[msg.sender] >= amount, "Not enough balance");
+        balances[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount);
     }
 }
