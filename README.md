@@ -1,86 +1,48 @@
-# Celo Composer CLI
+# Savemny Project 💰 Micro Savings & Mobile Payroll Platform (Celo + DeFi)
+<img width="1218" height="367" alt="image" src="https://github.com/user-attachments/assets/362fc45e-337e-4a9c-a821-b37e51734a6f" />
+> A DeFi-powered micro-savings and mobile payroll platform where users receive their salaries in stablecoins and invest for the future by staking CELO through an integrated retirement fund.
 
-A powerful CLI tool for generating customizable Celo blockchain starter kits with modern monorepo architecture.
+---
 
-## Features
+## 🚀 Overview
 
-- 🚀 **Modern Stack**: Next.js 14, TypeScript, Tailwind CSS, shadcn/ui
-- 📦 **Monorepo Ready**: Turborepo with PNPM workspaces
-- 🎨 **Beautiful UI**: Pre-configured shadcn/ui components
-- 🔧 **Developer Experience**: Interactive prompts and clear feedback
-- 🌍 **Celo Optimized**: Ready for Celo blockchain development
+This project combines **Decentralized Finance (DeFi)** with a **mobile salary management system** to help users save, invest, and plan for the future — all on the **Celo blockchain**.
 
-## Installation
+### ✳️ Core Features
+- **Micro Savings:** Users can save small amounts regularly, powered by smart contracts.  
+- **Mobile Payroll:** Salaries are paid directly to users’ wallets in stablecoins (e.g. cUSD).  
+- **CELO Staking:** Integrated retirement fund where users can stake their CELO for long-term returns.  
+- **Transparent & Secure:** Built on Celo — optimized for mobile-first, low-cost DeFi access.
 
-```bash
-# Install dependencies
-pnpm install
+---
 
-# Build the CLI
-pnpm build
+## 🧱 Tech Stack
 
-# Link for global usage (optional)
-npm link
-```
+| Layer | Technology |
+|-------|-------------|
+| Blockchain | [Celo](https://celo.org/) |
+| Smart Contracts | Solidity, Hardhat |
+| Frontend | React / Next.js |
+| Backend (optional) | Node.js + Express |
+| Wallet Integration | Celo Wallet / RainbowKit / Thirdweb |
+| Deployment | Celo Testnet (Alfajores) or Mainnet |
 
-## Usage
+---
 
-### Create a new Celo project
-
-```bash
-# Interactive mode
-pnpm dev create
-
-# With project name
-pnpm dev create my-celo-app
-
-# With options
-pnpm dev create my-celo-app --description "My awesome Celo app" --skip-install
-```
-
-### Command Options
-
-- `--description <description>` - Project description
-- `--skip-install` - Skip package installation
-
-## Generated Project Structure
-
-```
-my-celo-app/
-├── apps/
-│   └── web/                 # Next.js application
-├── packages/
-│   ├── ui/                  # shadcn/ui components
-│   └── utils/               # Shared utilities
-├── package.json             # Root package.json
-├── pnpm-workspace.yaml      # PNPM workspace config
-├── turbo.json              # Turborepo configuration
-└── tsconfig.json           # TypeScript configuration
-```
-
-## Development
+## ⚙️ Installation
 
 ```bash
-# Start development
-pnpm dev
+# 1. Clone the repository
+git clone https://github.com/yourusername/micro-savings-platform.git
 
-# Build
-pnpm build
+# 2. Enter the directory
+cd micro-savings-platform
 
-# Lint
-pnpm lint
+# 3. Install dependencies
+npm install
 
-# Run tests
-pnpm test
-```
+# 4. Compile and deploy smart contracts
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network alfajores
 
-## Tech Stack
 
-- **CLI Framework**: Commander.js + Inquirer.js
-- **Template Engine**: Plop.js
-- **Language**: TypeScript
-- **Generated Projects**: Next.js 14 + Turborepo + shadcn/ui
-
-## License
-
-MIT
