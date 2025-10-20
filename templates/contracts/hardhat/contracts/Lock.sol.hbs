@@ -1,25 +1,38 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-// OpenZeppelin Ownable (Remix-friendly import) — alternatif olarak lokal kütüphane kullanabilirsin.
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
-
-contract VisitorBook is Ownable {
+/// @title Simple on-chain Guestbook / Visitor Log
+/// @author 0xmerdows (example)
+/// @notice Küçük bir ziyaretçi hatıra defteri (guestbook) akıllı kontratı.
+/// - Ziyaretçi isim + mesaj bırakır (string).
+/// - Mesaj bırakılırken opsiyonel olarak Ether gönderebilir (bahşiş).
+/// - Kontrat sahibi mesajları silebilir (soft delete) ve kontratta biriken Ether'i çekebilir.
+contract Guestbook {
     struct Entry {
         address author;
         string name;
         string message;
         uint256 timestamp;
-        bool removed; // soft-delete flag — fiziksel silme yapmıyoruz (index stabilitesi için)
+        bool deleted;
+        uint256 value; // gönderilen Ether (wei)
     }
 
     Entry[] private entries;
+    address public owner;
 
-    /// Events
-    event EntryAdded(uint256 indexed index, address indexed author, string name, uint256 timestamp);
-    event EntryUpdated(uint256 indexed index, address indexed editor, string newMessage, uint256 timestamp);
-    event EntryRemoved(uint256 indexed index, address indexed remover, uint256 timestamp);
+    event NewEntry(
+        uint256 indexed index,
+        address indexed author,
+        string name,
+        string message,
+        uint256 timestamp,
+        uint256 value
+    );
 
-    /// Limits (gas + spam koruması için)
-    uint256 public constant MAX_MESSAGE_LENGTH = 1024; // bytes ~ karakter; aşırı uzun mesaj engellenir
-    uint256 public minAddPrice = 0; // istersen ETH fiyatı koyabilir
+    event EntryDeleted(uint256 indexed index, address indexed moderator);
+    event OwnerChanged(address indexed previousOwner, address indexed newOwner);
+    event Withdraw(address indexed to, uint256 amount);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Guestbook: caller is not the owner");
+
