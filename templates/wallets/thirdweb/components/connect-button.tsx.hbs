@@ -2,12 +2,11 @@
 
 import { ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
-import { celo, celoAlfajoresTestnet } from "thirdweb/chains";
-import { defineChain } from "thirdweb/chains";
+import { celo } from "thirdweb/chains";
 import { client } from "../lib/client";
 
 // Define Celo Sepolia chain
-const celoSepolia = defineChain({
+const celoSepoliaTestnet = defineChain({
   id: 11142220,
   name: "Celo Sepolia",
   rpc: "https://forno.celo-sepolia.celo-testnet.org",
@@ -18,8 +17,8 @@ const celoSepolia = defineChain({
   },
   blockExplorers: [
     {
-      name: "Celo Sepolia Blockscout",
-      url: "https://celo-sepolia.blockscout.com",
+      name: "Celo Sepolia Celoscan",
+      url: "https://sepolia.celoscan.io/",
     },
   ],
   testnet: true,
@@ -42,7 +41,7 @@ export function WalletConnectButton() {
       client={client}
       wallets={wallets}
       theme={"light"}
-      chains={[celo, celoAlfajoresTestnet, celoSepolia]}
+      chains={[celo, celoSepoliaTestnet]}
     />
   );
 }
