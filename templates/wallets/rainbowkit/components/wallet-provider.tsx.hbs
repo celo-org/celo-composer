@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import '@rainbow-me/rainbowkit/styles.css'
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { WagmiProvider } from 'wagmi'
-import { celo, celoAlfajores } from 'wagmi/chains'
+import { celo, celoSepolia } from 'wagmi/chains'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { http } from 'wagmi'
 
@@ -16,10 +16,10 @@ function getWagmiConfig() {
     config = getDefaultConfig({
       appName: '{{projectName}}',
       projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
-      chains: [celo, celoAlfajores],
+      chains: [celo, celoSepolia],
       transports: {
         [celo.id]: http(),
-        [celoAlfajores.id]: http(),
+        [celoSepolia.id]: http(),
       },
       ssr: true,
     })

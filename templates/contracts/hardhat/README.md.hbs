@@ -14,10 +14,10 @@ pnpm compile
 # Run tests
 pnpm test
 
-# Deploy to Alfajores testnet
-pnpm deploy:alfajores
+# Deploy to Celo Sepolia Testnet
+pnpm deploy:celo-sepolia
 
-# Deploy to Celo mainnet
+# Deploy to Celo Mainnet
 pnpm deploy:celo
 ```
 
@@ -26,9 +26,9 @@ pnpm deploy:celo
 - `pnpm compile` - Compile smart contracts
 - `pnpm test` - Run contract tests
 - `pnpm deploy` - Deploy to local network
-- `pnpm deploy:alfajores` - Deploy to Celo Alfajores testnet
-- `pnpm deploy:celo` - Deploy to Celo mainnet
-- `pnpm verify` - Verify contracts on Celoscan
+- `pnpm deploy:celo-sepolia` - Deploy to Celo Sepolia Testnet
+- `pnpm deploy:celo` - Deploy to Celo Mainnet
+- `pnpm verify` - Verify contracts on Etherscan
 - `pnpm clean` - Clean artifacts and cache
 
 ## 🌐 Networks
@@ -38,11 +38,10 @@ pnpm deploy:celo
 - **RPC URL**: https://forno.celo.org
 - **Explorer**: https://celoscan.io
 
-### Alfajores Testnet
-- **Chain ID**: 44787
-- **RPC URL**: https://alfajores-forno.celo-testnet.org
-- **Explorer**: https://alfajores.celoscan.io
-- **Faucet**: https://faucet.celo.org
+### Celo Sepolia Testnet
+- **Chain ID**: 11142220
+- **RPC URL**: https://forno.celo-sepolia.celo-testnet.org/
+- **Explorer**: https://sepolia.celoscan.io/
 
 ## 🔧 Environment Setup
 
@@ -54,7 +53,7 @@ pnpm deploy:celo
 2. Fill in your private key and API keys:
    ```env
    PRIVATE_KEY=your_private_key_without_0x_prefix
-   CELOSCAN_API_KEY=your_celoscan_api_key
+   ETHERSCAN_API_KEY=your_etherscan_api_key
    ```
 
 ## 📁 Project Structure
@@ -78,12 +77,11 @@ tsconfig.json      # TypeScript configuration
 
 - Never commit your `.env` file with real private keys
 - Use a dedicated wallet for development/testing
-- Test thoroughly on Alfajores before mainnet deployment
+- Test thoroughly on Celo Sepolia Testnet before CeloMainnet deployment
 - Consider using a hardware wallet for mainnet deployments
 
 ## 📚 Learn More
 
 - [Hardhat Documentation](https://hardhat.org/docs)
 - [Celo Developer Documentation](https://docs.celo.org)
-- [Celo Smart Contract Best Practices](https://docs.celo.org/developer/contractkit)
 - [Viem Documentation](https://viem.sh) (Ethereum library used by Hardhat)
