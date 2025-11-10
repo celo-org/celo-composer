@@ -2,27 +2,8 @@
 
 import { ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
-import { celo } from "thirdweb/chains";
+import { celo, celoSepoliaTestnet } from "thirdweb/chains";
 import { client } from "../lib/client";
-
-// Define Celo Sepolia chain
-const celoSepoliaTestnet = defineChain({
-  id: 11142220,
-  name: "Celo Sepolia",
-  rpc: "https://forno.celo-sepolia.celo-testnet.org",
-  nativeCurrency: {
-    name: "CELO",
-    symbol: "CELO",
-    decimals: 18,
-  },
-  blockExplorers: [
-    {
-      name: "Celo Sepolia Celoscan",
-      url: "https://sepolia.celoscan.io/",
-    },
-  ],
-  testnet: true,
-});
 
 const wallets = [
   createWallet("io.metamask"),
