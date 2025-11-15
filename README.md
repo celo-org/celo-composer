@@ -12,6 +12,11 @@ A powerful CLI tool for generating customizable Celo blockchain starter kits wit
 - 🎯 **Multiple Templates**: Choose from Basic Web App, Farcaster Miniapp, Minipay, or AI Chat templates
 - 🔌 **Flexible Integrations**: Add wallet providers (RainbowKit, Thirdweb) and smart contract frameworks (Hardhat, Foundry)
 
+## Requirements
+
+- Node.js >= 18.0.0
+- PNPM (recommended) or npm/yarn
+
 ## Quick Start
 
 Create a new Celo project in seconds:
@@ -24,11 +29,7 @@ This will start an interactive setup process where you can choose your template,
 
 ## Installation
 
-No installation required! Use `npx` to run Celo Composer directly:
-
-```bash
-npx @celo/celo-composer@latest create [project-name] [options]
-```
+No installation required! Use `npx` to run Celo Composer directly without installing anything globally.
 
 ## Usage
 
@@ -62,7 +63,7 @@ npx @celo/celo-composer@latest create my-celo-app \
 
 ### Quick Start with Defaults
 
-Skip all prompts and use default settings:
+Skip all prompts and use default settings. This will create a basic app with no additional setup. All available flags and options are listed in the Command Options table below.
 
 ```bash
 npx @celo/celo-composer@latest create my-celo-app --yes
@@ -110,6 +111,8 @@ Choose a wallet provider to handle user authentication and transaction signing:
 - **Thirdweb**: Complete Web3 development framework with powerful wallet tools
 - **None**: Skip wallet integration if you want to integrate your own solution
 
+All available flags can be found in the Command Options table below.
+
 ```bash
 npx @celo/celo-composer@latest create --wallet-provider rainbowkit
 ```
@@ -122,11 +125,17 @@ Set up a smart contract development environment:
 - **Foundry**: Fast, portable and modular toolkit for Ethereum application development
 - **None**: Skip smart contract development setup
 
+All available flags can be found in the Command Options table below.
+
 ```bash
 npx @celo/celo-composer@latest create --contracts hardhat
 ```
 
 ## Command Options
+
+```bash
+npx @celo/celo-composer@latest create [project-name] [options]
+```
 
 | Flag                              | Description                                                        | Default            |
 | --------------------------------- | ------------------------------------------------------------------ | ------------------ |
@@ -155,7 +164,7 @@ my-celo-app/
 
 ## Next Steps
 
-After creating your project:
+After creating your project, navigate to it and install dependencies (if you didn't use `--skip-install`):
 
 ```bash
 cd my-celo-app
@@ -164,11 +173,6 @@ pnpm dev      # Start development server
 ```
 
 Your project is automatically initialized with Git and includes an initial commit.
-
-## Requirements
-
-- Node.js >= 18.0.0
-- PNPM (recommended) or npm/yarn
 
 ## Tech Stack
 
@@ -187,6 +191,5 @@ MIT
 
 ## Resources
 
-- [Documentation](https://docs.celo.org/composer)
 - [GitHub Repository](https://github.com/celo-org/celo-composer)
 - [Celo Documentation](https://docs.celo.org)
