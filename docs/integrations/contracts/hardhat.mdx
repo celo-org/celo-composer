@@ -12,7 +12,7 @@ When you choose to include the Hardhat framework (by selecting it in the interac
 
 This application comes with:
 
-- **Pre-configured Hardhat**: The `hardhat.config.ts` file is already set up for Celo mainnet and the Alfajores testnet.
+- **Pre-configured Hardhat**: The `hardhat.config.ts` file is already set up for Celo Mainnet and the Celo Sepolia Testnet.
 - **Sample Contract**: A simple `Lock.sol` contract to get you started.
 - **Comprehensive Tests**: A full test suite for the sample contract using Viem and Hardhat's testing utilities.
 - **Deployment Scripts**: A deployment module using Hardhat Ignition, the modern way to deploy your contracts.
@@ -27,7 +27,7 @@ To deploy and verify your smart contracts, you'll need to set up your environmen
     This is highly sensitive and should be handled with extreme care. Do not
     commit this to version control.
   </Warning>
-- **`CELOSCAN_API_KEY`**: (Optional) Your API key from [Celoscan](https://celoscan.io/) for automatically verifying your deployed contracts.
+- **`ETHERSCAN_API_KEY`**: (Optional) Your API key from [Etherscan](https://etherscan.io/) for automatically verifying your deployed contracts.
 - **`REPORT_GAS`**: (Optional) Set to `true` to enable the gas reporter, which provides a detailed breakdown of gas usage for your contract's functions during testing.
 
 ## Monorepo Scripts
@@ -37,8 +37,8 @@ The root `package.json` of your project is updated with convenient scripts to ma
 - **`pnpm contracts:compile`**: Compiles your Solidity contracts and generates TypeChain bindings.
 - **`pnpm contracts:test`**: Runs the test suite for your contracts.
 - **`pnpm contracts:deploy`**: Deploys your contracts to the configured network (defaults to a local Hardhat node).
-- **`pnpm contracts:deploy:alfajores`**: Deploys your contracts specifically to the Alfajores testnet.
-- **`pnpm contracts:deploy:celo`**: Deploys your contracts to the Celo mainnet.
+- **`pnpm contracts:deploy:celo-sepolia`**: Deploys your contracts specifically to the Celo Sepolia Testnet.
+- **`pnpm contracts:deploy:celo`**: Deploys your contracts to the Celo Mainnet.
 
 ## Development Workflow
 

@@ -23,11 +23,11 @@ This will create a new directory at `packages/contracts` in your project, struct
 
 The template comes with the following features and configurations out of the box:
 
-- **Celo Network Configuration**: `foundry.toml` is pre-configured with RPC endpoints for Celo and Alfajores testnet.
+- **Celo Network Configuration**: `foundry.toml` is pre-configured with RPC endpoints for Celo and Celo Sepolia testnet.
 - **Sample Contract**: A simple `Counter.sol` contract to get you started.
 - **Deployment Scripts**: A `Counter.s.sol` script for deploying your contract using `forge script`.
 - **Tests**: A `Counter.t.sol` test file with examples of how to write tests for your contract using `forge test`.
-- **`.env.example`**: A template for your environment variables, including `PRIVATE_KEY` and `CELOSCAN_API_KEY`.
+- **`.env.example`**: A template for your environment variables, including `PRIVATE_KEY` and `ETHERSCAN_API_KEY`.
 
 ## Key Commands
 
@@ -50,8 +50,8 @@ forge test
 To deploy to a specific network, you'll need to have your `PRIVATE_KEY` set in a `.env` file.
 
 ```bash
-# Deploy to Alfajores
-forge script script/Counter.s.sol:CounterScript --rpc-url alfajores --broadcast --verify
+# Deploy to Celo Sepolia
+forge script script/Counter.s.sol:CounterScript --rpc-url --chain-id --broadcast --verify
 
 # Deploy to Celo Mainnet
 forge script script/Counter.s.sol:CounterScript --rpc-url mainnet --broadcast --verify
