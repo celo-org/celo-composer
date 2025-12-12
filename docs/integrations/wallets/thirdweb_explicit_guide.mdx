@@ -1,0 +1,109 @@
+
+---
+ "Integrate the Thirdweb SDK v5 into your Celo dApp for seamless wallet connection and smart account features."
+icon: "hotel"
+---
+
+[Thirdweb](https://thirdweb.com/) is a full-stack Web3 development framework. Their latest **SDK v5** is lightweight, performant, and supports over 300+ wallets out of the box, including in-app wallets (social/email login) and Account Abstraction.
+
+## Prerequisites
+
+To use the Thirdweb SDK, you need a **Client ID**.
+
+1. Go to the [Thirdweb Dashboard](https://thirdweb.com/dashboard/settings/api-keys).
+2. Create a new API Key.
+3. Allow the domains where your app will be deployed (e.g., `localhost:3000`, `myapp.com`).
+
+Add your Client ID to your environment variables:
+
+```bash
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id_here
+````
+
+## 1\. Installation
+
+Install the latest Thirdweb SDK and React dependencies.
+
+```bash
+npm install thirdweb
+```
+
+## 2\. Configuration
+
+In Thirdweb v5, you create a lightweight client instance once and reuse it throughout your app.
+
+Create a file named `client.ts` in your project (e.g., `src/client.ts`):
+
+```typescript
+import { createThirdwebClient } from "thirdweb";
+
+export const client = createThirdwebClient({
+  clientId: process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID,
+});
+```
+
+## 3\. Add the Connect Button
+
+The `ConnectButton` is a pre-built UI component that handles connection management, wallet switching, and social logins.
+
+In your main component (e.g., `Navbar.tsx` or `App.tsx`), import the `client` and the **Celo** chain definition.
+
+```tsx
+import { ConnectButton } from "thirdweb/react";
+import { celo } from "thirdweb/chains";
+import { client } from "./client"; // Import the client you created
+
+export default function WalletConnect() {
+  return (
+    <div className="flex justify-center">
+        <ConnectButton
+          client={client}
+          chain={celo} 
+          connectModal={{
+            size: "compact",
+            title: "Connect to Celo",
+          }}
+        />
+    </div>
+  );
+}
+```
+
+### Supported Wallets
+
+By default, the button supports 300+ wallets. You can restrict this to specific wallets (like MetaMask or Rainbow) if you prefer:
+
+```tsx
+import { createWallet, inAppWallet } from "thirdweb/wallets";
+
+const wallets = [
+  inAppWallet(), // Email/Social Login
+  createWallet("io.metamask"),
+  createWallet("com.coinbase.wallet"),
+];
+
+<ConnectButton client={client} wallets={wallets} chain={celo} />;
+```
+
+## 4\. Enable Smart Wallets (Account Abstraction)
+
+Celo's low gas fees make it perfect for **Smart Wallets**. This allows you to sponsor gas fees for your users, creating a completely gasless experience.
+
+Simply add the `accountAbstraction` prop to your `ConnectButton`:
+
+```tsx
+<ConnectButton
+  client={client}
+  chain={celo}
+  accountAbstraction={{
+    chain: celo,
+    sponsorGas: true, // Enables gasless transactions for users
+  }}
+/>
+```
+
+\<Info\>
+To use **sponsorGas**, you must enable "Account Abstraction" for the Celo chain in your [Thirdweb Dashboard](https://thirdweb.com/dashboard).
+\</Info\>
+
+```
