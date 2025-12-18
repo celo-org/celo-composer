@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.13.1
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint code
+        run: pnpm lint
+
+      - name: Build project
+        run: pnpm build
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Verify build artifacts
+        run: |
+          test -f dist/index.js || (echo "dist/index.js not found" && exit 1)
+          test -d dist || (echo "dist directory not found" && exit 1)
+          test -d templates || (echo "templates directory not found" && exit 1)
+          echo "Build artifacts verified successfully"
+
+      - name: Test CLI installation
+        run: |
+          npm pack
+          npm install -g ./celo-celo-composer-*.tgz
+          celo-composer --help
+          npm uninstall -g celo-composer || true
+          rm -f celo-celo-composer-*.tgz
+
