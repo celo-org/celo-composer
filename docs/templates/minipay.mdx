@@ -37,7 +37,89 @@ Use the Minipay template if you are building a dApp that:
 To create a new project using the Minipay template, run the following command:
 
 ```bash
-npx @celo/composer create --template minipay
+npx @celo/celo-composer@latest create --template minipay
 ```
 
 This will generate a new Celo Composer project with the Minipay template, ready for you to start building your dApp.
+
+## Sending USDT in the Minipay Template
+
+The generated project includes `UserBalance`, which reads USDT balance using the token address. To send USDT, use `viem`'s `encodeFunctionData` with the ERC-20 `transfer` function.
+
+<Warning>
+  USDT on Celo uses **6 decimals**. Pass `parseUnits(amount, 6)` when building
+  the transfer calldata. Using `parseEther` (18 decimals) will send
+  1,000,000,000,000× the intended amount.
+</Warning>
+
+```ts
+import {
+  createWalletClient,
+  createPublicClient,
+  custom,
+  http,
+  encodeFunctionData,
+  parseUnits,
+} from "viem";
+import { celo } from "viem/chains";
+
+// USDT on Celo mainnet — 6 decimals
+const USDT_ADDRESS = "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e";
+
+const ERC20_ABI = [
+  {
+    name: "transfer",
+    type: "function",
+    stateMutability: "nonpayable",
+    inputs: [
+      { name: "recipient", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    outputs: [{ name: "", type: "bool" }],
+  },
+] as const;
+
+const walletClient = createWalletClient({
+  chain: celo,
+  transport: custom(window.ethereum!),
+});
+
+const publicClient = createPublicClient({
+  chain: celo,
+  transport: http(),
+});
+
+async function sendUSDT(to: `0x${string}`, amount: string) {
+  const hash = await walletClient.sendTransaction({
+    to: USDT_ADDRESS,
+    data: encodeFunctionData({
+      abi: ERC20_ABI,
+      functionName: "transfer",
+      args: [
+        to,
+        parseUnits(amount, 6), // USDT uses 6 decimals on Celo
+      ],
+    }),
+  });
+
+  const receipt = await publicClient.waitForTransactionReceipt({ hash });
+
+  if (receipt.status === "success") {
+    console.log(`Sent ${amount} USDT — tx: https://celoscan.io/tx/${hash}`);
+  }
+
+  return hash;
+}
+```
+
+The `UserBalance` component in the template already imports `USDT_ADDRESS` — use the same constant to keep the address consistent across your app.
+
+## Token Reference
+
+| Token | Mainnet Address | Decimals |
+|-------|----------------|----------|
+| cUSD  | `0x765DE816845861e75A25fCA122bb6898B8B1282a` | 18 |
+| USDC  | `0xcebA9300f2b948710d2653dD7B07f33A8B32118C` | 6  |
+| USDT  | `0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e` | 6  |
+
+Chain ID: `42220` | RPC: `https://forno.celo.org` | Explorer: [celoscan.io](https://celoscan.io)
