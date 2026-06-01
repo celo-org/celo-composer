@@ -1,0 +1,93 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 2.4.13)'
+        required: true
+        default: '2.4.13'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # Skip if tag is a pre-release (beta/alpha/rc)
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-rc'))
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.13.1
+          
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Lint code
+        run: pnpm lint
+        
+      - name: Build project
+        run: pnpm build
+        
+      - name: Run tests
+        run: pnpm test
+        
+      - name: Extract version from tag
+        id: version
+        if: github.event_name == 'push'
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+          
+      - name: Update version (if manual dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          VERSION=${{ github.event.inputs.version }}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Publish to NPM
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Create GitHub Release
+        run: |
+          gh release create ${{ github.ref_name }} \
+            --title "Release ${{ github.ref_name }}" \
+            --notes "## Changes in this Release
+
+          See [CHANGELOG.md](https://github.com/celo-org/celo-composer/blob/${{ github.ref_name }}/CHANGELOG.md) for detailed changes.
+
+          ## Installation
+
+          \`\`\`bash
+          npm install -g @celo/celo-composer
+          \`\`\`
+
+          ## Usage
+
+          \`\`\`bash
+          npx @celo/celo-composer create my-celo-app
+          \`\`\`"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
