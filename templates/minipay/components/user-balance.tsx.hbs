@@ -23,6 +23,17 @@ function BalanceDisplay({ address, token, symbol }: { address: `0x${string}`, to
   );
 }
 
+/**
+ * Displays the connected wallet address and token balances for CELO, cUSD, USDC, and USDT.
+ *
+ * Token decimals reference:
+ *   - cUSD  (0x765DE816845861e75A25fCA122bb6898B8B1282a): 18 decimals
+ *   - USDC  (0xcebA9300f2b948710d2653dD7B07f33A8B32118C): 6 decimals
+ *   - USDT  (0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e): 6 decimals
+ *
+ * wagmi's `useBalance` handles decimal formatting — the `formatted` field is
+ * always in human-readable units regardless of the token's decimal count.
+ */
 export function UserBalance() {
   const { address, isConnected } = useAccount();
 
