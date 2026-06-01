@@ -4,12 +4,16 @@ import { Command } from 'commander';
 import { createCommand } from './commands/create.js';
 import chalk from 'chalk';
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const { version } = require('../package.json');
+
 const program = new Command();
 
 program
   .name('celo-composer')
   .description('CLI tool for generating customizable Celo blockchain starter kits')
-  .version('1.0.0');
+  .version(version);
 
 program
   .command('create')
