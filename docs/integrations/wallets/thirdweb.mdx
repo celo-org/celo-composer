@@ -1,20 +1,22 @@
 ---
 title: Thirdweb
-description: "Integrate the Thirdweb wallet SDK into your Celo dApp."
+description: "Integrate the Thirdweb SDK v5 into your Celo dApp for seamless wallet connection and smart account features."
 icon: "hotel"
 ---
 
-Thirdweb is a complete Web3 development framework that includes a powerful wallet SDK. It supports both external wallets (like MetaMask) and in-app wallets, which allow users to sign up with just an email or social account.
+[Thirdweb](https://thirdweb.com/) is a full-stack Web3 development framework. Their latest **SDK v5** is lightweight, performant, and supports over 300+ wallets out of the box, including in-app wallets (social/email login) and Account Abstraction.
 
-When you select Thirdweb, Celo Composer automatically installs the necessary dependencies, adds the provider components, and includes a ready-to-use `ConnectButton` in your UI.
+## Prerequisites
 
-## Environment Variables
+To use the Thirdweb SDK, you need a **Client ID**.
 
-To use the Thirdweb SDK, you'll need a Client ID from the Thirdweb Dashboard.
+1. Go to the [Thirdweb Dashboard](https://thirdweb.com/dashboard/settings/api-keys).
+2. Create a new API Key.
+3. Allow the domains where your app will be deployed (e.g., `localhost:3000`, `myapp.com`).
 
-- **`NEXT_PUBLIC_THIRDWEB_CLIENT_ID`**: Your project-specific client ID.
+Add your Client ID to your environment variables:
 
-<Info>
-  You can get your free Client ID from the [Thirdweb
-  Dashboard](https://thirdweb.com/dashboard/settings/api-keys).
-</Info>
+```bash
+NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id_here
+
+
