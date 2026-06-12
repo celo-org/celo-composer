@@ -1,0 +1,34 @@
+import { celo, celoSepolia } from "wagmi/chains";
+
+export const CELO_FEE_CURRENCIES = {
+  [celo.id]: {
+    cUSD: "0x765DE816845861e75A25fCA122bb6898B8B1282a" as const,
+    cEUR: "0xD8763C53112f612Fe77f1D1f0E821F9B3b354B4B" as const,
+    cREAL: "0xe8537a6d803a507257e6c0111532b7bc761e69b5" as const,
+    USDT: "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e" as const,
+  },
+  [celoSepolia.id]: {
+    cUSD: "0x874069Fa1Eb16D44d622F2e0Ca25eeA1700Ff7c2" as const,
+    cEUR: "0x10c8a1ae94747c6974ab159f8a1e2f7b8c2ecfb4" as const,
+    cREAL: "0xE4D517785D091D3c54818832dB6094bcc2744545" as const,
+    USDT: "0xe28cefdfdf275eec615367d603a442d5f9ef6a08" as const,
+  },
+};
+
+export type StableGasToken = "cUSD" | "cEUR" | "cREAL" | "USDT";
+
+/**
+ * Gets the contract address for the specified fee currency token on a given chain.
+ * Returns undefined for native CELO.
+ */
+export function getFeeCurrencyAddress(
+  token: StableGasToken | "CELO",
+  chainId: number
+): `0x${string}` | undefined {
+  if (token === "CELO") return undefined;
+
+  const chainCurrencies = CELO_FEE_CURRENCIES[chainId as keyof typeof CELO_FEE_CURRENCIES];
+  if (!chainCurrencies) return undefined;
+
+  return chainCurrencies[token as StableGasToken];
+}

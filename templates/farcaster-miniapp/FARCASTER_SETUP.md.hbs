@@ -99,6 +99,42 @@ The Farcaster manifest requires a signed account association to verify domain ow
 - The signed domain must exactly match where your app is hosted, including subdomains
 - If using ngrok, make sure the ngrok URL matches the signed domain
 
+## Celo Stablecoin Gas Fees (Gas Abstraction)
+
+One of Celo's most powerful features is **gas abstraction**, which allows users to pay for transaction gas fees using stablecoins (such as `cUSD`, `cEUR`, `cREAL`, or `USDT`) instead of the native `CELO` token. This is extremely beneficial for Frame/Miniapp users who may not hold native CELO.
+
+### How to Use Alternate Gas Currencies
+
+In Wagmi/Viem, you can configure gas abstraction by specifying the `feeCurrency` parameter on the transaction object.
+
+1. **Import the gas helper**:
+   We've included a helper at `@/lib/celo-gas` which lists the contract addresses for Celo gas currencies on both Mainnet and Sepolia.
+
+   ```typescript
+   import { getFeeCurrencyAddress } from "@/lib/celo-gas";
+   import { useChainId, useSendTransaction } from "wagmi";
+   ```
+
+2. **Send Transaction with feeCurrency**:
+   Pass the fee currency address to `sendTransaction` or `writeContract`:
+
+   ```typescript
+   const chainId = useChainId();
+   const { sendTransaction } = useSendTransaction();
+
+   const handleSend = () => {
+     // Retrieve stablecoin address (e.g. cUSD)
+     const feeCurrency = getFeeCurrencyAddress("cUSD", chainId);
+
+     sendTransaction({
+       to: "0x...",
+       value: parseEther("0.1"),
+       // Pass feeCurrency here
+       ...(feeCurrency ? { feeCurrency } : {}),
+     });
+   };
+   ```
+
 ## Additional Resources
 
 - [Farcaster Mini Apps Documentation](https://miniapps.farcaster.xyz/)

@@ -35,3 +35,29 @@ To make your Miniapp discoverable, you must sign a manifest with your Farcaster 
   `https://farcaster.xyz/~/developers/mini-apps/manifest?domain=YOUR_DOMAIN` to
   sign the manifest.
 </Info>
+
+## Celo Gas Abstraction (Fee Currency)
+
+Celo's unique native gas abstraction allows users of your Farcaster Miniapp to pay gas fees in stablecoins (`cUSD`, `cEUR`, `cREAL`, `USDT`) instead of native `CELO` tokens.
+
+The template contains a predefined helper file:
+- **`apps/web/src/lib/celo-gas.ts`**: Contains fee currency contract mappings for Celo Mainnet and Celo Sepolia testnet, along with the `getFeeCurrencyAddress` function.
+
+To execute a transaction with stablecoin gas, pass the `feeCurrency` option in Wagmi's `sendTransaction` or `writeContract` functions:
+
+```typescript
+import { getFeeCurrencyAddress } from "@/lib/celo-gas";
+import { useChainId, useSendTransaction } from "wagmi";
+
+const chainId = useChainId();
+const { sendTransaction } = useSendTransaction();
+
+const feeCurrencyAddress = getFeeCurrencyAddress("cUSD", chainId);
+
+sendTransaction({
+  to: "0x...",
+  value: parseEther("1"),
+  // Pass the feeCurrency address here
+  ...(feeCurrencyAddress ? { feeCurrency: feeCurrencyAddress } : {}),
+});
+```
