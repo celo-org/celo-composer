@@ -2,7 +2,9 @@
 import { useMiniApp } from "@/contexts/miniapp-context";
 import { sdk } from "@farcaster/frame-sdk";
 import { useState, useEffect } from "react";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount, useConnect, useSendTransaction, useChainId } from "wagmi";
+import { parseEther } from "viem";
+import { getFeeCurrencyAddress, StableGasToken } from "../lib/celo-gas";
 {{else}}
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -44,6 +46,35 @@ export default function Home() {
   const formatAddress = (address: string) => {
     if (!address || address.length < 10) return address;
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  // Gas Abstraction states and hooks
+  const chainId = useChainId();
+  const [gasToken, setGasToken] = useState<StableGasToken | "CELO">("CELO");
+  const [txHash, setTxHash] = useState<string | null>(null);
+  const [txSuccess, setTxSuccess] = useState(false);
+  
+  const { sendTransactionAsync, isPending: isSendingTx, error: txError } = useSendTransaction();
+
+  const handleSendTestTx = async () => {
+    setTxHash(null);
+    setTxSuccess(false);
+    
+    try {
+      const feeCurrency = getFeeCurrencyAddress(gasToken, chainId);
+      const tx = await sendTransactionAsync({
+        to: (address || walletAddress) as `0x${string}`,
+        value: parseEther("0"),
+        ...(feeCurrency ? { feeCurrency } : {}),
+      });
+      
+      if (tx) {
+        setTxHash(tx);
+        setTxSuccess(true);
+      }
+    } catch (err) {
+      console.error("Failed to send transaction:", err);
+    }
   };
   
   if (!isMiniAppReady) {
@@ -168,6 +199,64 @@ export default function Home() {
             {addMiniAppMessage && (
               <div className="mt-3 p-3 bg-white/30 backdrop-blur-sm rounded-lg">
                 <p className="text-sm text-gray-700">{addMiniAppMessage}</p>
+              </div>
+            )}
+          </div>
+
+          {/* Celo Gas Abstraction Demo Card */}
+          <div className="mb-6 bg-white/20 backdrop-blur-sm px-6 py-6 rounded-lg text-left">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">Celo Gas Abstraction</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              On Celo, users can pay gas fees using stablecoins. Try sending a test transaction using a custom gas currency!
+            </p>
+            
+            {/* Currency Selector */}
+            <div className="mb-4">
+              <label className="block text-xs font-semibold text-gray-600 uppercase mb-2">
+                Pay Gas With:
+              </label>
+              <select
+                value={gasToken}
+                onChange={(e) => setGasToken(e.target.value as StableGasToken | "CELO")}
+                className="w-full bg-white text-gray-900 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium"
+              >
+                <option value="CELO">CELO (Native)</option>
+                <option value="cUSD">cUSD (Stablecoin)</option>
+                <option value="cEUR">cEUR (Stablecoin)</option>
+                <option value="cREAL">cREAL (Stablecoin)</option>
+                <option value="USDT">USDT (Stablecoin)</option>
+              </select>
+            </div>
+
+            <button
+              onClick={handleSendTestTx}
+              disabled={!isConnected || isSendingTx}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+            >
+              {isSendingTx ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Sending Transaction...
+                </>
+              ) : (
+                <>
+                  <span>⚡</span>
+                  Send Test Tx
+                </>
+              )}
+            </button>
+
+            {/* Status Messages */}
+            {txSuccess && (
+              <div className="mt-3 p-3 bg-green-50 text-green-700 rounded-lg text-xs break-all border border-green-200">
+                <p className="font-semibold">Transaction Sent!</p>
+                <p className="mt-1 font-mono">{txHash}</p>
+              </div>
+            )}
+            {txError && (
+              <div className="mt-3 p-3 bg-red-50 text-red-700 rounded-lg text-xs border border-red-200 font-medium">
+                <p className="font-semibold text-red-800">Transaction Failed</p>
+                <p className="mt-1">{txError.message || "Unknown error occurred"}</p>
               </div>
             )}
           </div>
