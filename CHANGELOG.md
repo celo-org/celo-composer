@@ -74,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Monorepo**: Turborepo-based monorepo structure
 - **Developer Experience**: Interactive CLI with progress indicators
 - **Template System**: Modular template composition
-- **Network Support**: Pre-configured for Celo mainnet and Alfajores testnet
+- **Network Support**: Pre-configured for Celo mainnet and Celo Sepolia testnet
 
 ### Technical Details
 - Node.js 18+ support
