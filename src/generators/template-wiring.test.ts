@@ -61,6 +61,9 @@ describe("x402 template wiring", () => {
       "apps/api/package.json",
       "apps/api/tsconfig.json",
       "apps/api/.env.template",
+      // apps/api declares a `lint` script, so it has to ship a config or
+      // `turbo lint` fails for every generated project.
+      "apps/api/.eslintrc.json",
     ]) {
       expect(fs.pathExistsSync(path.join(projectPath, file))).toBe(true);
     }
