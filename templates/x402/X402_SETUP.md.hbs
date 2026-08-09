@@ -25,6 +25,23 @@ Celo hosts a facilitator for each network, so you do not run one:
 | Celo Sepolia (default) | `https://api.x402.sepolia.celo.org` | `eip155:11142220` |
 | Celo mainnet | `https://api.x402.celo.org` | `eip155:42220` |
 
+## Get a facilitator API key
+
+Do this first — it takes about a minute and costs nothing.
+
+1. Open [https://x402.celo.org](https://x402.celo.org) and connect an EVM wallet.
+2. Click **Create API key** and sign the message. No gas, no transaction.
+3. Copy the key. It looks like `x402_…` and is **shown only once**.
+
+New accounts start with **free credits on both mainnet and testnet**, so you can run
+this whole template without buying anything. Each settlement spends one credit; you
+buy more by depositing USDC on the same dashboard. If you lose the key, **Lost your
+key? Regenerate it** issues a new one and keeps your credits.
+
+The key is a **server-side secret**. It identifies you to the facilitator, is never
+part of the payment, and is never sent to the buyer — **the buyer needs no key at
+all.** Keep it in `.env`, which is already gitignored.
+
 ## Run it
 
 ```bash
@@ -34,8 +51,8 @@ cp .env.template .env
 
 Fill in three things in `.env`:
 
+- `X402_API_KEY` — the key from the step above.
 - `X402_PAY_TO` — an address you control. Until it is set, `/paid` answers for free.
-- `X402_API_KEY` — required, on testnet too. Request one from the Celo team.
 - `BUYER_PRIVATE_KEY` — a **throwaway** key holding a little testnet USDC.
 
 Then, in two terminals:
@@ -65,6 +82,10 @@ and the token rejects the signature at settlement, after everything else looked 
 both answer without one, so the server boots and returns a correct 402. Only `/settle`
 rejects, with `{"error":"unauthorized","message":"Missing X-API-Key"}`, by which point
 the buyer has already signed. The seller warns about this at startup.
+
+**Running out of credits fails at the same place.** Settlement returns `402` rather
+than `401`, which reads like the payment was refused when the account balance is the
+real cause. Check the dashboard before assuming the payment path broke.
 
 ## Going to mainnet
 

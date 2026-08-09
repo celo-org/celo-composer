@@ -59,10 +59,13 @@ export const PAY_TO = process.env.X402_PAY_TO;
  * never reaches the buyer — it identifies YOU to the facilitator, it is not part
  * of the payment.
  *
- * The key is REQUIRED, on testnet as well. `/supported` and `/verify` both answer
- * without one, so everything looks healthy right up to `/settle`, which returns
- * 401 after the buyer has already signed. Do not read a working 402 as proof that
- * the key is unnecessary.
+ * The key is REQUIRED, on testnet as well. Get one at https://x402.celo.org —
+ * connect a wallet, click "Create API key", sign a message. No gas, and new
+ * accounts start with free credits on both networks.
+ *
+ * `/supported` and `/verify` both answer without a key, so everything looks
+ * healthy right up to `/settle`, which returns 401 after the buyer has already
+ * signed. Do not read a working 402 as proof that the key is unnecessary.
  */
 export const facilitator = new HTTPFacilitatorClient({
   url: CONFIG.facilitator,

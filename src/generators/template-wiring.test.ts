@@ -69,8 +69,15 @@ describe("x402 template wiring", () => {
     }
   });
 
-  it("writes the setup guide at the project root", () => {
-    expect(fs.pathExistsSync(path.join(projectPath, "X402_SETUP.md"))).toBe(true);
+  it("writes a setup guide that says where to actually get an API key", () => {
+    const guide = fs.readFileSync(
+      path.join(projectPath, "X402_SETUP.md"),
+      "utf8"
+    );
+    // Settlement 401s without a key, so "ask someone" is not documentation.
+    // The dashboard is self-service and new accounts get free credits.
+    expect(guide).toContain("https://x402.celo.org");
+    expect(guide).toContain("Create API key");
   });
 
   it("pins the seller to a real Celo facilitator and a 6-decimal USDC price", () => {

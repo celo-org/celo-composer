@@ -43,9 +43,21 @@ cd apps/api
 cp .env.template .env
 ```
 
-Set `X402_PAY_TO` to an address you control — until it is set, `/paid` answers for
-free — `X402_API_KEY` to a facilitator key from the Celo team, and
-`BUYER_PRIVATE_KEY` to a throwaway key holding a little testnet USDC.
+### Get a facilitator API key first
+
+Open [https://x402.celo.org](https://x402.celo.org), connect an EVM wallet, click
+**Create API key** and sign the message. No gas, no transaction, and the key is shown
+only once. New accounts start with **free credits on both mainnet and testnet**, so
+nothing needs to be bought to run this template. Each settlement spends one credit.
+
+The key is a server-side secret: it identifies you to the facilitator, is never part
+of the payment, and **the buyer needs no key at all**.
+
+### Then fill in `.env`
+
+Set `X402_API_KEY` to that key, `X402_PAY_TO` to an address you control — until it is
+set, `/paid` answers for free — and `BUYER_PRIVATE_KEY` to a throwaway key holding a
+little testnet USDC.
 
 ```bash
 pnpm api:dev    # seller on http://localhost:3001
@@ -69,7 +81,9 @@ else looked correct.
 **The facilitator API key is required, including on testnet, and its absence is
 invisible until the last step.** `/supported` and `/verify` both answer without one,
 so the server boots and returns a correct 402; only `/settle` returns 401, after the
-buyer has signed. The generated seller warns about this at startup.
+buyer has signed. The generated seller warns about this at startup. An empty credit
+balance fails at the same point but returns `402`, which reads like a refused payment
+rather than an account problem.
 
 ## What this template skips
 
