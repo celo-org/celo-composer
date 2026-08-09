@@ -85,6 +85,9 @@ describe("x402 template wiring", () => {
     expect(x402).toContain("eip155:42220");
     // Testnet is the default, so running the scaffold costs nothing.
     expect(x402).toContain('process.env.X402_NETWORK === "mainnet"');
+    // Without this, .env is never read and the documented setup silently
+    // produces a free endpoint. Node's own --env-file needs 20.6; base allows 18.
+    expect(x402).toContain('import "dotenv/config"');
   });
 
   it("declares the x402 scripts and the paywall peer exemption on the root package", () => {

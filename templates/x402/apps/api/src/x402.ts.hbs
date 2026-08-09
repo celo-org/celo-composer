@@ -4,6 +4,11 @@
 // settlement transaction. You do not run it — Celo hosts one for each network, and
 // the addresses below are what those instances advertise on `GET /supported`.
 
+// Loaded here, first, because every constant below reads process.env at module
+// scope — and both entry points import this file before running their own code.
+// Node only reads .env by itself from 20.6 onward, and the workspace supports 18.
+import "dotenv/config";
+
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import type { Address } from "viem";
 
