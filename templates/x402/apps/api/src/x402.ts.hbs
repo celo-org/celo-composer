@@ -57,7 +57,12 @@ export const PAY_TO = process.env.X402_PAY_TO;
 /**
  * The facilitator client. The API key is attached to every facilitator call and
  * never reaches the buyer — it identifies YOU to the facilitator, it is not part
- * of the payment. Request one from the Celo team; testnet may not require it.
+ * of the payment.
+ *
+ * The key is REQUIRED, on testnet as well. `/supported` and `/verify` both answer
+ * without one, so everything looks healthy right up to `/settle`, which returns
+ * 401 after the buyer has already signed. Do not read a working 402 as proof that
+ * the key is unnecessary.
  */
 export const facilitator = new HTTPFacilitatorClient({
   url: CONFIG.facilitator,

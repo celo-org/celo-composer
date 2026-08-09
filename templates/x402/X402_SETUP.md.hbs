@@ -32,9 +32,10 @@ cd apps/api
 cp .env.template .env
 ```
 
-Fill in two things in `.env`:
+Fill in three things in `.env`:
 
 - `X402_PAY_TO` — an address you control. Until it is set, `/paid` answers for free.
+- `X402_API_KEY` — required, on testnet too. Request one from the Celo team.
 - `BUYER_PRIVATE_KEY` — a **throwaway** key holding a little testnet USDC.
 
 Then, in two terminals:
@@ -59,6 +60,11 @@ matter what you put in `asset`. USDC has it, which is why the template uses USDC
 **`extra` is the EIP-712 domain, and it cannot be read from the contract.** The `name`
 and `version` in `apps/api/src/index.ts` are what the token signs with. Get them wrong
 and the token rejects the signature at settlement, after everything else looked fine.
+
+**A missing API key does not show up until settlement.** `/supported` and `/verify`
+both answer without one, so the server boots and returns a correct 402. Only `/settle`
+rejects, with `{"error":"unauthorized","message":"Missing X-API-Key"}`, by which point
+the buyer has already signed. The seller warns about this at startup.
 
 ## Going to mainnet
 

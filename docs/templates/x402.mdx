@@ -44,7 +44,8 @@ cp .env.template .env
 ```
 
 Set `X402_PAY_TO` to an address you control — until it is set, `/paid` answers for
-free — and `BUYER_PRIVATE_KEY` to a throwaway key holding a little testnet USDC.
+free — `X402_API_KEY` to a facilitator key from the Celo team, and
+`BUYER_PRIVATE_KEY` to a throwaway key holding a little testnet USDC.
 
 ```bash
 pnpm api:dev    # seller on http://localhost:3001
@@ -64,6 +65,11 @@ regardless of what `asset` says. That is why the template uses USDC.
 **`extra` is the EIP-712 domain and cannot be read from the contract.** If the `name`
 or `version` is wrong the token rejects the signature at settlement, after everything
 else looked correct.
+
+**The facilitator API key is required, including on testnet, and its absence is
+invisible until the last step.** `/supported` and `/verify` both answer without one,
+so the server boots and returns a correct 402; only `/settle` returns 401, after the
+buyer has signed. The generated seller warns about this at startup.
 
 ## What this template skips
 

@@ -59,6 +59,14 @@ if (PAY_TO) {
       server
     )
   );
+  // Fail loudly at boot rather than at settlement. Without a key the server still
+  // starts and still returns a correct 402 — /supported and /verify do not need
+  // one — and then /settle returns 401 after the buyer has signed.
+  if (!process.env.X402_API_KEY) {
+    console.warn(
+      "⚠️  X402_API_KEY is not set. The 402 will look correct and settlement will fail with 401."
+    );
+  }
 } else {
   console.warn(
     "⚠️  X402_PAY_TO is not set — /paid is running FREE. Set it in .env to charge."
