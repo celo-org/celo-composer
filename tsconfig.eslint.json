@@ -1,0 +1,6 @@
+{
+  "//": "Lint everything under src, including tests. The build tsconfig excludes *.test.ts so they never reach dist/, but ESLint's type-aware rules still need a project that covers them.",
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

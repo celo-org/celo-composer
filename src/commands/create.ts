@@ -69,7 +69,8 @@ export async function createCommand(
             const autoWallet = options.walletProvider
               ? options.walletProvider
               : autoTemplateType === "farcaster-miniapp" ||
-                autoTemplateType === "ai-chat"
+                autoTemplateType === "ai-chat" ||
+                autoTemplateType === "x402"
               ? "none"
               : autoTemplateType === "minipay"
               ? "rainbowkit"
@@ -77,7 +78,8 @@ export async function createCommand(
             const autoContracts = options.contracts
               ? options.contracts
               : autoTemplateType === "farcaster-miniapp" ||
-                autoTemplateType === "ai-chat"
+                autoTemplateType === "ai-chat" ||
+                autoTemplateType === "x402"
               ? "none"
               : "hardhat";
             return {
@@ -115,6 +117,7 @@ export async function createCommand(
                 { name: "Farcaster Miniapp", value: "farcaster-miniapp" },
                 { name: "Minipay App", value: "minipay" },
                 { name: "AI Agent Chat App", value: "ai-chat" },
+                { name: "x402 Paid API", value: "x402" },
               ],
               default: "basic",
               // `-t` populates options.template; only the long form sets
@@ -139,7 +142,8 @@ export async function createCommand(
                   !options.walletProvider &&
                   templateType !== "farcaster-miniapp" &&
                   templateType !== "minipay" &&
-                  templateType !== "ai-chat"
+                  templateType !== "ai-chat" &&
+                  templateType !== "x402"
                 );
               },
             },
@@ -160,7 +164,8 @@ export async function createCommand(
               when: (answers: { templateType?: string }): boolean => {
                 const templateType =
                   cliTemplateType || answers.templateType;
-                if (templateType === "ai-chat") return false;
+                if (templateType === "ai-chat" || templateType === "x402")
+                  return false;
                 return !options.contracts;
               },
             },
@@ -250,7 +255,8 @@ export async function createCommand(
       options.walletProvider ||
       answers.walletProvider ||
       (finalTemplateType === "farcaster-miniapp" ||
-      finalTemplateType === "ai-chat"
+      finalTemplateType === "ai-chat" ||
+      finalTemplateType === "x402"
         ? "none"
         : finalTemplateType === "minipay"
         ? "rainbowkit"
@@ -259,7 +265,8 @@ export async function createCommand(
     if (!finalContractFramework) {
       finalContractFramework =
         finalTemplateType === "ai-chat" ||
-        finalTemplateType === "farcaster-miniapp"
+        finalTemplateType === "farcaster-miniapp" ||
+        finalTemplateType === "x402"
           ? "none"
           : "hardhat";
     }
