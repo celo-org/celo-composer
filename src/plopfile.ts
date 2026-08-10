@@ -214,6 +214,9 @@ export default function (plop: NodePlopAPI): void {
         globOptions: {
           dot: true,
         },
+        // The base template now ships an .eslintrc.json of its own, so this has to
+        // overwrite it rather than silently lose the Farcaster rule overrides.
+        force: true,
         skip: (data: PlopData): string | false => {
           if (data.templateType !== "farcaster-miniapp") {
             return "Skipping Farcaster Miniapp config - different template type selected";
