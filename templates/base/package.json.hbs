@@ -13,7 +13,12 @@
     "contracts:test": "turbo run test --filter=hardhat",
     "contracts:deploy": "turbo run deploy --filter=hardhat",
     "contracts:deploy:celo-sepolia": "turbo run deploy:celo-sepolia --filter=hardhat",
-    "contracts:deploy:celo": "turbo run deploy:celo --filter=hardhat"{{/if}}
+    "contracts:deploy:celo": "turbo run deploy:celo --filter=hardhat"{{/if}}{{#if (eq contractFramework "foundry")}},
+    "contracts:compile": "turbo run compile --filter=foundry",
+    "contracts:test": "turbo run test --filter=foundry",
+    "contracts:deploy": "turbo run deploy --filter=foundry",
+    "contracts:deploy:celo-sepolia": "turbo run deploy:celo-sepolia --filter=foundry",
+    "contracts:deploy:celo": "turbo run deploy:celo --filter=foundry"{{/if}}
   },
   "devDependencies": {
     "@types/node": "^20.8.0",

@@ -32,6 +32,25 @@
     },
     "deploy:celo": {
       "dependsOn": ["compile"]
+    }{{/if}}{{#if (eq contractFramework "foundry")}},
+    "compile": {
+      "dependsOn": ["^compile"],
+      "outputs": ["out/**", "cache/**"]
+    },
+    "test": {
+      "dependsOn": ["compile"]
+    },
+    "deploy": {
+      "dependsOn": ["compile"],
+      "cache": false
+    },
+    "deploy:celo-sepolia": {
+      "dependsOn": ["compile"],
+      "cache": false
+    },
+    "deploy:celo": {
+      "dependsOn": ["compile"],
+      "cache": false
     }{{/if}}
   }
 }

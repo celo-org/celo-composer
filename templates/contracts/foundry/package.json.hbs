@@ -1,0 +1,24 @@
+{
+  "name": "foundry",
+  "version": "1.0.0",
+  "description": "Smart contracts for {{projectName}}",
+  "private": true,
+  "scripts": {
+    "build": "forge build",
+    "compile": "forge build",
+    "test": "forge test",
+    "deploy": "forge script script/Counter.s.sol:CounterScript --broadcast",
+    "deploy:celo-sepolia": "forge script script/Counter.s.sol:CounterScript --rpc-url celo-sepolia --broadcast",
+    "deploy:celo": "forge script script/Counter.s.sol:CounterScript --rpc-url celo --broadcast",
+    "clean": "forge clean"
+  },
+  "keywords": [
+    "foundry",
+    "ethereum",
+    "celo",
+    "smart-contracts",
+    "solidity"
+  ],
+  "author": "",
+  "license": "MIT"
+}
