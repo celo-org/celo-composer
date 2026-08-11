@@ -19,7 +19,7 @@ const config: HardhatUserConfig = {
       chainId: 42220,
     },
     // Celo Sepolia Testnet
-    celo-sepolia: {
+    "celo-sepolia": {
       url: "https://forno.celo-sepolia.celo-testnet.org/",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 11142220,
@@ -33,7 +33,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       celo: process.env.ETHERSCAN_API_KEY || "",
-      celo-sepolia: process.env.ETHERSCAN_API_KEY || "",
+      "celo-sepolia": process.env.ETHERSCAN_API_KEY || "",
     },
     customChains: [
       {
