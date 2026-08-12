@@ -20,7 +20,7 @@ npx @celo/celo-composer@latest create my-chat --template ai-chat
 ## What it ships
 
 - **Next.js 15** with the App Router, React Server Components and streaming.
-- **Four model providers wired through the AI SDK** — Anthropic, Google, Mistral and OpenAI. Pick one by setting its key; the app reads whichever is present.
+- **Six model providers wired through the AI SDK** — Anthropic, Google, Mistral, OpenAI, DeepSeek and xAI. Pick one by setting its key; the app reads whichever is present. DeepSeek and xAI go through `@ai-sdk/openai` against their OpenAI-compatible endpoints, so they need no extra package.
 - **Persisted chats** in Postgres via Drizzle ORM, with migrations included.
 - **An artifacts panel** for documents, code and spreadsheets the model produces alongside the conversation.
 - **Playwright end-to-end tests** covering the chat and route layers.
@@ -45,6 +45,8 @@ Set the variables you need in `.env.local`:
 | `OPENAI_API_KEY` | OpenAI models |
 | `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini models |
 | `MISTRAL_API_KEY` | Mistral models |
+| `DEEPSEEK_API_KEY` | DeepSeek Chat and Reasoner |
+| `XAI_API_KEY` | Grok models |
 
 Then:
 
