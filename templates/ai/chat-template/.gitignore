@@ -17,6 +17,9 @@ build
 .DS_Store
 *.pem
 
+# typescript incremental build cache
+*.tsbuildinfo
+
 # debug
 npm-debug.log*
 yarn-debug.log*

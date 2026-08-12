@@ -13,7 +13,7 @@ import {
   chatModel,
   reasoningModel,
   titleModel,
-} from "./models.test";
+} from "./models.mock";
 
 type ModelInfo = {
   id: string;
