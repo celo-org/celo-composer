@@ -1,0 +1,69 @@
+---
+title: AI Chat Template
+description: "A standalone Next.js AI chat application, scaffolded by Celo Composer."
+icon: "message-bot"
+---
+
+The AI Chat template scaffolds a working chat application built on the [Vercel AI SDK](https://sdk.vercel.ai), with streaming responses, persisted conversations and an artifacts panel for generated documents and code.
+
+<Info>
+  Unlike the other templates, this one is **not a monorepo**. It scaffolds a
+  single Next.js application at the project root — no `apps/web`, no
+  `apps/contracts`, no Turborepo. The `--wallet-provider` and `--contracts`
+  flags do not apply.
+</Info>
+
+```bash
+npx @celo/celo-composer@latest create my-chat --template ai-chat
+```
+
+## What it ships
+
+- **Next.js 15** with the App Router, React Server Components and streaming.
+- **Six model providers wired through the AI SDK** — Anthropic, Google, Mistral, OpenAI, DeepSeek and xAI. Pick one by setting its key; the app reads whichever is present. DeepSeek and xAI go through `@ai-sdk/openai` against their OpenAI-compatible endpoints, so they need no extra package.
+- **Persisted chats** in Postgres via Drizzle ORM, with migrations included.
+- **An artifacts panel** for documents, code and spreadsheets the model produces alongside the conversation.
+- **Playwright end-to-end tests** covering the chat and route layers.
+
+## Requirements
+
+This template needs more than the others before it will run.
+
+<Warning>
+  **A Postgres database is required.** `POSTGRES_URL` is read at build time, not
+  just at runtime, so `pnpm build` fails without it rather than starting and
+  erroring later. Any Postgres works — a local instance, Neon, Supabase, or
+  Vercel Postgres.
+</Warning>
+
+Set the variables you need in `.env.local`:
+
+| Variable | Needed for |
+|---|---|
+| `POSTGRES_URL` | required — chat persistence, read at build time |
+| `ANTHROPIC_API_KEY` | Claude models |
+| `OPENAI_API_KEY` | OpenAI models |
+| `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini models |
+| `MISTRAL_API_KEY` | Mistral models |
+| `DEEPSEEK_API_KEY` | DeepSeek Chat and Reasoner |
+| `XAI_API_KEY` | Grok models |
+
+Then:
+
+```bash
+cd my-chat
+pnpm install
+pnpm dev
+```
+
+## Authentication is not included
+
+The template ships **no working authentication**. `app/(auth)/auth.ts` is a set of stubs — it returns a fixed `public-user` — `middleware.ts` allows every request, and `next-auth` is not a dependency.
+
+That is a deliberate starting point rather than an oversight: the chat works immediately with no sign-in flow to configure. **But every visitor shares the same identity**, so add real auth before putting an instance anywhere public. NextAuth, Clerk and Privy all drop into the existing `(auth)` route group.
+
+## Where this fits with Celo
+
+The template is a chat application, not a dApp — it ships no wallet connection and no contract tooling. It is the starting point for an **agent that will eventually transact**: bring your own wallet layer, or scaffold a second project with `--template basic` and move the pieces you need across.
+
+If you want payments in front of an API rather than a chat UI, look at the other templates in this section instead.

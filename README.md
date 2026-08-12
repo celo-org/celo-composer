@@ -4,9 +4,9 @@ A powerful CLI tool for generating customizable Celo blockchain starter kits wit
 
 ## Features
 
-- 🚀 **Modern Stack**: Next.js 14+, TypeScript, Tailwind CSS, shadcn/ui
+- 🚀 **Modern Stack**: Next.js (14+ in the base templates, 15 in ai-chat), TypeScript, Tailwind CSS, shadcn/ui
 - 📦 **Monorepo Ready**: Turborepo with PNPM workspaces
-- 🎨 **Beautiful UI**: Pre-configured shadcn/ui components
+- 🎨 **Beautiful UI**: shadcn/ui components copied in (button, card, sheet) — add more with the shadcn CLI after running `npx shadcn init`
 - 🔧 **Developer Experience**: Interactive prompts and clear feedback
 - 🌍 **Celo Optimized**: Ready for Celo blockchain development
 - 🎯 **Multiple Templates**: Choose from Basic Web App, Farcaster Miniapp, Minipay, or AI Chat templates

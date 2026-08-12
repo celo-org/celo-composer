@@ -49,7 +49,8 @@
         "pages": [
           "templates/web-app-template",
           "templates/farcaster-miniapp",
-          "templates/minipay"
+          "templates/minipay",
+              "templates/ai-chat"
         ]
       },
       {

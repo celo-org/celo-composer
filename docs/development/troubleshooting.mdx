@@ -36,10 +36,9 @@ export default function Page() {
 
 **Problem**: `celo-composer: command not found`
 
-**Solution**: This usually means the global installation didn't work correctly or your shell's `PATH` is not configured to find global Node modules.
+**Solution**: The docs use `npx`, which needs no installation at all — run `npx @celo/celo-composer@latest create` and the command is fetched on demand.
 
-1.  **Verify Installation**: Make sure you have installed the package globally with `npm install -g @celo/celo-composer`.
-2.  **Check PATH**: Ensure that your Node.js global bin directory is in your shell's `PATH`. You can find the directory by running `npm config get prefix`.
+If you installed it globally on purpose, check that your Node global bin directory is on your `PATH`. `npm config get prefix` prints where that is.
 
 **Problem**: Errors during `pnpm install`.
 
@@ -55,7 +54,7 @@ export default function Page() {
 **Solution**:
 
 1.  **Check Solidity Version**: Ensure the `solidity` version in your `hardhat.config.ts` matches the pragma statement in your contract files.
-2.  **Clean Cache**: Run `pnpm contracts:compile --force` to do a clean compilation.
+2.  **Clean Cache**: Run `pnpm --filter hardhat exec hardhat clean`, then `pnpm contracts:compile`. `--force` busts the Turborepo cache rather than Hardhat's, so it does not clear stale artifacts.
 
 **Problem**: Deployment script fails due to authentication or network issues.
 
