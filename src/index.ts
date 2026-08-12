@@ -1,15 +1,23 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import { createRequire } from 'node:module';
 import { createCommand } from './commands/create.js';
 import chalk from 'chalk';
+
+// Read at runtime rather than importing package.json, which would pull it into
+// the compiled tree and move dist/ around. `..` resolves to the package root
+// from dist/index.js and from src/index.ts alike, so `--version` is right under
+// both `node dist/index.js` and `tsx src/index.ts`.
+const require = createRequire(import.meta.url);
+const { version } = require('../package.json') as { version: string };
 
 const program = new Command();
 
 program
   .name('celo-composer')
   .description('CLI tool for generating customizable Celo blockchain starter kits')
-  .version('1.0.0');
+  .version(version);
 
 program
   .command('create')
