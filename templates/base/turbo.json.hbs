@@ -19,7 +19,7 @@
     }{{#if (eq contractFramework "hardhat")}},
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["artifacts/**", "cache/**", "typechain-types/**"]
+      "outputs": ["artifacts/**", "cache/**"]
     },
     "test": {
       "dependsOn": ["compile"]
