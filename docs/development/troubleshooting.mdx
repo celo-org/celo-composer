@@ -60,7 +60,7 @@ If you installed it globally on purpose, check that your Node global bin directo
 
 **Solution**:
 
-1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` and `CELO_PROVIDER_URL` are correctly set up in your `.env` file.
+1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` is set in `apps/contracts/.env`. That is the only variable the Hardhat config reads — the RPC endpoints for `celo` and `celo-sepolia` are written into `hardhat.config.ts`, so changing them means editing that file rather than the environment.
 2.  **Check Account Balance**: Make sure the wallet associated with your `PRIVATE_KEY` has enough funds (e.g., Celo Sepolia Testnet, Celo Mainnet) to pay for the deployment gas fees.
 
 ## Still Stuck?

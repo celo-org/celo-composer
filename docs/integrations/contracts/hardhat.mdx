@@ -8,7 +8,7 @@ Celo Composer provides a seamless integration with Hardhat, the industry-standar
 
 ## Hardhat Integration
 
-When you choose to include the Hardhat framework (by selecting it in the interactive prompts or using the `--contracts hardhat` flag), Celo Composer sets up a dedicated `apps/hardhat` application for you.
+When you choose to include the Hardhat framework (by selecting it in the interactive prompts or using the `--contracts hardhat` flag), Celo Composer sets up a dedicated `apps/contracts` application for you.
 
 This application comes with:
 
@@ -20,7 +20,7 @@ This application comes with:
 
 ## Environment Variables
 
-To deploy and verify your smart contracts, you'll need to set up your environment variables. In the `apps/hardhat` directory, you'll find a `.env.example` file. Create a copy of it named `.env` and add the following variables:
+To deploy and verify your smart contracts, you'll need to set up your environment variables. In the `apps/contracts` directory, you'll find a `.env.example` file. Create a copy of it named `.env` and add the following variables:
 
 - **`PRIVATE_KEY`**: The private key of the wallet you'll use for deploying contracts. This is required for deploying to any live network.
   <Warning>
@@ -42,10 +42,10 @@ The root `package.json` of your project is updated with convenient scripts to ma
 
 ## Development Workflow
 
-1.  **Write your contracts** in the `apps/hardhat/contracts` directory.
-2.  **Write tests** for your contracts in the `apps/hardhat/test` directory.
+1.  **Write your contracts** in the `apps/contracts/contracts` directory.
+2.  **Write tests** for your contracts in the `apps/contracts/test` directory.
 3.  **Run `pnpm contracts:compile`** to compile your contracts.
 4.  **Run `pnpm contracts:test`** to ensure everything is working as expected.
 5.  **Deploy your contracts** using one of the `deploy` scripts.
 
-Once deployed, your frontend application in `apps/web` can easily import the contract ABIs and addresses from the `apps/hardhat` application to start interacting with them on the blockchain.
+Once deployed, your frontend application in `apps/web` can easily import the contract ABIs and addresses from the `apps/contracts` application to start interacting with them on the blockchain.

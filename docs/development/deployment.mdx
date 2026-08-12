@@ -33,7 +33,7 @@ While the specific steps may vary depending on the platform you choose, the gene
 
     - **Framework Preset**: Select `Next.js`.
     - **Build Command**: `pnpm build`.
-    - **Output Directory**: `apps/web/dist` (or as configured in your `next.config.js`).
+    - **Output Directory**: leave blank. Vercel and Netlify detect Next.js and read `.next` themselves; naming a directory here breaks the deploy.
     - **Install Command**: `pnpm install`.
 
 4.  **Set Environment Variables**: Add the environment variables from your local `.env` file to the deployment platform's settings. Make sure to use the production values for things like API keys and RPC URLs.
