@@ -1,3 +1,5 @@
 node_modules
 .env
 dist
+# leftover from an interrupted pnpm pack (older versions stashed here)
+.prune-stash/
