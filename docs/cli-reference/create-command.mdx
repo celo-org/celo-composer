@@ -43,8 +43,10 @@ npx @celo/celo-composer@latest create my-awesome-dapp
 
 Create a new project with specific configurations by using flags. This is useful for scripting and automation.
 
+**A flag only skips its own question.** `--template` answers the template prompt and nothing else, so anything you leave out is still asked. In a script or a CI job there is nobody to answer, and the command stops there — so **add `-y` whenever the run has no terminal attached**. It accepts the defaults for every question your flags did not already answer, and your flags still win where you gave them.
+
 ```bash
-npx @celo/celo-composer@latest create --template minipay
+npx @celo/celo-composer@latest create my-minipay-app --template minipay -y
 ```
 
 This command creates a new project using the Minipay template, which is optimized for integration with the Minipay mobile wallet. It comes with a pre-configured wallet connection and a mobile-first UI.
@@ -53,14 +55,16 @@ This command creates a new project using the Minipay template, which is optimize
 npx @celo/celo-composer@latest create my-farcaster-app \
   --template farcaster-miniapp \
   --wallet-provider thirdweb \
-  --contracts none
+  --contracts none \
+  -y
 ```
 
 ```bash
 npx @celo/celo-composer@latest create my-ai-chat \
   --template ai-chat \
   --contracts none \
-  --wallet-provider none
+  --wallet-provider none \
+  -y
 ```
 
 The `ai-chat` template is a standalone Next.js app copied as-is (no Handlebars rendering). Wallet and contracts prompts are skipped by default.
