@@ -38,7 +38,7 @@ let workdir: string;
 
 beforeAll(() => {
   // dist/ is what users run, so that is what gets tested.
-  execFileSync(NPM, ["run", "build"], { cwd: REPO_ROOT, stdio: "pipe" });
+  execFileSync(NPM, ["run", "build"], { cwd: REPO_ROOT, stdio: "pipe", shell: process.platform === "win32" });
   workdir = mkdtempSync(join(tmpdir(), "celo-composer-smoke-"));
 });
 
@@ -88,29 +88,33 @@ function typescriptFiles(root: string): string[] {
  * catch block filtered an empty string and returned []. The suite passed over a
  * scaffold carrying 21 real syntax errors (#399).
  *
- * `transpileModule` is the public API for this: single-file, no module
- * resolution, no config file, and it reports the same parse diagnostics.
+ * `createSourceFile` parses and stops. An earlier version used
+ * `transpileModule`, which also emits — and emit throws
+ * `Debug Failure. Output generation failed` on a declaration file, because a
+ * `.d.ts` produces no output. Every ai-chat scaffold ships `next-env.d.ts`, so
+ * the check crashed on that template rather than reporting on it. Parsing is
+ * all this needs, so it is all it does now.
  */
 function syntaxErrors(projectPath: string): string[] {
   const out: string[] = [];
   for (const file of typescriptFiles(projectPath)) {
-    const result = ts.transpileModule(readFileSync(file, "utf8"), {
-      fileName: file,
-      reportDiagnostics: true,
-      compilerOptions: {
-        target: ts.ScriptTarget.ES2022,
-        module: ts.ModuleKind.ESNext,
-        jsx: ts.JsxEmit.Preserve,
-      },
-    });
-    for (const d of result.diagnostics ?? []) {
-      const where = d.file && d.start !== undefined
-        ? (({ line, character }) => `:${line + 1}:${character + 1}`)(
-            d.file.getLineAndCharacterOfPosition(d.start)
-          )
-        : "";
+    const sourceFile = ts.createSourceFile(
+      file,
+      readFileSync(file, "utf8"),
+      ts.ScriptTarget.ES2022,
+      true,
+      file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS
+    );
+    // parseDiagnostics is not on the public SourceFile type, but it is where the
+    // parser records syntax errors and there is no public accessor for them.
+    const diagnostics =
+      (sourceFile as unknown as { parseDiagnostics?: ts.Diagnostic[] })
+        .parseDiagnostics ?? [];
+
+    for (const d of diagnostics) {
+      const { line, character } = sourceFile.getLineAndCharacterOfPosition(d.start ?? 0);
       out.push(
-        `${file.slice(projectPath.length + 1)}${where} - error TS${d.code}: ` +
+        `${file.slice(projectPath.length + 1)}:${line + 1}:${character + 1} - error TS${d.code}: ` +
           ts.flattenDiagnosticMessageText(d.messageText, " ")
       );
     }
@@ -130,18 +134,10 @@ function syntaxErrors(projectPath: string): string[] {
 type Suite = "scaffold" | "manifests" | "components";
 
 const KNOWN_BROKEN: Array<{ suite: Suite; label: string; reason: string }> = [
-  { suite: "scaffold", label: "-t ai-chat", reason: "#387 — templates/ resolves to dist/templates, so ai-chat cannot scaffold (fix: #436)" },
-  // #399 had three entries here — basic, basic+thirdweb and minipay, the only
-  // combinations that ship a hardhat package. #427 merged on 2026-08-12, the
-  // markers went red on the next run, and they are gone. That is the property
-  // working: the list shrinks by itself as fixes land.
-
-  { suite: "manifests", label: "-t farcaster-miniapp --wallet-provider rainbowkit", reason: "#400 / #429 — react-query, viem and wagmi declared twice (fix: #428, #450)" },
-
-  { suite: "components", label: "-t basic", reason: "#396 — navbar imports ConnectButton; the file exports WalletConnectButton (fix: #397)" },
-  { suite: "components", label: "-t basic --wallet-provider thirdweb", reason: "#396 — same (fix: #397)" },
-  { suite: "components", label: "-t basic -c foundry", reason: "#396 — same (fix: #397)" },
-  { suite: "components", label: "-t minipay", reason: "#396 — navbar renders <WalletConnectButton /> with no import at all (fix: #397)" },
+  // This list started with eight entries. #427, #436 and #397 merged on
+  // 2026-08-12, seven markers went red on the next run naming their own
+  // combinations, and they were removed. Nobody had to remember this file.
+  { suite: "manifests", label: "-t farcaster-miniapp --wallet-provider rainbowkit", reason: "#429 — viem and wagmi still declared twice; #428 fixed the react-query half, #450 is open for the rest" },
 ];
 
 /** `it.failing` while the named bug is open, plain `it` once it is fixed. */
