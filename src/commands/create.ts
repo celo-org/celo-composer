@@ -44,23 +44,28 @@ export async function createCommand(
   try {
     console.log(chalk.blue.bold("\n🟨 Welcome to Celo Composer CLI!\n"));
 
-    // If --yes flag is provided, skip all prompts and use defaults/flags
-    // Check if any CLI options are provided (auto-mode)
-    const hasCliOptions = !!(
-      options.description ||
-      options.template ||
-      options.templateType ||
-      options.walletProvider ||
-      options.contracts ||
-      options.skipInstall ||
-      options.yes
-    );
+    // `-t` populates options.template; only the long `--template-type` sets
+    // templateType. Several reads below checked just one of the two, which was
+    // harmless while any flag skipped the prompts entirely and is not once they
+    // run: the template question would re-ask, and finalTemplateType would fall
+    // through to "basic" for a `-t minipay` that had no -y. Normalised once.
+    const cliTemplateType = options.template || options.templateType;
 
+    // Only -y skips the prompts.
+    //
+    // This used to skip them whenever ANY flag was present, so
+    // `create myapp -d "hello"` silently produced basic + rainbowkit + hardhat
+    // without asking a single question — and made -y redundant, since every
+    // other flag already did what it does. The docs describe the opposite:
+    // a flag bypasses the prompt "for those options", leaving the rest asked.
+    //
+    // The per-question `when:` clauses below already implement that, keyed on
+    // the specific flag. They were simply never reached.
     const answers: PromptAnswers =
-      options.yes || hasCliOptions
+      options.yes
         ? ((): PromptAnswers => {
             const autoTemplateType =
-              options.template || options.templateType || "basic";
+              cliTemplateType || "basic";
             const autoWallet = options.walletProvider
               ? options.walletProvider
               : autoTemplateType === "farcaster-miniapp" ||
@@ -112,7 +117,10 @@ export async function createCommand(
                 { name: "AI Agent Chat App", value: "ai-chat" },
               ],
               default: "basic",
-              when: !options.templateType,
+              // `-t` populates options.template; only the long form sets
+              // templateType. Checking one of the two asks again for a template
+              // the user already chose.
+              when: !cliTemplateType,
             },
             {
               type: "list",
@@ -126,7 +134,7 @@ export async function createCommand(
               default: "rainbowkit",
               when: (answers: { templateType?: string }): boolean => {
                 const templateType =
-                  options.templateType || answers.templateType;
+                  cliTemplateType || answers.templateType;
                 return (
                   !options.walletProvider &&
                   templateType !== "farcaster-miniapp" &&
@@ -151,7 +159,7 @@ export async function createCommand(
               default: "hardhat",
               when: (answers: { templateType?: string }): boolean => {
                 const templateType =
-                  options.templateType || answers.templateType;
+                  cliTemplateType || answers.templateType;
                 if (templateType === "ai-chat") return false;
                 return !options.contracts;
               },
@@ -181,7 +189,7 @@ export async function createCommand(
       answers.description ||
       "A new Celo blockchain project";
     const finalTemplateType =
-      options.templateType || answers.templateType || "basic";
+      cliTemplateType || answers.templateType || "basic";
 
     // Farcaster miniapp specific prompts - only ask if template is farcaster-miniapp and values not provided via CLI
     let farcasterAnswers: {
