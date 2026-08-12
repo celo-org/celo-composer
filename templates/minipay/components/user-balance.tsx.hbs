@@ -16,9 +16,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
  * Exported so the rest of your app can reuse the same addresses instead of
  * copying them.
  *
- * Symbols and decimals below were read from the contracts themselves rather
- * than copied from a table. Note that `0x765DE8…282a` now reports **USDm**
- * ("Mento Dollar") — it is the token long known as cUSD, renamed on chain.
+ * Every symbol and decimal count below was read from the contract by calling
+ * `symbol()`, `name()` and `decimals()` on the chain named, not copied from a
+ * table. Two of them surprise people:
+ *
+ *   - `0x765DE8…282a` reports **USDm** ("Mento Dollar"). It is the token long
+ *     known as cUSD, renamed on chain. MiniPay's own UI still says cUSD.
+ *   - Both Tether contracts report **USD₮**, with U+20AE, not the ASCII "USDT".
+ *
+ * Mainnet and Sepolia carry the same three tokens, so a balance panel that
+ * works against the faucet shows the same rows in production.
  */
 export const TOKENS_BY_CHAIN: Record<
   number,
@@ -27,10 +34,12 @@ export const TOKENS_BY_CHAIN: Record<
   [celo.id]: [
     { symbol: "USDm", address: "0x765DE816845861e75A25fCA122bb6898B8B1282a" }, // 18 decimals, formerly cUSD
     { symbol: "USDC", address: "0xcebA9300f2b948710d2653dD7B07f33A8B32118C" }, // 6 decimals
-    { symbol: "USDT", address: "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e" }, // 6 decimals
+    { symbol: "USD₮", address: "0x48065fbBE25f71C9282ddf5e1cD6D6A887483D5e" }, // 6 decimals
   ],
   [celoSepolia.id]: [
+    { symbol: "USDm", address: "0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b" }, // 18 decimals
     { symbol: "USDC", address: "0x01C5C0122039549AD1493B8220cABEdD739BC44E" }, // 6 decimals
+    { symbol: "USD₮", address: "0xd077A400968890Eacc75cdc901F0356c943e4fDb" }, // 6 decimals
   ],
 };
 
