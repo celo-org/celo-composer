@@ -11,7 +11,6 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import FrameWalletProvider from "./frame-wallet-context";
 
 interface MiniAppContextType {
   isMiniAppReady: boolean;
@@ -87,7 +86,7 @@ export function MiniAppProvider({ children, addMiniAppOnLoad }: MiniAppProviderP
         context,
       }}
     >
-      <FrameWalletProvider>{children}</FrameWalletProvider>
+      {children}
     </MiniAppContext.Provider>
   );
 }
