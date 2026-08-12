@@ -1,5 +1,107 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Released entries are left as they were written. Where a statement was true at the
+time and is not now — 2.2.0 describing Alfajores as the testnet, for instance —
+it stays, because a changelog records what shipped rather than what is currently
+true. The move to Celo Sepolia is its own entry under 2.4.13.
+
+## [Unreleased]
+
+### Added
+- Miniapp environment detection in the Farcaster template.
+
+### Changed
+- **Breaking for scripts:** a flag now skips only its own prompt. Previously any
+  flag suppressed every prompt, so `create app -t basic --skip-install` ran to
+  completion in CI; it now stops at the description question. Add `-y` to any
+  invocation with no terminal attached. This restores the documented behaviour
+  (#411).
+
+### Fixed
+- Bumped `next` to 15.3.6 in the chat template for GHSA-9qr9-h5gf-34mp.
+- Wallet status display no longer shows a hardcoded address; authentication status message corrected.
+- Variable initialisation and SDK property access errors in the Farcaster template.
+- Removed duplicate keys and fixed formatting across the `.env.example` files (#372).
+
+### Documentation
+- MiniPay: token reference table, a USDT transfer example, and JSDoc on `UserBalance` covering addresses and decimals.
+
+## [2.4.13] - 2025-12-18
+
+### Changed
+- **Alfajores replaced by Celo Sepolia throughout** — templates, docs and network config.
+- Contract verification moved to the Etherscan V2 API in place of Celoscan.
+- thirdweb bumped to a version that includes `celoSepoliaTestnet`.
+
+### Fixed
+- Plopfile and template paths now resolve on Windows.
+- Connect-button generation.
+
+### Documentation
+- README rewritten around the full template set and the command options.
+
+## [2.4.10] - 2025-08-21
+
+Covers 2.4.7 through 2.4.10, which were published without tags.
+
+### Changed
+- **Codebase migrated to ESM modules**, with dependencies updated to match.
+- ESLint config converted to ESM, then to `.json`.
+
+## [2.4.6] - 2025-08-21
+
+Covers 2.4.5 and 2.4.6. There is no `v2.4.5` tag, and the 2.4.5 bump (`a2e812b`) is an ancestor of `v2.4.6`.
+
+### Fixed
+- Downgraded `plop` and `node-plop` to resolve version conflicts.
+
+## [2.4.4] - 2025-08-21
+
+### Fixed
+- Downgraded `chalk`, `inquirer` and `ora` to resolve ESM compatibility issues.
+
+## [2.4.3] - 2025-08-18
+
+### Fixed
+- `.env` added to the AI chat template's gitignore.
+
+## [2.4.2] - 2025-08-18
+
+### Documentation
+- AI chat template: Celo integration details and project structure.
+
+## [2.4.1] - 2025-08-18
+
+### Added
+- **AI chat template**, with document management and real-time streaming.
+- Jest and ts-jest configured for unit testing.
+
+## [2.3.7] - 2025-08-07
+
+### Added
+- **Foundry support** as a contract framework.
+- **MiniPay template**, with custom wallet integration and balance display.
+
+### Changed
+- Contracts moved to `apps/`, and the Git initialisation flow improved.
+
+### Documentation
+- MiniPay template documentation, and template references updated.
+
+## [2.3.6] - 2025-08-07
+
+### Fixed
+- Template generation conflict for `connect-button`.
+- `moduleResolution` set to `bundler` in the base template's tsconfig.
+
+### Documentation
+- Mintlify configuration updated; Farcaster template tag added.
+
 ## [2.3.5] - 2025-08-06
 
 ### Fixed
@@ -14,11 +116,6 @@
 
 ### Added
 - Added wallet connection and miniapp installation UI to the Farcaster template.
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.2.4] - 2024-01-23
 
@@ -84,15 +181,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Commander.js for CLI framework
 - Inquirer.js for interactive prompts
 - Plop.js for template generation
-
-## [Unreleased]
-
-### Planned
-- Additional wallet provider integrations
-- More smart contract templates
-- Enhanced testing utilities
-- Documentation improvements
-- Performance optimizations
 
 ---
 
