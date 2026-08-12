@@ -61,7 +61,7 @@ export default function Page() {
 
 **Solution**:
 
-1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` and, if you overrode the defaults, `CELO_RPC_URL` / `CELO_SEPOLIA_RPC_URL` are set in `apps/contracts/.env`.
+1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` is set in `apps/contracts/.env`. That is the only variable the Hardhat config reads — the RPC endpoints for `celo` and `celo-sepolia` are written into `hardhat.config.ts`, so changing them means editing that file rather than the environment.
 2.  **Check Account Balance**: Make sure the wallet associated with your `PRIVATE_KEY` has enough funds (e.g., Celo Sepolia Testnet, Celo Mainnet) to pay for the deployment gas fees.
 
 ## Still Stuck?

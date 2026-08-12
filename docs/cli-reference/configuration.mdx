@@ -8,14 +8,20 @@ Your Celo Composer project is configured primarily through environment variables
 
 ## Environment Variables
 
-When you create a new project, a `.env.example` file is generated in the root of your project. To set up your local environment, you should:
+Nothing is generated at the root. Each app carries its own template, and the file is named differently in each:
 
-1.  **Create a copy** of this file and name it `.env`.
-2.  **Fill in the required values** in the `.env` file.
+| app | template file | copy it to |
+|---|---|---|
+| `apps/web` | `.env.template` | `apps/web/.env` |
+| `apps/contracts` (Hardhat only) | `.env.example` | `apps/contracts/.env` |
+
+To set up your local environment, copy each template that your project generated and fill in the values:
 
 ```bash
-# Copy the example file
 cp apps/web/.env.template apps/web/.env
+
+# only if you chose Hardhat — a Foundry project generates no env template
+cp apps/contracts/.env.example apps/contracts/.env
 ```
 
 <Warning>
