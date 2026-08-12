@@ -1,4 +1,4 @@
-import { NodePlopAPI } from "plop";
+import type { NodePlopAPI } from "plop";
 import path from "path";
 import { getTemplatesPath } from "./utils/paths.js";
 import { toPackageName } from "./utils/validation.js";

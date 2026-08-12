@@ -118,11 +118,3 @@ export class TemplateGenerator {
     }
   }
 }
-
-/**
- * Run the Plop generator with the provided configuration
- */
-export async function runPlopGenerator(config: PlopConfig): Promise<void> {
-  const generator = new TemplateGenerator();
-  await generator.generateProject(config);
-}

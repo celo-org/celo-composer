@@ -33,7 +33,7 @@ fi
 
 # Update version in package.json
 echo "📝 Updating version in package.json to $VERSION"
-npm version $VERSION --no-git-tag-version
+pnpm version $VERSION --no-git-tag-version
 
 # Update CHANGELOG.md
 echo "📝 Please update CHANGELOG.md with the changes for version $VERSION"
@@ -58,16 +58,15 @@ git tag "v$VERSION"
 git push origin $CURRENT_BRANCH
 git push origin "v$VERSION"
 
-echo "✅ Release process completed!"
+echo "✅ Version bumped, committed and tagged."
 echo ""
-echo "📦 The GitHub Action will now:"
-echo "  - Run CI tests"
-echo "  - Build the project"
-echo "  - Publish to npm"
-echo "  - Create GitHub release"
+echo "⚠️  Nothing publishes automatically. There is no .github/ directory in"
+echo "   this repository, so no workflow picks the tag up."
 echo ""
-echo "🔗 Monitor the progress at:"
-echo "  https://github.com/celo-org/celo-composer/actions"
+echo "📦 To publish, from this branch:"
+echo "  pnpm publish --access public"
+echo ""
+echo "   That runs prepublishOnly (clean, build, test) first."
 echo ""
 echo "📋 After successful deployment:"
 echo "  - Verify npm package: https://www.npmjs.com/package/@celo/celo-composer"

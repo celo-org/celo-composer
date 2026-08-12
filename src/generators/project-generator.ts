@@ -67,7 +67,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     try {
       await execAsync("pnpm install", { cwd: projectPath });
       spinner.succeed("Dependencies installed successfully!");
-    } catch (error) {
+    } catch {
       spinner.fail("Failed to install dependencies");
       console.log(
         chalk.yellow("You can install them manually later with: pnpm install")
@@ -83,7 +83,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     // Check if Git is installed
     try {
       await execAsync("git --version");
-    } catch (error) {
+    } catch {
       spinner.warn("Git is not installed. Skipping Git initialization.");
       return;
     }
@@ -137,7 +137,7 @@ yarn-error.log*
       cwd: projectPath,
     });
     spinner.succeed("Git repository initialized with initial commit");
-  } catch (error) {
+  } catch {
     spinner.fail("Failed to initialize Git repository");
     console.log(
       chalk.yellow(
