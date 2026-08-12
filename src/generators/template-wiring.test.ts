@@ -33,6 +33,11 @@ function generate(templateType: string, name: string): string {
       "-t",
       templateType,
       "--skip-install",
+      // -y, because a flag no longer implies it. #411 makes only -y skip the
+      // prompts, so without this the fixture blocks on an interactive question
+      // with no TTY and dies on "readline was closed". Harmless before that
+      // lands, required after.
+      "-y",
     ],
     { cwd: root, stdio: "pipe" }
   );
