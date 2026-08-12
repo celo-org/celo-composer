@@ -343,43 +343,93 @@ export async function createCommand(
       });
 
       // If Foundry is the selected contract framework, install its dependencies
+      let foundryInstallFailed = false;
       if (finalContractFramework === "foundry") {
         const contractsPath = path.join(projectPath, "apps", "contracts");
         spinner.start("Installing Foundry dependencies...");
         try {
           await new Promise<void>((resolve, reject) => {
+            // No `--no-commit`. Forge removed that flag — not committing is the
+            // default now — and passing it makes the whole command fail with
+            // "unexpected argument '--no-commit' found" on any current install.
             const installProcess = spawn(
               "forge",
-              ["install", "foundry-rs/forge-std", "--no-commit"],
+              ["install", "foundry-rs/forge-std"],
               { cwd: contractsPath, stdio: "pipe" }
             );
+
+            // Keep forge's own message. "exited with code 2" on its own tells
+            // the user nothing about what to do next.
+            let stderr = "";
+            installProcess.stderr?.on("data", (chunk) => {
+              stderr += String(chunk);
+            });
 
             installProcess.on("close", (code) => {
               if (code === 0) {
                 resolve();
               } else {
-                reject(new Error(`'forge install' failed with code ${code}`));
+                reject(
+                  new Error(
+                    stderr.trim() || `'forge install' exited with code ${code}`
+                  )
+                );
               }
             });
 
-            installProcess.on("error", (err) => {
-              reject(err);
+            installProcess.on("error", (err: NodeJS.ErrnoException) => {
+              reject(
+                new Error(
+                  err.code === "ENOENT"
+                    ? "'forge' is not on PATH. Install Foundry first: https://getfoundry.sh"
+                    : err.message
+                )
+              );
             });
           });
           spinner.succeed("Foundry dependencies installed successfully.");
         } catch (error) {
-          spinner.fail("Failed to install Foundry dependencies.");
-          console.error(error);
-          // We don't exit here, just warn the user.
+          // Loudly, and with the command that fixes it. A silent warning here
+          // produced a project that could not compile at all: script/Counter.s.sol
+          // and test/Counter.t.sol both import forge-std, so without lib/forge-std
+          // `forge build` fails on every file.
+          foundryInstallFailed = true;
+          spinner.fail("Could not install Foundry dependencies.");
+          console.error(
+            chalk.red(
+              `  ${error instanceof Error ? error.message : String(error)}`
+            )
+          );
+          console.log(
+            chalk.yellow(
+              "\n  The project was generated, but it will NOT compile until forge-std is\n" +
+                "  installed — both the script and the test import from it. Finish with:\n"
+            )
+          );
+          console.log(
+            chalk.white(
+              `    cd ${finalProjectName}/apps/contracts && forge install foundry-rs/forge-std\n`
+            )
+          );
         }
       }
 
-      console.log(chalk.green.bold("\n🎉 Your Celo project is ready!\n"));
+      console.log(
+        foundryInstallFailed
+          ? chalk.yellow.bold("\n⚠️  Your Celo project is generated, but incomplete.\n")
+          : chalk.green.bold("\n🎉 Your Celo project is ready!\n")
+      );
       console.log(chalk.cyan("Next steps:"));
       console.log(chalk.white(`  cd ${finalProjectName}`));
 
       if (!shouldInstall) {
         console.log(chalk.white("  pnpm install"));
+      }
+
+      if (foundryInstallFailed) {
+        console.log(
+          chalk.white("  cd apps/contracts && forge install foundry-rs/forge-std && cd ../..")
+        );
       }
 
       console.log(chalk.white("  pnpm dev"));

@@ -1,0 +1,66 @@
+# Smart Contracts — {{projectName}}
+
+Foundry project for the Celo network.
+
+## Setup
+
+Dependencies are installed by the scaffolder. If that step failed, or you cloned this
+project fresh, install them yourself from this directory:
+
+```bash
+forge install foundry-rs/forge-std
+```
+
+`lib/` is gitignored — Foundry tracks dependencies as git submodules, so a fresh clone
+needs `git submodule update --init --recursive` (or the `forge install` above).
+
+Copy the environment file and fill in a deployment key:
+
+```bash
+cp .env.example .env
+```
+
+## Commands
+
+Run these from the repository root, so turbo picks them up:
+
+```bash
+pnpm contracts:compile              # forge build
+pnpm contracts:test                 # forge test
+pnpm contracts:deploy:celo-sepolia  # deploy to Celo Sepolia
+pnpm contracts:deploy:celo          # deploy to Celo Mainnet
+```
+
+Or directly in this directory with `forge build`, `forge test`, `forge script ...`.
+
+## Networks
+
+`foundry.toml` already names both RPC endpoints, so `--rpc-url celo-sepolia` and
+`--rpc-url celo` work with no further configuration.
+
+| | Celo Sepolia (testnet) | Celo Mainnet |
+|---|---|---|
+| Chain ID | 11142220 | 42220 |
+| RPC | https://forno.celo-sepolia.celo-testnet.org/ | https://forno.celo.org |
+| Explorer | https://sepolia.celoscan.io | https://celoscan.io |
+| Faucet | https://faucet.celo.org/celo-sepolia | — |
+
+## Deploying
+
+The deploy scripts pass `--broadcast` and expect a key. The most direct form:
+
+```bash
+source .env
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo-sepolia \
+  --private-key $PRIVATE_KEY \
+  --broadcast
+```
+
+For anything holding real funds, prefer a keystore over a raw key in the environment:
+
+```bash
+cast wallet import deployer --interactive
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo --account deployer --broadcast
+```
