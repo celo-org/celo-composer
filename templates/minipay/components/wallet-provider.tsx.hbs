@@ -9,7 +9,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { WagmiProvider, createConfig, http, useConnect } from "wagmi";
 import { celo, celoSepolia } from "wagmi/chains";
-import { ConnectButton } from "./connect-button";
 
 const connectors = connectorsForWallets(
   [
