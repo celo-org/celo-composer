@@ -5,10 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Released entries are left as they were written. Where a statement was true at the
+time and is not now — 2.2.0 describing Alfajores as the testnet, for instance —
+it stays, because a changelog records what shipped rather than what is currently
+true. The move to Celo Sepolia is its own entry under 2.4.13.
+
 ## [Unreleased]
 
 ### Added
 - Miniapp environment detection in the Farcaster template.
+
+### Changed
+- **Breaking for scripts:** a flag now skips only its own prompt. Previously any
+  flag suppressed every prompt, so `create app -t basic --skip-install` ran to
+  completion in CI; it now stops at the description question. Add `-y` to any
+  invocation with no terminal attached. This restores the documented behaviour
+  (#411).
 
 ### Fixed
 - Bumped `next` to 15.3.6 in the chat template for GHSA-9qr9-h5gf-34mp.
@@ -42,6 +54,8 @@ Covers 2.4.7 through 2.4.10, which were published without tags.
 - ESLint config converted to ESM, then to `.json`.
 
 ## [2.4.6] - 2025-08-21
+
+Covers 2.4.5 and 2.4.6. There is no `v2.4.5` tag, and the 2.4.5 bump (`a2e812b`) is an ancestor of `v2.4.6`.
 
 ### Fixed
 - Downgraded `plop` and `node-plop` to resolve version conflicts.
@@ -102,8 +116,6 @@ Covers 2.4.7 through 2.4.10, which were published without tags.
 
 ### Added
 - Added wallet connection and miniapp installation UI to the Farcaster template.
-
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [2.2.4] - 2024-01-23
 
@@ -169,15 +181,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Commander.js for CLI framework
 - Inquirer.js for interactive prompts
 - Plop.js for template generation
-
-## [Unreleased]
-
-### Planned
-- Additional wallet provider integrations
-- More smart contract templates
-- Enhanced testing utilities
-- Documentation improvements
-- Performance optimizations
 
 ---
 
