@@ -61,7 +61,7 @@ export default function Page() {
 
 **Solution**:
 
-1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` and `CELO_PROVIDER_URL` are correctly set up in your `.env` file.
+1.  **Check `.env` file**: Ensure your `PRIVATE_KEY` and, if you overrode the defaults, `CELO_RPC_URL` / `CELO_SEPOLIA_RPC_URL` are set in `apps/contracts/.env`.
 2.  **Check Account Balance**: Make sure the wallet associated with your `PRIVATE_KEY` has enough funds (e.g., Celo Sepolia Testnet, Celo Mainnet) to pay for the deployment gas fees.
 
 ## Still Stuck?

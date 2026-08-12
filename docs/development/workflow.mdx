@@ -22,7 +22,7 @@ Any changes you make to your code in any of the `apps/*` directories will trigge
 
 If your project includes smart contracts, your workflow will typically involve these steps:
 
-1.  **Write Contracts**: Add or modify your Solidity contracts in `apps/hardhat/contracts`.
+1.  **Write Contracts**: Add or modify your Solidity contracts in `apps/contracts/contracts`.
 2.  **Compile**: Run `pnpm contracts:compile` to compile your contracts and generate TypeScript types.
 3.  **Test**: Write and run tests for your contracts using `pnpm contracts:test`.
 4.  **Deploy**: Deploy your contracts to a local network or a testnet like Celo Sepolia using the `pnpm contracts:deploy:celo-sepolia` scripts.
@@ -35,7 +35,7 @@ When you're ready to build your application for production, you can use the buil
 pnpm build
 ```
 
-This command, powered by Turborepo, will create an optimized production build for all the applications in your monorepo. The output will be placed in the `dist` directory for each app (e.g., `apps/web/dist`).
+This command, powered by Turborepo, will create an optimized production build for all the applications in your monorepo. Next.js writes its output to `.next` inside each app (e.g. `apps/web/.next`) — the template sets no `distDir`, so there is no `dist` directory.
 
 ## 4. Debugging
 

@@ -153,9 +153,6 @@ my-celo-app/
 ├── apps/
 │   ├── web/                 # Next.js application
 │   └── contracts/           # Smart contracts (if selected)
-├── packages/
-│   ├── ui/                  # Shared UI components
-│   └── utils/               # Shared utilities
 ├── package.json             # Root package.json
 ├── pnpm-workspace.yaml      # PNPM workspace config
 ├── turbo.json              # Turborepo configuration
