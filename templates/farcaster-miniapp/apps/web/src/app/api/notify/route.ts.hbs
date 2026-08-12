@@ -1,4 +1,4 @@
-import { sendFrameNotification } from "@/lib/notification-client";
+import { sendMiniAppNotification } from "@/lib/notification-client";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -6,7 +6,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { fid, notification } = body;
 
-    const result = await sendFrameNotification({
+    const result = await sendMiniAppNotification({
       fid,
       title: notification.title,
       body: notification.body,

@@ -1,7 +1,7 @@
-import type { FrameNotificationDetails } from "@farcaster/frame-sdk";
+import type { MiniAppNotificationDetails } from "@farcaster/miniapp-core";
 
 // In-memory storage to replace Redis
-const notificationStore = new Map<string, FrameNotificationDetails>();
+const notificationStore = new Map<string, MiniAppNotificationDetails>();
 
 const notificationServiceKey = "farcaster:miniapp";
 
@@ -11,14 +11,14 @@ function getUserNotificationDetailsKey(fid: number): string {
 
 export async function getUserNotificationDetails(
   fid: number
-): Promise<FrameNotificationDetails | null> {
+): Promise<MiniAppNotificationDetails | null> {
   const key = getUserNotificationDetailsKey(fid);
   return notificationStore.get(key) || null;
 }
 
 export async function setUserNotificationDetails(
   fid: number,
-  notificationDetails: FrameNotificationDetails
+  notificationDetails: MiniAppNotificationDetails
 ): Promise<void> {
   const key = getUserNotificationDetailsKey(fid);
   notificationStore.set(key, notificationDetails);
@@ -32,8 +32,8 @@ export async function deleteUserNotificationDetails(
 }
 
 // Helper function to get all stored notification details (for debugging)
-export function getAllNotificationDetails(): Array<{fid: string, details: FrameNotificationDetails}> {
-  const result: Array<{fid: string, details: FrameNotificationDetails}> = [];
+export function getAllNotificationDetails(): Array<{fid: string, details: MiniAppNotificationDetails}> {
+  const result: Array<{fid: string, details: MiniAppNotificationDetails}> = [];
   for (const [key, details] of notificationStore.entries()) {
     const fid = key.replace(`${notificationServiceKey}:user:`, '');
     result.push({ fid, details });

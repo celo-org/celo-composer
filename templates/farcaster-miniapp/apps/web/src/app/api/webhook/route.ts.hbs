@@ -1,101 +1,93 @@
-import { sendFrameNotification } from "@/lib/notification-client";
+import { sendMiniAppNotification } from "@/lib/notification-client";
 import {
   deleteUserNotificationDetails,
   setUserNotificationDetails,
 } from "@/lib/memory-store";
-import { createPublicClient, http } from "viem";
-import { optimism } from "viem/chains";
+import {
+  createVerifyAppKeyWithHub,
+  parseWebhookEvent,
+} from "@farcaster/miniapp-node";
+import { NextResponse } from "next/server";
 
-const KEY_REGISTRY_ADDRESS = "0x00000000Fc1237824fb747aBDE0FF18990E59b7e";
-
-const KEY_REGISTRY_ABI = [
-  {
-    inputs: [
-      { name: "fid", type: "uint256" },
-      { name: "key", type: "bytes" },
-    ],
-    name: "keyDataOf",
-    outputs: [
-      {
-        components: [
-          { name: "state", type: "uint8" },
-          { name: "keyType", type: "uint32" },
-        ],
-        name: "",
-        type: "tuple",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-] as const;
-
-async function verifyFidOwnership(fid: number, appKey: `0x${string}`) {
-  const client = createPublicClient({
-    chain: optimism,
-    transport: http(),
-  });
-
-  try {
-    const result = await client.readContract({
-      address: KEY_REGISTRY_ADDRESS,
-      abi: KEY_REGISTRY_ABI,
-      functionName: "keyDataOf",
-      args: [BigInt(fid), appKey],
-    });
-
-    return result.state === 1 && result.keyType === 1;
-  } catch (error) {
-    console.error("Key Registry verification failed:", error);
-    return false;
-  }
-}
-
-function decode(encoded: string) {
-  return JSON.parse(Buffer.from(encoded, "base64").toString("utf8"));
-}
+// Mini App webhook events arrive as JSON Farcaster Signature envelopes, not as
+// Frames v1 button posts. Verifying one means proving the signing key really
+// belongs to the fid that sent it, and that lookup needs a Farcaster hub.
+//
+// hub-api.neynar.com requires an API key. Set NEYNAR_API_KEY, or point
+// FARCASTER_HUB_URL at a hub you run yourself.
+const verifyAppKey = createVerifyAppKeyWithHub(
+  process.env.FARCASTER_HUB_URL || "https://hub-api.neynar.com",
+  process.env.NEYNAR_API_KEY
+    ? { headers: { "x-api-key": process.env.NEYNAR_API_KEY } }
+    : undefined,
+);
 
 export async function POST(request: Request) {
+  let payload: unknown;
   try {
-    const body = await request.json();
-    const { untrustedData, trustedData } = body;
-
-    if (untrustedData?.buttonIndex === 1) {
-      // Add frame notification
-      const { fid } = decode(trustedData.messageBytes);
-      const appKey = `0x${Buffer.from(
-        decode(untrustedData.state || "{}").publicKey || "",
-        "base64"
-      ).toString("hex")}` as `0x${string}`;
-
-      const isValidKey = await verifyFidOwnership(fid, appKey);
-      if (!isValidKey) {
-        return new Response("Unauthorized", { status: 401 });
-      }
-
-      await setUserNotificationDetails(fid, {
-        url: untrustedData.url,
-        token: untrustedData.notificationDetails?.token || "",
-      });
-
-      // Send a test notification
-      await sendFrameNotification({
-        fid,
-        title: "Welcome to {{projectName}}!",
-        body: "You've successfully enabled notifications.",
-      });
-
-      return new Response("OK");
-    } else if (untrustedData?.buttonIndex === 2) {
-      // Remove frame notification
-      const { fid } = decode(trustedData.messageBytes);
-      await deleteUserNotificationDetails(fid);
-      return new Response("OK");
-    }
-
-    return new Response("Invalid request", { status: 400 });
-  } catch (error) {
-    console.error("Webhook error:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
+
+  let data;
+  try {
+    data = await parseWebhookEvent(payload, verifyAppKey);
+  } catch (error) {
+    switch (error instanceof Error ? error.name : "") {
+      case "VerifyJsonFarcasterSignature.InvalidDataError":
+      case "VerifyJsonFarcasterSignature.InvalidEventDataError":
+        return NextResponse.json(
+          { error: "Malformed webhook event" },
+          { status: 400 },
+        );
+      case "VerifyJsonFarcasterSignature.InvalidAppKeyError":
+        return NextResponse.json({ error: "Invalid app key" }, { status: 401 });
+      default:
+        // VerifyAppKeyError, or the hub being unreachable or unconfigured.
+        // This is our problem, not the caller's, so the client should retry.
+        console.error("Webhook verification failed:", error);
+        return NextResponse.json(
+          { error: "Could not verify the event" },
+          { status: 500 },
+        );
+    }
+  }
+
+  const { fid, event } = data;
+
+  try {
+    switch (event.event) {
+      case "miniapp_added":
+      case "notifications_enabled": {
+        // miniapp_added carries notificationDetails only when the user also
+        // enabled notifications; without them there is no token to store.
+        if (!event.notificationDetails) {
+          await deleteUserNotificationDetails(fid);
+          break;
+        }
+
+        await setUserNotificationDetails(fid, event.notificationDetails);
+        await sendMiniAppNotification({
+          fid,
+          title: "Welcome to {{projectName}}!",
+          body: "You've successfully enabled notifications.",
+          notificationDetails: event.notificationDetails,
+        });
+        break;
+      }
+      case "miniapp_removed":
+      case "notifications_disabled":
+        await deleteUserNotificationDetails(fid);
+        break;
+    }
+  } catch (error) {
+    console.error("Webhook handler failed:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ success: true });
 }

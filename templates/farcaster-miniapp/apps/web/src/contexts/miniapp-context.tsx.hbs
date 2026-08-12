@@ -1,8 +1,6 @@
 "use client";
-import { sdk } from "@farcaster/frame-sdk";
-// Use any types for Farcaster SDK compatibility
-type FrameContext = any;
-type AddFrameResult = any;
+import { sdk } from "@farcaster/miniapp-sdk";
+import type { AddMiniApp, Context } from "@farcaster/miniapp-core";
 import {
   createContext,
   useCallback,
@@ -14,9 +12,9 @@ import {
 
 interface MiniAppContextType {
   isMiniAppReady: boolean;
-  context: FrameContext | null;
+  context: Context.MiniAppContext | null;
   setMiniAppReady: () => void;
-  addMiniApp: () => Promise<AddFrameResult | null>;
+  addMiniApp: () => Promise<AddMiniApp.AddMiniAppResult | null>;
 }
 
 const MiniAppContext = createContext<MiniAppContextType | undefined>(undefined);
@@ -27,7 +25,7 @@ interface MiniAppProviderProps {
 }
 
 export function MiniAppProvider({ children, addMiniAppOnLoad }: MiniAppProviderProps): JSX.Element {
-  const [context, setContext] = useState<FrameContext | null>(null);
+  const [context, setContext] = useState<Context.MiniAppContext | null>(null);
   const [isMiniAppReady, setIsMiniAppReady] = useState(false);
 
   const setMiniAppReady = useCallback(async () => {
@@ -54,19 +52,19 @@ export function MiniAppProvider({ children, addMiniAppOnLoad }: MiniAppProviderP
 
   const handleAddMiniApp = useCallback(async () => {
     try {
-      const result = await sdk.actions.addFrame();
+      const result = await sdk.actions.addMiniApp();
       if (result) {
         return result;
       }
       return null;
     } catch (error) {
-      console.error("[error] adding frame", error);
+      console.error("[error] adding mini app", error);
       return null;
     }
   }, []);
 
   useEffect(() => {
-    // on load, set the frame as ready
+    // on load, set the mini app as ready
     if (isMiniAppReady && !context?.client?.added && addMiniAppOnLoad) {
       handleAddMiniApp();
     }
