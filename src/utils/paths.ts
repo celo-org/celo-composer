@@ -14,32 +14,33 @@ export function getDirname(importMetaUrl: string): string {
  */
 export function getTemplatesPath(importMetaUrl: string): string {
   const currentDir = getDirname(importMetaUrl);
-  // At runtime, we're in dist/, so go up to package root, then into templates/
-  // During development, we might be in src/, so handle both cases - (added currentDir.includes('\\dist') || to also handle Windows paths)
-  const isInDist = currentDir.includes('/dist') || currentDir.includes('\\dist') || currentDir.endsWith('/dist') || currentDir.includes('\\dist') ;
-  let templatesPath: string;
 
-  if (isInDist) {
-    // From dist/generators/ or dist/utils/ go up to package root, then into templates/
-    templatesPath = join(currentDir, '..', 'templates');
-  } else {
-    // dev mode: we might be in src or src/**
-    const inSrcSubdir = currentDir.includes('/src/') || currentDir.includes('\\src\\');
-    const inSrcRoot = currentDir.endsWith('/src') || currentDir.endsWith('\\src');
-
-    if (inSrcSubdir) {
-      // From src/ go up to package root, then into templates/
-      // e.g. .../celo-composer/src/generators -> go up twice to reach repo root
-      templatesPath = join(currentDir, '..', '..', 'templates');
-    } else if (inSrcRoot) {
-      // e.g. .../celo-composer/src -> go up once to reach repo root
-      templatesPath = join(currentDir, '..', 'templates');
-    } else {
-    // Fallback: safest default, go up one level
-    templatesPath = join(currentDir, '..', 'templates');
+  // Walk up until a directory actually contains templates/, rather than
+  // hardcoding how many levels up the caller happens to sit.
+  //
+  // This used to branch on dist-vs-src and then apply a fixed `..` for dist,
+  // which is only correct for a caller at dist/ root. plopfile.js is there, so
+  // it worked; plop-generator.js is at dist/generators/, so it resolved to
+  // <pkg>/dist/templates — a directory that has never existed. The ai-chat
+  // template is the only one that goes through that path, which is why it was
+  // the only template that could not be scaffolded at all.
+  //
+  // Depth-independent so moving a caller cannot reintroduce it.
+  let dir = currentDir;
+  for (let i = 0; i < 6; i += 1) {
+    const candidate = join(dir, 'templates');
+    if (existsSync(candidate)) return candidate;
+    const parent = dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
   }
-}
-  return templatesPath;
+
+  // Nothing found. Return the historically-correct guess so the caller reports
+  // a missing template rather than a missing directory two levels up.
+  const isInDist = currentDir.includes('/dist') || currentDir.includes('\\dist');
+  return isInDist
+    ? join(currentDir, '..', 'templates')
+    : join(currentDir, '..', '..', 'templates');
 }
 
 /**
