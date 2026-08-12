@@ -131,13 +131,10 @@ type Suite = "scaffold" | "manifests" | "components";
 
 const KNOWN_BROKEN: Array<{ suite: Suite; label: string; reason: string }> = [
   { suite: "scaffold", label: "-t ai-chat", reason: "#387 — templates/ resolves to dist/templates, so ai-chat cannot scaffold (fix: #436)" },
-  // #399, found by the parse check once it actually parsed. Only the
-  // combinations that ship a hardhat package are affected — verified by
-  // generating all seven: basic, basic+thirdweb and minipay carry the 21
-  // errors; basic+none, foundry and farcaster carry none.
-  { suite: "scaffold", label: "-t basic", reason: "#399 — hardhat.config.ts has unquoted hyphenated network keys, 21 parse errors (fix: #427)" },
-  { suite: "scaffold", label: "-t basic --wallet-provider thirdweb", reason: "#399 — same (fix: #427)" },
-  { suite: "scaffold", label: "-t minipay", reason: "#399 — same (fix: #427)" },
+  // #399 had three entries here — basic, basic+thirdweb and minipay, the only
+  // combinations that ship a hardhat package. #427 merged on 2026-08-12, the
+  // markers went red on the next run, and they are gone. That is the property
+  // working: the list shrinks by itself as fixes land.
 
   { suite: "manifests", label: "-t farcaster-miniapp --wallet-provider rainbowkit", reason: "#400 / #429 — react-query, viem and wagmi declared twice (fix: #428, #450)" },
 
