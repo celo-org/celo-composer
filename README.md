@@ -9,7 +9,7 @@ A powerful CLI tool for generating customizable Celo blockchain starter kits wit
 - 🎨 **Beautiful UI**: shadcn/ui components copied in (button, card, sheet) — add more with the shadcn CLI after running `npx shadcn init`
 - 🔧 **Developer Experience**: Interactive prompts and clear feedback
 - 🌍 **Celo Optimized**: Ready for Celo blockchain development
-- 🎯 **Multiple Templates**: Choose from Basic Web App, Farcaster Miniapp, Minipay, or AI Chat templates
+- 🎯 **Multiple Templates**: Choose from Basic Web App, Farcaster Miniapp, Minipay, AI Chat, or x402 Paid API templates
 - 🔌 **Flexible Integrations**: Add wallet providers (RainbowKit, Thirdweb) and smart contract frameworks (Hardhat, Foundry)
 
 ## Requirements
@@ -103,6 +103,19 @@ A standalone Next.js AI chat application template.
 npx @celo/celo-composer@latest create --template ai-chat
 ```
 
+### x402 Paid API
+
+An HTTP API that charges per call in USDC, plus a buyer script that pays it. Ships
+as `apps/api` alongside the web app, with a seller endpoint behind the x402 paywall
+and a runnable buyer so the whole loop works on testnet out of the box.
+
+```bash
+npx @celo/celo-composer@latest create --template x402
+```
+
+Needs a facilitator API key — free, from [x402.celo.org](https://x402.celo.org). The
+generated `X402_SETUP.md` walks through it.
+
 ## Wallet Providers
 
 Choose a wallet provider to handle user authentication and transaction signing:
@@ -140,7 +153,7 @@ npx @celo/celo-composer@latest create [project-name] [options]
 | Flag                              | Description                                                        | Default            |
 | --------------------------------- | ------------------------------------------------------------------ | ------------------ |
 | `-d, --description <description>` | Project description                                                | Interactive prompt |
-| `-t, --template <type>`           | Template type (`basic`, `farcaster-miniapp`, `minipay`, `ai-chat`) | `basic`            |
+| `-t, --template <type>`           | Template type (`basic`, `farcaster-miniapp`, `minipay`, `ai-chat`, `x402`) | `basic`            |
 | `--wallet-provider <provider>`    | Wallet provider (`rainbowkit`, `thirdweb`, `none`)                 | `rainbowkit`       |
 | `-c, --contracts <framework>`     | Smart contract framework (`hardhat`, `foundry`, `none`)            | `hardhat`          |
 | `--skip-install`                  | Skip automatic dependency installation                             | `false`            |

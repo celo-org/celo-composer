@@ -101,6 +101,15 @@ describe("x402 template wiring", () => {
     const pkg = fs.readJsonSync(path.join(projectPath, "package.json"));
     expect(pkg.scripts["api:dev"]).toBeDefined();
     expect(pkg.scripts["api:buy"]).toBeDefined();
+
+    // A defined script is not a runnable one. `turbo run <task>` is rejected at
+    // graph construction if the task is absent from the pipeline, so `api:buy`
+    // shipped broken while this test stayed green — turbo.json being the
+    // thirteenth place a template type has to be threaded through, and the one
+    // this suite exists to catch.
+    const turbo = fs.readJsonSync(path.join(projectPath, "turbo.json"));
+    expect(turbo.pipeline.buy).toBeDefined();
+    expect(turbo.pipeline.dev).toBeDefined();
     // @x402/paywall drags in Solana and Algorand wallet stacks plus React 19 for a
     // browser page an API seller never renders. Leaving it unmet is deliberate.
     expect(pkg.pnpm?.peerDependencyRules?.ignoreMissing).toContain(

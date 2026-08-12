@@ -20,18 +20,27 @@ export type X402Network = "testnet" | "mainnet";
  * USDC is used because it implements EIP-3009 `transferWithAuthorization`, which is
  * the standard the `exact` scheme signs against. A token without EIP-3009 cannot be
  * settled by this path no matter what you put in `asset`.
+ *
+ * `domain` is the EIP-712 domain the TOKEN signs with, and it lives next to the
+ * address rather than beside the price so the two cannot drift apart. Get it wrong
+ * and the token rejects the signature at settlement — after the buyer has signed.
+ * Both entries were read from the contracts (`name()` / `version()` on each
+ * network) rather than assumed; note that `eip712Domain()` itself reverts on both,
+ * so those two getters are how you check.
  */
 export const X402 = {
   testnet: {
     facilitator: "https://api.x402.sepolia.celo.org",
     caip2: "eip155:11142220",
     usdc: "0x01C5C0122039549AD1493B8220cABEdD739BC44E" as Address,
+    domain: { name: "USDC", version: "2" },
     explorer: "https://celo-sepolia.blockscout.com",
   },
   mainnet: {
     facilitator: "https://api.x402.celo.org",
     caip2: "eip155:42220",
     usdc: "0xcebA9300f2b948710d2653dD7B07f33A8B32118C" as Address,
+    domain: { name: "USDC", version: "2" },
     explorer: "https://celoscan.io",
   },
 } as const;
@@ -51,7 +60,7 @@ export const CAIP2: `eip155:${string}` = CONFIG.caip2;
  */
 export const PRICE = process.env.X402_PRICE ?? "10000";
 
-/** Where settled payments land. Falls back to the buyer's own address in dev. */
+/** Where settled payments land. Unset means /paid answers for free. */
 export const PAY_TO = process.env.X402_PAY_TO;
 
 /**

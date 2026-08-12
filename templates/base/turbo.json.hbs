@@ -16,7 +16,10 @@
     },
     "clean": {
       "cache": false
-    }{{#if (eq contractFramework "hardhat")}},
+    }{{#if (eq templateType "x402")}},
+    "buy": {
+      "cache": false
+    }{{/if}}{{#if (eq contractFramework "hardhat")}},
     "compile": {
       "dependsOn": ["^compile"],
       "outputs": ["artifacts/**", "cache/**"]

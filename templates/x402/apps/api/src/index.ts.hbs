@@ -44,10 +44,9 @@ if (PAY_TO) {
               price: {
                 amount: PRICE,
                 asset: CONFIG.usdc,
-                // The EIP-712 domain the token itself signs with. These two values
-                // cannot be read from the contract, so they are stated here — and if
-                // they are wrong the token rejects the signature at settlement time.
-                extra: { name: "USDC", version: "2" },
+                // The EIP-712 domain the token signs with, taken from the same
+                // per-network entry as the address above so the two cannot desync.
+                extra: CONFIG.domain,
               },
             },
           ],
