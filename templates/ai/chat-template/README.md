@@ -8,7 +8,7 @@ An intelligent AI assistant for interacting with the Celo blockchain ecosystem. 
 - **Wallet Integration**: Connect and manage Celo wallet addresses
 - **Interactive Chat Interface**: Real-time conversations with AI models
 - **Artifact Generation**: Create and edit code, documents, and data visualizations
-- **User Authentication**: Secure login and guest access
+- **No authentication**: every visitor shares one identity — see "Authentication" below before deploying
 - **Chat History**: Persistent conversation storage and retrieval
 - **File Upload Support**: Process and analyze uploaded documents
 
@@ -32,9 +32,10 @@ An intelligent AI assistant for interacting with the Celo blockchain ecosystem. 
    # Database
    POSTGRES_URL=your_postgres_connection_string
 
-   # Authentication
-   AUTH_SECRET=your_auth_secret
    ```
+
+   `AUTH_SECRET` appears in `.env.example` but nothing reads it — see
+   "Authentication" below.
 
 3. **Run database migrations:**
 
@@ -50,12 +51,25 @@ An intelligent AI assistant for interacting with the Celo blockchain ecosystem. 
 
 5. **Open [http://localhost:3000](http://localhost:3000) in your browser**
 
+## Authentication
+
+**This template ships no working authentication.** `app/(auth)/auth.ts` opens with
+`// Auth disabled; export stubs for compatibility` and returns a fixed
+`public-user`, `middleware.ts` allows every request, and `next-auth` is not a
+dependency. The `login` and `register` pages and the `[...nextauth]` route are
+left in place as scaffolding to build on, but nothing behind them runs.
+
+That makes the chat work immediately with no sign-in to configure — and it means
+**every visitor shares one identity**, so add real auth before putting an
+instance anywhere public. NextAuth, Clerk and Privy all drop into the existing
+`(auth)` route group.
+
 ## Project Structure
 
 ```
-apps/web/
+.
 ├── app/                    # Next.js App Router pages
-│   ├── (auth)/            # Authentication routes
+│   ├── (auth)/            # Stubbed auth routes — see below
 │   └── (chat)/            # Chat interface and API routes
 ├── components/            # React components
 ├── lib/                   # Utilities and configurations
@@ -81,7 +95,7 @@ apps/web/
 - **Database**: PostgreSQL with Drizzle ORM
 - **Styling**: Tailwind CSS
 - **UI Components**: Radix UI primitives
-- **Authentication**: NextAuth.js
+- **Authentication**: none wired. The `(auth)` route group is stubbed; add NextAuth, Clerk or Privy yourself
 - **AI Integration**: Multiple provider support
 - **Blockchain**: Celo integration via Thirdweb and Viem
 
