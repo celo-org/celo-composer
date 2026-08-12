@@ -112,7 +112,17 @@ async function sendUSDT(to: `0x${string}`, amount: string) {
 }
 ```
 
-The `UserBalance` component in the template already imports `USDT_ADDRESS` — use the same constant to keep the address consistent across your app.
+The `UserBalance` component exports `TOKENS_BY_CHAIN` — import that instead of writing an address down again, and it keeps working when the user is on Celo Sepolia rather than mainnet:
+
+```ts
+import { TOKENS_BY_CHAIN } from "@/components/user-balance";
+import { useAccount } from "wagmi";
+
+const { chainId } = useAccount();
+const usdt = TOKENS_BY_CHAIN[chainId!]?.find((t) => t.symbol === "USD₮")?.address;
+```
+
+The symbol is `USD₮` with U+20AE, which is what both Tether contracts return from `symbol()` — not the ASCII `USDT`.
 
 ## Token Reference
 
