@@ -36,6 +36,10 @@ export class TemplateGenerator {
       walletProvider,
       contractFramework,
       projectPath,
+      miniappName,
+      miniappDescription,
+      miniappTags,
+      miniappTagline,
     } = config;
 
     try {
@@ -78,6 +82,12 @@ export class TemplateGenerator {
       const generator = plopInstance.getGenerator("celo-project");
 
       // Run the generator with the provided configuration
+      // The four miniapp values are prompted for, resolved, forwarded through
+      // project-generator and declared on PlopConfig — and were then dropped
+      // here, the last step before the templates see them. layout.tsx.hbs and
+      // warpcast.ts.hbs are full of `{{#if miniappName}}` branches whose
+      // condition was therefore always false, so every farcaster project shipped
+      // the generic {{else}} fallbacks no matter what the user typed.
       const results = await generator.runActions({
         projectName,
         description,
@@ -85,6 +95,10 @@ export class TemplateGenerator {
         walletProvider,
         contractFramework,
         projectPath,
+        miniappName,
+        miniappDescription,
+        miniappTags,
+        miniappTagline,
       });
 
       // Check if generation was successful
