@@ -1,6 +1,7 @@
 import { NodePlopAPI } from "plop";
 import path from "path";
 import { getTemplatesPath } from "./utils/paths.js";
+import { toPackageName } from "./utils/validation.js";
 
 interface PlopData {
   projectName: string;
@@ -261,12 +262,7 @@ export default function (plop: NodePlopAPI): void {
   });
 
   // Add helper functions for templates
-  plop.setHelper("kebabCase", (text: string) => {
-    return text
-      .replace(/([a-z])([A-Z])/g, "$1-$2")
-      .replace(/\s+/g, "-")
-      .toLowerCase();
-  });
+  plop.setHelper("kebabCase", (text: string) => toPackageName(text));
 
   plop.setHelper("camelCase", (text: string) => {
     return text

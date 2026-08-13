@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import { createRequire } from 'node:module';
 import { createCommand } from './commands/create.js';
 import chalk from 'chalk';
@@ -24,9 +24,32 @@ program
   .description('Create a new Celo project')
   .argument('[project-name]', 'Name of the project')
   .option('-d, --description <description>', 'Project description')
-  .option('-t, --template <type>', 'Template type (basic, farcaster-miniapp, minipay, ai-chat)')
-  .option('--wallet-provider <provider>', 'Wallet provider (rainbowkit, thirdweb, none)')
-  .option('-c, --contracts <framework>', 'Smart contract framework (hardhat, foundry, none)')
+  // .choices() rather than a bare string, so an unknown value is rejected with
+  // the allowed list instead of flowing into Plop — where every
+  // `{{#if (eq templateType ...)}}` is simply false and the user silently gets a
+  // bare base project that matches nothing documented.
+  .addOption(
+    new Option('-t, --template <type>', 'Template type').choices([
+      'basic',
+      'farcaster-miniapp',
+      'minipay',
+      'ai-chat',
+    ])
+  )
+  .addOption(
+    new Option('--wallet-provider <provider>', 'Wallet provider').choices([
+      'rainbowkit',
+      'thirdweb',
+      'none',
+    ])
+  )
+  .addOption(
+    new Option('-c, --contracts <framework>', 'Smart contract framework').choices([
+      'hardhat',
+      'foundry',
+      'none',
+    ])
+  )
   .option('--skip-install', 'Skip package installation')
   .option('-y, --yes', 'Skip all prompts and use defaults')
   .action(createCommand);

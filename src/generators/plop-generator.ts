@@ -3,6 +3,7 @@ import nodePlop from "node-plop";
 import path from "path";
 import { safeCopyTemplate } from "../utils/safe-copy.js";
 import { getTemplatesPath, getPlopfilePath } from "../utils/paths.js";
+import { toPackageName } from "../utils/validation.js";
 
 // TypeScript compilation handles TS support - no runtime tsx needed
 
@@ -62,7 +63,9 @@ export class TemplateGenerator {
         const pkgPath = path.join(projectPath, "package.json");
         if (await fs.pathExists(pkgPath)) {
           const pkg = JSON.parse(await fs.readFile(pkgPath, "utf8")) as Record<string, unknown>;
-          (pkg as { name?: string }).name = projectName;
+          // This path never reaches Plop, so the kebabCase helper never runs —
+          // normalise here through the same function the helper uses.
+          (pkg as { name?: string }).name = toPackageName(projectName);
           // Normalize version for new project scaffolds
           (pkg as { version?: string }).version = "0.1.0";
           await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
