@@ -1,12 +1,23 @@
 import { createThirdwebClient } from "thirdweb";
 
-// Replace this with your client ID get one from https://thirdweb.com/dashboard/
-const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!;
+// Get a client ID from https://thirdweb.com/dashboard and set it in
+// apps/web/.env as NEXT_PUBLIC_THIRDWEB_CLIENT_ID.
+//
+// This falls back to a placeholder rather than throwing. The page tree imports
+// this module, so a throw here runs during the prerender step of `next build`
+// and makes a fresh scaffold fail before anyone has had a chance to configure
+// anything. `createThirdwebClient` accepts any non-empty string without
+// validating it, so the build stays green and the failure lands where it means
+// something — the first call that actually needs the ID.
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
 
 if (!clientId) {
-  throw new Error("Missing NEXT_PUBLIC_THIRDWEB_CLIENT_ID environment variable");
+  console.warn(
+    "[thirdweb] NEXT_PUBLIC_THIRDWEB_CLIENT_ID is not set, using a placeholder. " +
+      "Wallet connection will not work until you set it in apps/web/.env."
+  );
 }
 
 export const client = createThirdwebClient({
-  clientId,
+  clientId: clientId || "YOUR_CLIENT_ID",
 });
