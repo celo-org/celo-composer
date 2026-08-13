@@ -1,87 +1,78 @@
 name: Publish Beta to NPM
 
+# Pre-release tags only: scripts/release.sh (or a manual tag) pushes
+# v*-beta*/v*-alpha*/v*-rc* and this workflow publishes under the matching
+# npm dist-tag. No manual-dispatch version input — the repo stays the single
+# source of truth for versions.
 on:
   push:
     tags:
       - 'v*-beta*'
       - 'v*-alpha*'
       - 'v*-rc*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Beta version to publish (e.g., 2.4.13-beta.1)'
-        required: true
-        default: '2.4.13-beta.1'
-      tag:
-        description: 'NPM dist-tag (beta, alpha, rc)'
-        required: true
-        default: 'beta'
 
 jobs:
   publish-beta:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '26'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-          
+
+      # pnpm must be on PATH before setup-node resolves its cache
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
           version: 10.13.1
-          
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Lint code
         run: pnpm lint
-        
+
       - name: Build project
         run: pnpm build
-        
+
       - name: Run tests
         run: pnpm test
-        
+
       - name: Determine dist-tag
         id: dist-tag
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
-          else
-            # Extract tag from git tag (e.g., v2.4.13-beta.1 -> beta)
-            TAG_NAME=${GITHUB_REF#refs/tags/v}
-            if [[ $TAG_NAME == *"-beta"* ]]; then
-              echo "tag=beta" >> $GITHUB_OUTPUT
-            elif [[ $TAG_NAME == *"-alpha"* ]]; then
-              echo "tag=alpha" >> $GITHUB_OUTPUT
-            elif [[ $TAG_NAME == *"-rc"* ]]; then
-              echo "tag=rc" >> $GITHUB_OUTPUT
-            else
-              echo "tag=beta" >> $GITHUB_OUTPUT
-            fi
+          TAG_NAME=${GITHUB_REF#refs/tags/v}
+          if [[ $TAG_NAME == *"-beta"* ]]; then
+            echo "tag=beta" >> $GITHUB_OUTPUT
+          elif [[ $TAG_NAME == *"-alpha"* ]]; then
+            echo "tag=alpha" >> $GITHUB_OUTPUT
+          elif [[ $TAG_NAME == *"-rc"* ]]; then
+            echo "tag=rc" >> $GITHUB_OUTPUT
           fi
-          
-      - name: Update version (if manual dispatch)
-        if: github.event_name == 'workflow_dispatch'
+
+      - name: Verify tag matches package.json
         run: |
-          npm version ${{ github.event.inputs.version }} --no-git-tag-version
-          
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "Tag v$TAG_VERSION does not match package.json version $PKG_VERSION" && exit 1
+          fi
+
       - name: Publish to NPM (Pre-release)
-        run: npm publish --tag ${{ steps.dist-tag.outputs.tag }}
+        run: npm publish --provenance --access public --tag ${{ steps.dist-tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
+
       - name: Create GitHub Pre-release
         run: |
           gh release create ${{ github.ref_name }} \
@@ -97,19 +88,8 @@ jobs:
           npm install -g @celo/celo-composer@${{ steps.dist-tag.outputs.tag }}
           \`\`\`
 
-          ## Usage
-
-          \`\`\`bash
-          npx @celo/celo-composer@${{ steps.dist-tag.outputs.tag }} create my-celo-app
-          \`\`\`
-
           ## Changes in this Pre-release
 
-          See [CHANGELOG.md](https://github.com/celo-org/celo-composer/blob/${{ github.ref_name }}/CHANGELOG.md) for detailed changes.
-
-          ## Feedback
-
-          Please report any issues or feedback on our [GitHub Issues](https://github.com/celo-org/celo-composer/issues)."
+          See [CHANGELOG.md](https://github.com/celo-org/celo-composer/blob/${{ github.ref_name }}/CHANGELOG.md) for detailed changes."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

@@ -35,28 +35,21 @@ Publishes stable releases to npm with the `latest` tag and creates GitHub releas
 
 **How to Trigger:**
 
-**Automatic (Recommended):**
-1. Ensure your code is on the `main` branch and all changes are committed and pushed
-2. Make sure `package.json` version is already updated to match the release version / new version (e.g., `2.4.14`)
-3. Create and push a version tag from your local machine:
-   ```bash
-   git tag v2.4.14
-   git push origin v2.4.14
-   ```
-   The workflow will automatically trigger when you push a tag matching `v*` (excluding pre-releases). This does not create any new commit, just trigger deployment workflow.
+The entry point is `scripts/release.sh`. It bumps `package.json`, prompts for the CHANGELOG update, commits, tags `vX.Y.Z`, and pushes both — the pushed tag triggers this workflow, which verifies the tag matches `package.json` before publishing.
 
-**Manual:**
-1. Go to [Actions](https://github.com/celo-org/celo-composer/actions) → **Publish to NPM**
-2. Click **Run workflow**
-3. Select the branch (usually `main`)
-4. Enter the version number (e.g., `2.4.14`)
-5. Click **Run workflow**
-   
-   **Note:** Manual dispatch will automatically update `package.json` version, but won't create a git tag.
+```bash
+./scripts/release.sh patch   # or minor / major / X.Y.Z
+```
+
+If you need to trigger it without the script, push a matching tag by hand — but the version bump must already be committed, or the workflow's tag-vs-package.json check will fail:
+
+```bash
+git tag v2.4.14
+git push origin v2.4.14
+```
 
 **Notes:**
-- Code should be on the `main` branch (or the branch you're releasing from)
-- Git commands are run from your local machine
+- Tags are the only trigger; there is no manual-dispatch path (a CI-side version bump would publish a version the repo never recorded)
 - Tags containing `-beta`, `-alpha`, or `-rc` will be handled by the Publish-beta workflow instead
 
 ---
@@ -91,21 +84,9 @@ Publishes pre-releases (beta/alpha/rc) to npm with appropriate dist-tags and cre
    ```
    The workflow will automatically trigger when you push a tag matching `v*-beta*`, `v*-alpha*`, or `v*-rc*`.
 
-**Manual:**
-1. Go to [Actions](https://github.com/celo-org/celo-composer/actions) → **Publish Beta to NPM**
-2. Click **Run workflow**
-3. Select the branch (usually `main`)
-4. Enter:
-   - **Version**: `2.4.14-beta.1` (or alpha/rc)
-   - **Tag**: `beta` (or `alpha` or `rc`)
-5. Click **Run workflow**
-   
-   **Note:** Manual dispatch will automatically update `package.json` version, but won't create a git tag.
-
 **Notes:**
-- Code should be on the `main` branch (or the branch you're releasing from)
-- Git commands are run from your local machine
-- For automatic trigger: You must manually update `package.json` version before creating the tag
+- Tags are the only trigger; there is no manual-dispatch path
+- The `package.json` version must be committed as the pre-release version (e.g. `2.4.14-beta.1`) before tagging — the workflow verifies tag and package.json agree
 
 **Installation:**
 Users can install pre-releases with:

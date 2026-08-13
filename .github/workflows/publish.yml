@@ -1,74 +1,65 @@
 name: Publish to NPM
 
+# Tags are the only trigger: scripts/release.sh bumps the version, commits,
+# and pushes the tag — this workflow picks it up. A manual-dispatch path that
+# bumped the version in CI would publish a version the repo never recorded.
 on:
   push:
     tags:
       - 'v*'
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to publish (e.g., 2.4.13)'
-        required: true
-        default: '2.4.13'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    # Skip if tag is a pre-release (beta/alpha/rc)
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-rc'))
-    
+    # Pre-release tags (beta/alpha/rc) are handled by publish-beta.yml
+    if: ${{ !contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-rc') }}
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           fetch-depth: 0
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '26'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-          
+
+      # pnpm must be on PATH before setup-node resolves its cache
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
           version: 10.13.1
-          
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Lint code
         run: pnpm lint
-        
+
       - name: Build project
         run: pnpm build
-        
+
       - name: Run tests
         run: pnpm test
-        
-      - name: Extract version from tag
-        id: version
-        if: github.event_name == 'push'
+
+      - name: Verify tag matches package.json
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Extracted version: $VERSION"
-          
-      - name: Update version (if manual dispatch)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          npm version ${{ github.event.inputs.version }} --no-git-tag-version
-          VERSION=${{ github.event.inputs.version }}
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "Tag v$TAG_VERSION does not match package.json version $PKG_VERSION" && exit 1
+          fi
+
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          
+
       - name: Create GitHub Release
         run: |
           gh release create ${{ github.ref_name }} \
@@ -90,4 +81,3 @@ jobs:
           \`\`\`"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
