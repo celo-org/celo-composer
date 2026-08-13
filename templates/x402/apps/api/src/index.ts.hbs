@@ -1,0 +1,89 @@
+// {{projectName}} — an x402 seller.
+//
+// `GET /free` is open. `POST /paid` charges the caller USDC on Celo before it answers.
+//
+// The flow, once:
+//   1. An agent calls POST /paid with no payment header.
+//   2. This server answers 402 with what it will accept (asset, amount, payTo, network).
+//   3. The agent signs an EIP-3009 authorization for exactly that and calls again.
+//   4. The facilitator verifies the signature, submits the transfer, and pays the gas.
+//   5. This handler runs and the response carries a settlement receipt.
+//
+// Step 5 is the part worth noticing: the BUYER needs no CELO. The authorization is
+// signed off-chain and the facilitator sponsors the gas, so an agent holding nothing
+// but a stablecoin can transact.
+
+import { serve } from "@hono/node-server";
+import { ExactEvmScheme } from "@x402/evm/exact/server";
+import { paymentMiddleware, x402ResourceServer } from "@x402/hono";
+import { Hono } from "hono";
+import { getAddress } from "viem";
+import { CAIP2, CONFIG, NETWORK, PAY_TO, PRICE, facilitator } from "./x402.js";
+
+const app = new Hono();
+
+/** Free route — no payment, useful for liveness checks. */
+app.get("/free", (c) =>
+  c.json({ ok: true, network: NETWORK, facilitator: CONFIG.facilitator })
+);
+
+if (PAY_TO) {
+  const server = new x402ResourceServer(facilitator);
+  server.register("eip155:*", new ExactEvmScheme());
+
+  app.use(
+    "*",
+    paymentMiddleware(
+      {
+        "POST /paid": {
+          accepts: [
+            {
+              scheme: "exact",
+              network: CAIP2,
+              payTo: getAddress(PAY_TO),
+              price: {
+                amount: PRICE,
+                asset: CONFIG.usdc,
+                // The EIP-712 domain the token signs with, taken from the same
+                // per-network entry as the address above so the two cannot desync.
+                extra: CONFIG.domain,
+              },
+            },
+          ],
+          // What the caller is buying. This is shown to the paying agent, so it
+          // should describe the resource, not the project.
+          description: "One call to the {{projectName}} paid API",
+        },
+      },
+      server
+    )
+  );
+  // Fail loudly at boot rather than at settlement. Without a key the server still
+  // starts and still returns a correct 402 — /supported and /verify do not need
+  // one — and then /settle returns 401 after the buyer has signed.
+  if (!process.env.X402_API_KEY) {
+    console.warn(
+      "⚠️  X402_API_KEY is not set. The 402 will look correct and settlement will fail with 401."
+    );
+  }
+} else {
+  console.warn(
+    "⚠️  X402_PAY_TO is not set — /paid is running FREE. Set it in .env to charge."
+  );
+}
+
+/** The paid route. Everything here runs only after a settled payment. */
+app.post("/paid", (c) =>
+  c.json({
+    message: "You paid for this response.",
+    network: NETWORK,
+    servedAt: new Date().toISOString(),
+  })
+);
+
+const port = Number(process.env.PORT ?? 3001);
+serve({ fetch: app.fetch, port });
+console.log(`{{projectName}} x402 seller listening on http://localhost:${port}`);
+console.log(`  network:     ${NETWORK} (${CAIP2})`);
+console.log(`  facilitator: ${CONFIG.facilitator}`);
+console.log(`  price:       ${PRICE} raw units of USDC`);

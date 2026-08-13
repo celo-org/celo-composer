@@ -76,7 +76,8 @@ export default function (plop: NodePlopAPI): void {
         skip: (data: PlopData): string | false => {
           if (
             data.templateType === "farcaster-miniapp" ||
-            data.templateType === "minipay"
+            data.templateType === "minipay" ||
+            data.templateType === "x402"
           ) {
             return "Skipping RainbowKit - This template uses its own wallet components";
           }
@@ -125,8 +126,11 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/thirdweb/components/"),
         templateFiles: path.join(templatesPath, "wallets/thirdweb/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (data.templateType === "farcaster-miniapp") {
-            return "Skipping Thirdweb - Farcaster Miniapp uses its own wallet components";
+          if (
+            data.templateType === "farcaster-miniapp" ||
+            data.templateType === "x402"
+          ) {
+            return "Skipping Thirdweb - this template uses its own wallet components";
           }
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb - different wallet provider selected";
@@ -234,6 +238,37 @@ export default function (plop: NodePlopAPI): void {
         skip: (data: PlopData): string | false => {
           if (data.templateType !== "farcaster-miniapp") {
             return "Skipping Farcaster setup guide - different template type selected";
+          }
+          return false;
+        },
+      },
+      // Conditionally add the x402 seller + buyer app (apps/api).
+      // The base template already globs `apps/*` in pnpm-workspace.yaml, so this
+      // drops in as a second workspace package without touching apps/web.
+      {
+        type: "addMany",
+        destination: "{{projectPath}}/apps/api/",
+        base: path.join(templatesPath, "x402/apps/api/"),
+        templateFiles: path.join(templatesPath, "x402/apps/api/**/*.hbs"),
+        globOptions: {
+          dot: true,
+        },
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "x402") {
+            return "Skipping x402 API - different template type selected";
+          }
+          return false;
+        },
+        verbose: true,
+      },
+      // Add x402 setup documentation
+      {
+        type: "add",
+        path: "{{projectPath}}/X402_SETUP.md",
+        templateFile: path.join(templatesPath, "x402/X402_SETUP.md.hbs"),
+        skip: (data: PlopData): string | false => {
+          if (data.templateType !== "x402") {
+            return "Skipping x402 setup guide - different template type selected";
           }
           return false;
         },

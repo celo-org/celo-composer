@@ -1,0 +1,85 @@
+// Network constants and the facilitator client.
+//
+// The facilitator is the piece that verifies a payment signature and submits the
+// settlement transaction. You do not run it — Celo hosts one for each network, and
+// the addresses below are what those instances advertise on `GET /supported`.
+
+// Loaded here, first, because every constant below reads process.env at module
+// scope — and both entry points import this file before running their own code.
+// Node only reads .env by itself from 20.6 onward, and the workspace supports 18.
+import "dotenv/config";
+
+import { HTTPFacilitatorClient } from "@x402/core/server";
+import type { Address } from "viem";
+
+export type X402Network = "testnet" | "mainnet";
+
+/**
+ * Celo's hosted x402 facilitators, and the canonical USDC each one settles.
+ *
+ * USDC is used because it implements EIP-3009 `transferWithAuthorization`, which is
+ * the standard the `exact` scheme signs against. A token without EIP-3009 cannot be
+ * settled by this path no matter what you put in `asset`.
+ *
+ * `domain` is the EIP-712 domain the TOKEN signs with, and it lives next to the
+ * address rather than beside the price so the two cannot drift apart. Get it wrong
+ * and the token rejects the signature at settlement — after the buyer has signed.
+ * Both entries were read from the contracts (`name()` / `version()` on each
+ * network) rather than assumed; note that `eip712Domain()` itself reverts on both,
+ * so those two getters are how you check.
+ */
+export const X402 = {
+  testnet: {
+    facilitator: "https://api.x402.sepolia.celo.org",
+    caip2: "eip155:11142220",
+    usdc: "0x01C5C0122039549AD1493B8220cABEdD739BC44E" as Address,
+    domain: { name: "USDC", version: "2" },
+    explorer: "https://celo-sepolia.blockscout.com",
+  },
+  mainnet: {
+    facilitator: "https://api.x402.celo.org",
+    caip2: "eip155:42220",
+    usdc: "0xcebA9300f2b948710d2653dD7B07f33A8B32118C" as Address,
+    domain: { name: "USDC", version: "2" },
+    explorer: "https://celoscan.io",
+  },
+} as const;
+
+/** Testnet by default, so running this scaffold costs nothing. */
+export const NETWORK: X402Network =
+  process.env.X402_NETWORK === "mainnet" ? "mainnet" : "testnet";
+
+export const CONFIG = X402[NETWORK];
+
+/** CAIP-2 chain id, e.g. `eip155:11142220`. The `@x402` packages key schemes by this. */
+export const CAIP2: `eip155:${string}` = CONFIG.caip2;
+
+/**
+ * Price in RAW token units, not decimals. USDC has 6, so "10000" is 0.01 USDC.
+ * Getting this wrong by 10^6 is the single most common mistake when wiring x402.
+ */
+export const PRICE = process.env.X402_PRICE ?? "10000";
+
+/** Where settled payments land. Unset means /paid answers for free. */
+export const PAY_TO = process.env.X402_PAY_TO;
+
+/**
+ * The facilitator client. The API key is attached to every facilitator call and
+ * never reaches the buyer — it identifies YOU to the facilitator, it is not part
+ * of the payment.
+ *
+ * The key is REQUIRED, on testnet as well. Get one at https://x402.celo.org —
+ * connect a wallet, click "Create API key", sign a message. No gas, and new
+ * accounts start with free credits on both networks.
+ *
+ * `/supported` and `/verify` both answer without a key, so everything looks
+ * healthy right up to `/settle`, which returns 401 after the buyer has already
+ * signed. Do not read a working 402 as proof that the key is unnecessary.
+ */
+export const facilitator = new HTTPFacilitatorClient({
+  url: CONFIG.facilitator,
+  createAuthHeaders: async () => {
+    const headers = { "X-API-Key": process.env.X402_API_KEY ?? "" };
+    return { verify: headers, settle: headers, supported: headers };
+  },
+});

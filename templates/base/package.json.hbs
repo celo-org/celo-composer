@@ -18,8 +18,16 @@
     "contracts:test": "turbo run test --filter=foundry",
     "contracts:deploy": "turbo run deploy --filter=foundry",
     "contracts:deploy:celo-sepolia": "turbo run deploy:celo-sepolia --filter=foundry",
-    "contracts:deploy:celo": "turbo run deploy:celo --filter=foundry"{{/if}}
-  },
+    "contracts:deploy:celo": "turbo run deploy:celo --filter=foundry"{{/if}}{{#if (eq templateType "x402")}},
+    "api:dev": "turbo run dev --filter=api",
+    "api:buy": "turbo run buy --filter=api"{{/if}}
+  },{{#if (eq templateType "x402")}}
+  "pnpm": {
+    "peerDependencyRules": {
+      "//": "The @x402 server adapters peer-depend on @x402/paywall, which serves a browser paywall page and pulls in Solana + Algorand wallet stacks plus React 19. This project is an API seller and never renders that page, so the peer is left unmet on purpose rather than dragging that tree into a Celo scaffold.",
+      "ignoreMissing": ["@x402/paywall"]
+    }
+  },{{/if}}
   "devDependencies": {
     "@types/node": "^20.8.0",
     "turbo": "^1.10.16",

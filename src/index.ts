@@ -34,6 +34,7 @@ program
       'farcaster-miniapp',
       'minipay',
       'ai-chat',
+      'x402',
     ])
   )
   .addOption(

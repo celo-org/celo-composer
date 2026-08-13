@@ -50,7 +50,8 @@
           "templates/web-app-template",
           "templates/farcaster-miniapp",
           "templates/minipay",
-              "templates/ai-chat"
+          "templates/ai-chat",
+          "templates/x402"
         ]
       },
       {

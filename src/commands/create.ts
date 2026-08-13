@@ -66,20 +66,32 @@ export async function createCommand(
         ? ((): PromptAnswers => {
             const autoTemplateType =
               cliTemplateType || "basic";
-            const autoWallet = options.walletProvider
-              ? options.walletProvider
-              : autoTemplateType === "farcaster-miniapp" ||
-                autoTemplateType === "ai-chat"
+            // FORCED, not defaulted. The plopfile guards skip the wallet
+            // components for these template types unconditionally, so a flag
+            // saying otherwise cannot be honoured — it just produces a navbar
+            // importing a connect-button nothing writes. Farcaster and Minipay
+            // survive that because they ship their own replacement; x402 and
+            // ai-chat ship none, which is where it fails silently.
+            const scaffoldsOwnWallet =
+              autoTemplateType === "farcaster-miniapp" ||
+              autoTemplateType === "ai-chat" ||
+              autoTemplateType === "x402";
+            const autoWallet = scaffoldsOwnWallet
               ? "none"
-              : autoTemplateType === "minipay"
-              ? "rainbowkit"
-              : "rainbowkit";
-            const autoContracts = options.contracts
-              ? options.contracts
-              : autoTemplateType === "farcaster-miniapp" ||
-                autoTemplateType === "ai-chat"
-              ? "none"
-              : "hardhat";
+              : options.walletProvider ?? "rainbowkit";
+            // NOT forced, unlike the wallet above — the two guards are not
+            // symmetric. The wallet actions in plopfile.ts check the template
+            // type as well ("This template uses its own wallet components"),
+            // so an explicit --wallet-provider cannot be honoured. The contract
+            // actions check only contractFramework, so `-t farcaster-miniapp
+            // -c hardhat` genuinely scaffolds hardhat and is worth keeping.
+            const autoContracts =
+              options.contracts ??
+              (autoTemplateType === "farcaster-miniapp" ||
+              autoTemplateType === "ai-chat" ||
+              autoTemplateType === "x402"
+                ? "none"
+                : "hardhat");
             return {
               projectName: projectName || "my-celo-app",
               description:
@@ -115,6 +127,7 @@ export async function createCommand(
                 { name: "Farcaster Miniapp", value: "farcaster-miniapp" },
                 { name: "Minipay App", value: "minipay" },
                 { name: "AI Agent Chat App", value: "ai-chat" },
+                { name: "x402 Paid API", value: "x402" },
               ],
               default: "basic",
               // `-t` populates options.template; only the long form sets
@@ -139,7 +152,8 @@ export async function createCommand(
                   !options.walletProvider &&
                   templateType !== "farcaster-miniapp" &&
                   templateType !== "minipay" &&
-                  templateType !== "ai-chat"
+                  templateType !== "ai-chat" &&
+                  templateType !== "x402"
                 );
               },
             },
@@ -160,7 +174,8 @@ export async function createCommand(
               when: (answers: { templateType?: string }): boolean => {
                 const templateType =
                   cliTemplateType || answers.templateType;
-                if (templateType === "ai-chat") return false;
+                if (templateType === "ai-chat" || templateType === "x402")
+                  return false;
                 return !options.contracts;
               },
             },
@@ -246,20 +261,26 @@ export async function createCommand(
       }
     }
 
+    // Forced here, and it has to be HERE. Computing it in the auto-mode branch
+    // above is not enough — this is the value that reaches plop, and it read
+    // `options.walletProvider` first, so an explicit flag won again regardless.
+    //
+    // plopfile.ts skips the rainbowkit and thirdweb component actions for these
+    // template types unconditionally, so the flag cannot be honoured; it only
+    // produces a navbar importing a component nothing writes. Farcaster and
+    // Minipay ship their own replacement, x402 and ai-chat ship none.
     const finalWalletProvider =
-      options.walletProvider ||
-      answers.walletProvider ||
-      (finalTemplateType === "farcaster-miniapp" ||
-      finalTemplateType === "ai-chat"
+      finalTemplateType === "farcaster-miniapp" ||
+      finalTemplateType === "ai-chat" ||
+      finalTemplateType === "x402"
         ? "none"
-        : finalTemplateType === "minipay"
-        ? "rainbowkit"
-        : "rainbowkit");
+        : options.walletProvider || answers.walletProvider || "rainbowkit";
     let finalContractFramework = options.contracts || answers.contractFramework;
     if (!finalContractFramework) {
       finalContractFramework =
         finalTemplateType === "ai-chat" ||
-        finalTemplateType === "farcaster-miniapp"
+        finalTemplateType === "farcaster-miniapp" ||
+        finalTemplateType === "x402"
           ? "none"
           : "hardhat";
     }

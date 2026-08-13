@@ -1,0 +1,93 @@
+---
+title: "x402 Paid API"
+description: "Scaffold an API that agents can pay for, in stablecoins on Celo."
+icon: "credit-card"
+---
+
+## What you get
+
+```bash
+npx @celo/celo-composer create my-app -t x402
+```
+
+An `apps/api` workspace containing both halves of an x402 payment:
+
+- a **seller** — a Hono server whose `POST /paid` answers `402 Payment Required` with what it accepts
+- a **buyer** — a script that reads those requirements, pays them, and prints the settlement hash
+
+It points at Celo Sepolia by default, so the whole loop runs for free.
+
+## How x402 works
+
+An agent calls your endpoint. You answer `402` with a machine-readable description of
+what you accept: asset, amount, recipient, network. The agent signs an EIP-3009
+authorization for exactly that and calls again. A **facilitator** verifies the
+signature, submits the transfer on chain, pays the gas, and only then does your
+handler run.
+
+The part developers do not expect: **the buyer needs no CELO.** The authorization is
+signed off-chain and the facilitator sponsors the gas, so an agent holding nothing but
+a stablecoin can transact.
+
+Celo hosts a facilitator per network, so you do not run one:
+
+| Network | Facilitator | CAIP-2 |
+| --- | --- | --- |
+| Celo Sepolia (default) | `https://api.x402.sepolia.celo.org` | `eip155:11142220` |
+| Celo mainnet | `https://api.x402.celo.org` | `eip155:42220` |
+
+## Running it
+
+```bash
+cd apps/api
+cp .env.template .env
+```
+
+### Get a facilitator API key first
+
+Open [https://x402.celo.org](https://x402.celo.org), connect an EVM wallet, click
+**Create API key** and sign the message. No gas, no transaction, and the key is shown
+only once. New accounts start with **free credits on both mainnet and testnet**, so
+nothing needs to be bought to run this template. Each settlement spends one credit.
+
+The key is a server-side secret: it identifies you to the facilitator, is never part
+of the payment, and **the buyer needs no key at all**.
+
+### Then fill in `.env`
+
+Set `X402_API_KEY` to that key, `X402_PAY_TO` to an address you control — until it is
+set, `/paid` answers for free — and `BUYER_PRIVATE_KEY` to a throwaway key holding a
+little testnet USDC.
+
+```bash
+pnpm api:dev    # seller on http://localhost:3001
+pnpm api:buy    # buyer pays it
+```
+
+The buyer prints the settlement transaction and an explorer link.
+
+## Things that catch people out
+
+**The price is in raw units.** USDC has 6 decimals, so `10000` is 0.01 USDC.
+
+**The token must implement EIP-3009.** The `exact` scheme signs a
+`transferWithAuthorization`. A token without it cannot settle through this path
+regardless of what `asset` says. That is why the template uses USDC.
+
+**`extra` is the EIP-712 domain and cannot be read from the contract.** If the `name`
+or `version` is wrong the token rejects the signature at settlement, after everything
+else looked correct.
+
+**The facilitator API key is required, including on testnet, and its absence is
+invisible until the last step.** `/supported` and `/verify` both answer without one,
+so the server boots and returns a correct 402; only `/settle` returns 401, after the
+buyer has signed. The generated seller warns about this at startup. An empty credit
+balance fails at the same point but returns `402`, which reads like a refused payment
+rather than an account problem.
+
+## What this template skips
+
+No wallet provider and no smart contract framework are scaffolded. The seller needs
+neither — it verifies signatures rather than holding a wallet — and the buyer reads a
+key straight from the environment. `apps/web` is generated as the standard Celo
+Composer frontend and is left untouched.
