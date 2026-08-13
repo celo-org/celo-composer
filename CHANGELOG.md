@@ -171,7 +171,7 @@ Covers 2.4.5 and 2.4.6. There is no `v2.4.5` tag, and the 2.4.5 bump (`a2e812b`)
 - **Monorepo**: Turborepo-based monorepo structure
 - **Developer Experience**: Interactive CLI with progress indicators
 - **Template System**: Modular template composition
-- **Network Support**: Pre-configured for Celo mainnet and Alfajores testnet
+- **Network Support**: Pre-configured for Celo mainnet and Celo Sepolia testnet
 
 ### Technical Details
 - Node.js 18+ support
