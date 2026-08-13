@@ -28,34 +28,56 @@ The template comes with the following features and configurations out of the box
 - **Deployment Scripts**: A `Counter.s.sol` script for deploying your contract using `forge script`.
 - **Tests**: A `Counter.t.sol` test file with examples of how to write tests for your contract using `forge test`.
 - **`.env.example`**: A template for your environment variables, including `PRIVATE_KEY` and `ETHERSCAN_API_KEY`.
+- **`remappings.txt`** and a **`package.json`**, so the workspace picks the project up and the root `contracts:*` scripts reach it.
+- **`README.md`** inside `apps/contracts` with the same commands, plus the network table and faucet link.
 
 ## Key Commands
 
-All commands should be run from the `apps/contracts` directory.
-
-### Compile Contracts
+Run these from the project root:
 
 ```bash
-forge build
+pnpm contracts:compile             # forge build
+pnpm contracts:test                # forge test
+pnpm contracts:deploy:celo-sepolia
+pnpm contracts:deploy:celo
 ```
 
-### Run Tests
-
-```bash
-forge test
-```
+Or run `forge` directly from `apps/contracts`.
 
 ### Deploy Contract
 
-To deploy to a specific network, you'll need to have your `PRIVATE_KEY` set in a `.env` file.
+Copy `.env.example` to `.env` and fill in `PRIVATE_KEY` first.
+
+The network names come from the `[rpc_endpoints]` block in `foundry.toml`, which defines **`celo-sepolia`** and **`celo`**. There is no `mainnet` alias.
 
 ```bash
-# Deploy to Celo Sepolia
-forge script script/Counter.s.sol:CounterScript --rpc-url --chain-id --broadcast --verify
+cd apps/contracts
+source .env
 
-# Deploy to Celo Mainnet
-forge script script/Counter.s.sol:CounterScript --rpc-url mainnet --broadcast --verify
+# Celo Sepolia
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo-sepolia \
+  --private-key $PRIVATE_KEY \
+  --broadcast
+
+# Celo Mainnet
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo \
+  --private-key $PRIVATE_KEY \
+  --broadcast
 ```
+
+`Counter.s.sol` calls `vm.startBroadcast()` with no arguments, so the key comes from the command line rather than from the script — which is why `--private-key` is needed even with `PRIVATE_KEY` in the environment.
+
+For an account holding real funds, use a keystore instead of a raw key:
+
+```bash
+cast wallet import deployer --interactive
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo --account deployer --broadcast
+```
+
+To verify on Celoscan, add `--verify --etherscan-api-key $ETHERSCAN_API_KEY`.
 
 ### Local Development with Anvil
 
