@@ -9,12 +9,17 @@
  * so they fail on a missed edit rather than on a changed line number.
  */
 
-import { execFileSync } from "child_process";
+import { spawnSync } from "child_process";
 import fs from "fs-extra";
 import os from "os";
 import path from "path";
 
 const repoRoot = path.resolve(__dirname, "..", "..");
+
+interface Generated {
+  projectPath: string;
+  stderr: string;
+}
 
 /**
  * Drive the CLI the way a user does, as a subprocess, rather than importing the
@@ -22,9 +27,15 @@ const repoRoot = path.resolve(__dirname, "..", "..");
  * ESM-only, which Jest cannot load in-process without switching the whole runner
  * over. Running it through `tsx` sidesteps that and tests the real entry point.
  */
-function generate(templateType: string, name: string): string {
+function generateWith(
+  templateType: string,
+  name: string,
+  extraArgs: string[] = []
+): Generated {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "composer-test-"));
-  execFileSync(
+  // spawnSync rather than execFileSync: a diagnostic printed to stderr is part
+  // of what these tests assert on, and execFileSync only hands back stdout.
+  const run = spawnSync(
     path.join(repoRoot, "node_modules", ".bin", "tsx"),
     [
       path.join(repoRoot, "src", "index.ts"),
@@ -32,6 +43,7 @@ function generate(templateType: string, name: string): string {
       name,
       "-t",
       templateType,
+      ...extraArgs,
       "--skip-install",
       // -y, because a flag no longer implies it. #411 makes only -y skip the
       // prompts, so without this the fixture blocks on an interactive question
@@ -39,9 +51,18 @@ function generate(templateType: string, name: string): string {
       // lands, required after.
       "-y",
     ],
-    { cwd: root, stdio: "pipe" }
+    { cwd: root, encoding: "utf8" }
   );
-  return path.join(root, name);
+  if (run.status !== 0) {
+    throw new Error(
+      `create -t ${templateType} ${extraArgs.join(" ")} exited ${run.status}\n${run.stderr}`
+    );
+  }
+  return { projectPath: path.join(root, name), stderr: run.stderr };
+}
+
+function generate(templateType: string, name: string): string {
+  return generateWith(templateType, name).projectPath;
 }
 
 // Generating a project shells out to git; give it room.
@@ -150,5 +171,86 @@ describe("other templates are unaffected", () => {
   it("does not leak the pnpm peer exemption into a basic project", () => {
     const pkg = fs.readJsonSync(path.join(projectPath, "package.json"));
     expect(pkg.pnpm).toBeUndefined();
+  });
+});
+
+/**
+ * Four templates cannot honour `--wallet-provider`, for two different reasons,
+ * and one of them was not cosmetic. minipay writes `connect-button.tsx` and
+ * `wallet-provider.tsx`, the same two filenames the thirdweb template writes,
+ * and nothing stopped both actions from running: `-t minipay --wallet-provider
+ * thirdweb` aborted with "File already exists", exited 1, and left a project
+ * half on disk. The other three discarded the flag in silence.
+ */
+describe("an explicit --wallet-provider the template cannot honour", () => {
+  const roots: string[] = [];
+  const keep = (g: Generated): Generated => {
+    roots.push(path.dirname(g.projectPath));
+    return g;
+  };
+
+  afterAll(() => {
+    for (const root of roots) fs.removeSync(root);
+  });
+
+  it("does not collide with minipay's own components, and says why", () => {
+    // The regression. Before this, generateWith threw here on exit 1.
+    const { projectPath, stderr } = keep(
+      generateWith("minipay", "mp-fixture", ["--wallet-provider", "thirdweb"])
+    );
+
+    const components = fs.readdirSync(
+      path.join(projectPath, "apps/web/src/components")
+    );
+    // minipay's own three survive...
+    expect(components).toEqual(
+      expect.arrayContaining([
+        "connect-button.tsx",
+        "wallet-provider.tsx",
+        "user-balance.tsx",
+      ])
+    );
+    // ...and thirdweb's lib never lands beside them. This is the half of the
+    // guard that was missing on the lib action while the components action
+    // had it.
+    expect(fs.pathExistsSync(path.join(projectPath, "apps/web/src/lib/client.ts"))).toBe(false);
+
+    expect(stderr).toContain("Ignoring --wallet-provider thirdweb");
+    expect(stderr).toContain("ships its own wallet components");
+  });
+
+  it("gives the other reason for a template that ships no wallet layer", () => {
+    const { projectPath, stderr } = keep(
+      generateWith("x402", "x402-wallet-fixture", [
+        "--wallet-provider",
+        "thirdweb",
+      ])
+    );
+    // x402 ships none, so the message must not claim it has its own.
+    expect(stderr).toContain("ships no wallet layer of its own");
+    expect(stderr).not.toContain("ships its own wallet components");
+    expect(fs.pathExistsSync(path.join(projectPath, "apps/web/src/lib/client.ts"))).toBe(false);
+  });
+
+  it("stays quiet when the flag agrees with the forcing", () => {
+    // `--wallet-provider none` is what the template gets anyway. Warning there
+    // would be noise about a conflict that does not exist.
+    const { stderr } = keep(
+      generateWith("x402", "x402-none-fixture", ["--wallet-provider", "none"])
+    );
+    expect(stderr).not.toContain("Ignoring --wallet-provider");
+  });
+
+  it("still wires thirdweb for a template that can take it", () => {
+    // The control. A guard that suppresses everything would pass every
+    // assertion above.
+    const { projectPath, stderr } = keep(
+      generateWith("basic", "basic-thirdweb-fixture", [
+        "--wallet-provider",
+        "thirdweb",
+      ])
+    );
+    expect(fs.pathExistsSync(path.join(projectPath, "apps/web/src/lib/client.ts"))).toBe(true);
+    expect(stderr).not.toContain("Ignoring --wallet-provider");
   });
 });
