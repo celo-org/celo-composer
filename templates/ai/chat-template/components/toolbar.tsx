@@ -10,6 +10,7 @@ import {
   type Dispatch,
   memo,
   type ReactNode,
+  type RefObject,
   type SetStateAction,
   useEffect,
   useRef,
@@ -318,12 +319,16 @@ const PureToolbar = ({
   artifactKind: ArtifactKind;
 }) => {
   const toolbarRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  useOnClickOutside(toolbarRef, () => {
+  // usehooks-ts 3.1.1 types this as RefObject<HTMLElement>, while React 19's
+  // useRef(null) produces RefObject<HTMLElement | null>. The hook guards
+  // `ref.current` before touching it, so the cast is accurate rather than a
+  // silenced null. Remove it if upstream widens the signature.
+  useOnClickOutside(toolbarRef as RefObject<HTMLDivElement>, () => {
     setIsToolbarVisible(false);
     setSelectedTool(null);
   });
