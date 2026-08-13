@@ -1,5 +1,10 @@
 node_modules
 .env
 dist
+
+# build artefacts and editor noise
+*.tsbuildinfo
+.DS_Store
+
 # leftover from an interrupted pnpm pack (older versions stashed here)
 .prune-stash/

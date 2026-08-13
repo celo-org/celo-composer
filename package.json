@@ -50,9 +50,7 @@
     "fs-extra": "^11.1.1",
     "inquirer": "^9.2.12",
     "node-plop": "^0.32.0",
-    "ora": "^7.0.1",
-    "path": "^0.12.7",
-    "plop": "^4.0.1"
+    "ora": "^7.0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
@@ -61,9 +59,9 @@
     "@types/node": "^20.8.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
-    "cross-env": "^7.0.3",
     "eslint": "^8.50.0",
     "jest": "^29.7.0",
+    "plop": "^4.0.1",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.4.1",
     "tsx": "^3.14.0",
