@@ -24,11 +24,17 @@ export function WalletConnectButton() {
   }
 
   if (!isConnected) {
-    const frameConnector = connectors.find(connector => connector.id === 'frameWallet')
-    
+    // The connector registers as id 'farcaster' (name 'Farcaster'). The string
+    // 'frameWallet' appears nowhere in @farcaster/miniapp-wagmi-connector — it
+    // is left over from the Frames-era connector — so the lookup returned
+    // undefined and the button rendered and did nothing. app/page.tsx already
+    // matched on 'farcaster'; the two files disagreed.
+    const farcasterConnector = connectors.find(connector => connector.id === 'farcaster')
+
     return (
       <button
-        onClick={() => frameConnector && connect({ connector: frameConnector })}
+        onClick={() => farcasterConnector && connect({ connector: farcasterConnector })}
+        disabled={!farcasterConnector}
         type="button"
         className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
       >
