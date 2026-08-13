@@ -134,10 +134,10 @@ function syntaxErrors(projectPath: string): string[] {
 type Suite = "scaffold" | "manifests" | "components";
 
 const KNOWN_BROKEN: Array<{ suite: Suite; label: string; reason: string }> = [
-  // This list started with eight entries. #427, #436 and #397 merged on
-  // 2026-08-12, seven markers went red on the next run naming their own
-  // combinations, and they were removed. Nobody had to remember this file.
-  { suite: "manifests", label: "-t farcaster-miniapp --wallet-provider rainbowkit", reason: "#429 — viem and wagmi still declared twice; #428 fixed the react-query half, #450 is open for the rest" },
+  // This list started with eight entries. As the fix PRs merged (#427, #436,
+  // #397 on 2026-08-12, then #450), each marker went red on the next run
+  // naming its own combination and was removed. Nobody had to remember this
+  // file. Add new entries here only with an open issue number.
 ];
 
 /** `it.failing` while the named bug is open, plain `it` once it is fixed. */
