@@ -208,28 +208,11 @@ export default function (plop: NodePlopAPI): void {
         },
         verbose: true,
       },
-      // Conditionally add Farcaster Miniapp configuration files
-      {
-        type: "addMany",
-        destination: "{{projectPath}}/apps/web/",
-        base: path.join(templatesPath, "farcaster-miniapp/apps/web/"),
-        templateFiles: [
-          path.join(templatesPath, "farcaster-miniapp/apps/web/.eslintrc.json.hbs")
-        ],
-        globOptions: {
-          dot: true,
-        },
-        // The base template now ships an .eslintrc.json of its own, so this has to
-        // overwrite it rather than silently lose the Farcaster rule overrides.
-        force: true,
-        skip: (data: PlopData): string | false => {
-          if (data.templateType !== "farcaster-miniapp") {
-            return "Skipping Farcaster Miniapp config - different template type selected";
-          }
-          return false;
-        },
-        verbose: true,
-      },
+      // Farcaster used to overwrite the base .eslintrc.json here, purely to keep
+      // three @typescript-eslint rule overrides. Those rules never resolved, so
+      // the overwrite existed to preserve a broken config — see #402. The base
+      // config is written for every template and is what farcaster needs, so
+      // both the file and this action are gone.
       // Add Farcaster setup documentation
       {
         type: "add",
