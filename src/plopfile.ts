@@ -2,7 +2,7 @@ import type { NodePlopAPI } from "plop";
 import path from "path";
 import { getTemplatesPath } from "./utils/paths.js";
 import { toPackageName } from "./utils/validation.js";
-import { ignoresWalletProvider, walletSkipReason } from "./utils/templates.js";
+import { skipsWalletTemplateFiles, walletSkipReason } from "./utils/templates.js";
 
 interface PlopData {
   projectName: string;
@@ -75,7 +75,7 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/rainbowkit/components/"),
         templateFiles: path.join(templatesPath, "wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (ignoresWalletProvider(data.templateType)) {
+          if (skipsWalletTemplateFiles(data.templateType)) {
             return walletSkipReason("RainbowKit", data.templateType);
           }
           if (data.walletProvider !== "rainbowkit") {
@@ -123,7 +123,7 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/thirdweb/components/"),
         templateFiles: path.join(templatesPath, "wallets/thirdweb/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (ignoresWalletProvider(data.templateType)) {
+          if (skipsWalletTemplateFiles(data.templateType)) {
             return walletSkipReason("Thirdweb", data.templateType);
           }
           if (data.walletProvider !== "thirdweb") {
@@ -143,7 +143,7 @@ export default function (plop: NodePlopAPI): void {
           // Same guard as the components action above. It was narrower than
           // that one, which was harmless only because walletProvider is forced
           // to "none" for the templates it missed — a latent copy of #396.
-          if (ignoresWalletProvider(data.templateType)) {
+          if (skipsWalletTemplateFiles(data.templateType)) {
             return walletSkipReason("Thirdweb lib", data.templateType);
           }
           if (data.walletProvider !== "thirdweb") {

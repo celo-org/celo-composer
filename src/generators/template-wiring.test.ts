@@ -215,8 +215,54 @@ describe("an explicit --wallet-provider the template cannot honour", () => {
     // had it.
     expect(fs.pathExistsSync(path.join(projectPath, "apps/web/src/lib/client.ts"))).toBe(false);
 
+    // minipay is forced to rainbowkit rather than to "none", so the packages its
+    // own components import are still declared. The first version of this fix
+    // forced "none" and shipped a scaffold with the components and none of what
+    // they import — see the minipay default test below.
+    const pkg = fs.readJsonSync(path.join(projectPath, "apps/web/package.json"));
+    expect(pkg.dependencies).toHaveProperty("@rainbow-me/rainbowkit");
+    expect(pkg.dependencies).toHaveProperty("wagmi");
+
     expect(stderr).toContain("Ignoring --wallet-provider thirdweb");
-    expect(stderr).toContain("ships its own wallet components");
+    expect(stderr).toContain("rainbowkit-based wallet components");
+    expect(stderr).toContain("Using rainbowkit instead");
+  });
+
+  it("a default minipay scaffold keeps the stack its components import", () => {
+    // The assertion that was missing, and the one that catches the regression
+    // review found on #461: minipay's wallet-provider.tsx imports
+    // RainbowKitProvider, WagmiProvider and QueryClientProvider, and
+    // user-balance.tsx uses wagmi hooks. The base manifest gates all four
+    // packages on walletProvider === "rainbowkit", so forcing "none" produced a
+    // project whose own components import packages it does not declare.
+    //
+    // No flag at all: this is what every ordinary minipay user gets.
+    const { projectPath } = keep(generateWith("minipay", "mp-default"));
+    const pkg = fs.readJsonSync(path.join(projectPath, "apps/web/package.json"));
+
+    for (const dep of [
+      "@rainbow-me/rainbowkit",
+      "wagmi",
+      "viem",
+      "@tanstack/react-query",
+    ]) {
+      expect(pkg.dependencies).toHaveProperty(dep);
+    }
+
+    // And the components that need them are actually there.
+    const components = fs.readdirSync(path.join(projectPath, "apps/web/src/components"));
+    expect(components).toEqual(
+      expect.arrayContaining(["connect-button.tsx", "wallet-provider.tsx", "user-balance.tsx"])
+    );
+  });
+
+  it("stays quiet when the flag names the provider the template requires", () => {
+    // `--wallet-provider rainbowkit` on minipay is agreement, not a conflict —
+    // the same case as `--wallet-provider none` on x402 below.
+    const { stderr } = keep(
+      generateWith("minipay", "mp-agrees", ["--wallet-provider", "rainbowkit"])
+    );
+    expect(stderr).not.toContain("Ignoring --wallet-provider");
   });
 
   it("gives the other reason for a template that ships no wallet layer", () => {
