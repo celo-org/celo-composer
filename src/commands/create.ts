@@ -6,6 +6,10 @@ import ora from "ora";
 import path from "path";
 import { generateProject } from "../generators/project-generator.js";
 import { validateProjectName } from "../utils/validation.js";
+import {
+  forcedWalletProvider,
+  walletOverrideReason,
+} from "../utils/templates.js";
 
 interface CreateOptions {
   description?: string;
@@ -67,18 +71,14 @@ export async function createCommand(
             const autoTemplateType =
               cliTemplateType || "basic";
             // FORCED, not defaulted. The plopfile guards skip the wallet
-            // components for these template types unconditionally, so a flag
-            // saying otherwise cannot be honoured — it just produces a navbar
-            // importing a connect-button nothing writes. Farcaster and Minipay
-            // survive that because they ship their own replacement; x402 and
-            // ai-chat ship none, which is where it fails silently.
-            const scaffoldsOwnWallet =
-              autoTemplateType === "farcaster-miniapp" ||
-              autoTemplateType === "ai-chat" ||
-              autoTemplateType === "x402";
-            const autoWallet = scaffoldsOwnWallet
-              ? "none"
-              : options.walletProvider ?? "rainbowkit";
+            // actions for these template types unconditionally, so a flag
+            // saying otherwise cannot be honoured. The list and the two
+            // distinct reasons live in utils/templates.ts — they used to be
+            // restated here and in the skip strings, and had drifted.
+            const autoWallet =
+              forcedWalletProvider(autoTemplateType) ??
+              options.walletProvider ??
+              "rainbowkit";
             // NOT forced, unlike the wallet above — the two guards are not
             // symmetric. The wallet actions in plopfile.ts check the template
             // type as well ("This template uses its own wallet components"),
@@ -264,17 +264,36 @@ export async function createCommand(
     // Forced here, and it has to be HERE. Computing it in the auto-mode branch
     // above is not enough — this is the value that reaches plop, and it read
     // `options.walletProvider` first, so an explicit flag won again regardless.
-    //
-    // plopfile.ts skips the rainbowkit and thirdweb component actions for these
-    // template types unconditionally, so the flag cannot be honoured; it only
-    // produces a navbar importing a component nothing writes. Farcaster and
-    // Minipay ship their own replacement, x402 and ai-chat ship none.
+    // NOT always "none". minipay is forced to rainbowkit, because its own
+    // components import RainbowKitProvider/WagmiProvider and the base manifest
+    // gates those packages on this value — forcing "none" shipped a scaffold
+    // with the components and none of what they import. See utils/templates.ts.
+    const forcedWallet = forcedWalletProvider(finalTemplateType);
     const finalWalletProvider =
-      finalTemplateType === "farcaster-miniapp" ||
-      finalTemplateType === "ai-chat" ||
-      finalTemplateType === "x402"
-        ? "none"
-        : options.walletProvider || answers.walletProvider || "rainbowkit";
+      forcedWallet ?? (options.walletProvider || answers.walletProvider || "rainbowkit");
+
+    // The flag was passed and then dropped, so say so. Until now `create app
+    // -t x402 --wallet-provider thirdweb` exited 0 having produced a project
+    // with no thirdweb in it, and nothing told the user their flag did
+    // nothing. `--wallet-provider none` is what the forcing does anyway, so
+    // it is agreement rather than a conflict and stays quiet.
+    // Warn when the flag was passed and does not survive — whatever it was
+    // overridden TO. A flag that agrees with the forced value (`--wallet-provider
+    // rainbowkit` on minipay, or `none` on x402) is agreement, not a conflict,
+    // and stays quiet.
+    if (
+      options.walletProvider &&
+      forcedWallet !== null &&
+      options.walletProvider !== forcedWallet
+    ) {
+      console.warn(
+        chalk.yellow(
+          `⚠️  Ignoring --wallet-provider ${options.walletProvider}: ${walletOverrideReason(
+            finalTemplateType
+          )}. Using ${forcedWallet} instead.`
+        )
+      );
+    }
     let finalContractFramework = options.contracts || answers.contractFramework;
     if (!finalContractFramework) {
       finalContractFramework =

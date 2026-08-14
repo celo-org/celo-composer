@@ -2,6 +2,7 @@ import type { NodePlopAPI } from "plop";
 import path from "path";
 import { getTemplatesPath } from "./utils/paths.js";
 import { toPackageName } from "./utils/validation.js";
+import { skipsWalletTemplateFiles, walletSkipReason } from "./utils/templates.js";
 
 interface PlopData {
   projectName: string;
@@ -74,12 +75,8 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/rainbowkit/components/"),
         templateFiles: path.join(templatesPath, "wallets/rainbowkit/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (
-            data.templateType === "farcaster-miniapp" ||
-            data.templateType === "minipay" ||
-            data.templateType === "x402"
-          ) {
-            return "Skipping RainbowKit - This template uses its own wallet components";
+          if (skipsWalletTemplateFiles(data.templateType)) {
+            return walletSkipReason("RainbowKit", data.templateType);
           }
           if (data.walletProvider !== "rainbowkit") {
             return "Skipping RainbowKit - different wallet provider selected";
@@ -126,11 +123,8 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/thirdweb/components/"),
         templateFiles: path.join(templatesPath, "wallets/thirdweb/components/*.tsx.hbs"),
         skip: (data: PlopData): string | false => {
-          if (
-            data.templateType === "farcaster-miniapp" ||
-            data.templateType === "x402"
-          ) {
-            return "Skipping Thirdweb - this template uses its own wallet components";
+          if (skipsWalletTemplateFiles(data.templateType)) {
+            return walletSkipReason("Thirdweb", data.templateType);
           }
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb - different wallet provider selected";
@@ -146,8 +140,11 @@ export default function (plop: NodePlopAPI): void {
         base: path.join(templatesPath, "wallets/thirdweb/lib/"),
         templateFiles: path.join(templatesPath, "wallets/thirdweb/lib/*.ts.hbs"),
         skip: (data: PlopData): string | false => {
-          if (data.templateType === "farcaster-miniapp") {
-            return "Skipping Thirdweb lib - Farcaster Miniapp uses its own wallet components";
+          // Same guard as the components action above. It was narrower than
+          // that one, which was harmless only because walletProvider is forced
+          // to "none" for the templates it missed — a latent copy of #396.
+          if (skipsWalletTemplateFiles(data.templateType)) {
+            return walletSkipReason("Thirdweb lib", data.templateType);
           }
           if (data.walletProvider !== "thirdweb") {
             return "Skipping Thirdweb lib - different wallet provider selected";
