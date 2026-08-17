@@ -1,0 +1,79 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly
+title: "bug: "
+labels: ["bug", "status: triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened? (exact commands/steps + REAL output)
+      description: '"Confirmed" means you ran it. Distinguish "I ran this and here is the output" from "static reading suggests". Include what you expected instead.'
+      placeholder: "When I ... , the app ... . I expected ... ."
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps. An agent or teammate should be able to follow them exactly.
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: rootcause
+    attributes:
+      label: Root cause (file:line), if known
+      description: Makes the fix unambiguous and the review checkable. "Static reading suggests" is fine — say which it is.
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit tested
+      placeholder: "v2.4.13 / a1b2c3d, MiniPay Android"
+    validations:
+      required: false
+  - type: textarea
+    id: where
+    attributes:
+      label: "Where is the defect (not just where you noticed it)?"
+      description: Name the code path that serves users. If you found it in a fallback/dev-only path, check whether the production path has the same defect and say so.
+      placeholder: "Found in the log-scan route, but the subgraph path (production) has the identical fee omission."
+    validations:
+      required: false
+  - type: textarea
+    id: measurement
+    attributes:
+      label: "How would we know it's fixed?"
+      description: "What metric, log, or check would show the fix worked — without asking the reporter to retest. If the answer is 'we can't measure it', say so; instrumenting may be the first task."
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser/device, app version or URL, wallet if relevant (e.g. MiniPay).
+      placeholder: "MiniPay on Android 14, mondeto.app production"
+    validations:
+      required: false
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Priority (one per issue — split if two items would be scheduled differently)
+      options:
+        - "critical — money correctness, security, or user-visible wrong data"
+        - "high — major feature broken, workaround exists"
+        - "medium"
+        - "low — minor / cosmetic"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs / screenshots
+      description: Console output, error messages, screenshots, tx hashes.
+    validations:
+      required: false

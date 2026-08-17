@@ -1,0 +1,60 @@
+name: User story / feature
+description: A piece of user-facing work, written so a human or agent can implement it without follow-up questions
+title: "story: "
+labels: ["enhancement", "status: triage"]
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: User story
+      description: Who wants it, what they want, and why.
+      placeholder: "As a <user type>, I want <capability>, so that <outcome>."
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context & evidence
+      description: Why now? Link research, feedback, metrics, or the parent epic.
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Verifiable checklist — these become the tests AND define "done" (a ticket closes when these are met, not when a related PR merges). Keep code work and ops work (rotate/migrate/purge) as separate boxes so a PR can close its half.
+      placeholder: |
+        - [ ] Given ..., when ..., then ...
+        - [ ] Given ..., when ..., then ...
+        - [ ] Errors are handled: ...
+    validations:
+      required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Non-goals
+      description: What this deliberately does NOT include, and who owns the adjacent work. ("User-facing copy belongs to #193.") Also say if this is explicitly NOT a blocker.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Depends on / blocks
+      description: Ordering that must survive without anyone remembering it.
+      placeholder: "Depends on #215. Blocks #216."
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: ["critical — money correctness, security, or user-visible wrong data", "high", "medium", "low"]
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Design / technical notes
+      description: Links to designs, affected files or modules, API changes, migration needs.
+    validations:
+      required: false

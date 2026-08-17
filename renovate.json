@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "rebaseWhen": "behind-base-branch",
+  "lockFileMaintenance": { "enabled": true, "schedule": ["before 6am on monday"] },
+  "prConcurrentLimit": 3,
+  "packageRules": [
+    {
+      "description": "Group non-major deps into one PR to reduce lockfile PR count",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies"
+    },
+    {
+      "description": "Major bumps stay separate and need explicit review",
+      "matchUpdateTypes": ["major"],
+      "labels": ["chore", "priority:medium"]
+    }
+  ]
+}
