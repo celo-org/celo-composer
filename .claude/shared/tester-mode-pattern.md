@@ -6,7 +6,7 @@ Synced from `pm-kit`. Generic pattern; the worked example is mini-quiz (see end)
 
 Some paths cannot be meaningfully faked: anything that moves money, spends gas, sends a real message, or writes to a third-party system. A staging environment proves the code typechecks against a mock; it does not prove that real gas gets spent from the real treasury and the real receipt comes back. Tester mode lets you run the *identical* production pipeline with real (small) stakes, visible only to a handful of internal accounts.
 
-It has already paid for itself: the first native-CELO payout in mini-quiz was run this way (#15) and surfaced three bugs (#19, #20, #21) that no offline test could have found — all three lived in the gap between "the code typechecks" and "real gas was spent from the real treasury".
+It has already paid for itself: our first native-CELO payout ran this way and surfaced three bugs that no offline test could have found — all three lived in the gap between "the code typechecks" and "real gas was spent from the real treasury".
 
 ## The model: restrict the audience, never the behaviour
 

@@ -33,7 +33,7 @@ body:
     id: out-of-scope
     attributes:
       label: Non-goals
-      description: What this deliberately does NOT include, and who owns the adjacent work. ("User-facing copy belongs to #193.") Also say if this is explicitly NOT a blocker.
+      description: What this deliberately does NOT include, and who owns the adjacent work. ("User-facing copy belongs to #12.") Also say if this is explicitly NOT a blocker.
     validations:
       required: true
   - type: textarea
@@ -41,7 +41,7 @@ body:
     attributes:
       label: Depends on / blocks
       description: Ordering that must survive without anyone remembering it.
-      placeholder: "Depends on #215. Blocks #216."
+      placeholder: "Depends on #12. Blocks #34."
     validations:
       required: false
   - type: dropdown
