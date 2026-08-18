@@ -1,0 +1,48 @@
+# Copy to <repo>/.github/workflows/issue-priority-label.yml (apply.sh does this).
+# Turns the issue form's required "Priority" dropdown into the matching priority:* label,
+# so every ticket carries its priority as a label from the moment it's filed.
+# Uses only the repo-scoped GITHUB_TOKEN — no secrets to configure.
+name: Label issue priority
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply priority label from the form dropdown
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BODY: ${{ github.event.issue.body }}
+          NUM: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Dropdowns render as "### <Label>" followed by the selected option; options may
+          # carry a description ("critical — money ...", "S — hours"), so only the first
+          # word is the value.
+          pick() { printf '%s\n' "$BODY" | awk -v h="^### $1" '$0 ~ h {found=1; next} found && NF {print $1; exit}' | tr -d '\r'; }
+
+          p=$(pick Priority | tr '[:upper:]' '[:lower:]')
+          case "$p" in
+            critical|high|medium|low)
+              for other in critical high medium low; do
+                [ "$other" != "$p" ] && gh issue edit "$NUM" -R "$REPO" --remove-label "priority:$other" 2>/dev/null || true
+              done
+              gh issue edit "$NUM" -R "$REPO" --add-label "priority:$p" && echo "labeled #$NUM priority:$p" ;;
+            *) echo "no priority selection found (got: '$p')" ;;
+          esac
+
+          s=$(pick Size | tr '[:lower:]' '[:upper:]')
+          case "$s" in
+            S|M|L)
+              for other in S M L; do
+                [ "$other" != "$s" ] && gh issue edit "$NUM" -R "$REPO" --remove-label "size:$other" 2>/dev/null || true
+              done
+              gh issue edit "$NUM" -R "$REPO" --add-label "size:$s" && echo "labeled #$NUM size:$s" ;;
+            *) echo "no size selection found (got: '$s')" ;;
+          esac
