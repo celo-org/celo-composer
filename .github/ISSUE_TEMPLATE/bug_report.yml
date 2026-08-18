@@ -77,3 +77,11 @@ body:
       description: Console output, error messages, screenshots, tx hashes.
     validations:
       required: false
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      description: "T-shirt estimate of the fix. If you'd pick L, first ask whether it splits."
+      options: ["S — hours", "M — a day-ish", "L — multi-day (split it if you can)"]
+    validations:
+      required: true
