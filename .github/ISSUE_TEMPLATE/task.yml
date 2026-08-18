@@ -1,0 +1,28 @@
+name: Task / chore
+description: Technical or process work that isn't a user story or a bug (refactor, deps, infra, docs)
+title: "task: "
+labels: ["chore", "status: triage"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What needs to be done?
+      description: Concrete outcome, not activity. "CI runs tests on every PR" not "look into CI".
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of done
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: ["critical — money correctness, security, or user-visible wrong data", "high", "medium", "low"]
+    validations:
+      required: true

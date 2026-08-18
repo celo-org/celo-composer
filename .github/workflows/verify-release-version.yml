@@ -1,0 +1,15 @@
+# On a release tag, verify the tag matches package.json version (and CHANGELOG has an entry).
+# Thin caller — the logic lives in celo-org/pm-kit.
+name: verify-release-version
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: celo-org/pm-kit/.github/workflows/verify-release-version.yml@main
