@@ -15,7 +15,8 @@ jobs:
   publish-beta:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # create the GitHub pre-release
+      id-token: write # npm publish --provenance mints an OIDC token
 
     steps:
       - name: Checkout code
