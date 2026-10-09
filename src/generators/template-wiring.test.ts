@@ -300,3 +300,52 @@ describe("an explicit --wallet-provider the template cannot honour", () => {
     expect(stderr).not.toContain("Ignoring --wallet-provider");
   });
 });
+
+/**
+ * #451. The hardhat template's README says to copy .env.example to .env, and
+ * Hardhat 2 never reads .env by itself: with nothing loading it, PRIVATE_KEY
+ * resolved to no accounts and the advertised CELO_RPC_URL /
+ * CELO_SEPOLIA_RPC_URL changed nothing, with no error either way.
+ */
+describe("hardhat contracts read their .env", () => {
+  let projectPath: string;
+
+  beforeAll(() => {
+    projectPath = generateWith("basic", "hardhat-env-fixture", ["-c", "hardhat"]).projectPath;
+  });
+
+  afterAll(() => {
+    fs.removeSync(path.dirname(projectPath));
+  });
+
+  it("loads .env before the config reads process.env", () => {
+    const config = fs.readFileSync(
+      path.join(projectPath, "apps/contracts/hardhat.config.ts"),
+      "utf8"
+    );
+    // A real import line, not the string inside a comment, and before any read.
+    const load = config.search(/^import "dotenv\/config";$/m);
+    expect(load).toBeGreaterThanOrEqual(0);
+    expect(load).toBeLessThan(config.indexOf("process.env"));
+    const pkg = fs.readJsonSync(path.join(projectPath, "apps/contracts/package.json"));
+    expect(pkg.devDependencies.dotenv).toBeDefined();
+  });
+
+  it("lets CELO_RPC_URL and CELO_SEPOLIA_RPC_URL override forno, and falls back when empty", () => {
+    const config = fs.readFileSync(
+      path.join(projectPath, "apps/contracts/hardhat.config.ts"),
+      "utf8"
+    );
+    // `||`, not `??`: .env.example ships these as empty strings, which dotenv
+    // loads as "" — `??` would hand Hardhat an empty URL.
+    expect(config).toContain('process.env.CELO_RPC_URL || "https://forno.celo.org"');
+    expect(config).toContain(
+      'process.env.CELO_SEPOLIA_RPC_URL || "https://forno.celo-sepolia.celo-testnet.org/"'
+    );
+  });
+
+  it("no longer advertises an RPC variable the web app never reads", () => {
+    const env = fs.readFileSync(path.join(projectPath, "apps/web/.env.template"), "utf8");
+    expect(env).not.toContain("CELO_RPC_URL");
+  });
+});
