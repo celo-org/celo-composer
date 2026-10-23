@@ -12,6 +12,8 @@ true. The move to Celo Sepolia is its own entry under 2.4.13.
 
 ## [Unreleased]
 
+## [2.4.14] - 2026-09-24
+
 ### Added
 - Miniapp environment detection in the Farcaster template.
 
