@@ -31,14 +31,14 @@ const repoRoot = path.resolve(__dirname, "..", "..");
  * GHSA-2xp9-vwfh-vxw4 — unauthenticated RCE in the Image Optimization API when
  * AVIF files are used — is vulnerable `>= 10.0.0, < 15.5.24`, and
  * GHSA-p293-qw3h-jr36 (CVE-2026-75604) is vulnerable `>= 13.4.0, < 15.5.24`.
- * Both first patched in 15.5.24.
+ * Both first patched in 15.5.24. GHSA-2464-fhr4-w9xw and GHSA-p3m5-59mp-jv5r (22 Oct 2026) raise the floor to 15.5.28.
  *
  * Pinned here rather than written in a comment next to each manifest, so that
  * raising it is one edit and every manifest is re-checked against it.
  */
-const NEXT_FLOOR = "15.5.24";
+const NEXT_FLOOR = "15.5.28";
 
-/** `^15.5.25` and `15.5.25` both mean "15.5.25 is the lowest we could get". */
+/** `^15.5.28` and `15.5.28` both mean "15.5.28 is the lowest we could get". */
 function lowestAllowed(range: string): number[] {
   const cleaned = range.trim().replace(/^[\^~>=\s]+/, "");
   const parts = cleaned.split(".").map((n) => parseInt(n, 10));
