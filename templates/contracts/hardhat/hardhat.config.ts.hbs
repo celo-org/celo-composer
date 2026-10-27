@@ -1,3 +1,6 @@
+// Hardhat 2 does not read .env by itself, so without this every value the README
+// tells you to put there (PRIVATE_KEY included) is silently ignored.
+import "dotenv/config";
 import type { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox-viem";
 
@@ -14,13 +17,13 @@ const config: HardhatUserConfig = {
   networks: {
     // Celo Mainnet
     celo: {
-      url: "https://forno.celo.org",
+      url: process.env.CELO_RPC_URL || "https://forno.celo.org",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 42220,
     },
     // Celo Sepolia Testnet
     "celo-sepolia": {
-      url: "https://forno.celo-sepolia.celo-testnet.org/",
+      url: process.env.CELO_SEPOLIA_RPC_URL || "https://forno.celo-sepolia.celo-testnet.org/",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 11142220,
     },
@@ -55,7 +58,7 @@ const config: HardhatUserConfig = {
     ],
   },
   gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
+    enabled: process.env.REPORT_GAS === "true",
     currency: "USD",
   },
 };
