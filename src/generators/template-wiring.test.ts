@@ -344,6 +344,18 @@ describe("hardhat contracts read their .env", () => {
     );
   });
 
+  it("keeps the gas reporter off when REPORT_GAS is left empty", () => {
+    const config = fs.readFileSync(
+      path.join(projectPath, "apps/contracts/hardhat.config.ts"),
+      "utf8"
+    );
+    const env = fs.readFileSync(path.join(projectPath, "apps/contracts/.env.example"), "utf8");
+    // .env.example ships `REPORT_GAS=`, and once dotenv loads .env that is "",
+    // which `!== undefined` would read as on.
+    expect(env).toMatch(/^REPORT_GAS=$/m);
+    expect(config).toContain('enabled: process.env.REPORT_GAS === "true"');
+  });
+
   it("no longer advertises an RPC variable the web app never reads", () => {
     const env = fs.readFileSync(path.join(projectPath, "apps/web/.env.template"), "utf8");
     expect(env).not.toContain("CELO_RPC_URL");
