@@ -44,8 +44,44 @@ If you installed it globally on purpose, check that your Node global bin directo
 
 **Solution**:
 
-1.  **Check Node/PNPM Versions**: Ensure you are using the recommended versions of Node.js (v18+) and PNPM (v8+).
+1.  **Check Node/PNPM Versions**: Generated projects require Node.js 22 or later and PNPM 8 or later (`engines` in the root `package.json`). `node -v` and `pnpm -v` print what you have.
 2.  **Clear Cache**: Try clearing the PNPM cache with `pnpm store prune` and then run `pnpm install` again.
+
+## Environment Variables
+
+**Problem**: A value in `.env` has no effect in the web app.
+
+**Solution**: Check where the file is. Next.js reads env files from `apps/web`, not from the monorepo root, so the file must be `apps/web/.env` (or `apps/web/.env.local`). Variables starting with `NEXT_PUBLIC_` are inlined into the bundle at build time, so rebuild after changing one. The full list of variables per template is in [Project Configuration](/cli-reference/configuration#environment-variables).
+
+**Problem**: `[thirdweb] NEXT_PUBLIC_THIRDWEB_CLIENT_ID is not set, using a placeholder.`
+
+**Solution**: Set `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` in `apps/web/.env` to a client ID from the [thirdweb dashboard](https://thirdweb.com/dashboard). The build passes without it, but wallet connection does not work.
+
+**Problem**: An x402 seller returns a correct 402, then settlement fails with `{"error":"unauthorized","message":"Missing X-API-Key"}`.
+
+**Solution**: Set `X402_API_KEY` in `apps/api/.env`. The facilitator answers `/supported` and `/verify` without a key and only rejects at `/settle`. Running out of credits fails at the same step, so check your balance on [x402.celo.org](https://x402.celo.org) as well.
+
+## Deploying to Celo
+
+**Problem**: `pnpm contracts:deploy:celo-sepolia` (Hardhat) prints the deploy command and then nothing happens.
+
+**Solution**: Ignition is waiting for you to confirm the network, and the question does not reach your terminal through the root script. Run `pnpm deploy:celo-sepolia` from `apps/contracts`, or prefix the root command with `HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=1`. See [Deploying Smart Contracts](/development/deployment#deploying-smart-contracts).
+
+**Problem**: Hardhat stops with `ProviderError: Invalid params`.
+
+**Solution**: Hardhat has no account for that network, which means `PRIVATE_KEY` did not reach `hardhat.config.ts`. Check that it is set in `apps/contracts/.env` and is not empty.
+
+**Problem**: `insufficient funds for gas * price + value: have 0 want …`
+
+**Solution**: The deployer has no CELO on that network. Deploys pay gas in CELO, whatever stablecoins the account holds. On Celo Sepolia, get testnet CELO from the [faucet](https://faucet.celo.org/celo-sepolia) for the address of your `PRIVATE_KEY` (`cast wallet address --private-key $PRIVATE_KEY` prints it).
+
+**Problem**: Foundry stops with `Error: You seem to be using Foundry's default sender. Be sure to set your own --sender.`
+
+**Solution**: The root `pnpm contracts:deploy:*` scripts do not pass a key to `forge script` ([#460](https://github.com/celo-org/celo-composer/issues/460)). Run `forge script` from `apps/contracts` with `--private-key $PRIVATE_KEY` or `--account`, as shown in [Deploying Smart Contracts](/development/deployment#deploying-smart-contracts).
+
+**Problem**: `WARN Local package.json exists, but node_modules missing, did you mean to install?` when running a Foundry task.
+
+**Solution**: Nothing to fix. The Foundry app has no npm dependencies, so PNPM creates no `node_modules` for it. Its libraries live in `apps/contracts/lib`.
 
 ## Hardhat & Smart Contract Errors
 

@@ -8,27 +8,118 @@ Your Celo Composer project is configured primarily through environment variables
 
 ## Environment Variables
 
-Nothing is generated at the root. Each app carries its own template, and the file is named differently in each:
+Nothing is generated at the root of a monorepo project. Each app carries its own template file, the name differs between apps, and which ones you get depends on the template and options you chose:
 
-| app | template file | copy it to |
-|---|---|---|
-| `apps/web` | `.env.template` | `apps/web/.env` |
-| `apps/contracts` (Hardhat only) | `.env.example` | `apps/contracts/.env` |
+| app | template file | copy it to | generated when |
+|---|---|---|---|
+| `apps/web` | `.env.template` | `apps/web/.env` | every template except `ai-chat` |
+| `apps/contracts` | `.env.example` | `apps/contracts/.env` | `--contracts hardhat` or `--contracts foundry` |
+| `apps/api` | `.env.template` | `apps/api/.env` | `--template x402` |
+| project root | `.env.example` | `.env.local` | `--template ai-chat` (a single Next.js app, not a monorepo) |
 
-To set up your local environment, copy each template that your project generated and fill in the values:
+Copy each one your project has and fill in the values:
 
 ```bash
 cp apps/web/.env.template apps/web/.env
-
-# only if you chose Hardhat — a Foundry project generates no env template
-cp apps/contracts/.env.example apps/contracts/.env
+cp apps/contracts/.env.example apps/contracts/.env   # Hardhat or Foundry
+cp apps/api/.env.template apps/api/.env               # x402
 ```
+
+The `.env` file has to sit inside the app that reads it. Next.js loads env files from the directory it runs in, so a `.env` at the monorepo root is not seen by `apps/web`.
 
 <Warning>
   The `.env` file contains sensitive information and is included in the `.gitignore` file by default. **Never commit your `.env` file to version control.**
 </Warning>
 
+The tables below list every variable the template files declare, and the file that reads it in the generated project. Variables prefixed with `NEXT_PUBLIC_` are inlined into the browser bundle at build time, so never put a secret in one.
 
+### `apps/web/.env.template`
+
+{/* env-file: templates/base/apps/web/.env.template.hbs */}
+
+| Variable | Generated for | Read by | Notes |
+|---|---|---|---|
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | `basic` with RainbowKit, `minipay` | `src/components/wallet-provider.tsx` | Get one at [dashboard.reown.com](https://dashboard.reown.com). Falls back to the placeholder `YOUR_PROJECT_ID` when unset, which is not a valid project ID. |
+| `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` | `basic` with Thirdweb | `src/lib/client.ts` | Get one at [thirdweb.com/dashboard](https://thirdweb.com/dashboard). When unset the build still passes, a warning is logged, and wallet connection does not work. |
+| `NEXT_PUBLIC_URL` | `farcaster-miniapp` | `src/app/layout.tsx`, `src/lib/env.ts` | Public URL of the app, used in the Mini App embed and manifest. Defaults to `http://localhost:3000`. Use your `ngrok` URL while testing. |
+| `NEXT_PUBLIC_APP_ENV` | `farcaster-miniapp` | `src/lib/env.ts` | `development` or `production`. |
+| `JWT_SECRET` | `farcaster-miniapp` | `src/app/api/auth/sign-in/route.ts` (via `src/lib/env.ts`) | Signs session tokens. Generate one with `openssl rand -base64 32`. |
+| `NEXT_PUBLIC_FARCASTER_HEADER` | `farcaster-miniapp` | `src/lib/env.ts` | From signing your manifest, see the [Farcaster template](/templates/farcaster-miniapp). |
+| `NEXT_PUBLIC_FARCASTER_PAYLOAD` | `farcaster-miniapp` | `src/lib/env.ts` | Same as above. |
+| `NEXT_PUBLIC_FARCASTER_SIGNATURE` | `farcaster-miniapp` | `src/lib/env.ts` | Same as above. |
+| `NEYNAR_API_KEY` | `farcaster-miniapp` | `src/app/api/webhook/route.ts` | Only needed for notifications. Without it, or your own `FARCASTER_HUB_URL`, `/api/webhook` answers 500. |
+| `FARCASTER_HUB_URL` | `farcaster-miniapp` | `src/app/api/webhook/route.ts` | Defaults to `https://hub-api.neynar.com`. |
+| `CELO_RPC_URL` | every template | nothing | Not read by anything in `apps/web` ([#451](https://github.com/celo-org/celo-composer/issues/451)). The wallet providers use the default RPC of the `celo` and `celoSepolia` chains from `viem`, which is forno. |
+
+### `apps/contracts/.env.example` (Hardhat)
+
+{/* env-file: templates/contracts/hardhat/.env.example.hbs */}
+
+| Variable | Read by | Notes |
+|---|---|---|
+| `PRIVATE_KEY` | `hardhat.config.ts`, networks `celo` and `celo-sepolia` | The deployer account. Use a key that holds only test funds. With no key, deploys to those networks have no account to send from. |
+| `ETHERSCAN_API_KEY` | `hardhat.config.ts`, `etherscan.apiKey` | Optional. An [Etherscan](https://etherscan.io/) V2 key, used to verify contracts on Celoscan. |
+| `REPORT_GAS` | `hardhat.config.ts`, `gasReporter.enabled` | Optional. The reporter is on whenever this variable is defined at all, so leave the line out rather than setting it to `false`. |
+| `CELO_RPC_URL` | nothing yet | `hardhat.config.ts` hardcodes `https://forno.celo.org` ([#451](https://github.com/celo-org/celo-composer/issues/451)). |
+| `CELO_SEPOLIA_RPC_URL` | nothing yet | `hardhat.config.ts` hardcodes `https://forno.celo-sepolia.celo-testnet.org/` ([#451](https://github.com/celo-org/celo-composer/issues/451)). |
+
+### `apps/contracts/.env.example` (Foundry)
+
+{/* env-file: templates/contracts/foundry/.env.example.hbs */}
+
+| Variable | Read by | Notes |
+|---|---|---|
+| `PRIVATE_KEY` | your shell, passed as `--private-key $PRIVATE_KEY` | The deploy script calls `vm.startBroadcast()` without reading this variable, so it only takes effect when you pass it on the command line. See [Deploying Smart Contracts](/development/deployment#deploying-smart-contracts). |
+| `ETHERSCAN_API_KEY` | `forge verify-contract` | Optional. An [Etherscan](https://etherscan.io/) V2 key. |
+
+The file also carries `CELO_RPC_URL` and `CELO_SEPOLIA_RPC_URL` as comments. Uncommenting them changes nothing, because `foundry.toml` names both endpoints directly. To use another provider, pass its URL to `--rpc-url`.
+
+### `apps/api/.env.template` (x402)
+
+{/* env-file: templates/x402/apps/api/.env.template.hbs */}
+
+| Variable | Read by | Notes |
+|---|---|---|
+| `X402_NETWORK` | `src/x402.ts` | `testnet` (Celo Sepolia, default) or `mainnet`. Any other value means testnet. |
+| `X402_PAY_TO` | `src/x402.ts` | Address that receives payments. Until it is set, `/paid` answers for free. |
+| `X402_PRICE` | `src/x402.ts` | Price in raw USDC units. USDC has 6 decimals, so `10000` is 0.01 USDC. |
+| `X402_API_KEY` | `src/x402.ts`, `src/index.ts` | Required, on testnet too. Create one at [x402.celo.org](https://x402.celo.org). Without it the server starts and returns a correct 402, and settlement fails afterwards. |
+| `PORT` | `src/index.ts` | Defaults to `3001`. |
+| `BUYER_PRIVATE_KEY` | `src/buyer.ts` | The key `pnpm api:buy` pays with. It needs USDC and no CELO. |
+| `SELLER_URL` | `src/buyer.ts` | Defaults to `http://localhost:3001/paid`. |
+
+### `.env.example` (AI chat)
+
+{/* env-file: templates/ai/chat-template/.env.example */}
+
+| Variable | Read by | Notes |
+|---|---|---|
+| `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` | `lib/thirdweb.ts` | Thirdweb client ID for the wallet features. |
+| `OPENAI_API_KEY` | `lib/ai/providers.ts` | Each provider key you set adds that provider's models to the model picker. |
+| `ANTHROPIC_API_KEY` | `lib/ai/providers.ts` | |
+| `MISTRAL_API_KEY` | `lib/ai/providers.ts` | |
+| `DEEPSEEK_API_KEY` | `lib/ai/providers.ts` | |
+| `XAI_API_KEY` | `lib/ai/providers.ts` | |
+| `GOOGLE_GENERATIVE_AI_API_KEY` | `lib/ai/providers.ts` | |
+| `POSTGRES_URL` | `lib/db/queries.ts`, `lib/db/migrate.ts`, `drizzle.config.ts` | Required. `pnpm build` runs the migration first, so the build fails without it. |
+| `BLOB_READ_WRITE_TOKEN` | `@vercel/blob`, from `app/(chat)/api/files/upload/route.ts` | Needed for file uploads. |
+| `REDIS_URL` | `resumable-stream`, from `app/(chat)/api/chat/route.ts` | Optional. Without it, resumable streams are turned off and a message is logged. |
+
+## Networks
+
+The templates are set up for these two networks. Chain IDs were read from the RPC with `cast chain-id`.
+
+| | Celo Mainnet | Celo Sepolia (testnet) |
+|---|---|---|
+| Chain ID | `42220` | `11142220` |
+| RPC (forno) | `https://forno.celo.org` | `https://forno.celo-sepolia.celo-testnet.org/` |
+| Hardhat network name | `celo` | `celo-sepolia` |
+| Foundry `--rpc-url` alias | `celo` | `celo-sepolia` |
+| `viem` / `wagmi` chain | `celo` | `celoSepolia` |
+| Explorer | [celoscan.io](https://celoscan.io) | [sepolia.celoscan.io](https://sepolia.celoscan.io) |
+| Faucet | | [faucet.celo.org/celo-sepolia](https://faucet.celo.org/celo-sepolia) |
+
+Forno is a public endpoint and is rate limited. For anything beyond light testing, use your own node or an RPC provider.
 
 ## Build & Deployment Configuration
 

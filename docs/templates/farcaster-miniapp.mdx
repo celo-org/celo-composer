@@ -16,7 +16,7 @@ This template extends the Basic Web App template with essential Farcaster featur
 
 ## Environment Variables
 
-Create a `.env` file at the root of your project and add the following variables. For local development, use an `ngrok` URL for `NEXT_PUBLIC_URL`.
+Copy `apps/web/.env.template` to `apps/web/.env.local` and fill in the following variables. The file has to be inside `apps/web`; Next.js does not read a `.env` at the project root. For local development, use an `ngrok` URL for `NEXT_PUBLIC_URL`. The full list, including the webhook variables, is in [Project Configuration](/cli-reference/configuration#environment-variables).
 
 - **`NEXT_PUBLIC_URL`**: Your app's public URL.
 - **`JWT_SECRET`**: A secret for signing JWTs. Generate one with `openssl rand -base64 32`.
