@@ -44,7 +44,9 @@ Refs #
 <!-- Commands + output, not "tested ✓".
      - Tests run on THIS head (not CI's cached result)
      - Mutation count: "disabling <the fix> turns N red"  (N=0 ⇒ the test that would catch this is missing)
-     - Build of the real artifact / click-through of the changed surface
+     - Build of the real artifact
+     - UI touched → browser pass on THIS head: routes visited, actions, console errors = 0, screenshots (desktop + phone) attached
+     - Payment path, bigger change → optional: one real small-amount tx from your own wallet — hash + receipt status (or say none was run)
      - At least one test THROUGH the seam this touches (route in → response out; CLI as subprocess; component render)
      - Every guarantee stated above has a test on its FAILURE path
      - Touched CI? link one green run AND one deliberately red run
@@ -69,6 +71,7 @@ Refs #
 - [ ] README / runbook / `.env.example` / examples / error strings updated for the world this creates
 - [ ] Lockfile touched → rebased on current `main`, lockfile regenerated (never hand-resolved)
 - [ ] Wallet/provider tree touched → loaded in a normal browser, not only MiniPay
+- [ ] UI touched → browser pass run on this head, desktop + phone, screenshots attached; `e2e-smoke` green on the preview
 - [ ] Money/security path → `money-path-checklist.md` run; payout logic compared against the other side
 - [ ] No secrets in the diff
 - [ ] Questions for the maintainer marked clearly at the end (or "none")
