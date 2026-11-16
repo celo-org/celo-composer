@@ -15,7 +15,7 @@
 - Use shadcn/ui as the default UI library in all web templates
 - Use Plop.js for template generation and composition
 - Use PNPM as the package manager
-- Templates should use Next.js 14+ with App Router
+- Templates should use Next.js 15 with App Router
 
 ## Code Style & Standards
 

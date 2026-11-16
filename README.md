@@ -73,7 +73,7 @@ npx @celo/celo-composer@latest create my-celo-app --yes
 
 ### Basic Web App (default)
 
-A standard Next.js 14+ web application with modern UI, perfect for most dApp projects.
+A standard Next.js 15 web application with modern UI, perfect for most dApp projects.
 
 ```bash
 npx @celo/celo-composer@latest create --template basic
@@ -188,7 +188,7 @@ Your project is automatically initialized with Git and includes an initial commi
 
 **Generated Projects Include:**
 
-- Next.js 14+ with App Router
+- Next.js 15 with App Router
 - TypeScript
 - Tailwind CSS
 - shadcn/ui components
