@@ -38,11 +38,18 @@ const repoRoot = path.resolve(__dirname, "..", "..");
  */
 const NEXT_FLOOR = "15.5.28";
 
-/** `^15.5.28` and `15.5.28` both mean "15.5.28 is the lowest we could get". */
+/**
+ * `^15.5.28` and `15.5.28` both mean "15.5.28 is the lowest we could get".
+ *
+ * Anything else throws. Caught in review: the first version stripped a prefix
+ * and parsed what was left, so `^15.5.28 || 14` read as 15.5.28 and cleared
+ * the floor while still allowing 14.x. The shape is now matched whole, so an
+ * `||` union, a `>=A <B` pair, an `x` wildcard or a prerelease tail all refuse
+ * rather than read as whichever part happens to come first.
+ */
 function lowestAllowed(range: string): number[] {
-  const cleaned = range.trim().replace(/^[\^~>=\s]+/, "");
-  const parts = cleaned.split(".").map((n) => parseInt(n, 10));
-  if (parts.length !== 3 || parts.some(Number.isNaN)) {
+  const match = range.trim().match(/^[\^~]?(\d+)\.(\d+)\.(\d+)$/);
+  if (!match) {
     throw new Error(
       `Cannot read a floor out of the version range "${range}". ` +
         `This test only understands exact pins and caret/tilde ranges; if a ` +
@@ -50,7 +57,7 @@ function lowestAllowed(range: string): number[] {
         `dropping the manifest from the sweep.`
     );
   }
-  return parts;
+  return [match[1], match[2], match[3]].map((n) => parseInt(n, 10));
 }
 
 function isAtLeastFloor(range: string): boolean {
@@ -98,6 +105,35 @@ function declaredNextRange(manifestPath: string): string {
   if (!match) throw new Error(`No "next" declaration in ${manifestPath}`);
   return match[1];
 }
+
+/**
+ * Caught in review: with every manifest above the floor, the comparator itself
+ * was never exercised on the failing side. Removing the `got[i] < floor[i]`
+ * line, or comparing only the major, left the suite green. These cases pin
+ * the comparator independently of what the manifests happen to say today.
+ */
+describe("the floor comparator", () => {
+  it.each([
+    ["15.5.28", true],
+    ["^15.5.28", true],
+    ["~15.5.28", true],
+    ["15.5.29", true],
+    ["^15.6.0", true],
+    ["16.0.0", true],
+    ["^15.5.27", false],
+    ["15.4.99", false],
+    ["^14.99.99", false],
+  ])("reads %s as at-least-floor = %s", (range, expected) => {
+    expect(isAtLeastFloor(range)).toBe(expected);
+  });
+
+  it.each(["^15.5.28 || 14", ">=15.5.28 <16", "15.x", "latest", "15.5.28-canary.1", ""])(
+    "refuses the range shape %j instead of reading part of it",
+    (range) => {
+      expect(() => isAtLeastFloor(range)).toThrow(/Cannot read a floor/);
+    }
+  );
+});
 
 describe("every template manifest, scannable or not, clears the Next.js advisory floor", () => {
   const manifests = manifestsDeclaringNext();
