@@ -12,6 +12,35 @@ true. The move to Celo Sepolia is its own entry under 2.4.13.
 
 ## [Unreleased]
 
+## [2.4.15] - 2026-11-16
+
+### Changed
+- **Generated projects ship Next.js 15.** The base template moves from `next ^14.0.0`
+  to `^15.5.28` and the chat template from `15.3.6` to `15.5.28`, with
+  `eslint-config-next` in step. Closes the unauthenticated RCE advisories
+  GHSA-2xp9-vwfh-vxw4, GHSA-p293-qw3h-jr36 and GHSA-2464-fhr4-w9xw (critical) and
+  GHSA-p3m5-59mp-jv5r (high); no 14.x release patches them. A test holds every
+  template manifest, Handlebars included, to the floor, and every scaffold now
+  resolves `sharp` 0.35.5 (#471, #479, #458).
+- **Node.js 22 or later is required**, for the CLI and for generated projects;
+  Node 18 and 20 are end of life. CA roots refreshed (#477).
+
+### Fixed
+- The Hardhat template now loads `apps/contracts/.env` (`dotenv`), so `PRIVATE_KEY`
+  reaches the config. `CELO_RPC_URL` and `CELO_SEPOLIA_RPC_URL` override the forno
+  endpoints when set, and the gas reporter turns on only when `REPORT_GAS=true`.
+  `CELO_RPC_URL` is dropped from the web `.env.template`, which nothing read (#475, #451).
+- `handlebars` pinned to 4.7.10 for GHSA-p8wg-vrv2-v86f and GHSA-8r5x-fm3f-whwj (#478).
+
+### Documentation
+- Environment variable reference per template, with the file that reads each
+  variable and a networks table (chain IDs, RPC, explorers, faucet), held to the
+  templates by a test. Deploying to Celo with Hardhat and Foundry, paying gas in
+  stablecoins, testing inside MiniPay, and new troubleshooting entries (#480, #476).
+
+### CI
+- npm publishing uses trusted publishing (OIDC) with provenance (#473, #474).
+
 ## [2.4.14] - 2026-09-24
 
 ### Added
