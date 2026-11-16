@@ -14,7 +14,7 @@ A powerful CLI tool for generating customizable Celo blockchain starter kits wit
 
 ## Requirements
 
-- Node.js >= 18.0.0
+- Node.js >= 22.0.0
 - PNPM (recommended) or npm/yarn
 
 ## Quick Start
