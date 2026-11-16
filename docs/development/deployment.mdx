@@ -47,7 +47,74 @@ While the specific steps may vary depending on the platform you choose, the gene
 
 ## Deploying Smart Contracts
 
-Your smart contracts need to be deployed to a public network (like Celo Sepolia Testnet testnet or Celo Mainnet) before your frontend application can interact with them.
+Your smart contracts need to be deployed to a public network (like Celo Sepolia Testnet or Celo Mainnet) before your frontend application can interact with them.
 
-- Use the `pnpm contracts:deploy:celo-sepolia` or `pnpm contracts:deploy:celo` scripts to deploy your contracts.
-- After deployment, you will get the contract addresses. You need to update your frontend's environment variables with these new addresses so it knows where to find the contracts on-chain.
+Chain IDs, RPC endpoints and explorers for both networks are listed under [Networks](/cli-reference/configuration#networks).
+
+### Before you deploy
+
+1. **Use a key that holds only test funds.** Put it in `apps/contracts/.env` as `PRIVATE_KEY` (copy `.env.example` first).
+2. **Fund it with CELO.** On Celo Sepolia, get testnet CELO from the [faucet](https://faucet.celo.org/celo-sepolia). The deploy scripts send ordinary transactions, so gas is paid in CELO even if the account also holds stablecoins.
+3. **Deploy to Celo Sepolia first**, and only move to mainnet once the testnet deploy works.
+
+### Hardhat
+
+```bash
+pnpm contracts:deploy:celo-sepolia   # Celo Sepolia
+pnpm contracts:deploy:celo           # Celo Mainnet
+```
+
+Both run `hardhat ignition deploy ignition/modules/Lock.ts` against the named network. Before deploying to a live network, Ignition asks you to confirm. When it runs through the root `pnpm contracts:deploy:*` scripts, that question is not shown, so the command looks stuck. Either run the script from inside `apps/contracts`, where the prompt appears:
+
+```bash
+cd apps/contracts
+pnpm deploy:celo-sepolia
+```
+
+or confirm in advance with Ignition's own environment variable:
+
+```bash
+HARDHAT_IGNITION_CONFIRM_DEPLOYMENT=1 pnpm contracts:deploy:celo-sepolia
+```
+
+Ignition prints the deployed address and keeps a record of it under `apps/contracts/ignition/deployments/chain-<chain id>/`.
+
+### Foundry
+
+The root `pnpm contracts:deploy:*` scripts do not pass a key to `forge script`, so they stop with `Error: You seem to be using Foundry's default sender` ([#460](https://github.com/celo-org/celo-composer/issues/460)). Run the script from `apps/contracts` and pass the key yourself:
+
+```bash
+cd apps/contracts
+source .env
+forge script script/Counter.s.sol:CounterScript \
+  --rpc-url celo-sepolia \
+  --private-key $PRIVATE_KEY \
+  --broadcast
+```
+
+Use `--rpc-url celo` for mainnet. For a key that guards real funds, import it into an encrypted keystore with `cast wallet import deployer --interactive` and pass `--account deployer` instead of `--private-key`.
+
+### Using the deployed address
+
+No template reads a contract address from the environment yet. Add your own variable to `apps/web/.env.template`, for example `NEXT_PUBLIC_CONTRACT_ADDRESS`, read it in `apps/web`, and set it on your hosting platform as well.
+
+## Paying gas in stablecoins
+
+Celo lets a transaction pay its fee in an allowlisted ERC-20 instead of CELO, by setting the `feeCurrency` field. This affects the transactions your app sends, not your contract deploys.
+
+- `viem` and `wagmi` support `feeCurrency` when you use their `celo` or `celoSepolia` chain, which is what the RainbowKit and MiniPay wallet providers already do. `ethers` and `web3.js` do not support it on their own.
+- For an 18-decimal token such as USDm, `feeCurrency` is the token address. For USDC and USDT, which have 6 decimals, it is the token's **adapter** address, not the token address. Transfers still use the token address.
+- The allowlist and the adapter addresses for each network are on [Fee currency contracts](https://docs.celo.org/build/tools/contracts/fee-currencies). Worked examples are in [Using Fee Abstraction](https://docs.celo.org/build/fee-abstraction/using-fee-abstraction).
+
+## Testing a MiniPay app
+
+A project made with `--template minipay` connects to the wallet on its own when it is opened inside MiniPay, so there is no connect step to test. MiniPay holds only stablecoins and pays gas in them itself. It may override any `feeCurrency` you set, so do not build a flow that needs the user to hold CELO.
+
+MiniPay cannot be tested in an Android emulator, so use a phone:
+
+1. Start the app with `pnpm dev`, and expose it over HTTPS with `ngrok http 3000`.
+2. In MiniPay, open **Settings → About** and tap the **Version** number until developer mode is confirmed.
+3. In **Settings → Developer Settings**, turn on **Developer Mode**, and **Use Testnet** if your app is on Celo Sepolia.
+4. Tap **Load Test Page**, enter the `ngrok` URL, and tap **Go**.
+
+The steps with screenshots are in [Test your Mini App inside MiniPay](https://docs.minipay.xyz/getting-started/test-in-minipay.html), and the Celo-specific parts of building for MiniPay are in [Build for MiniPay](https://docs.celo.org/build/mini-apps/overview).
