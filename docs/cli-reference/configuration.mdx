@@ -49,7 +49,6 @@ The tables below list every variable the template files declare, and the file th
 | `NEXT_PUBLIC_FARCASTER_SIGNATURE` | `farcaster-miniapp` | `src/lib/env.ts` | Same as above. |
 | `NEYNAR_API_KEY` | `farcaster-miniapp` | `src/app/api/webhook/route.ts` | Only needed for notifications. Without it, or your own `FARCASTER_HUB_URL`, `/api/webhook` answers 500. |
 | `FARCASTER_HUB_URL` | `farcaster-miniapp` | `src/app/api/webhook/route.ts` | Defaults to `https://hub-api.neynar.com`. |
-| `CELO_RPC_URL` | every template | nothing | Not read by anything in `apps/web` ([#451](https://github.com/celo-org/celo-composer/issues/451)). The wallet providers use the default RPC of the `celo` and `celoSepolia` chains from `viem`, which is forno. |
 
 ### `apps/contracts/.env.example` (Hardhat)
 
@@ -59,9 +58,9 @@ The tables below list every variable the template files declare, and the file th
 |---|---|---|
 | `PRIVATE_KEY` | `hardhat.config.ts`, networks `celo` and `celo-sepolia` | The deployer account. Use a key that holds only test funds. With no key, deploys to those networks have no account to send from. |
 | `ETHERSCAN_API_KEY` | `hardhat.config.ts`, `etherscan.apiKey` | Optional. An [Etherscan](https://etherscan.io/) V2 key, used to verify contracts on Celoscan. |
-| `REPORT_GAS` | `hardhat.config.ts`, `gasReporter.enabled` | Optional. The reporter is on whenever this variable is defined at all, so leave the line out rather than setting it to `false`. |
-| `CELO_RPC_URL` | nothing yet | `hardhat.config.ts` hardcodes `https://forno.celo.org` ([#451](https://github.com/celo-org/celo-composer/issues/451)). |
-| `CELO_SEPOLIA_RPC_URL` | nothing yet | `hardhat.config.ts` hardcodes `https://forno.celo-sepolia.celo-testnet.org/` ([#451](https://github.com/celo-org/celo-composer/issues/451)). |
+| `REPORT_GAS` | `hardhat.config.ts`, `gasReporter.enabled` | Optional. The reporter is on only when the value is exactly `true`; `false` or empty leaves it off. |
+| `CELO_RPC_URL` | `hardhat.config.ts`, network `celo` | Optional. Empty falls back to `https://forno.celo.org`. |
+| `CELO_SEPOLIA_RPC_URL` | `hardhat.config.ts`, network `celo-sepolia` | Optional. Empty falls back to `https://forno.celo-sepolia.celo-testnet.org/`. |
 
 ### `apps/contracts/.env.example` (Foundry)
 
