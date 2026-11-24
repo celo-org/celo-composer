@@ -23,6 +23,13 @@ body:
     validations:
       required: true
   - type: textarea
+    id: tried
+    attributes:
+      label: What has already been tried?
+      description: Fixes, workarounds or theories you already ruled out, and why. Say "attempted, outcome unclear" rather than "ruled out" when unsure. This saves the next person from repeating your dead ends.
+    validations:
+      required: false
+  - type: textarea
     id: rootcause
     attributes:
       label: Root cause (file:line), if known

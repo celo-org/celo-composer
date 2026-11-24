@@ -27,6 +27,7 @@ body:
         - [ ] Given ..., when ..., then ...
         - [ ] Given ..., when ..., then ...
         - [ ] Errors are handled: ...
+        - [ ] Edge case (empty / max / Unicode / double submit / phone viewport): ...
     validations:
       required: true
   - type: textarea
@@ -55,7 +56,7 @@ body:
     id: notes
     attributes:
       label: Design / technical notes
-      description: Links to designs, affected files or modules, API changes, migration needs.
+      description: "Where to start: links to designs, affected files or modules (file:line where known), existing helpers or components to reuse, API changes, migration needs, and constraints (stack, things that must not change)."
     validations:
       required: false
   - type: dropdown
