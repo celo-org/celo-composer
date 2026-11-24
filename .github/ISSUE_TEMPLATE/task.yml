@@ -11,14 +11,33 @@ body:
     validations:
       required: true
   - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: "Where to look and what to follow: files or modules (file:line where known), related issues and PRs, docs, and constraints (stack, things that must not change). Whoever picks this up, a teammate or an agent, should not have to ask you where to start."
+      placeholder: |
+        - Code: src/lib/payments.ts, the settle() path
+        - Related: #12, PR #40
+        - Constraint: no change to the public API
+    validations:
+      required: false
+  - type: textarea
     id: done
     attributes:
-      label: Definition of done
+      label: Definition of done (verification scenarios)
+      description: Concrete checks that prove it is done, including edge cases. Each one should be something you could run or click. Keep code work and ops work as separate boxes.
       placeholder: |
-        - [ ] ...
-        - [ ] ...
+        - [ ] Given ..., when ..., then ...
+        - [ ] Edge case: empty / failure / concurrent → ...
     validations:
       required: true
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: What this deliberately does not include, so the implementer doesn't wander.
+    validations:
+      required: false
   - type: dropdown
     id: priority
     attributes:
